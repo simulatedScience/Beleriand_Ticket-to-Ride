@@ -1,0 +1,78 @@
+city1,city2,color1,color2,length
+vancouver,calgary,gray,,3
+vancouver,seattle,gray,gray,1
+calgary,seattle,gray,,4
+calgary,helena,gray,,4
+calgary,winnipeg,white,,6
+seattle,portland,gray,gray,1
+seattle,helena,yellow,,6
+portland,san francisco,green,pink,6
+portland,salt lake city,blue,,6
+san francisco,salt lake city,orange,white,5
+san francisco,los angeles,pink,yellow,3
+los angeles,las vegas,gray,,2
+los angeles,phoenix,gray,,3
+los angeles,el paso,black,,6
+salt lake city,las vegas,orange,,3
+salt lake city,denver,yellow,red,3
+salt lake city,helena,pink,,3
+helena,winnipeg,blue,,4
+helena,duluth,orange,,6
+helena,omaha,red,,4
+helena,denver,green,,4
+denver,phoenix,white,,5
+denver,omaha,pink,,4
+denver,kansas city,black,orange,4
+denver,oklahoma city,red,,4
+denver,santa fe,gray,,2
+phoenix,el paso,gray,,3
+phoenix,santa fe,gray,,3
+el paso,santa fe,gray,,2
+el paso,oklahoma city,yellow,,5
+el paso,houston,green,,6
+el paso,dallas,red,,4
+houston,dallas,gray,gray,1
+houston,new orleans,gray,,2
+dallas,oklahoma city,gray,gray,2
+dallas,little rock,gray,,2
+oklahoma city,kansas city,gray,gray,2
+oklahoma city,little rock,gray,,2
+kansas city,omaha,gray,gray,1
+kansas city,saint louis,pink,blue,2
+omaha,chicago,blue,,4
+omaha,duluth,gray,gray,2
+duluth,winnipeg,black,,4
+duluth,sault st. marie,gray,,3
+duluth,toronto,pink,,6
+duluth,chicago,red,,3
+winnipeg,sault st. marie,gray,,6
+sault st. marie,montreal,black,,5
+sault st. marie,toronto,gray,,2
+montreal,boston,gray,gray,2
+montreal,toronto,gray,,3
+montreal,new york,blue,,3
+boston,new york,yellow,red,2
+new york,washington,black,orange,2
+new york,pittsburgh,white,green,2
+pittsburgh,toronto,gray,,2
+pittsburgh,washington,gray,,2
+pittsburgh,raleigh,gray,,2
+pittsburgh,nashville,yellow,,4
+pittsburgh,saint louis,green,,5
+pittsburgh,chicago,black,orange,3
+chicago,saint louis,green,white,2
+toronto,chicago,white,,4
+saint louis,little rock,gray,,2
+saint louis,nashville,gray,,2
+little rock,new orleans,green,,3
+little rock,nashville,white,,3
+new orleans,atlanta,yellow,orange,4
+new orleans,miami,red,,6
+miami,atlanta,blue,,5
+miami,charleston,pink,,4
+charleston,raleigh,gray,,2
+charleston,atlanta,gray,,2
+atlanta,nashville,gray,,1
+atlanta,raleigh,gray,gray,2
+nashville,raleigh,black,,3
+raleigh,washington,gray,gray,2
