@@ -1,0 +1,28 @@
+Isle of Balar ; West Taur-im-Duinath ; 8
+Linaewen ; Forest of Neldoreth ; 8
+Nuath ; Pass of Aglon ; 10
+Nan Elmoth ; East Taur-im-Duinath ; 8
+Himring ; Amon Ereb ; 7
+Targelion ; Forest of Region ; 7
+Ered Wethrin ; Himring ; 10
+Barad Nimras ; Gates of Sirion ; 7
+River Nenning ; Cape Balar ; 7
+Nogrod ; West Taur-im-Duinath ; 8
+Sarn Athrud ; Gates of Sirion ; 10
+Eglarest ; Amon Ereb ; 12
+Gates of Sirion ; Isle of Balar ; 8
+Menegroth ; Arvenien ; 8
+Taur-Nu-Fuin ; Forest of Region ; 6
+Gondolin ; Havens of Sirion ; 10
+Tol Sirion ; Nan Elmoth ; 10
+Ladros ; Andrum ; 10
+Cirith Ninniach ; Ladros ; 11
+Crossing of Teiglin ; Nan Tathren ; 5
+Brithombar ; Nargothrond ; 5
+Eithel Sirion ; Amon Rudh ; 6
+Forest of Neldoreth ; West Taur-im-Duinath ; 9
+Nogrod ; Menegroth ; 10
+Pass of Aglon ; East Taur-im-Duinath ; 10
+Himring ; Belegost ; 6
+Vinyamar ; Amon Rudh ; 9
+Cirith Ninniach ; Nargothrond ; 9
