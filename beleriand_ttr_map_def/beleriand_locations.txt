@@ -1,40 +1,39 @@
-Havens of Sirion
-Nargothrond
-Gondolin
-Menegroth
-Brithombar
-East Taur-im-Duinath
-West Taur-im-Duinath
-River Nenning
-Pass of Aglon
 Amon Ereb
-Eglarest
-Belegost
-Nogrod
-Cirith Ninniach
-Eithel Sirion
 Amon Rudh
-Nan Tathren
-Gates of Sirion
-Isle of Balar
-Cape Balar
-Himring
-Barad Nimras
-Arvenien
-Havens of Sirion
-Vinyamar
-Linaewen
-Nuath
-Lake Mithrim
-Ered Wethrin
-Tol Sirion
-Taur-Nu-Fuin
-Ladros
-Crossing of Teiglin
-Forest of Region
-Forest of Neldoreth
-Nan Elmoth
-Lake Heleron
-Targelion
-Sarn Athrud
 Andrum
+Arvenien
+Barad Nimras
+Belegost
+Brithombar
+Cape Balar
+Cirith Ninniach
+Crossing of Teiglin
+East Taur-im-Duinath
+Eglarest
+Eithel Sirion
+Ered Wethrin
+Forest of Neldoreth
+Forest of Region
+Gates of Sirion
+Gondolin
+Havens of Sirion
+Himring
+Isle of Balar
+Ladros
+Lake Heleron
+Lake Mithrim
+Linaewen
+Menegroth
+Nan Elmoth
+Nan Tathren
+Nargothrond
+Nogrod
+Nuath
+Pass of Aglon
+River Nenning
+Sarn Athrud
+Targelion
+Taur-Nu-Fuin
+Tol Sirion
+Vinyamar
+West Taur-im-Duinath
