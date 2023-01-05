@@ -8,6 +8,7 @@ import os
 
 from PIL import ImageFont
 import numpy as np
+import matplotlib.pyplot as plt
 
 from graph_particle import Graph_Particle
 
@@ -29,6 +30,35 @@ class Particle_Label(Graph_Particle):
     )
     self.label = label
     self.color = "#222222"
+
+
+  def draw(self, 
+      ax: plt.Axes,
+      color: str = "#222222",
+      alpha: float = 1,
+      zorder: int = 4):
+    """
+    draw the particle on the canvas
+
+    Args:
+        ax (plt.Axes): matplotlib axes to draw on
+        color (str, optional): color of the particle. Defaults to "".
+        alpha (float, optional): alpha value of the particle. Defaults to 0.7.
+        zorder (int, optional): zorder of the particle. Defaults to 4.
+    """
+    ax.text(
+        self.position[0],
+        self.position[1],
+        self.label,
+        color = color,
+        alpha = alpha,
+        zorder = zorder,
+        horizontalalignment = "center",
+        verticalalignment = "center",
+        fontsize = 20,
+        fontproperties = ImageFont.truetype("beleriand_ttr\\MiddleEarth.ttf", 20),
+    )
+
 
   def get_label_size(self, label: str, fontsize: int, font: str):
     """

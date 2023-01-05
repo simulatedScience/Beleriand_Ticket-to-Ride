@@ -52,9 +52,9 @@ class TTR_Particle_Graph:
       self.particle_nodes[label] = Particle_Node(
           label,
           position=position)
-      # self.particle_labels[label] = Particle_Label(
-      #     label,
-      #     position=position + np.array([0, 2], dtype=np.float64))
+      self.particle_labels[label] = Particle_Label(
+          label,
+          position=position + np.array([0, 2], dtype=np.float64))
 
     for ((location_1, location_2), length, color) in zip(self.edges, self.edge_lengths, self.edge_colors):
       node_1 = self.particle_nodes[location_1]
@@ -106,11 +106,11 @@ class TTR_Particle_Graph:
         ax (_type_): _description_
     """
     for particle_node in self.particle_nodes.values():
-      particle_node.draw_bounding_box(ax, color="#222222", alpha=0.7 * alpha_multiplier)
+      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier)
     for particle_label in self.particle_labels.values():
-      particle_label.draw_bounding_box(ax, color="#222222", alpha=1.0 * alpha_multiplier)
+      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw_bounding_box(ax, color=particle_edge.color, alpha=0.7 * alpha_multiplier)
+      particle_edge.draw(ax, color=particle_edge.color, alpha=0.7 * alpha_multiplier)
 
 
   def __str__(self):
@@ -150,7 +150,7 @@ if __name__ == "__main__":
 
   fig, ax = plt.subplots()
   particle_graph.draw(ax, alpha_multiplier=0.3)
-  particle_graph.optimize_layout(iterations=2500, dt=0.1)
+  particle_graph.optimize_layout(iterations=5000, dt=0.1)
   particle_graph.draw(ax, alpha_multiplier=1.0)
   
   ax.set_xlim(-30, 30)

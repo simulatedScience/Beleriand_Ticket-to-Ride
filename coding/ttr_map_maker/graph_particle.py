@@ -40,7 +40,7 @@ class Graph_Particle:
     
     self.velocity_decay = 0.99 # velocity decay factor
     self.connected_particles = list() # particles that this particle is attracted to
-    self.attraction_strength = 0.001 # strength of attraction force between this particle and its connected particles
+    self.attraction_strength = 0.01 # strength of attraction force between this particle and its connected particles
     self.target_location = target_position
     # bounding box properties
     self.bounding_box_size = bounding_box_size # corners of bounding box, in counter-clockwise order
@@ -128,37 +128,34 @@ class Graph_Particle:
     self_polygon = self.get_bounding_box_polygon()
     other_polygon = other.get_bounding_box_polygon()
     min_distance = self_polygon.distance(other_polygon)
-    if min_distance > self.interaction_radius:
-      # if distance between bounding boxes is greater than interaction radius
-      return np.zeros(2), 0
+    if min_distance <= self.interaction_radius:
+      # if distance between bounding boxes is within interaction radius
+      # get overlap
+      overlap_center, overlap_area = get_box_overlap(self_polygon, other_polygon)
+      if overlap_area > 0:
+        # calculate forces
+        overlap_vector = overlap_center - self.position
+        translation_force = -overlap_vector * overlap_area
+        translation_acceleration = translation_force / self.mass
+        # rotation force perpendicular to translation force
+        center_center = other.position - self.position
+        rotation_axis = np.array([0, 0, np.cross(center_center, overlap_vector)])
+        if np.linalg.norm(rotation_axis) > 0:
+          rotation_axis /= np.linalg.norm(rotation_axis)
+        
+        tangential_force = np.cross(rotation_axis, overlap_vector) * overlap_area
+        torque = np.linalg.norm(overlap_vector) * np.linalg.norm(tangential_force) * (-rotation_axis[2])
+        angular_acceleration = torque / self.inertia
 
-    # get overlap
-    overlap_center, overlap_area = get_box_overlap(self_polygon, other_polygon)
-    if overlap_area <= 0:
-      # if no overlap
-      return np.zeros(2), 0
-
-    # calculate forces
-    overlap_vector = overlap_center - self.position
-    translation_force = -overlap_vector * overlap_area
-    translation_acceleration = translation_force / self.mass
-    # rotation force perpendicular to translation force
-    center_center = other.position - self.position
-    rotation_axis = np.array([0, 0, np.cross(center_center, overlap_vector)])
-    if np.linalg.norm(rotation_axis) > 0:
-      rotation_axis /= np.linalg.norm(rotation_axis)
-    
-    tangential_force = np.cross(rotation_axis, overlap_vector) * overlap_area
-    torque = np.linalg.norm(overlap_vector) * np.linalg.norm(tangential_force) * (-rotation_axis[2])
-    angular_acceleration = torque / self.inertia
-
-    self.acceleration += translation_acceleration
-    self.angular_acceleration += angular_acceleration
+        self.acceleration += translation_acceleration
+        self.angular_acceleration += angular_acceleration
 
     if other in self.connected_particles:
       # if other particle is connected to this particle, apply attraction force towards other particle
       self.acceleration += self.attraction_strength * min_distance / self.mass
-    return translation_acceleration, angular_acceleration
+      # encourage similar orientation of connected particles by applying torque
+      self.angular_acceleration += (other.rotation - self.rotation) * self.attraction_strength / self.inertia
+    # return translation_acceleration, angular_acceleration
 
 
   def update(self, dt: float):
@@ -236,7 +233,7 @@ class Graph_Particle:
 
     return bounding_box, Polygon(bounding_box)
 
-  
+
   def draw_bounding_box(self,
       ax: plt.Axes, 
       color: str = "",
@@ -247,6 +244,9 @@ class Graph_Particle:
 
     args:
       ax (matplotlib.axes.Axes): axis to draw on
+      color (str): color of particle
+      alpha (float): alpha value of particle
+      zorder (int): zorder of particle
     """
     polygon_patch = PolygonPatch(
         self.get_bounding_box(),
@@ -257,6 +257,23 @@ class Graph_Particle:
     )
     ax.add_patch(polygon_patch)
 
+
+  def draw(self,
+      ax: plt.Axes,
+      color: str = "",
+      alpha: float = 0.7,
+      zorder: int = 4):
+    """
+    draw particle on `ax`. This should be overwritten by subclasses.
+
+    args:
+      ax (matplotlib.axes.Axes): axis to draw on
+      color (str): color of particle
+      alpha (float): alpha value of particle
+      zorder (int): zorder of particle
+    """
+    print("Warning: draw() method of Particle class should be overwritten by subclasses. Falling back to draw_bounding_box().")
+    self.draw_bounding_box(ax, color, alpha, zorder)
 
 def get_box_overlap(box1_poly: Polygon, box2_poly: Polygon) -> Tuple[np.ndarray, float]:
     """

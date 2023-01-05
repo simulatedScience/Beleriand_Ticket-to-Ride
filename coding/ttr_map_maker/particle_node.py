@@ -17,7 +17,7 @@ class Particle_Node(Graph_Particle):
         position,
         rotation = 0,
         target_position = position,
-        mass = 0.0001,
+        mass = 0.1,
         bounding_box_size = (1, 1),
         interaction_radius = 3,
     )
