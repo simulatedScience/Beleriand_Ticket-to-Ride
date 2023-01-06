@@ -85,15 +85,18 @@ class Board_Layout_GUI:
     # set default style for tkinter widgets
     self.style = ttk.Style()
     self.style.configure("Frame",
-        bg=self.color_config["frame_color"],
-        fg=self.color_config["frame_fg_color"])
-    self.style.configure("Label",
-        bg=self.color_config["frame_color"],
-        fg=self.color_config["frame_fg_color"])
-    self.style.configure("Button",
-        bg=self.color_config["button_color"],
-        fg=self.color_config["button_fg_color"],
-        relief="flat")
+        background=self.color_config["frame_color"],
+        foreground=self.color_config["frame_fg_color"])
+    self.style.configure("TLabel",
+        background=self.color_config["frame_color"],
+        foreground=self.color_config["frame_fg_color"])
+    self.style.configure("TButton",
+        background=self.color_config["button_color"],
+        foreground=self.color_config["button_fg_color"],
+        activebackground=self.color_config["button_active_color"],
+        activeforeground=self.color_config["button_active_fg_color"],
+        )
+    
     # self.style.map("TButton",
     #     background=[("active", self.color_config["button_active_color"]),
     #                 ("hover", self.color_config["button_hover_color"])],
@@ -108,18 +111,59 @@ class Board_Layout_GUI:
         background=self.color_config["frame_color"],
         foreground=self.color_config["frame_fg_color"])
 
+  def add_frame_style(self, frame: ttk.Frame):
+    frame.configure(
+      bg=self.color_config["frame_bg_color"],
+      fg=self.color_config["frame_fg_color"],
+      )
+
+  def add_label_style(self, label: ttk.Label):
+    label.configure(
+      bg=self.color_config["bg_color"],
+      fg=self.color_config["fg_color"],
+      )
+
+  def add_button_style(self, button: tk.Button):
+    button.configure(
+      bg=self.color_config["button_bg_color"],
+      fg=self.color_config["button_fg_color"],
+      activebackground=self.color_config["button_active_bg_color"],
+      activeforeground=self.color_config["button_active_fg_color"],
+      relief="flat",
+      )
+
+  def add_entry_style(self, entry: ttk.Entry):
+    entry.configure(
+      bg=self.color_config["button_active_bg_color"],
+      fg=self.color_config["button_active_fg_color"],
+      insertbackground=self.color_config["button_fg_color"],
+      )
+
+  def add_checkbutton_style(self, checkbutton: ttk.Checkbutton):
+    checkbutton.configure(
+      bg=self.color_config["bg_color"],
+      fg=self.color_config["fg_color"],
+      activebackground=self.color_config["bg_color"],
+      activeforeground=self.color_config["fg_color"],
+      selectcolor=self.color_config["button_active_bg_color"],
+      )
+
+
   def init_frames(self):
     """
     Create frames for the matplotlib animation and controls.
     """
-    self.main_frame = tk.Frame(self.master, bg=self.color_config["bg_color"])
+    self.main_frame = ttk.Frame(self.master)
+    # self.main_frame.configure(background=self.color_config["bg_color"])
     self.main_frame.place(relx=0.5,rely=0.5,anchor="c")
     # create frame for matplotlib animation
-    self.animation_frame = tk.Frame(self.main_frame, bg=self.color_config["bg_color"])
+    self.animation_frame = ttk.Frame(self.main_frame)
+    # self.animation_frame.configure(background=self.color_config["bg_color"])
     self.animation_frame.grid(row=0, column=0, sticky="ne")
 
     # create frame for controls
-    self.control_frame = tk.Frame(self.main_frame, bg=self.color_config["bg_color"])
+    self.control_frame = ttk.Frame(self.main_frame)
+    # self.control_frame.configure(background=self.color_config["bg_color"])
     self.control_frame.grid(row=0, column=1, sticky="nw")
 
     self.draw_control_widgets()
@@ -190,34 +234,34 @@ class Board_Layout_GUI:
     """
     row_index = 0
     # frame for file inputs
-    file_frame = tk.Frame(self.control_frame, bg=self.color_config["frame_color"])
+    file_frame = ttk.Frame(self.control_frame)
     file_frame.grid(row=row_index, column=0, sticky="ne")
     row_index += 1
     self.draw_file_widgets(file_frame)
 
     # frame for particle simulation parameters
-    particle_frame = tk.Frame(self.control_frame, bg=self.color_config["frame_color"])
+    particle_frame = ttk.Frame(self.control_frame)
     particle_frame.grid(row=row_index, column=0, sticky="ne")
     row_index += 1
     self.draw_particle_widgets(particle_frame)
 
     # frame for toggles
-    toggle_frame = tk.Frame(self.control_frame, bg=self.color_config["frame_color"])
+    toggle_frame = ttk.Frame(self.control_frame)
     toggle_frame.grid(row=row_index, column=0, sticky="ne")
     row_index += 1
     self.draw_toggle_widgets(toggle_frame)
 
-  def draw_file_widgets(self, file_frame: tk.Frame):
+  def draw_file_widgets(self, file_frame: ttk.Frame):
     """
     Draw widgets for file inputs. Place them in the given frame using grid layout.
 
     Args:
-        file_frame (tk.Frame): frame to place widgets in
+        file_frame (ttk.Frame): frame to place widgets in
     """
     # node file input
-    node_file_label = tk.Label(file_frame, text="Node File", bg=self.color_config["frame_color"])
+    node_file_label = ttk.Label(file_frame, text="Node File")
     node_file_label.grid(row=0, column=0, sticky="ne")
-    node_file_entry = tk.Entry(file_frame, textvariable=self.node_file, width=12)
+    node_file_entry = ttk.Entry(file_frame, textvariable=self.node_file, width=12)
     node_file_entry.grid(row=0, column=1, sticky="nw")
     node_file_button = tk.Button(file_frame, 
         text="Browse",
@@ -225,9 +269,9 @@ class Board_Layout_GUI:
     node_file_button.grid(row=0, column=2, sticky="nw")
 
     # edge file input
-    edge_file_label = tk.Label(file_frame, text="Edge File", bg=self.color_config["frame_color"])
+    edge_file_label = ttk.Label(file_frame, text="Edge File")
     edge_file_label.grid(row=1, column=0, sticky="ne")
-    edge_file_entry = tk.Entry(file_frame, textvariable=self.edge_file, width=12)
+    edge_file_entry = ttk.Entry(file_frame, textvariable=self.edge_file, width=12)
     edge_file_entry.grid(row=1, column=1, sticky="nw")
     edge_file_button = tk.Button(file_frame, 
         text="Browse",
@@ -235,9 +279,9 @@ class Board_Layout_GUI:
     edge_file_button.grid(row=1, column=2, sticky="nw")
 
     # task file input
-    task_file_label = tk.Label(file_frame, text="Task File", bg=self.color_config["frame_color"])
+    task_file_label = ttk.Label(file_frame, text="Task File")
     task_file_label.grid(row=2, column=0, sticky="ne")
-    task_file_entry = tk.Entry(file_frame, textvariable=self.task_file, width=12)
+    task_file_entry = ttk.Entry(file_frame, textvariable=self.task_file, width=12)
     task_file_entry.grid(row=2, column=1, sticky="nw")
     task_file_button = tk.Button(file_frame,
         text="Browse",
@@ -245,9 +289,9 @@ class Board_Layout_GUI:
     task_file_button.grid(row=2, column=2, sticky="nw")
 
     # background file input
-    background_file_label = tk.Label(file_frame, text="Background File", bg=self.color_config["frame_color"])
+    background_file_label = ttk.Label(file_frame, text="Background File")
     background_file_label.grid(row=3, column=0, sticky="ne")
-    background_file_entry = tk.Entry(file_frame, textvariable=self.background_file, width=12)
+    background_file_entry = ttk.Entry(file_frame, textvariable=self.background_file, width=12)
     background_file_entry.grid(row=3, column=1, sticky="nw")
     background_file_button = tk.Button(file_frame,
         text="Browse",
@@ -297,7 +341,7 @@ class Board_Layout_GUI:
     # load background image
     self.background_image_mpl = mpimg.imread(self.background_file.get())
 
-  def draw_particle_widgets(self, particle_frame: tk.Frame):
+  def draw_particle_widgets(self, particle_frame: ttk.Frame):
     """
     Draw widgets for particle simulation parameters. Place them in the given frame using grid layout.
 
@@ -314,7 +358,7 @@ class Board_Layout_GUI:
     - label mass
 
     Args:
-        particle_frame (tk.Frame): frame to place widgets in
+        particle_frame (ttk.Frame): frame to place widgets in
     """
     def add_label_and_entry(row_index: int, text: str, var: tk.StringVar):
       """
@@ -325,9 +369,9 @@ class Board_Layout_GUI:
           text (str): text to display in the label
           var (tk.StringVar): variable to store the entry value in
       """
-      label = tk.Label(particle_frame, text=text, bg=self.color_config["frame_color"])
+      label = ttk.Label(particle_frame, text=text)
       label.grid(row=row_index, column=0, sticky="ne")
-      entry = tk.Entry(particle_frame, textvariable=var, width=4)
+      entry = ttk.Entry(particle_frame, textvariable=var, width=4)
       entry.grid(row=row_index, column=1, sticky="nw")
     
     row_index = 0
@@ -361,7 +405,7 @@ class Board_Layout_GUI:
     """
     raise NotImplementedError # TODO
 
-  def draw_toggle_widgets(self, toggle_frame: tk.Frame):
+  def draw_toggle_widgets(self, toggle_frame: ttk.Frame):
     """
     Draw widgets for toggling the display of different elements. Place them in the given frame using grid layout.
 
@@ -375,7 +419,7 @@ class Board_Layout_GUI:
     - show shortest paths for tasks
 
     Args:
-        toggle_frame (tk.Frame): frame to place widgets in
+        toggle_frame (ttk.Frame): frame to place widgets in
     """
     def add_label_and_checkbutton(row_index: int, text: str, var: tk.BooleanVar):
       """
@@ -386,9 +430,9 @@ class Board_Layout_GUI:
           text (str): text to display in the label
           var (tk.BooleanVar): variable to store the checkbutton value in
       """
-      label = tk.Label(toggle_frame, text=text, bg=self.color_config["frame_color"])
+      label = ttk.Label(toggle_frame, text=text)
       label.grid(row=row_index, column=0, sticky="ne")
-      checkbutton = tk.Checkbutton(toggle_frame, variable=var, command=self.update_canvas)
+      checkbutton = ttk.Checkbutton(toggle_frame, variable=var, command=self.update_canvas)
       checkbutton.grid(row=row_index, column=1, sticky="nw")
 
     row_index = 0
