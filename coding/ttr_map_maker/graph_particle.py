@@ -15,7 +15,7 @@ class Graph_Particle:
         target_position: np.ndarray = None,
         mass: float = 1,
         bounding_box_size: Tuple[float, float] = (1, 1),
-        interaction_radius: float = 1):
+        interaction_radius: float = 5):
     """
     initialize a particle
     moment of inertia is calculated from bounding box size and mass assuming a uniform density and a rectangular shape
@@ -38,9 +38,9 @@ class Graph_Particle:
     self.angular_acceleration = 0
     self.inertia = mass * (bounding_box_size[0] ** 2 + bounding_box_size[1] ** 2) / 12 # moment of inertia
     
-    self.velocity_decay = 0.99 # velocity decay factor
+    self.velocity_decay = 0.9999 # velocity decay factor
     self.connected_particles = list() # particles that this particle is attracted to
-    self.attraction_strength = 0.01 # strength of attraction force between this particle and its connected particles
+    self.attraction_strength = 0.001 # strength of attraction force between this particle and its connected particles
     self.target_location = target_position
     # bounding box properties
     self.bounding_box_size = bounding_box_size # corners of bounding box, in counter-clockwise order
@@ -113,9 +113,11 @@ class Graph_Particle:
   def interact(self, other: "Graph_Particle") -> Tuple[np.ndarray, float]:
     """
     Interact with another particle.
-    Only interact with particles where the distance between their bounding boxes is less than `self.interaction_radius`.
-    Forces are calculated from the amount of overlap between the particles' bounding boxes.
-    This interaction is not symmetric, so `self` particle will be affected by `other` particle differently than `other` particle will be affected by `self` particle.
+    - Only interact with particles where the distance between their center points is less than `self.interaction_radius`.
+    - Repulsion forces are calculated from the amount of overlap between the particles' bounding boxes using the `get_repulsion_forces` method.
+    - Attraction forces are calculated using the `get_attraction_forces` method.
+    - Attraction forces are only calculated if `other` is in `self.connected_particles`.
+    - This interaction is not symmetric, so `self` particle will be affected by `other` particle differently than `other` particle will be affected by `self` particle.
 
     args:
       other (Graph_Particle): other particle to interact with
@@ -125,9 +127,29 @@ class Graph_Particle:
       (float) angular acceleration to apply to `self` particle
     """
     # check if particles are close enough to interact
+    if np.linalg.norm(self.position - other.position) <= self.interaction_radius:
+      # get repulsion force
+      repulsion_force, repulsion_torque = self.get_repulsion_forces(other)
+      # get attraction force
+      if other in self.connected_particles:
+        attraction_force, attraction_torque = self.get_attraction_forces(other)
+      else:
+        attraction_force = np.zeros(2)
+        attraction_torque = 0
+      # add forces to acceleration
+      self.acceleration += (repulsion_force + attraction_force) / self.mass
+      self.angular_acceleration += (repulsion_torque + attraction_torque) / self.inertia
+
+
+  def old_interact(self, other: "Graph_Particle") -> Tuple[np.ndarray, float]:
+    """
+    old interact method
+    """
+    # check if particles are close enough to interact
     self_polygon = self.get_bounding_box_polygon()
     other_polygon = other.get_bounding_box_polygon()
     min_distance = self_polygon.distance(other_polygon)
+    # REPULSION
     if min_distance <= self.interaction_radius:
       # if distance between bounding boxes is within interaction radius
       # get overlap
@@ -150,6 +172,7 @@ class Graph_Particle:
         self.acceleration += translation_acceleration
         self.angular_acceleration += angular_acceleration
 
+    # ATTRACTION TO CONNECTED PARTICLES
     if other in self.connected_particles:
       # if other particle is connected to this particle, apply attraction force towards other particle
       self.acceleration += self.attraction_strength * min_distance / self.mass
@@ -158,18 +181,62 @@ class Graph_Particle:
     # return translation_acceleration, angular_acceleration
 
 
-  def update(self, dt: float):
+  def get_repulsion_forces(self, other: "Graph_Particle") -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Get repulsion force between this particle and another particle.
+    Forces are calculated from the amount of overlap between the particles' bounding boxes.
+
+
+    args:
+      other (Graph_Particle): other particle to interact with
+
+    returns:
+      (np.ndarray) translation repulsion force to apply to `self` particle
+      (np.ndarray) rotation repulsion force to apply to `self` particle
+    """
+    # get overlap
+    self_polygon = self.get_bounding_box_polygon()
+    other_polygon = other.get_bounding_box_polygon()
+    overlap_center, overlap_area = get_box_overlap(self_polygon, other_polygon)
+
+    if not overlap_area > 0: # no overlap => no repulsion force
+      return np.zeros(2), 0
+
+    overlap_vector = overlap_center - self.position # vector from self center to center of overlap area
+    translation_force = -overlap_vector * overlap_area
+    # rotation force perpendicular to translation force
+    center_center = other.position - self.position
+    rotation_axis = np.array([0, 0, np.cross(center_center, overlap_vector)])
+    if np.linalg.norm(rotation_axis) > 0: # normalize rotation axis if it is defined
+      rotation_axis /= np.linalg.norm(rotation_axis)
+    
+    tangential_force = np.cross(rotation_axis, overlap_vector) * overlap_area
+    torque = np.linalg.norm(overlap_vector) * np.linalg.norm(tangential_force) * (-rotation_axis[2])
+
+    return translation_force, torque
+
+
+  def update(self, dt: float) -> float:
     """
     update particle's position and velocity
+
+    args:
+      dt (float): time step
+
+    returns:
+      (float) distance traveled
     """
-    if np.linalg.norm(self.velocity) > 0 or np.linalg.norm(self.acceleration) > 0 or self.angular_velocity > 0 or self.angular_acceleration > 0:
+    if np.linalg.norm(self.velocity) > 0 or \
+          np.linalg.norm(self.acceleration) > 0 or \
+          self.angular_velocity > 0 or \
+          self.angular_acceleration > 0:
       # update velocity
       if self.target_location is not None:
         # if target location is set, apply force towards target location
         target_vector = self.target_location - self.position
         if np.linalg.norm(target_vector) > 0:
           target_vector /= np.linalg.norm(target_vector)
-        self.acceleration += target_vector * self.attraction_strength
+        self.acceleration += target_vector * self.attraction_strength / self.mass
       self.velocity += self.acceleration * dt
       self.angular_velocity += self.angular_acceleration * dt
 
@@ -183,6 +250,8 @@ class Graph_Particle:
       # reduce velocities using friction
       self.velocity *= self.velocity_decay * dt
       self.angular_velocity *= self.velocity_decay * dt
+
+    return np.linalg.norm(self.velocity) * dt
 
 
   def get_bounding_box(self) -> np.ndarray:

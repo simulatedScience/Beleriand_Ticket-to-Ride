@@ -21,7 +21,14 @@ class TTR_Particle_Graph:
   def __init__(self,
         locations: List[str],
         paths: List[Tuple[str, str, int, str]],
-        location_positions: Dict[str, np.ndarray] = None):
+        location_positions: Dict[str, np.ndarray] = None,
+        force_multipliers: dict = {
+          "edge-edge": 0.1,
+          "edge-node": 0.1,
+          "node-label": 0.1,
+          "node-target": 0.01,
+          "velocity_decay": 0.999,
+        }):
     """
     Initialize a TTR particle graph made from labeled locations and paths.
     Each path is made from several rectangular edge particles.
@@ -76,7 +83,9 @@ class TTR_Particle_Graph:
       last_particle.add_connected_particle(node_2)
 
 
-  def optimize_layout(self, iterations: int = 1000, dt: float = 0.02):
+  def optimize_layout(self,
+      iterations: int = 1000,
+      dt: float = 0.02):
     """
     optimize layout of particle graph by calling the interact() and update() methods of each particle.
     Use Cell lists and Verlet lists to speed up the computation.
@@ -86,6 +95,7 @@ class TTR_Particle_Graph:
         dt (float, optional): timestep. Defaults to 0.02.
     """
     all_particles = list(self.particle_nodes.values()) + list(self.particle_labels.values()) + list(self.particle_edges.values())
+    cell_list = dict()
     for i in range(iterations):
       for particle in all_particles:
         particle.reset_acceleration()
@@ -137,7 +147,7 @@ if __name__ == "__main__":
   location_positions = {
     "Menegroth": np.array([0, 5], dtype=np.float64),
     "Nargothrond": np.array([-4, -2], dtype=np.float64),
-    "Hithlum": np.array([4, -4], dtype=np.float64),
+    "Hithlum": np.array([4, -5], dtype=np.float64),
   }
 
   paths = [
@@ -150,7 +160,7 @@ if __name__ == "__main__":
 
   fig, ax = plt.subplots()
   particle_graph.draw(ax, alpha_multiplier=0.3)
-  particle_graph.optimize_layout(iterations=5000, dt=0.1)
+  particle_graph.optimize_layout(iterations=500, dt=0.1)
   particle_graph.draw(ax, alpha_multiplier=1.0)
   
   ax.set_xlim(-30, 30)
