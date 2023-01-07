@@ -11,7 +11,7 @@ axes.set_ylim(-10, 10)
 
 # Add a single rectangle artist to the figure
 rectangle = plt.Rectangle((0, 0), 1, 1, picker=True)
-axes.add_artist(rectangle)
+axes.add_patch(rectangle)
 
 
 # Create the FigureCanvasTkAgg object and pack it into the window

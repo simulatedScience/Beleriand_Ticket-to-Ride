@@ -82,8 +82,8 @@ class TTR_Particle_Graph:
       self.particle_labels[label].position = \
           self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0], 0]) + np.array([1, 0], dtype=np.float64)
       self.particle_labels[label].add_connected_particle(self.particle_nodes[label])
-      print(f"node position {label}: {self.particle_nodes[label].position}")
-      print(f"label position {label}: {self.particle_labels[label].position}")
+      # print(f"node position {label}: {self.particle_nodes[label].position}")
+      # print(f"label position {label}: {self.particle_labels[label].position}")
 
     # create edges and add connections between particles
     for ((location_1, location_2), length, color) in zip(self.edges, self.edge_lengths, self.edge_colors):
@@ -123,7 +123,7 @@ class TTR_Particle_Graph:
         iterations (int, optional): number of iterations to perform. Defaults to 1000.
         dt (float, optional): timestep. Defaults to 0.02.
     """
-    all_particles = list(self.particle_nodes.values()) + list(self.particle_labels.values()) + list(self.particle_edges.values())
+    all_particles = self.get_particle_list()
     cell_list = dict()
     for i in range(iterations):
       for particle in all_particles:
@@ -136,6 +136,16 @@ class TTR_Particle_Graph:
 
       for particle in all_particles:
         particle.update(dt)
+
+
+  def get_particle_list(self):
+    """
+    get all particles in particle graph
+
+    Returns:
+        [type]: [description]
+    """
+    return list(self.particle_nodes.values()) + list(self.particle_labels.values()) + list(self.particle_edges.values())
 
 
   def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
@@ -217,7 +227,7 @@ class TTR_Particle_Graph:
     """
     draw arrows between all particles that are connected to each other.
     """
-    all_particles = list(self.particle_nodes.values()) + list(self.particle_labels.values()) + list(self.particle_edges.values())
+    all_particles = self.get_particle_list()
     for particle in all_particles:
       for connected_particle in particle.connected_particles:
         ax.arrow(particle.position[0], particle.position[1],

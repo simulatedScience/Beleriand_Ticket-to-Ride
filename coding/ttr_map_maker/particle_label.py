@@ -94,16 +94,16 @@ class Particle_Label(Graph_Particle):
     text_image_size = self.img_font.getsize(self.label)
     text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
     text_draw = ImageDraw.Draw(text_image)
-    text_draw.text((0, 0), self.label, font=self.img_font, fill=color)
+    text_draw.text((0, 0), self.label, font=self.img_font, fill=color, picker=True)
     # text_image = text_image.rotate(self.rotation, expand=True)
     # text_image = text_image.resize(text_image_size)
     # draw image on axes
 
-    label_extent = (
-        self.position[0] - self.bounding_box_size[0] / 2,
-        self.position[0] + self.bounding_box_size[0] / 2,
-        self.position[1] - self.bounding_box_size[1] / 2,
-        self.position[1] + self.bounding_box_size[1] / 2)
+    # label_extent = (
+    #     self.position[0] - self.bounding_box_size[0] / 2,
+    #     self.position[0] + self.bounding_box_size[0] / 2,
+    #     self.position[1] - self.bounding_box_size[1] / 2,
+    #     self.position[1] + self.bounding_box_size[1] / 2)
     label_extent = (
         self.position[0] - self.bounding_box_size[0],
         self.position[0] + self.bounding_box_size[0],

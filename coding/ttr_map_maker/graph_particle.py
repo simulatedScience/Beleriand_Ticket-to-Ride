@@ -105,6 +105,15 @@ class Graph_Particle:
     """
     return self.neighbors
 
+  def set_position(self, position: np.ndarray):
+    """
+    Set the position of the particle.
+
+    args:
+      position (np.ndarray): new position of particle
+    """
+    self.position = position
+    print("new position", self.position)
 
   def __str__(self):
     return f"Particle at\t {self.position} with mass\t {self.mass} and inertia\t {self.inertia}."
@@ -337,7 +346,8 @@ class Graph_Particle:
         facecolor=color,
         edgecolor=color,
         alpha=alpha,
-        zorder=zorder
+        zorder=zorder,
+        picker=True
     )
     self.plotted_objects.append(ax.add_patch(polygon_patch))
 

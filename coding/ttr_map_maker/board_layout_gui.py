@@ -43,6 +43,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from ttr_particle_graph import TTR_Particle_Graph
 from particle_edge import Particle_Edge
 import read_ttr_files as ttr_reader
+from drag_handler import Drag_Handler
 
 class Board_Layout_GUI:
   def __init__(self,
@@ -778,6 +779,8 @@ class Board_Layout_GUI:
       self.particle_graph.draw_labels(self.ax)
     if self.show_edges.get():
       self.particle_graph.draw_edges(self.ax)
+    
+    self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
     
 
   def init_node_positions(self, node_spacing: float = 3) -> dict:

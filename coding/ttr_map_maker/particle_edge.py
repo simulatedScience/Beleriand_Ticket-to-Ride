@@ -145,7 +145,7 @@ class Particle_Edge(Graph_Particle):
       alpha: float = 0.7,
       zorder: int = 4):
     super().draw_bounding_box(ax, color, alpha, zorder)
-    midpoints = self.get_edge_midpoints()
-    self.plotted_objects.append(
-        ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder)
-    )
+    # midpoints = self.get_edge_midpoints()
+    # self.plotted_objects.append(
+    #     ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder)
+    # )

@@ -54,9 +54,10 @@ class Particle_Node(Graph_Particle):
             plt.Circle(
                 self.position,
                 0.5,
-                color = color,
-                alpha = alpha,
-                zorder = zorder
+                color=color,
+                alpha=alpha,
+                zorder=zorder,
+                picker=True
             )
         )
     )
