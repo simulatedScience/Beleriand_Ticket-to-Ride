@@ -49,20 +49,28 @@ class Board_Layout_GUI:
           "bg_color":               "#1e1e1e", # darkest grey
           "fg_color":               "#d4d4d4", # light grey
           "frame_bg_color":         "#252526", # darker grey
+          "label_bg_color":         "#252526", # darker grey
+          "label_fg_color":         "#d4d4d4", # light grey
           "button_bg_color":        "#333333", # dark grey
           "button_fg_color":        "#f5f5f5", # white
           "button_hover_bg_color":  "#444444", # dark grey
           "button_hover_fg_color":  "#f5f5f5", # white
           "button_active_bg_color": "#555555", # dark grey
           "button_active_fg_color": "#f5f5f5", # white
-          "plot_bg_color":          "#e7e7e7", # darker grey
+          "entry_bg_color":         "#3c3c3c", # dark grey
+          "entry_fg_color":         "#f5f5f5", # white
+          "entry_select_color":     "#4477aa", # blue
+          "plot_bg_color":          "#cccccc", # darker grey
+          "plot_fg_color":          "#000000", # black
+          "plot_grid_color":        "#aaaaaa", # black
           }):
     self.color_config = color_config
     # create master window in fullscreen
     self.master = tk.Tk()
-    # self.master.attributes("-fullscreen", True)
+    # maximize window
     self.master.configure(bg=self.color_config["bg_color"])
     self.master.minsize(800, 700)
+    self.master.state("zoomed")
     # add fullscreen toggle
     self.master.bind("<F11>", self.toggle_fullscreen)
     self.master.title("Ticket-to-Ride board layout optimizer")
@@ -86,11 +94,21 @@ class Board_Layout_GUI:
       bg=self.color_config["frame_bg_color"],
       )
 
-  def add_label_style(self, label: tk.Label):
+  def add_label_style(self, label: tk.Label, headline_level=5):
+    if headline_level == 1:
+      font_size = self.font_size + 6
+    elif headline_level == 2:
+      font_size = self.font_size + 4
+    elif headline_level == 3:
+      font_size = self.font_size + 3
+    elif headline_level == 4:
+      font_size = self.font_size + 1
+    if headline_level == 5:
+      font_size = self.font_size
     label.configure(
-      bg=self.color_config["bg_color"],
-      fg=self.color_config["fg_color"],
-      font=(self.font, self.font_size),
+      bg=self.color_config["label_bg_color"],
+      fg=self.color_config["label_fg_color"],
+      font=(self.font, font_size),
       )
 
   def add_button_style(self, button: tk.Button):
@@ -101,24 +119,27 @@ class Board_Layout_GUI:
       activeforeground=self.color_config["button_active_fg_color"],
       relief="flat",
       border=0,
-      font=(self.font, self.font_size),
+      font=(self.font, self.font_size, "bold"),
+      padx=self.grid_pad_x//2,
+      pady=self.grid_pad_y//2,
       )
 
-  def add_entry_style(self, entry: tk.Entry):
+  def add_entry_style(self, entry: tk.Entry, justify="right"):
     entry.configure(
-      bg=self.color_config["button_active_bg_color"],
-      fg=self.color_config["button_active_fg_color"],
+      bg=self.color_config["entry_bg_color"],
+      fg=self.color_config["entry_fg_color"],
       insertbackground=self.color_config["button_fg_color"],
+      selectbackground=self.color_config["entry_select_color"],
       relief="flat",
       border=0,
-      justify="right",
+      justify=justify,
       font=(self.font, self.font_size),
       )
 
   def add_checkbutton_style(self, checkbutton: tk.Checkbutton):
     checkbutton.configure(
-      bg=self.color_config["bg_color"],
-      fg=self.color_config["fg_color"],
+      bg=self.color_config["label_bg_color"],
+      fg=self.color_config["label_fg_color"],
       activebackground=self.color_config["bg_color"],
       activeforeground=self.color_config["fg_color"],
       selectcolor=self.color_config["button_active_bg_color"],
@@ -131,42 +152,52 @@ class Board_Layout_GUI:
     """
     self.main_frame = tk.Frame(self.master, background=self.color_config["bg_color"])
     self.main_frame.place(relx=0.5,rely=0.5,anchor="c")
+    # configure grid
+    self.main_frame.columnconfigure(0, weight=1)
+    self.main_frame.columnconfigure(1, weight=0)
     # create frame for matplotlib animation
     self.animation_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
     self.animation_frame.grid(
         row=0,
         column=0,
         sticky="nsew",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
+        padx=(2*self.grid_pad_x, 2*self.grid_pad_x),
+        pady=(2*self.grid_pad_y, 2*self.grid_pad_y))
 
     # create frame for controls
     self.control_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
     self.control_frame.grid(
         row=0,
         column=1,
-        sticky="nw",
-        padx=(self.grid_pad_x, 0),
-        pady=(0,0))
+        sticky="e",
+        padx=(2*self.grid_pad_x, 0),
+        pady=(0,0),
+        ipadx=2*self.grid_pad_x,
+        ipady=2*self.grid_pad_y)
 
     self.draw_control_widgets()
 
-    # # create matplotlib figure
-    # self.fig = plt.figure(figsize=(5, 3), dpi=100)
-    # self.fig.patch.set_facecolor(self.color_config["bg_color"])
-    # self.ax = self.fig.add_subplot(111)
-    # self.ax.set_facecolor(self.color_config["bg_color"])
-    # # hide frame, axis and ticks
-    # self.ax.set_frame_on(False)
+    # create matplotlib figure
+    self.fig = plt.figure(figsize=(15, 10), dpi=100)
+    self.fig.patch.set_facecolor(self.color_config["plot_bg_color"])
+    self.ax = self.fig.add_subplot(111)
+    self.ax.set_facecolor(self.color_config["plot_bg_color"])
+    # hide frame, axis and ticks
+    self.ax.set_frame_on(self.show_plot_frame.get())
     # self.ax.set_axis_off()
     # self.ax.set_xticks([])
     # self.ax.set_yticks([])
-    # self.ax.set_xlim(-20, 20)
-    # self.ax.set_ylim(-15, 15)
+    self.ax.set_xlim(-20, 20)
+    self.ax.set_ylim(-15, 15)
     
-    # # create canvas for matplotlib figure
-    # self.canvas = FigureCanvasTkAgg(self.fig, master=self.animation_frame)
-    # self.canvas.get_tk_widget().grid(row=0, column=0, sticky="nsew")
+    # create canvas for matplotlib figure
+    self.canvas = FigureCanvasTkAgg(self.fig, master=self.animation_frame)
+    self.canvas.get_tk_widget().grid(
+        row=0,
+        column=0,
+        sticky="nsew")
+    self.canvas.draw()
+    self.ax.plot(0, 0, "o", color=self.color_config["plot_fg_color"])
 
   def init_tk_variables(self):
     """
@@ -210,6 +241,7 @@ class Board_Layout_GUI:
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
     self.show_task_paths = tk.BooleanVar(value=True, name="show_task_paths")
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused")
+    self.show_plot_frame = tk.BooleanVar(value=True, name="show_plot_frame")
 
   def draw_control_widgets(self):
     """
@@ -233,7 +265,7 @@ class Board_Layout_GUI:
     particle_frame.grid(
         row=row_index,
         column=0,
-        sticky="nsew",
+        sticky="ew",
         pady=(0, self.grid_pad_y))
     row_index += 1
     self.draw_particle_widgets(particle_frame)
@@ -256,15 +288,19 @@ class Board_Layout_GUI:
     Args:
         file_frame (tk.Frame): frame to place widgets in
     """
+    # configure grid layout
+    file_frame.columnconfigure(0, weight=1)
+    file_frame.columnconfigure(1, weight=1)
+    file_frame.columnconfigure(2, weight=1)
     row_index = 0
-    # category label
-    category_label_files = tk.Label(file_frame, text="File Inputs")
-    self.add_label_style(category_label_files)
+    # headline for file inputs
+    category_label_files = tk.Label(file_frame, text="File Inputs", justify="center")
+    self.add_label_style(category_label_files, headline_level=3)
     category_label_files.grid(
         row=row_index,
         column=0,
-        columnspan=2,
-        sticky="nw",
+        columnspan=3,
+        sticky="nsew",
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(self.grid_pad_y, self.grid_pad_y))
     row_index += 1
@@ -479,10 +515,13 @@ class Board_Layout_GUI:
           padx=(0, self.grid_pad_x),
           pady=(0, self.grid_pad_y))
     
+    # configure grid layout
+    particle_frame.columnconfigure(0, weight=1)
+    particle_frame.columnconfigure(1, weight=1)
     row_index = 0
     # headline for particle graph parameters
-    headline = tk.Label(particle_frame, text="Particle Graph Parameters")
-    self.add_label_style(headline)
+    headline = tk.Label(particle_frame, text="Particle Graph Parameters", justify="center")
+    self.add_label_style(headline, headline_level=3)
     headline.grid(
         row=row_index,
         column=0,
@@ -569,14 +608,17 @@ class Board_Layout_GUI:
       checkbutton.grid(
           row=row_index,
           column=1,
-          sticky="ne",
+          sticky="nw",
           padx=(0, self.grid_pad_x),
           pady=(0, self.grid_pad_y))
-
+    
+    # configure grid layout
+    # toggle_frame.columnconfigure(0, weight=1)
+    toggle_frame.columnconfigure(1, weight=1)
     row_index = 0
     # headline for the toggle widgets
-    label = tk.Label(toggle_frame, text="Toggles")
-    self.add_label_style(label)
+    label = tk.Label(toggle_frame, text="Toggles", justify="center")
+    self.add_label_style(label, headline_level=3)
     label.grid(
         row=row_index,
         column=0,
@@ -596,25 +638,51 @@ class Board_Layout_GUI:
     add_label_and_checkbutton(row_index, "Background Image", self.show_background_image)
     row_index += 1
     add_label_and_checkbutton(row_index, "Play/Pause", self.simulation_paused)
-    row_index += 1
+    row_index += 1 # TODO: prettify play/pause button
     add_label_and_checkbutton(row_index, "Show Shortest Paths", self.show_task_paths)
+    row_index += 1
+    add_label_and_checkbutton(row_index, "Show Plot Frame", self.show_plot_frame)
+    row_index += 1
 
-  def update_canvas(self):
+  def update_canvas(self, *args):
     """
     Update the canvas with the current settings.
     """
-    raise NotImplementedError # TODO
+    self.update_frame()
+    # TODO
+
+  def update_frame(self):
+    """
+    Update the frame with the current settings.
+    """
+    self.ax.set_frame_on(self.show_plot_frame.get())
+    # show/hid ticks
+    self.ax.tick_params(
+        axis="both",
+        which="both",
+        bottom=self.show_plot_frame.get(),
+        top=self.show_plot_frame.get(),
+        left=self.show_plot_frame.get(),
+        right=self.show_plot_frame.get(),
+        labelbottom=self.show_plot_frame.get(),
+        labelleft=self.show_plot_frame.get())
+    if self.show_plot_frame.get():
+      self.ax.grid(color=self.color_config["plot_grid_color"])
+    else:
+      self.ax.grid(False)
 
   def init_animation(self):
     """
     Initialize the animation.
     """
-    pass
-    # self.animation = anim.FuncAnimation(
-    #     self.figure,
-    #     self.update_canvas,
-    #     interval=500,
-    #     blit=False)
+    # pass
+    line = self.ax.plot([], [])
+    self.animation = anim.FuncAnimation(
+        self.fig,
+        self.update_canvas,
+        interval=50,
+        blit=False)
 
 if __name__ == "__main__":
   gui = Board_Layout_GUI()
+  # tk.mainloop()

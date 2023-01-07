@@ -73,9 +73,9 @@ class Particle_Edge(Graph_Particle):
           closest_points[0, :] = point_1
           closest_points[1, :] = point_2
     
-    force_direction = (closest_points[0, :] - closest_points[1, :]) / min_distance
+    force_direction = (closest_points[1, :] - closest_points[0, :]) / min_distance
     translation_force = self.edge_attraction * self.attraction_from_distance(min_distance) * force_direction
-    return translation_force
+    return translation_force, closest_points[0, :]
 
 
   def get_node_attraction_force(self, node: Graph_Particle):
@@ -97,7 +97,7 @@ class Particle_Edge(Graph_Particle):
         min_distance = distance
         closest_point = point
 
-    force_direction = (closest_point - node.position) / min_distance
+    force_direction = (node.position - closest_point) / min_distance
     translation_force = self.node_attraction * self.attraction_from_distance(min_distance) * force_direction
 
     force_anchor = closest_point
@@ -135,7 +135,7 @@ class Particle_Edge(Graph_Particle):
     Returns:
         float: attraction force
     """
-    return distance**2 / 10
+    return distance**2 / 2
     return (np.exp(distance) - 1) / 3
 
 

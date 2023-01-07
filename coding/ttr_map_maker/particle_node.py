@@ -61,4 +61,4 @@ class Particle_Node(Graph_Particle):
     Returns:
         np.ndarray: attraction force
     """
-    return np.zeros(2)
+    return np.zeros(2), self.position

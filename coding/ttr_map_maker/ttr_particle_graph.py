@@ -24,8 +24,8 @@ class TTR_Particle_Graph:
         location_positions: Dict[str, np.ndarray] = None,
         particle_parameters: dict = {
           "velocity_decay": 0.99,
-          "edge-edge": 1,
-          "edge-node": 1,
+          "edge-edge": 0.01,
+          "edge-node": 0.01,
           "node-label": 0.001,
           "node-target": 0.001,
           "node_mass": 1,
@@ -165,6 +165,25 @@ class TTR_Particle_Graph:
             head_length=0.4,
             zorder=0)
 
+  def draw_edge_attractors(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+    """
+    draw circles around each edge particle that shows the area where other particles are attracted to it.
+    """
+    for particle_edge in self.particle_edges.values():
+      for connected_particle in particle_edge.connected_particles:
+        _, anchor_1 = particle_edge.get_attraction_forces(connected_particle)
+        _, anchor_2 = connected_particle.get_attraction_forces(particle_edge)
+        ax.arrow(anchor_1[0], anchor_1[1],
+            anchor_2[0] - anchor_1[0],
+            anchor_2[1] - anchor_1[1],
+            color="#222222",
+            alpha=alpha_multiplier,
+            width=0.1,
+            length_includes_head=True,
+            head_width=0.3,
+            head_length=0.4,
+            zorder=0)
+
   def __str__(self):
       return f"Particle graph with {len(self.node_labels)} nodes and {len(self.edges)} edges."
 
@@ -200,17 +219,18 @@ if __name__ == "__main__":
 
   particle_graph = TTR_Particle_Graph(locations, paths, location_positions)
 
-  n_iter = 1000
-  dt = 0.03
-  print_at = n_iter//5
+  n_iter = 100
+  dt = 0.1
+  print_at = 0
 
   fig, ax = plt.subplots()
   particle_graph.draw(ax, alpha_multiplier=0.1)
-  particle_graph.optimize_layout(iterations=print_at, dt=dt)
-  particle_graph.draw(ax, alpha_multiplier=0.5)
+  # particle_graph.optimize_layout(iterations=print_at, dt=dt)
+  # particle_graph.draw(ax, alpha_multiplier=0.5)
   particle_graph.optimize_layout(iterations=n_iter-print_at, dt=dt)
   particle_graph.draw(ax, alpha_multiplier=1.0)
-  particle_graph.draw_connections(ax, alpha_multiplier=0.5)
+  # particle_graph.draw_connections(ax, alpha_multiplier=0.5)
+  particle_graph.draw_edge_attractors(ax, alpha_multiplier=0.5)
   
   ax.set_xlim(-15, 15)
   ax.set_ylim(-10, 10)
