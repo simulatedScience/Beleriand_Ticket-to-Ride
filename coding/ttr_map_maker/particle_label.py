@@ -6,7 +6,7 @@ A node can be connected to other nodes by edges.
 """
 from typing import Tuple
 
-from PIL import ImageFont
+from PIL import Image, ImageFont, ImageDraw
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import fontManager
@@ -48,14 +48,15 @@ class Particle_Label(Graph_Particle):
     super().__init__(
         position,
         rotation = 0,
-        target_position = position,
+        target_position = None,
         mass = mass,
         bounding_box_size = (width, height),
         interaction_radius = interaction_radius,
         velocity_decay = velocity_decay,
-        repulsion_strength=repulsion_strength,
+        repulsion_strength = repulsion_strength,
     )
     self.label = label
+    self.fontsize = fontsize
     self.color = "#222222"
     self.node_attraction = node_attraction
 
@@ -90,27 +91,26 @@ class Particle_Label(Graph_Particle):
         alpha (float, optional): alpha value of the particle. Defaults to 0.7.
         zorder (int, optional): zorder of the particle. Defaults to 4.
     """
-    if bg_color is not None:
-      ax.add_patch(plt.Rectangle(
-        self.position - self.bounding_box_size / 2,
-        self.bounding_box_size[0]*1.1,
-        self.bounding_box_size[1]*1.1,
-        color = bg_color,
-        alpha = alpha,
-        zorder = zorder - 1,
-      ))
-    ax.text(
-        self.position[0],
-        self.position[1],
-        self.label,
-        color = color,
-        alpha = alpha,
-        zorder = zorder,
-        horizontalalignment = "center",
-        verticalalignment = "center",
-        fontsize = 20,
-        fontname = self.font_name,
-    )
+    text_image_size = self.img_font.getsize(self.label)
+    text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
+    text_draw = ImageDraw.Draw(text_image)
+    text_draw.text((0, 0), self.label, font=self.img_font, fill=color)
+    # text_image = text_image.rotate(self.rotation, expand=True)
+    # text_image = text_image.resize(text_image_size)
+    # draw image on axes
+
+    label_extent = (
+        self.position[0] - self.bounding_box_size[0] / 2,
+        self.position[0] + self.bounding_box_size[0] / 2,
+        self.position[1] - self.bounding_box_size[1] / 2,
+        self.position[1] + self.bounding_box_size[1] / 2)
+    label_extent = (
+        self.position[0] - self.bounding_box_size[0],
+        self.position[0] + self.bounding_box_size[0],
+        self.position[1] - self.bounding_box_size[1],
+        self.position[1] + self.bounding_box_size[1])
+    ax.imshow(text_image, extent=label_extent, zorder=zorder, alpha=alpha)
+    
 
 
   def get_label_size(self, label: str, fontsize: int, font: str) -> Tuple[float, float]:
@@ -127,12 +127,12 @@ class Particle_Label(Graph_Particle):
         float: height of the label, always 1
     """
     if ".ttf" in font:
-      img_font = ImageFont.truetype(font, fontsize)
+      self.img_font = ImageFont.truetype(font, fontsize)
     else:
       # load installed font
-      img_font = ImageFont.load(font)
-      img_font.set_size(fontsize)
-    width, height = img_font.getsize(label)
+      self.img_font = ImageFont.load(font)
+      self.img_font.set_size(fontsize)
+    width, height = self.img_font.getsize(label)
     # normalize height
     width /= height
     height = 1

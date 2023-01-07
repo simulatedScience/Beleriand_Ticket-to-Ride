@@ -73,13 +73,17 @@ class TTR_Particle_Graph:
           )
       self.particle_labels[label] = Particle_Label(
           label,
-          position=position + np.array([0, 2], dtype=np.float64),
+          position=position,
           mass=self.particle_parameters["label_mass"],
           node_attraction=self.particle_parameters["node-label"],
           interaction_radius=self.particle_parameters["interaction_radius"],
           velocity_decay=self.particle_parameters["velocity_decay"],
           repulsion_strength=self.particle_parameters["repulsion_strength"],)
+      self.particle_labels[label].position = \
+          self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0], 0]) + np.array([1, 0], dtype=np.float64)
       self.particle_labels[label].add_connected_particle(self.particle_nodes[label])
+      print(f"node position {label}: {self.particle_nodes[label].position}")
+      print(f"label position {label}: {self.particle_labels[label].position}")
 
     # create edges and add connections between particles
     for ((location_1, location_2), length, color) in zip(self.edges, self.edge_lengths, self.edge_colors):
@@ -145,7 +149,69 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, alpha=0.7 * alpha_multiplier)
+      particle_edge.draw(ax, color=particle_edge.color, alpha=0.8 * alpha_multiplier)
+
+  def erase(self):
+    """
+    erase particle graph
+    """
+    for particle_node in self.particle_nodes.values():
+      particle_node.erase()
+    for particle_label in self.particle_labels.values():
+      particle_label.erase()
+    for particle_edge in self.particle_edges.values():
+      particle_edge.erase()
+
+  def draw_nodes(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+    """draw nodes of particle graph
+
+    Args:
+        ax (plt.Axes): matplotlib axes to draw on
+        alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
+    """
+    for particle_node in self.particle_nodes.values():
+      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier)
+
+  def erase_nodes(self):
+    """
+    erase nodes of particle graph
+    """
+    for particle_node in self.particle_nodes.values():
+      particle_node.erase()
+
+  def draw_labels(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+    """draw labels of particle graph
+
+    Args:
+        ax (plt.Axes): matplotlib axes to draw on
+        alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
+    """
+    for particle_label in self.particle_labels.values():
+      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
+
+  def erase_labels(self):
+    """
+    erase labels of particle graph
+    """
+    for particle_label in self.particle_labels.values():
+      particle_label.erase()
+
+  def draw_edges(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+    """draw edges of particle graph
+
+    Args:
+        ax (plt.Axes): matplotlib axes to draw on
+        alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
+    """
+    for particle_edge in self.particle_edges.values():
+      particle_edge.draw(ax, color=particle_edge.color, alpha=0.8 * alpha_multiplier)
+
+  def erase_edges(self):
+    """
+    erase edges of particle graph
+    """
+    for particle_edge in self.particle_edges.values():
+      particle_edge.erase()
 
   def draw_connections(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
     """

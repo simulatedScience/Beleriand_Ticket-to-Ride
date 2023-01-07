@@ -49,7 +49,17 @@ class Particle_Node(Graph_Particle):
         alpha (float, optional): alpha value of the node. Defaults to 1.
         zorder (int, optional): zorder of the node. Defaults to 4.
     """
-    ax.add_patch(plt.Circle(self.position, 0.5, color = color, alpha = alpha, zorder = zorder))
+    self.plotted_objects.append(
+        ax.add_patch(
+            plt.Circle(
+                self.position,
+                0.5,
+                color = color,
+                alpha = alpha,
+                zorder = zorder
+            )
+        )
+    )
 
 
   def get_attraction_force(self, other):

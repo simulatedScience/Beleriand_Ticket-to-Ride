@@ -56,6 +56,7 @@ class Graph_Particle:
     # variables for Verlet list algorithm
     self.neighbors = []
     self.interaction_radius = interaction_radius
+    self.plotted_objects: list = list() # objects that are plotted a graph
 
 
   def set_connected_particles(self, particles: List["Graph_Particle"]):
@@ -338,7 +339,7 @@ class Graph_Particle:
         alpha=alpha,
         zorder=zorder
     )
-    ax.add_patch(polygon_patch)
+    self.plotted_objects.append(ax.add_patch(polygon_patch))
 
 
   def draw(self,
@@ -357,6 +358,15 @@ class Graph_Particle:
     """
     print("Warning: draw() method of Particle class should be overwritten by subclasses. Falling back to draw_bounding_box().")
     self.draw_bounding_box(ax, color, alpha, zorder)
+
+
+  def erase(self):
+    """
+    erase drawn particle
+    """
+    for obj in self.plotted_objects:
+      obj.remove()
+    self.plotted_objects = []
 
 def get_box_overlap(box1_poly: Polygon, box2_poly: Polygon) -> Tuple[np.ndarray, float]:
     """

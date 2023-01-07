@@ -1,3 +1,5 @@
 .kra~
 .jpg~
 __pycache__
+*.pyc
+board_map_design
