@@ -22,12 +22,17 @@ class TTR_Particle_Graph:
         locations: List[str],
         paths: List[Tuple[str, str, int, str]],
         location_positions: Dict[str, np.ndarray] = None,
-        force_multipliers: dict = {
-          "edge-edge": 0.1,
-          "edge-node": 0.1,
-          "node-label": 0.1,
-          "node-target": 0.01,
-          "velocity_decay": 0.999,
+        particle_parameters: dict = {
+          "velocity_decay": 0.99,
+          "edge-edge": 1,
+          "edge-node": 1,
+          "node-label": 0.001,
+          "node-target": 0.001,
+          "node_mass": 1,
+          "edge_mass": 1,
+          "label_mass": 0.2,
+          "interaction_radius": 15,
+          "repulsion_strength": 2,
         }):
     """
     Initialize a TTR particle graph made from labeled locations and paths.
@@ -42,6 +47,7 @@ class TTR_Particle_Graph:
     *self.edges, self.edge_lengths, self.edge_colors = list(zip(*paths))
     self.edges = list(zip(*self.edges))
     self.location_positions = location_positions
+    self.particle_parameters = particle_parameters
 
     self.particle_nodes = dict()
     self.particle_edges = dict()
@@ -58,11 +64,24 @@ class TTR_Particle_Graph:
         position = np.array([5*i, 0], dtype=np.float64)
       self.particle_nodes[label] = Particle_Node(
           label,
-          position=position)
+          position=position,
+          mass=self.particle_parameters["node_mass"],
+          target_attraction=self.particle_parameters["node-target"],
+          interaction_radius=self.particle_parameters["interaction_radius"],
+          velocity_decay=self.particle_parameters["velocity_decay"],
+          repulsion_strength=self.particle_parameters["repulsion_strength"],
+          )
       self.particle_labels[label] = Particle_Label(
           label,
-          position=position + np.array([0, 2], dtype=np.float64))
+          position=position + np.array([0, 2], dtype=np.float64),
+          mass=self.particle_parameters["label_mass"],
+          node_attraction=self.particle_parameters["node-label"],
+          interaction_radius=self.particle_parameters["interaction_radius"],
+          velocity_decay=self.particle_parameters["velocity_decay"],
+          repulsion_strength=self.particle_parameters["repulsion_strength"],)
+      self.particle_labels[label].add_connected_particle(self.particle_nodes[label])
 
+    # create edges and add connections between particles
     for ((location_1, location_2), length, color) in zip(self.edges, self.edge_lengths, self.edge_colors):
       node_1 = self.particle_nodes[location_1]
       node_2 = self.particle_nodes[location_2]
@@ -74,7 +93,13 @@ class TTR_Particle_Graph:
         edge_particle = Particle_Edge(
             color,
             edge_position,
-            edge_rotation)
+            edge_rotation,
+            mass=self.particle_parameters["edge_mass"],
+            node_attraction=self.particle_parameters["edge-node"],
+            edge_attraction=self.particle_parameters["edge-edge"],
+            interaction_radius=self.particle_parameters["interaction_radius"],
+            velocity_decay=self.particle_parameters["velocity_decay"],
+            repulsion_strength=self.particle_parameters["repulsion_strength"],)
         edge_particle.add_connected_particle(last_particle)
         if i >= 1:
           last_particle.add_connected_particle(edge_particle)
@@ -122,6 +147,23 @@ class TTR_Particle_Graph:
     for particle_edge in self.particle_edges.values():
       particle_edge.draw(ax, color=particle_edge.color, alpha=0.7 * alpha_multiplier)
 
+  def draw_connections(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+    """
+    draw arrows between all particles that are connected to each other.
+    """
+    all_particles = list(self.particle_nodes.values()) + list(self.particle_labels.values()) + list(self.particle_edges.values())
+    for particle in all_particles:
+      for connected_particle in particle.connected_particles:
+        ax.arrow(particle.position[0], particle.position[1],
+            connected_particle.position[0] - particle.position[0],
+            connected_particle.position[1] - particle.position[1],
+            color="#222222",
+            alpha=alpha_multiplier,
+            width=0.1,
+            length_includes_head=True,
+            head_width=0.3,
+            head_length=0.4,
+            zorder=0)
 
   def __str__(self):
       return f"Particle graph with {len(self.node_labels)} nodes and {len(self.edges)} edges."
@@ -145,8 +187,8 @@ if __name__ == "__main__":
       "Hithlum",
   ]
   location_positions = {
-    "Menegroth": np.array([0, 5], dtype=np.float64),
-    "Nargothrond": np.array([-4, -2], dtype=np.float64),
+    "Menegroth": np.array([0, 6], dtype=np.float64),
+    "Nargothrond": np.array([-6, -2], dtype=np.float64),
     "Hithlum": np.array([4, -5], dtype=np.float64),
   }
 
@@ -158,13 +200,21 @@ if __name__ == "__main__":
 
   particle_graph = TTR_Particle_Graph(locations, paths, location_positions)
 
+  n_iter = 1000
+  dt = 0.03
+  print_at = n_iter//5
+
   fig, ax = plt.subplots()
-  particle_graph.draw(ax, alpha_multiplier=0.3)
-  particle_graph.optimize_layout(iterations=500, dt=0.1)
+  particle_graph.draw(ax, alpha_multiplier=0.1)
+  particle_graph.optimize_layout(iterations=print_at, dt=dt)
+  particle_graph.draw(ax, alpha_multiplier=0.5)
+  particle_graph.optimize_layout(iterations=n_iter-print_at, dt=dt)
   particle_graph.draw(ax, alpha_multiplier=1.0)
+  particle_graph.draw_connections(ax, alpha_multiplier=0.5)
   
-  ax.set_xlim(-30, 30)
+  ax.set_xlim(-15, 15)
   ax.set_ylim(-10, 10)
   ax.legend()
+  ax.set_aspect("equal")
   plt.grid(color="#dddddd", linestyle="--", linewidth=1)
   plt.show()

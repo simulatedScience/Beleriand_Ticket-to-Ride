@@ -48,13 +48,12 @@ class Board_Layout_GUI:
       color_config: dict = {
           "bg_color":               "#1e1e1e", # darkest grey
           "fg_color":               "#d4d4d4", # light grey
-          "frame_color":            "#252526", # darker grey
-          "frame_fg_color":         "#e7e7e7", # light grey
-          "button_color":           "#333333", # dark grey
+          "frame_bg_color":         "#252526", # darker grey
+          "button_bg_color":        "#333333", # dark grey
           "button_fg_color":        "#f5f5f5", # white
-          "button_hover_color":     "#444444", # dark grey
+          "button_hover_bg_color":  "#444444", # dark grey
           "button_hover_fg_color":  "#f5f5f5", # white
-          "button_active_color":    "#555555", # dark grey
+          "button_active_bg_color": "#555555", # dark grey
           "button_active_fg_color": "#f5f5f5", # white
           "plot_bg_color":          "#e7e7e7", # darker grey
           }):
@@ -68,7 +67,11 @@ class Board_Layout_GUI:
     self.master.bind("<F11>", self.toggle_fullscreen)
     self.master.title("Ticket-to-Ride board layout optimizer")
 
-    self.set_styles()
+    self.grid_pad_x = 5
+    self.grid_pad_y = 5
+    self.font = "Roboto"
+    self.font_size = 11
+
     self.init_tk_variables()
     self.init_frames()
     self.init_animation()
@@ -78,49 +81,16 @@ class Board_Layout_GUI:
   def toggle_fullscreen(self, event=None):
     self.master.attributes("-fullscreen", not self.master.attributes("-fullscreen"))
 
-  def set_styles(self):
-    """
-    Set default styles for tkinter widgets.
-    """
-    # set default style for tkinter widgets
-    self.style = ttk.Style()
-    self.style.configure("Frame",
-        background=self.color_config["frame_color"],
-        foreground=self.color_config["frame_fg_color"])
-    self.style.configure("TLabel",
-        background=self.color_config["frame_color"],
-        foreground=self.color_config["frame_fg_color"])
-    self.style.configure("TButton",
-        background=self.color_config["button_color"],
-        foreground=self.color_config["button_fg_color"],
-        activebackground=self.color_config["button_active_color"],
-        activeforeground=self.color_config["button_active_fg_color"],
-        )
-    
-    # self.style.map("TButton",
-    #     background=[("active", self.color_config["button_active_color"]),
-    #                 ("hover", self.color_config["button_hover_color"])],
-    #     foreground=[("active", self.color_config["button_active_fg_color"]),
-    #                 ("hover", self.color_config["button_hover_fg_color"])])
-    self.style.configure("TEntry",
-        background=self.color_config["frame_color"],
-        foreground=self.color_config["frame_fg_color"],
-        fieldbackground=self.color_config["frame_color"],
-        insertbackground=self.color_config["frame_fg_color"])
-    self.style.configure("TCheckbutton",
-        background=self.color_config["frame_color"],
-        foreground=self.color_config["frame_fg_color"])
-
-  def add_frame_style(self, frame: ttk.Frame):
+  def add_frame_style(self, frame: tk.Frame):
     frame.configure(
       bg=self.color_config["frame_bg_color"],
-      fg=self.color_config["frame_fg_color"],
       )
 
-  def add_label_style(self, label: ttk.Label):
+  def add_label_style(self, label: tk.Label):
     label.configure(
       bg=self.color_config["bg_color"],
       fg=self.color_config["fg_color"],
+      font=(self.font, self.font_size),
       )
 
   def add_button_style(self, button: tk.Button):
@@ -130,16 +100,22 @@ class Board_Layout_GUI:
       activebackground=self.color_config["button_active_bg_color"],
       activeforeground=self.color_config["button_active_fg_color"],
       relief="flat",
+      border=0,
+      font=(self.font, self.font_size),
       )
 
-  def add_entry_style(self, entry: ttk.Entry):
+  def add_entry_style(self, entry: tk.Entry):
     entry.configure(
       bg=self.color_config["button_active_bg_color"],
       fg=self.color_config["button_active_fg_color"],
       insertbackground=self.color_config["button_fg_color"],
+      relief="flat",
+      border=0,
+      justify="right",
+      font=(self.font, self.font_size),
       )
 
-  def add_checkbutton_style(self, checkbutton: ttk.Checkbutton):
+  def add_checkbutton_style(self, checkbutton: tk.Checkbutton):
     checkbutton.configure(
       bg=self.color_config["bg_color"],
       fg=self.color_config["fg_color"],
@@ -153,18 +129,25 @@ class Board_Layout_GUI:
     """
     Create frames for the matplotlib animation and controls.
     """
-    self.main_frame = ttk.Frame(self.master)
-    # self.main_frame.configure(background=self.color_config["bg_color"])
+    self.main_frame = tk.Frame(self.master, background=self.color_config["bg_color"])
     self.main_frame.place(relx=0.5,rely=0.5,anchor="c")
     # create frame for matplotlib animation
-    self.animation_frame = ttk.Frame(self.main_frame)
-    # self.animation_frame.configure(background=self.color_config["bg_color"])
-    self.animation_frame.grid(row=0, column=0, sticky="ne")
+    self.animation_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
+    self.animation_frame.grid(
+        row=0,
+        column=0,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
 
     # create frame for controls
-    self.control_frame = ttk.Frame(self.main_frame)
-    # self.control_frame.configure(background=self.color_config["bg_color"])
-    self.control_frame.grid(row=0, column=1, sticky="nw")
+    self.control_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
+    self.control_frame.grid(
+        row=0,
+        column=1,
+        sticky="nw",
+        padx=(self.grid_pad_x, 0),
+        pady=(0,0))
 
     self.draw_control_widgets()
 
@@ -234,73 +217,183 @@ class Board_Layout_GUI:
     """
     row_index = 0
     # frame for file inputs
-    file_frame = ttk.Frame(self.control_frame)
-    file_frame.grid(row=row_index, column=0, sticky="ne")
+    file_frame = tk.Frame(self.control_frame)
+    self.add_frame_style(file_frame)
+    file_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
     row_index += 1
     self.draw_file_widgets(file_frame)
 
     # frame for particle simulation parameters
-    particle_frame = ttk.Frame(self.control_frame)
-    particle_frame.grid(row=row_index, column=0, sticky="ne")
+    particle_frame = tk.Frame(self.control_frame)
+    self.add_frame_style(particle_frame)
+    particle_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
     row_index += 1
     self.draw_particle_widgets(particle_frame)
 
     # frame for toggles
-    toggle_frame = ttk.Frame(self.control_frame)
-    toggle_frame.grid(row=row_index, column=0, sticky="ne")
+    toggle_frame = tk.Frame(self.control_frame)
+    self.add_frame_style(toggle_frame)
+    toggle_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
     row_index += 1
     self.draw_toggle_widgets(toggle_frame)
 
-  def draw_file_widgets(self, file_frame: ttk.Frame):
+  def draw_file_widgets(self, file_frame: tk.Frame):
     """
     Draw widgets for file inputs. Place them in the given frame using grid layout.
 
     Args:
-        file_frame (ttk.Frame): frame to place widgets in
+        file_frame (tk.Frame): frame to place widgets in
     """
+    row_index = 0
+    # category label
+    category_label_files = tk.Label(file_frame, text="File Inputs")
+    self.add_label_style(category_label_files)
+    category_label_files.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nw",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    row_index += 1
     # node file input
-    node_file_label = ttk.Label(file_frame, text="Node File")
-    node_file_label.grid(row=0, column=0, sticky="ne")
-    node_file_entry = ttk.Entry(file_frame, textvariable=self.node_file, width=12)
-    node_file_entry.grid(row=0, column=1, sticky="nw")
+    node_file_label = tk.Label(file_frame, text="Node File")
+    self.add_label_style(node_file_label)
+    node_file_label.grid(
+        row=row_index,
+        column=0,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    node_file_entry = tk.Entry(file_frame, textvariable=self.node_file, width=12)
+    self.add_entry_style(node_file_entry)
+    node_file_entry.grid(
+        row=row_index,
+        column=1,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
     node_file_button = tk.Button(file_frame, 
         text="Browse",
         command=lambda: self.browse_txt_file("browse locations file (.txt)", self.node_file))
-    node_file_button.grid(row=0, column=2, sticky="nw")
+    self.add_button_style(node_file_button)
+    node_file_button.grid(
+        row=row_index,
+        column=2,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    row_index += 1
 
     # edge file input
-    edge_file_label = ttk.Label(file_frame, text="Edge File")
-    edge_file_label.grid(row=1, column=0, sticky="ne")
-    edge_file_entry = ttk.Entry(file_frame, textvariable=self.edge_file, width=12)
-    edge_file_entry.grid(row=1, column=1, sticky="nw")
+    edge_file_label = tk.Label(file_frame, text="Edge File")
+    self.add_label_style(edge_file_label)
+    edge_file_label.grid(
+        row=row_index,
+        column=0,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    edge_file_entry = tk.Entry(file_frame, textvariable=self.edge_file, width=12)
+    self.add_entry_style(edge_file_entry)
+    edge_file_entry.grid(
+        row=row_index,
+        column=1,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
     edge_file_button = tk.Button(file_frame, 
         text="Browse",
         command=lambda: self.browse_txt_file("browse paths file (.txt)", self.edge_file))
-    edge_file_button.grid(row=1, column=2, sticky="nw")
+    self.add_button_style(edge_file_button)
+    edge_file_button.grid(
+        row=row_index,
+        column=2,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
 
     # task file input
-    task_file_label = ttk.Label(file_frame, text="Task File")
-    task_file_label.grid(row=2, column=0, sticky="ne")
-    task_file_entry = ttk.Entry(file_frame, textvariable=self.task_file, width=12)
-    task_file_entry.grid(row=2, column=1, sticky="nw")
+    task_file_label = tk.Label(file_frame, text="Task File")
+    self.add_label_style(task_file_label)
+    task_file_label.grid(
+        row=row_index,
+        column=0,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    task_file_entry = tk.Entry(file_frame, textvariable=self.task_file, width=12)
+    self.add_entry_style(task_file_entry)
+    task_file_entry.grid(
+        row=row_index,
+        column=1,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
     task_file_button = tk.Button(file_frame,
         text="Browse",
         command=lambda: self.browse_txt_file("browse tasks file (.txt)", self.task_file))
-    task_file_button.grid(row=2, column=2, sticky="nw")
+    self.add_button_style(task_file_button)
+    task_file_button.grid(
+        row=row_index,
+        column=2,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
 
     # background file input
-    background_file_label = ttk.Label(file_frame, text="Background File")
-    background_file_label.grid(row=3, column=0, sticky="ne")
-    background_file_entry = ttk.Entry(file_frame, textvariable=self.background_file, width=12)
-    background_file_entry.grid(row=3, column=1, sticky="nw")
+    background_file_label = tk.Label(file_frame, text="Background File")
+    self.add_label_style(background_file_label)
+    background_file_label.grid(
+        row=row_index,
+        column=0,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    background_file_entry = tk.Entry(file_frame, textvariable=self.background_file, width=12)
+    self.add_entry_style(background_file_entry)
+    background_file_entry.grid(
+        row=row_index,
+        column=1,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
     background_file_button = tk.Button(file_frame,
         text="Browse",
         command=lambda: self.browse_image_file("browse background file", self.background_file))
-    background_file_button.grid(row=3, column=2, sticky="nw")
+    self.add_button_style(background_file_button)
+    background_file_button.grid(
+        row=row_index,
+        column=2,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
 
     # load button
     load_button = tk.Button(file_frame, text="Load", command=self.load_files)
-    load_button.grid(row=4, column=0, sticky="ne")
+    self.add_button_style(load_button)
+    load_button.grid(
+        row=row_index,
+        column=0,
+        columnspan=3,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
 
   def browse_txt_file(self, browse_request: str, var: tk.StringVar):
     """
@@ -341,7 +434,7 @@ class Board_Layout_GUI:
     # load background image
     self.background_image_mpl = mpimg.imread(self.background_file.get())
 
-  def draw_particle_widgets(self, particle_frame: ttk.Frame):
+  def draw_particle_widgets(self, particle_frame: tk.Frame):
     """
     Draw widgets for particle simulation parameters. Place them in the given frame using grid layout.
 
@@ -358,7 +451,7 @@ class Board_Layout_GUI:
     - label mass
 
     Args:
-        particle_frame (ttk.Frame): frame to place widgets in
+        particle_frame (tk.Frame): frame to place widgets in
     """
     def add_label_and_entry(row_index: int, text: str, var: tk.StringVar):
       """
@@ -369,12 +462,35 @@ class Board_Layout_GUI:
           text (str): text to display in the label
           var (tk.StringVar): variable to store the entry value in
       """
-      label = ttk.Label(particle_frame, text=text)
-      label.grid(row=row_index, column=0, sticky="ne")
-      entry = ttk.Entry(particle_frame, textvariable=var, width=4)
-      entry.grid(row=row_index, column=1, sticky="nw")
+      label = tk.Label(particle_frame, text=text)
+      self.add_label_style(label)
+      label.grid(
+          row=row_index,
+          column=0,
+          sticky="ne",
+          padx=(self.grid_pad_x, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
+      entry = tk.Entry(particle_frame, textvariable=var, width=4)
+      self.add_entry_style(entry)
+      entry.grid(
+          row=row_index,
+          column=1,
+          sticky="nw",
+          padx=(0, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
     
     row_index = 0
+    # headline for particle graph parameters
+    headline = tk.Label(particle_frame, text="Particle Graph Parameters")
+    self.add_label_style(headline)
+    headline.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    row_index += 1
     add_label_and_entry(row_index, "Time Step Size", self.time_step)
     row_index += 1
     add_label_and_entry(row_index, "Time Steps Per Frame", self.iterations_per_frame)
@@ -397,7 +513,14 @@ class Board_Layout_GUI:
     row_index += 1
     # add button to load parameters into the particle simulation
     load_button = tk.Button(particle_frame, text="Load", command=self.load_particle_parameters)
-    load_button.grid(row=row_index, column=0, sticky="ne")
+    self.add_button_style(load_button)
+    load_button.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
 
   def load_particle_parameters(self):
     """
@@ -405,7 +528,7 @@ class Board_Layout_GUI:
     """
     raise NotImplementedError # TODO
 
-  def draw_toggle_widgets(self, toggle_frame: ttk.Frame):
+  def draw_toggle_widgets(self, toggle_frame: tk.Frame):
     """
     Draw widgets for toggling the display of different elements. Place them in the given frame using grid layout.
 
@@ -419,7 +542,7 @@ class Board_Layout_GUI:
     - show shortest paths for tasks
 
     Args:
-        toggle_frame (ttk.Frame): frame to place widgets in
+        toggle_frame (tk.Frame): frame to place widgets in
     """
     def add_label_and_checkbutton(row_index: int, text: str, var: tk.BooleanVar):
       """
@@ -430,12 +553,38 @@ class Board_Layout_GUI:
           text (str): text to display in the label
           var (tk.BooleanVar): variable to store the checkbutton value in
       """
-      label = ttk.Label(toggle_frame, text=text)
-      label.grid(row=row_index, column=0, sticky="ne")
-      checkbutton = ttk.Checkbutton(toggle_frame, variable=var, command=self.update_canvas)
-      checkbutton.grid(row=row_index, column=1, sticky="nw")
+      # label = tk.Label(toggle_frame, text=text)
+      # self.add_label_style(label)
+      # label.grid(
+      #     row=row_index,
+      #     column=0,
+      #     sticky="ne",
+      #     padx=(self.grid_pad_x, self.grid_pad_x),
+      #     pady=(0, self.grid_pad_y))
+      checkbutton = tk.Checkbutton(toggle_frame, 
+          text=text,
+          variable=var,
+          command=self.update_canvas)
+      self.add_checkbutton_style(checkbutton)
+      checkbutton.grid(
+          row=row_index,
+          column=1,
+          sticky="ne",
+          padx=(0, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
 
     row_index = 0
+    # headline for the toggle widgets
+    label = tk.Label(toggle_frame, text="Toggles")
+    self.add_label_style(label)
+    label.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, 0))
+    row_index += 1
     add_label_and_checkbutton(row_index, "Edges", self.show_edges)
     row_index += 1
     add_label_and_checkbutton(row_index, "Nodes", self.show_nodes)

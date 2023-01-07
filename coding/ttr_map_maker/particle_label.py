@@ -12,12 +12,18 @@ import matplotlib.pyplot as plt
 from matplotlib.font_manager import fontManager
 
 from graph_particle import Graph_Particle
+from particle_node import Particle_Node
 
 
 class Particle_Label(Graph_Particle):
   def __init__(self,
         label: str,
         position: np.ndarray = np.array([0, 0]),
+        mass: float = 1,
+        interaction_radius: float = 5,
+        velocity_decay: float = 0.9999,
+        repulsion_strength: float = 1,
+        node_attraction: float = 0.1,
         fontsize: int = 20,
         font_name: str = None,
         font_path: str = "beleriand_ttr\\MiddleEarth.ttf"):
@@ -43,12 +49,28 @@ class Particle_Label(Graph_Particle):
         position,
         rotation = 0,
         target_position = position,
-        mass = 1,
+        mass = mass,
         bounding_box_size = (width, height),
-        interaction_radius = 3,
+        interaction_radius = interaction_radius,
+        velocity_decay = velocity_decay,
+        repulsion_strength=repulsion_strength,
     )
     self.label = label
     self.color = "#222222"
+    self.node_attraction = node_attraction
+
+
+  def get_attraction_force(self, other: Particle_Node) -> Tuple[np.ndarray, np.ndarray]:
+    """calculate attraction force to other particle
+
+    Args:
+        other (Particle_Node): particle node that the label is attracted to
+
+    Returns:
+        np.ndarray: attraction force
+        np.ndarray: force anchor point
+    """
+    return self.node_attraction * (other.position - self.position), self.position
 
 
   def draw(self, 
