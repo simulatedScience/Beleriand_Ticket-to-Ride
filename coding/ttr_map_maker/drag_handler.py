@@ -66,7 +66,15 @@ class Drag_Handler:
       self.on_release(event)
     # Get the rectangle artist that was picked
     self.current_artist = event.artist
-    event_position = self.current_artist.get_center()
+    # if artist is a circle, get its center
+    if self.current_artist.__class__.__name__ == "Circle":
+      event_position = self.current_artist.get_center()
+    # if artist is a polygon, get its center
+    elif self.current_artist.__class__.__name__ == "Polygon":
+      event_position = self.current_artist.get_xy()
+    # if artist is an image, get its center
+    elif self.current_artist.__class__.__name__ == "AxesImage":
+      event_position = np.array([event.mouseevent.x, event.mouseevent.y])
 
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
@@ -91,8 +99,17 @@ class Drag_Handler:
       event (matplotlib.backend_bases.MouseEvent): The mouse event.
     """
     if event.inaxes:
-      self.current_artist.set_center(np.array([event.xdata, event.ydata]))
-      # self.current_artist.set_ydata(event.mouseevent.y)
+      # if artist is a circle, move its center
+      if self.current_artist.__class__.__name__ == "Circle":
+        self.current_artist.set_center(np.array([event.xdata, event.ydata]))
+      # if artist is a polygon, move its center
+      elif self.current_artist.__class__.__name__ == "Polygon":
+        self.current_artist.set_xy((event.xdata, event.ydata))
+      # if artist is an image, move its center
+      elif self.current_artist.__class__.__name__ == "AxesImage":
+        self.current_artist.set_xdata(event.xdata)
+        self.current_artist.set_ydata(event.ydata)
+
       self.canvas.draw_idle()
 
 

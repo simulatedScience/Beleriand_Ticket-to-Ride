@@ -113,6 +113,19 @@ class Graph_Particle:
       position (np.ndarray): new position of particle
     """
     self.position = position
+    self.bounding_box, self.bounding_box_polygon = self.update_bounding_box()
+
+  def set_rotation(self, rotation: float):
+    """
+    Set the rotation of the particle.
+
+    args:
+      rotation (float): new rotation of particle
+    """
+    if rotation > np.pi or rotation < - np.pi:
+      rotation = rotation % (2 * np.pi)
+    self.rotation = rotation
+    self.bounding_box, self.bounding_box_polygon = self.update_bounding_box()
 
   def __str__(self):
     return f"Particle at\t {self.position} with mass\t {self.mass} and inertia\t {self.inertia}."
@@ -328,9 +341,10 @@ class Graph_Particle:
 
   def draw_bounding_box(self,
       ax: plt.Axes, 
-      color: str = "",
+      color: str = None,
+      border_color: str = None,
       alpha: float = 0.3,
-      zorder: int = 3):
+      zorder: int = 3) -> None:
     """
     draw bounding box of particle on `ax`
 
@@ -340,10 +354,15 @@ class Graph_Particle:
       alpha (float): alpha value of particle
       zorder (int): zorder of particle
     """
+    if border_color is None:
+      border_color = color
+    if color is None:
+      print("Warning: Particle not shown since no color was given")
+      return
     polygon_patch = PolygonPatch(
         self.get_bounding_box(),
         facecolor=color,
-        edgecolor=color,
+        edgecolor=border_color,
         alpha=alpha,
         zorder=zorder,
         picker=True

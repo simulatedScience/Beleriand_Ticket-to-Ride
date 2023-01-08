@@ -35,6 +35,7 @@ class Particle_Edge(Graph_Particle):
     self.node_attraction = node_attraction
     self.edge_attraction = edge_attraction
     self.color = color
+    self.border_color = "#555555"
 
 
   def get_attraction_forces(self, other_particle):
@@ -158,10 +159,30 @@ class Particle_Edge(Graph_Particle):
 
   def draw(self,
       ax: plt.Axes,
-      color: str = "",
+      color: str = None,
+      border_color: str = None,
       alpha: float = 0.7,
       zorder: int = 4):
-    super().draw_bounding_box(ax, color, alpha, zorder)
+    """
+    draw this edge as a rectangle
+
+    Args:
+        ax (plt.Axes): matplotlib axes
+        color (str, optional): color. Defaults to None.
+        alpha (float, optional): alpha. Defaults to 0.7.
+        zorder (int, optional): zorder. Defaults to 4.
+    """
+    if color is None:
+      color = self.color
+    if border_color is None:
+      # if particle has no  border color, initialize it as gray
+      try:
+        border_color = self.border_color
+      except AttributeError:
+        border_color = "#555555"
+        self.border_color = border_color
+      
+    super().draw_bounding_box(ax, color, border_color, alpha, zorder)
     # midpoints = self.get_edge_midpoints()
     # self.plotted_objects.append(
     #     ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder)

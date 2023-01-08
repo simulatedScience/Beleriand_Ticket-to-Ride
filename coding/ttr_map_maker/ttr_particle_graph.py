@@ -142,7 +142,7 @@ class TTR_Particle_Graph:
   def move_labels_to_nodes(self,
       ax: plt.Axes,
       x_offset: float = 0.,
-      y_offset: float = 2.):
+      y_offset: float = 2.) -> None:
     """
     move all labels to the position of their connected node with an offset. Then erase and redraw the labels.
 
@@ -155,6 +155,46 @@ class TTR_Particle_Graph:
       particle_label.position = particle_label.connected_particles[0].position + np.array([x_offset, y_offset], dtype=np.float64)
       particle_label.erase()
       particle_label.draw(ax)
+
+
+  def move_edges_to_nodes(self, ax: plt.Axes, **draw_kwargs) -> None:
+    """
+    move all edges such that tey form straight lines between their connected nodes. Then erase and redraw the edges.
+
+    Args:
+        ax (plt.Axes): axes to draw on
+        draw_kwargs (dict): kwargs to pass to the draw method of the edge particles
+    """
+    for path in self.paths:
+      location_1 = path[0]
+      location_2 = path[1]
+      lenght = path[2]
+      node_1 = self.particle_nodes[location_1]
+      node_2 = self.particle_nodes[location_2]
+      edge_particles = [self.particle_edges[(location_1, location_2, i)] for i in range(lenght)]
+      for i, particle in enumerate(edge_particles):
+        particle.set_position(
+          node_1.position + (node_2.position - node_1.position) * (i+1) / (lenght+1)
+        )
+        particle.set_rotation(
+          -np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
+        )
+        particle.erase()
+        particle.draw(ax, **draw_kwargs)
+
+
+  def scale_node_positions(self, ax, scale_factor: float = 0.8):
+    """
+    scale the positions of all nodes by a scale factor
+
+    Args:
+        scale_factor (float, optional): scale factor. Defaults to 0.8.
+    """
+    for particle_node in self.particle_nodes.values():
+      particle_node.set_position(
+        particle_node.position*scale_factor)
+      particle_node.erase()
+      particle_node.draw(ax)
 
 
   def get_locations(self) -> list:
@@ -199,17 +239,18 @@ class TTR_Particle_Graph:
 
 
   def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
-    """draw particle graph
+    """
+    draw particle graph
 
     Args:
-        ax (_type_): _description_
+        ax (plt.Axes): axes to draw on
     """
     for particle_node in self.particle_nodes.values():
       particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier)
     for particle_label in self.particle_labels.values():
       particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, alpha=0.8 * alpha_multiplier)
+      particle_edge.draw(ax, color=particle_edge.color, border_color="#555555", alpha=0.8 * alpha_multiplier)
 
   def erase(self):
     """
@@ -357,6 +398,7 @@ if __name__ == "__main__":
   particle_graph.draw(ax, alpha_multiplier=1.0)
   # particle_graph.draw_connections(ax, alpha_multiplier=0.5)
   particle_graph.draw_edge_attractors(ax, alpha_multiplier=0.5)
+
   
   particle_graph.save("test_particle_graph.pickle")
 

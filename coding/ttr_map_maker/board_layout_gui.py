@@ -168,7 +168,7 @@ class Board_Layout_GUI:
     self.animation_frame.grid(
         row=0,
         column=0,
-        sticky="nsew",
+        sticky="w",
         padx=(2*self.grid_pad_x, 2*self.grid_pad_x),
         pady=(2*self.grid_pad_y, 2*self.grid_pad_y))
 
@@ -194,7 +194,7 @@ class Board_Layout_GUI:
     self.ax.set_xlim(0, 20)
     self.ax.set_ylim(0, 15)
     self.ax.axis("scaled")
-    self.fig.subplots_adjust(left=0.02, bottom=0.02, right=0.98, top=0.98, wspace=None, hspace=None)
+    self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=None, hspace=None)
     self.update_frame()
     
     # create canvas for matplotlib figure
@@ -215,7 +215,7 @@ class Board_Layout_GUI:
     self.edge_file = tk.StringVar(value="beleriand_ttr//beleriand_paths.txt", name="edge_file")
     self.task_file = tk.StringVar(value="beleriand_ttr//beleriand_tasks.txt", name="task_file")
     self.background_file = tk.StringVar(value="beleriand_ttr//beleriand_map.png", name="background_file")
-    self.particle_graph_file = tk.StringVar(value="beleriand_ttr//beleriand_particle_graph.pickle", name="particle_graph_file")
+    self.particle_graph_file = tk.StringVar(value="beleriand_ttr//beleriand_particle_graph_labeled.pickle", name="particle_graph_file")
 
     base_colors = [
       "#000000", # black
@@ -245,13 +245,21 @@ class Board_Layout_GUI:
 
     # variables for toggles
     self.show_nodes = tk.BooleanVar(value=True, name="show_nodes")
-    self.show_edges = tk.BooleanVar(value=False, name="show_edges")
+    self.show_edges = tk.BooleanVar(value=True, name="show_edges")
     self.show_labels = tk.BooleanVar(value=True, name="show_labels")
     self.show_targets = tk.BooleanVar(value=False, name="show_targets")
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
     self.show_task_paths = tk.BooleanVar(value=True, name="show_task_paths")
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused")
-    self.show_plot_frame = tk.BooleanVar(value=True, name="show_plot_frame")
+    self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
+
+    # variables for plot
+    self.board_width = tk.DoubleVar(value=83.1, name="board_width")
+    self.board_height = tk.DoubleVar(value=54.0, name="board_height")
+    self.background_image_offset_x = tk.DoubleVar(value=20.0, name="background_image_offset_x")
+    self.background_image_offset_y = tk.DoubleVar(value=3.0, name="background_image_offset_y")
+    self.board_scale_factor = tk.DoubleVar(value=1.25, name="board_scale_factor")
+    self.node_scale_factor = tk.DoubleVar(value=0.8, name="node_scale_factor")
 
   def draw_control_widgets(self):
     """
@@ -301,6 +309,19 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     row_index += 1
     self.draw_button_widgets(button_frame)
+
+    # frame for plot parameters
+    plot_param_frame = tk.Frame(self.control_frame)
+    self.add_frame_style(plot_param_frame)
+    plot_param_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    self.draw_plot_param_widgets(plot_param_frame)
+
+
 
   def draw_file_widgets(self, file_frame: tk.Frame):
     """
@@ -804,8 +825,10 @@ class Board_Layout_GUI:
         labelleft=self.show_plot_frame.get())
     if self.show_plot_frame.get():
       self.ax.grid(color=self.color_config["plot_grid_color"])
+      self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=None, hspace=None)
     else:
       self.ax.grid(False)
+      self.fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
 
   def update_background_image(self):
     """
@@ -863,21 +886,27 @@ class Board_Layout_GUI:
     row_index = 0
     column_index = 0
     # add buttons
-    add_control_button(row_index, column_index, "Play/Pause", self.play_pause)
+    add_control_button(row_index, column_index, "Save graph", self.save_graph)
     column_index += 1
-    add_control_button(row_index, column_index, "Save", self.save)
+    add_control_button(row_index, column_index, "Snap labels", self.move_labels_to_nodes)
     column_index += 1
-    add_control_button(row_index, column_index, "snap labels", self.move_labels_to_nodes)
+    add_control_button(row_index, column_index, "Scale nodes", self.scale_node_positions)
+    row_index += 1
+    column_index = 0
+    add_control_button(row_index, column_index, "Save img", self.save_image)
+    column_index += 1
+    add_control_button(row_index, column_index, "Snap edges", self.move_edges_to_nodes)
+    column_index += 1
+    add_control_button(row_index, column_index, "scale img", self.scale_background_image)
     column_index += 1
 
-  
   def play_pause(self):
     """
     Start/stop the particle simulation.
     """
     raise NotImplementedError # TODO
 
-  def save(self):
+  def save_graph(self):
     """
     Save the current canvas.
     """
@@ -887,12 +916,18 @@ class Board_Layout_GUI:
     filepath = tk.filedialog.asksaveasfilename(
         title="Save particle graph object with pickle",
         filetypes=(("PICKLE", "*.pickle"), ("all files", "*.*")))
+    if filepath == "":
+      return
     self.particle_graph.save(filepath)
+  
+  def save_image(self):
     # save canvas as image
     filepath = tk.filedialog.asksaveasfilename(
         title="Save canvas as image",
         filetypes=(("PNG", "*.png"), ("all files", "*.*")))
-    self.fig.savefig(filepath)
+    if filepath == "":
+      return
+    self.fig.savefig(filepath, dpi=600)
 
   def move_labels_to_nodes(self):
     """
@@ -901,6 +936,136 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     self.particle_graph.move_labels_to_nodes(self.ax)
+
+  def move_edges_to_nodes(self):
+    """
+    Move the edges to the nodes.
+    """
+    if self.particle_graph is None:
+      return
+    self.particle_graph.move_edges_to_nodes(self.ax, alpha=1)
+
+  def scale_background_image(self):
+    """
+    Resize the background image and canvas to ensure the background fits real lego pieces.
+    new size will be the board size * scale_factor.
+    """
+    if self.background_image_mpl is None:
+      return
+    # get new size
+    new_width = self.board_width.get() * self.board_scale_factor.get()
+    new_height = self.board_height.get() * self.board_scale_factor.get()
+    x_offset = self.background_image_offset_x.get()
+    y_offset = self.background_image_offset_y.get()
+
+    self.background_image_extent = np.array([
+        x_offset,
+        new_width + x_offset,
+        y_offset,
+        new_height + y_offset])
+    # update plot limits
+    self.ax.set_xlim(x_offset, new_width + x_offset)
+    self.ax.set_ylim(y_offset, new_height + y_offset)
+    self.update_background_image()
+
+  def scale_node_positions(self):
+    """
+    Scale the node positions to fit the new background image size.
+    """
+    if self.particle_graph is None:
+      return
+    self.particle_graph.scale_node_positions(self.ax, self.node_scale_factor.get())
+
+  def draw_plot_param_widgets(self, plot_param_frame: tk.Frame):
+    """
+    draw widgets for plot parameter settings.
+    settings include:
+    wdith and height of physical board
+    """
+    def add_label_and_entry(row_index: int, column_index: int, text: str, var: tk.StringVar):
+      """
+      Add a label and entry widget to the given frame.
+
+      Args:
+          row_index (int): row index to place the widgets in
+          text (str): text to display in the label
+          var (tk.StringVar): variable to store the entry value in
+      """
+      label = tk.Label(plot_param_frame, text=text)
+      self.add_label_style(label)
+      label.grid(
+          row=row_index,
+          column=column_index,
+          sticky="ne",
+          padx=(self.grid_pad_x, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
+      entry = tk.Entry(plot_param_frame, textvariable=var, width=4)
+      self.add_entry_style(entry)
+      entry.grid(
+          row=row_index,
+          column=column_index+1,
+          sticky="nw",
+          padx=(0, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
+      # configure used columns to stretch
+      plot_param_frame.columnconfigure(column_index, weight=1)
+      plot_param_frame.columnconfigure(column_index+1, weight=1)
+    
+    row_index = 0
+    column_index = 0
+    # add label for physical board size
+    label = tk.Label(plot_param_frame, text="Board size")
+    self.add_label_style(label)
+    label.grid(
+        row=row_index,
+        column=column_index,
+        columnspan=4,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    # add Entries for width and height of physical board
+    add_label_and_entry(row_index, column_index, "width", self.board_width)
+    column_index += 2
+    add_label_and_entry(row_index, column_index, "height", self.board_height)
+    column_index += 2
+    row_index += 1
+    # add label for background image offset
+    label = tk.Label(plot_param_frame, text="Background image offset")
+    self.add_label_style(label)
+    label.grid(
+        row=row_index,
+        column=0,
+        columnspan=4,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    column_index = 0
+    # add Entries for width and height of physical board
+    add_label_and_entry(row_index, column_index, "x", self.background_image_offset_x)
+    column_index += 2
+    add_label_and_entry(row_index, column_index, "y", self.background_image_offset_y)
+    column_index += 2
+    row_index += 1
+    # add label for node and background scale factor
+    label = tk.Label(plot_param_frame, text="scale factors")
+    self.add_label_style(label)
+    label.grid(
+        row=row_index,
+        column=0,
+        columnspan=4,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    column_index = 0
+    # add Entry for board scale factor
+    add_label_and_entry(row_index, column_index, "board", self.board_scale_factor)
+    column_index += 2
+    # add Entry for node scale factor
+    add_label_and_entry(row_index, column_index, "nodes", self.node_scale_factor)
+
 
 
   def init_animation(self):

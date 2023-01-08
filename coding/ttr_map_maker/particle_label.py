@@ -96,43 +96,57 @@ class Particle_Label(Graph_Particle):
   def draw(self, 
       ax: plt.Axes,
       color: str = None,
-      bg_color: str = None,
+      border_color: str = "#eeeeee",
       alpha: float = 1,
       zorder: int = 4):
     """
     draw the particle on the canvas.
-    If a background color is given, a rectangle is drawn behind the label with the given color.
+    If a border color is given, the label text will have an outline with the given color.
 
     Args:
         ax (plt.Axes): matplotlib axes to draw on
         color (str, optional): color of the particle. Defaults to "#222222".
-        bg_color (str, optional): background color of the label. Defaults to None.
+        border_color (str, optional): background color of the label. Defaults to None.
         alpha (float, optional): alpha value of the particle. Defaults to 0.7.
         zorder (int, optional): zorder of the particle. Defaults to 4.
     """
     if color is None:
       color = self.color
     text_image_size = self.img_font.getsize(self.label)
+    if border_color is not None:
+      self.draw_label_outline(ax, border_color, alpha, zorder)
+
     text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
     text_draw = ImageDraw.Draw(text_image)
-    text_draw.text((0, 0), self.label, font=self.img_font, fill=color, picker=True)
-    # text_image = text_image.rotate(self.rotation, expand=True)
-    # text_image = text_image.resize(text_image_size)
-    # draw image on axes
+    text_draw.text((0, 0), self.label, font=self.img_font, fill=color, picker=True, stroke_width=1)
 
-    # label_extent = (
-    #     self.position[0] - self.bounding_box_size[0] / 2,
-    #     self.position[0] + self.bounding_box_size[0] / 2,
-    #     self.position[1] - self.bounding_box_size[1] / 2,
-    #     self.position[1] + self.bounding_box_size[1] / 2)
     label_extent = (
-        self.position[0] - self.bounding_box_size[0],
-        self.position[0] + self.bounding_box_size[0],
-        self.position[1] - self.bounding_box_size[1],
-        self.position[1] + self.bounding_box_size[1])
+        self.position[0] - self.bounding_box_size[0] / 2,
+        self.position[0] + self.bounding_box_size[0] / 2,
+        self.position[1] - self.bounding_box_size[1] / 2,
+        self.position[1] + self.bounding_box_size[1] / 2)
     self.plotted_objects.append(ax.imshow(text_image, extent=label_extent, zorder=zorder, alpha=alpha))
     
 
+  def draw_label_outline(self,
+      ax: plt.Axes,
+      border_color: str = "#ffffff",
+      alpha: float = 1,
+      zorder: int = 4):
+
+    text_image_size = self.img_font.getsize(self.label)
+    outline_image = Image.new("RGBA", text_image_size, (0,0,0,0))
+    text_draw = ImageDraw.Draw(outline_image)
+    text_draw.text((0, 0), self.label, font=self.img_font, fill="#eeeeee", picker=True, border=1, borderfill=border_color, stroke_width=5, stroke_fill=border_color)
+
+    label_extent = (
+        self.position[0] - self.bounding_box_size[0] / 2,
+        self.position[0] + self.bounding_box_size[0] / 2,
+        self.position[1] - self.bounding_box_size[1] / 2,
+        self.position[1] + self.bounding_box_size[1] / 2)
+
+    self.plotted_objects.append(
+        ax.imshow(outline_image, extent=label_extent, alpha=alpha, zorder=zorder))
 
   def get_label_size(self, label: str, fontsize: int, font: str) -> Tuple[float, float]:
     """
