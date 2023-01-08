@@ -33,6 +33,7 @@ class Particle_Node(Graph_Particle):
         repulsion_strength=repulsion_strength,
     )
     self.label = label
+    self.target_attraction = target_attraction
     self.color = "#222222"
 
 
@@ -73,3 +74,18 @@ class Particle_Node(Graph_Particle):
         np.ndarray: attraction force
     """
     return np.zeros(2), self.position
+
+
+  def set_parameters(self, node_parameters):
+    """
+    set parameters of the node
+
+    Args:
+        node_parameters (dict): dictionary with parameters for the node
+    """
+    self.color = node_parameters.get("color", self.color)
+    self.mass = node_parameters.get("node_mass", self.mass)
+    self.target_attraction = node_parameters.get("target_attraction", self.target_attraction)
+    self.velocity_decay = node_parameters.get("node_velocity_decay", self.velocity_decay)
+    self.interaction_radius = node_parameters.get("interaction_radius", self.interaction_radius)
+    self.repulsion_strength = node_parameters.get("repulsion_strength", self.repulsion_strength)

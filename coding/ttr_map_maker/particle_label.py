@@ -74,9 +74,28 @@ class Particle_Label(Graph_Particle):
     return self.node_attraction * (other.position - self.position), self.position
 
 
+  def set_parameters(self, label_parameters: dict):
+    """
+    set parameters for the label
+
+    Args:
+        label_parameters (dict): dictionary with parameters for the label
+    """
+    self.color = label_parameters.get("color", self.color)
+    # self.fontsize = label_parameters.get("fontsize", self.fontsize)
+    # self.font_name = label_parameters.get("font_name", self.font_name)
+    self.node_attraction = label_parameters.get("node-label", self.node_attraction)
+    self.mass = label_parameters.get("label_mass", self.mass)
+    self.velocity_decay = label_parameters.get("label_velocity_decay", self.velocity_decay)
+    self.interaction_radius = label_parameters.get("interaction_radius", self.interaction_radius)
+    self.repulsion_strength = label_parameters.get("repulsion_strength", self.repulsion_strength)
+
+    # self.img_font = ImageFont.truetype(self.font_name, self.fontsize)
+
+
   def draw(self, 
       ax: plt.Axes,
-      color: str = "#222222",
+      color: str = None,
       bg_color: str = None,
       alpha: float = 1,
       zorder: int = 4):
@@ -91,6 +110,8 @@ class Particle_Label(Graph_Particle):
         alpha (float, optional): alpha value of the particle. Defaults to 0.7.
         zorder (int, optional): zorder of the particle. Defaults to 4.
     """
+    if color is None:
+      color = self.color
     text_image_size = self.img_font.getsize(self.label)
     text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
     text_draw = ImageDraw.Draw(text_image)
@@ -109,7 +130,7 @@ class Particle_Label(Graph_Particle):
         self.position[0] + self.bounding_box_size[0],
         self.position[1] - self.bounding_box_size[1],
         self.position[1] + self.bounding_box_size[1])
-    ax.imshow(text_image, extent=label_extent, zorder=zorder, alpha=alpha)
+    self.plotted_objects.append(ax.imshow(text_image, extent=label_extent, zorder=zorder, alpha=alpha))
     
 
 

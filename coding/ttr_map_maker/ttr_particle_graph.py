@@ -44,6 +44,7 @@ class TTR_Particle_Graph:
         location_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
     """
     self.node_labels = locations
+    self.paths = paths
     *self.edges, self.edge_lengths, self.edge_colors = list(zip(*paths))
     self.edges = list(zip(*self.edges))
     self.location_positions = location_positions
@@ -138,6 +139,43 @@ class TTR_Particle_Graph:
         particle.update(dt)
 
 
+  def move_labels_to_nodes(self,
+      ax: plt.Axes,
+      x_offset: float = 0.,
+      y_offset: float = 2.):
+    """
+    move all labels to the position of their connected node with an offset. Then erase and redraw the labels.
+
+    Args:
+        ax (plt.Axes): axes to draw on
+        x_offset (float, optional): x offset. Defaults to 0..
+        y_offset (float, optional): y offset. Defaults to 2.
+    """
+    for particle_label in self.particle_labels.values():
+      particle_label.position = particle_label.connected_particles[0].position + np.array([x_offset, y_offset], dtype=np.float64)
+      particle_label.erase()
+      particle_label.draw(ax)
+
+
+  def get_locations(self) -> list:
+    """
+    get all location labels in particle graph
+
+    Returns:
+        list: list of location labels
+    """
+    return self.particle_nodes
+
+  def get_paths(self) -> list:
+    """
+    get all paths in particle graph
+
+    Returns:
+        list: list of paths
+    """
+    return self.paths
+
+
   def get_particle_list(self):
     """
     get all particles in particle graph
@@ -146,6 +184,18 @@ class TTR_Particle_Graph:
         [type]: [description]
     """
     return list(self.particle_nodes.values()) + list(self.particle_labels.values()) + list(self.particle_edges.values())
+
+
+  def set_parameters(self, particle_parameters: dict):
+    """
+    update all given particle parameters
+    These changes are applied to all particles in the particle graph.
+
+    Args:
+        particle_parameters (dict): dictionary of particle parameters. See __init__ for allowed parameters and details.
+    """
+    for particle in self.get_particle_list():
+      particle.set_parameters(particle_parameters)
 
 
   def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
@@ -308,6 +358,8 @@ if __name__ == "__main__":
   # particle_graph.draw_connections(ax, alpha_multiplier=0.5)
   particle_graph.draw_edge_attractors(ax, alpha_multiplier=0.5)
   
+  particle_graph.save("test_particle_graph.pickle")
+
   ax.set_xlim(-15, 15)
   ax.set_ylim(-10, 10)
   ax.legend()

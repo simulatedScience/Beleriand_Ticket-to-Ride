@@ -139,6 +139,23 @@ class Particle_Edge(Graph_Particle):
     return (np.exp(distance) - 1) / 3
 
 
+  def set_parameters(self, edge_parameters):
+    """
+    set parameters of this edge
+
+    Args:
+        edge_parameters (dict): dictionary with parameters for this edge
+    """
+    self.node_attraction = edge_parameters.get("edge-node", self.node_attraction)
+    self.edge_attraction = edge_parameters.get("edge-edge", self.edge_attraction)
+    self.mass = edge_parameters.get("edge_mass", self.mass)
+    self.color = edge_parameters.get("color", self.color)
+    self.velocity_decay = edge_parameters.get("velocity_decay", self.velocity_decay)
+    self.repulsion_strength = edge_parameters.get("repulsion_strength", self.repulsion_strength)
+    self.interaction_radius = edge_parameters.get("interaction_radius", self.interaction_radius)
+
+
+
   def draw(self,
       ax: plt.Axes,
       color: str = "",

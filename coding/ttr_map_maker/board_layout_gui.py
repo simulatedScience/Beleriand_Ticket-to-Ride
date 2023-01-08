@@ -194,7 +194,7 @@ class Board_Layout_GUI:
     self.ax.set_xlim(0, 20)
     self.ax.set_ylim(0, 15)
     self.ax.axis("scaled")
-    self.fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
+    self.fig.subplots_adjust(left=0.02, bottom=0.02, right=0.98, top=0.98, wspace=None, hspace=None)
     self.update_frame()
     
     # create canvas for matplotlib figure
@@ -204,7 +204,7 @@ class Board_Layout_GUI:
         column=0,
         sticky="nsew")
     self.canvas.draw()
-    self.ax.plot(0, 0, "o", color=self.color_config["plot_fg_color"])
+
 
   def init_tk_variables(self):
     """
@@ -215,6 +215,7 @@ class Board_Layout_GUI:
     self.edge_file = tk.StringVar(value="beleriand_ttr//beleriand_paths.txt", name="edge_file")
     self.task_file = tk.StringVar(value="beleriand_ttr//beleriand_tasks.txt", name="task_file")
     self.background_file = tk.StringVar(value="beleriand_ttr//beleriand_map.png", name="background_file")
+    self.particle_graph_file = tk.StringVar(value="beleriand_ttr//beleriand_particle_graph.pickle", name="particle_graph_file")
 
     base_colors = [
       "#000000", # black
@@ -289,6 +290,17 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     row_index += 1
     self.draw_toggle_widgets(toggle_frame)
+
+    # frame for other buttons
+    button_frame = tk.Frame(self.control_frame)
+    self.add_frame_style(button_frame)
+    button_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    self.draw_button_widgets(button_frame)
 
   def draw_file_widgets(self, file_frame: tk.Frame):
     """
@@ -400,6 +412,35 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     row_index += 1
 
+    # particle graph file input
+    particle_graph_file_label = tk.Label(file_frame, text="Particle Graph")
+    self.add_label_style(particle_graph_file_label)
+    particle_graph_file_label.grid(
+        row=row_index,
+        column=0,
+        sticky="ne",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    particle_graph_file_entry = tk.Entry(file_frame, textvariable=self.particle_graph_file, width=12)
+    self.add_entry_style(particle_graph_file_entry)
+    particle_graph_file_entry.grid(
+        row=row_index,
+        column=1,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    particle_graph_file_button = tk.Button(file_frame,
+        text="Browse",
+        command=lambda: self.browse_pickle_file("browse particle graph file (.pickle)", self.particle_graph_file))
+    self.add_button_style(particle_graph_file_button)
+    particle_graph_file_button.grid(
+        row=row_index,
+        column=2,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+
     # background file input
     background_file_label = tk.Label(file_frame, text="Background File")
     self.add_label_style(background_file_label)
@@ -464,14 +505,33 @@ class Board_Layout_GUI:
     if file_path:
       var.set(file_path)
 
+  def browse_pickle_file(self, browse_request: str, var: tk.StringVar):
+    """
+    Open a file dialog to select a pickle file.
+
+    Args:
+        browse_request (str): text to display in the file dialog
+        var (tk.StringVar): variable to store the file path in
+    """
+    file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.pickle")])
+    if file_path:
+      var.set(file_path)
+
   def load_files(self):
     """
     Load the files specified in the file inputs.
     """
-    # load node file (locations)
-    locations = ttr_reader.read_locations(self.node_file.get())
-    # load edge file (paths)
-    paths = ttr_reader.read_paths(self.edge_file.get())
+    # try loading particle graph
+    try:
+      self.particle_graph = ttr_reader.load_particle_graph(self.particle_graph_file.get())
+      locations = self.particle_graph.get_locations()
+      paths = self.particle_graph.get_paths()
+    except FileNotFoundError:
+      print("Particle graph file not found. Constructing new particle graph.")
+      # load node file (locations)
+      locations = ttr_reader.read_locations(self.node_file.get())
+      # load edge file (paths)
+      paths = ttr_reader.read_paths(self.edge_file.get())
     # load task file (tasks)
     tasks = ttr_reader.read_tasks(self.task_file.get())
 
@@ -484,8 +544,13 @@ class Board_Layout_GUI:
       self.background_image_mpl = mpimg.imread(self.background_file.get())
     except FileNotFoundError:
       print("Background image file not found.")
+    self.ax.clear()
     self.update_background_image()
+
     self.init_particle_graph()
+
+    self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
+
 
   def draw_particle_widgets(self, particle_frame: tk.Frame):
     """
@@ -586,7 +651,18 @@ class Board_Layout_GUI:
     """
     Load the parameters for the particle simulation from the tkinter variables.
     """
-    raise NotImplementedError # TODO
+    particle_parameters = {
+      "velocity_decay": float(self.velocity_decay.get()),
+      "edge-edge": float(self.edge_edge_force.get()),
+      "edge-node": float(self.edge_node_force.get()),
+      "node-label": float(self.node_label_force.get()),
+      "node-target": float(self.node_target_force.get()),
+      "node_mass": float(self.node_mass.get()),
+      "edge_mass": float(self.edge_mass.get()),
+      "label_mass": float(self.label_mass.get()),
+      "interaction_radius": float(self.interaction_radius.get()),
+      "repulsion_strength": float(self.repulsion_strength.get())}
+    self.particle_graph.set_parameters(particle_parameters)	
 
   def draw_toggle_widgets(self, toggle_frame: tk.Frame):
     """
@@ -600,12 +676,14 @@ class Board_Layout_GUI:
     - background image
     - play/pause simulation
     - show shortest paths for tasks
+    - show plot frame
 
     Args:
         toggle_frame (tk.Frame): frame to place widgets in
     """
     def add_label_and_checkbutton(
         row_index: int,
+        column_index: int,
         text: str,
         var: tk.BooleanVar,
         command: Callable = self.update_canvas):
@@ -632,15 +710,16 @@ class Board_Layout_GUI:
       self.add_checkbutton_style(checkbutton)
       checkbutton.grid(
           row=row_index,
-          column=1,
+          column=column_index,
           sticky="nw",
-          padx=(0, self.grid_pad_x),
+          padx=(self.grid_pad_x, self.grid_pad_x),
           pady=(0, self.grid_pad_y))
     
     # configure grid layout
-    # toggle_frame.columnconfigure(0, weight=1)
+    toggle_frame.columnconfigure(0, weight=1)
     toggle_frame.columnconfigure(1, weight=1)
     row_index = 0
+    column_index = 0
     # headline for the toggle widgets
     label = tk.Label(toggle_frame, text="Toggles", justify="center")
     self.add_label_style(label, headline_level=3)
@@ -652,26 +731,26 @@ class Board_Layout_GUI:
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(self.grid_pad_y, 0))
     row_index += 1
-    add_label_and_checkbutton(row_index, "Nodes", self.show_nodes, command=self.update_nodes)
+    add_label_and_checkbutton(row_index, column_index, "Nodes", self.show_nodes, command=self.update_nodes)
     row_index += 1
-    add_label_and_checkbutton(row_index, "Edges", self.show_edges, command=self.update_edges)
+    add_label_and_checkbutton(row_index, column_index, "Edges", self.show_edges, command=self.update_edges)
     row_index += 1
-    add_label_and_checkbutton(row_index, "Labels", self.show_labels, command=self.update_labels)
+    add_label_and_checkbutton(row_index, column_index, "Labels", self.show_labels, command=self.update_labels)
     row_index += 1
-    add_label_and_checkbutton(row_index, "Targets", self.show_targets)
+    add_label_and_checkbutton(row_index, column_index, "Targets", self.show_targets)
+    row_index = 1 # reset for second column
+    column_index = 1
+    add_label_and_checkbutton(row_index, column_index, "Show Tasks", self.show_task_paths)
     row_index += 1
-    add_label_and_checkbutton(row_index, "Show Tasks", self.show_task_paths)
+    add_label_and_checkbutton(row_index, column_index, "Background Image", self.show_background_image, command=self.update_background_image)
     row_index += 1
-    add_label_and_checkbutton(row_index, "Play/Pause", self.simulation_paused)
-    row_index += 1 # TODO: prettify play/pause button
-    add_label_and_checkbutton(row_index, "Background Image", self.show_background_image, command=self.update_background_image)
-    row_index += 1
-    add_label_and_checkbutton(row_index, "Show Plot Frame", self.show_plot_frame, command=self.update_frame)
+    add_label_and_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.update_frame)
     row_index += 1
 
   def update_canvas(self, *args):
     """
     Update the canvas with the current settings.
+    This method will likely not be necessary in the future but will be replaced by more specific methods.
     """
     pass # TODO
 
@@ -744,6 +823,86 @@ class Board_Layout_GUI:
     elif self.plotted_background_image is not None:
       self.plotted_background_image.remove()
 
+  def draw_button_widgets(self, button_frame: tk.Frame):
+    """
+    Draw the button widgets in the given frame.
+    """
+    def add_control_button(
+        row_index: int,
+        column_index: int,
+        text: str,
+        command: Callable = self.update_canvas):
+      """
+      Add a label and checkbutton widget to the given frame.
+
+      Args:
+          row_index (int): row index to place the widgets in
+          text (str): text to display in the label
+          var (tk.BooleanVar): variable to store the checkbutton value in
+      """
+      # label = tk.Label(toggle_frame, text=text)
+      # self.add_label_style(label)
+      # label.grid(
+      #     row=row_index,
+      #     column=0,
+      #     sticky="ne",
+      #     padx=(self.grid_pad_x, self.grid_pad_x),
+      #     pady=(0, self.grid_pad_y))
+      button = tk.Button(button_frame, 
+          text=text,
+          command=command)
+      self.add_button_style(button)
+      button.grid(
+          row=row_index,
+          column=column_index,
+          sticky="nsew",
+          padx=(self.grid_pad_x, 0),
+          pady=(0, self.grid_pad_y))
+      button_frame.columnconfigure(column_index, weight=1)
+
+    row_index = 0
+    column_index = 0
+    # add buttons
+    add_control_button(row_index, column_index, "Play/Pause", self.play_pause)
+    column_index += 1
+    add_control_button(row_index, column_index, "Save", self.save)
+    column_index += 1
+    add_control_button(row_index, column_index, "snap labels", self.move_labels_to_nodes)
+    column_index += 1
+
+  
+  def play_pause(self):
+    """
+    Start/stop the particle simulation.
+    """
+    raise NotImplementedError # TODO
+
+  def save(self):
+    """
+    Save the current canvas.
+    """
+    if self.particle_graph is None:
+      return
+    # save particle graph object
+    filepath = tk.filedialog.asksaveasfilename(
+        title="Save particle graph object with pickle",
+        filetypes=(("PICKLE", "*.pickle"), ("all files", "*.*")))
+    self.particle_graph.save(filepath)
+    # save canvas as image
+    filepath = tk.filedialog.asksaveasfilename(
+        title="Save canvas as image",
+        filetypes=(("PNG", "*.png"), ("all files", "*.*")))
+    self.fig.savefig(filepath)
+
+  def move_labels_to_nodes(self):
+    """
+    Move the labels to the nodes.
+    """
+    if self.particle_graph is None:
+      return
+    self.particle_graph.move_labels_to_nodes(self.ax)
+
+
   def init_animation(self):
     """
     Initialize the animation.
@@ -761,27 +920,27 @@ class Board_Layout_GUI:
     arange nodes along left edge and corresponding labels to their right
     """
     print("init_particle_graph")
-    if self.graph_data is None:
-      print("No graph data available.")
-      return
     node_positions = self.init_node_positions()
-    if self.particle_graph is not None:
-      self.particle_graph.erase()
-    self.particle_graph = TTR_Particle_Graph(
-        locations = self.graph_data["locations"],
-        paths = self.graph_data["paths"],
-        location_positions = node_positions,
-        particle_parameters = self.get_particle_parameters()
-    )
+    if self.particle_graph is None:
+      if self.graph_data is None:
+        print("No graph data available.")
+        return
+      print("new graph")
+      if self.particle_graph is not None:
+        self.particle_graph.erase()
+      self.particle_graph = TTR_Particle_Graph(
+          locations = self.graph_data["locations"],
+          paths = self.graph_data["paths"],
+          location_positions = node_positions,
+          particle_parameters = self.get_particle_parameters()
+      )
     if self.show_nodes.get():
       self.particle_graph.draw_nodes(self.ax)
     if self.show_labels.get():
       self.particle_graph.draw_labels(self.ax)
     if self.show_edges.get():
       self.particle_graph.draw_edges(self.ax)
-    
-    self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
-    
+
 
   def init_node_positions(self, node_spacing: float = 3) -> dict:
     """
@@ -798,20 +957,20 @@ class Board_Layout_GUI:
     node_positions: dict = dict()
     for i, location_name in enumerate(self.graph_data["locations"]):
       node_positions[location_name] = np.array([
-          10,
+          2,
           image_height - node_spacing*(i+1)])
 
     # rescale background image to fit the node positions along the y axis
     if self.background_image_mpl is not None:
-      scale_factor = image_height / self.background_image_mpl.shape[1]
+      scale_factor = image_height / self.background_image_mpl.shape[0]
       self.background_image_extent = np.array([
           0,
-          image_height,
+          self.background_image_mpl.shape[1]*scale_factor,
           0,
-          self.background_image_mpl.shape[0]*scale_factor])
+          image_height,])
       # update plot limits
-      self.ax.set_xlim(0, self.background_image_mpl.shape[0]*scale_factor)
-      self.ax.set_ylim(0, self.background_image_mpl.shape[1]*scale_factor)
+      self.ax.set_xlim(0, self.background_image_mpl.shape[1]*scale_factor)
+      self.ax.set_ylim(0, image_height)
       self.update_background_image()
     else:
       self.ax.set_xlim(0, image_height*2)

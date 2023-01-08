@@ -113,7 +113,6 @@ class Graph_Particle:
       position (np.ndarray): new position of particle
     """
     self.position = position
-    print("new position", self.position)
 
   def __str__(self):
     return f"Particle at\t {self.position} with mass\t {self.mass} and inertia\t {self.inertia}."

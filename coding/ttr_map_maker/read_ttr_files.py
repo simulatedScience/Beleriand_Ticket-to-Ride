@@ -1,6 +1,7 @@
 """
 this module contains functions to read the input files for TTR maps represented as graphs
 """
+import pickle
 
 def read_locations(location_file: str):
   """
@@ -62,3 +63,19 @@ def read_tasks(task_file: str):
         tasks.append((loc_1, loc_2, int(length)))
 
   return tasks
+
+
+def load_particle_graph(particle_graph_file):
+  """
+  load a particle graph from a pickle file
+
+  Args:
+      particle_graph_file (str): path to the pickle file
+
+  Returns:
+      ParticleGraph: particle graph
+  """
+  with open(particle_graph_file, "rb") as file:
+    particle_graph = pickle.load(file)
+
+  return particle_graph

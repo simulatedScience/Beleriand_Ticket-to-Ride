@@ -49,7 +49,7 @@ class Drag_Handler:
     self.current_artist: plt.Artist = None # the artist that is currently being dragged
     self.current_particle: Graph_Particle = None # the particle associated to the artist that is currently being dragged
     self.canvas.mpl_connect("pick_event", self.on_pick)
-    # print("Drag handler initialized.")
+    print("Drag handler initialized.")
 
   def on_pick(self, event):
     """
@@ -67,7 +67,6 @@ class Drag_Handler:
     # Get the rectangle artist that was picked
     self.current_artist = event.artist
     event_position = self.current_artist.get_center()
-    print(f"picked artist: {self.current_artist} at ({event_position[0]}, {event_position[1]})")
 
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
@@ -80,8 +79,8 @@ class Drag_Handler:
     else:
       self.current_particle = self.find_particle_in_list(event_position, self.particle_list)
 
-    print(f"picked artist: {event.artist}")
-    print(f"picked particle: {self.current_particle}, type: {type(self.current_particle)}")
+    # print(f"picked artist: {event.artist}")
+    # print(f"picked particle: {self.current_particle}, type: {type(self.current_particle)}")
 
   def on_motion(self, event):
     """
@@ -92,7 +91,6 @@ class Drag_Handler:
       event (matplotlib.backend_bases.MouseEvent): The mouse event.
     """
     if event.inaxes:
-      print(f"moving particle {self.current_particle} to ({event.xdata}, {event.ydata})")
       self.current_artist.set_center(np.array([event.xdata, event.ydata]))
       # self.current_artist.set_ydata(event.mouseevent.y)
       self.canvas.draw_idle()
@@ -106,22 +104,18 @@ class Drag_Handler:
     Args:
       event (matplotlib.backend_bases.MouseEvent): The mouse event.
     """
-    print(f"released particle {self.current_particle} at ({event.xdata}, {event.ydata})")
     if self.cid_1 is not None:
       self.canvas.mpl_disconnect(self.cid_1)
       self.cid_1 = None
-      print(f"disconnecting cid_1: {self.cid_1}")
     if self.cid_2 is not None:
       self.canvas.mpl_disconnect(self.cid_2)
       self.cid_2 = None
-      print(f"disconnecting cid_2: {self.cid_2}")
 
     # update the particle's position
     x_pos, y_pos = event.xdata, event.ydata
     self.current_particle.set_position(np.array([x_pos, y_pos]))
     self.current_particle.erase()
     self.current_particle.draw(self.ax)
-    print(f"{self.current_particle.position = }, ({x_pos, y_pos})")
 
     self.current_artist = None
     self.current_particle = None
