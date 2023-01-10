@@ -3,10 +3,12 @@ This module implements a class to handle drag and drop events for matplotlib art
 
 It also provides tools to find a particle associated to that artist.
 """
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.image import AxesImage
+from matplotlib.patches import Circle, Rectangle
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 from graph_particle import Graph_Particle
@@ -63,32 +65,36 @@ class Drag_Handler:
       print("Warning: an artist was already being dragged.")
       event.xdata = event.mouseevent.x
       event.ydata = event.mouseevent.y
+      if self.current_particle is None:
+        print("weird")
       self.on_release(event)
     # Get the rectangle artist that was picked
     self.current_artist = event.artist
     # if artist is a circle, get its center
-    if self.current_artist.__class__.__name__ == "Circle":
-      event_position = self.current_artist.get_center()
-    # if artist is a polygon, get its center
-    elif self.current_artist.__class__.__name__ == "Polygon":
-      event_position = self.current_artist.get_xy()
+    if isinstance(self.current_artist, (Circle, Rectangle)):
+      artist_center: np.ndarray = self.current_artist.get_center()
     # if artist is an image, get its center
-    elif self.current_artist.__class__.__name__ == "AxesImage":
-      event_position = np.array([event.mouseevent.x, event.mouseevent.y])
-
+    elif isinstance(self.current_artist, AxesImage):
+      artist_extent: Tuple[float] = self.current_artist.get_extent()
+      artist_center: np.ndarray = np.array(artist_extent[:2]) + np.array(artist_extent[2:])/2
+      print(f"found image at: {artist_center}")
+    else:
+      print(f"Warning: unknown artist type: {type(self.current_artist)}")
+      return
+    print(f"found artist at: {artist_center}")
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
     self.cid_2 = self.canvas.mpl_connect("button_release_event", self.on_release)
 
     # find the particle associated to the artist
     if self.use_cell_list:
-      potential_particles = self.find_cell_particles(event_position)
-      self.current_particle = self.find_particle_in_list(event_position, potential_particles)
+      potential_particles = self.find_cell_particles(artist_center)
+      self.current_particle = self.find_particle_in_list(artist_center, potential_particles)
     else:
-      self.current_particle = self.find_particle_in_list(event_position, self.particle_list)
+      self.current_particle = self.find_particle_in_list(artist_center, self.particle_list)
 
-    # print(f"picked artist: {event.artist}")
-    # print(f"picked particle: {self.current_particle}, type: {type(self.current_particle)}")
+    print(f"picked artist: {event.artist}")
+    print(f"picked particle: {self.current_particle}, type: {type(self.current_particle)}")
 
   def on_motion(self, event):
     """
@@ -100,15 +106,24 @@ class Drag_Handler:
     """
     if event.inaxes:
       # if artist is a circle, move its center
-      if self.current_artist.__class__.__name__ == "Circle":
+      if isinstance(self.current_artist, Circle):
         self.current_artist.set_center(np.array([event.xdata, event.ydata]))
-      # if artist is a polygon, move its center
-      elif self.current_artist.__class__.__name__ == "Polygon":
-        self.current_artist.set_xy((event.xdata, event.ydata))
+      # if artist is a rectangle, move its center
+      elif isinstance(self.current_artist, Rectangle):
+        self.current_artist.set_xy((
+            event.xdata - self.current_artist.get_width()/2,
+            event.ydata - self.current_artist.get_height()/2))
       # if artist is an image, move its center
-      elif self.current_artist.__class__.__name__ == "AxesImage":
-        self.current_artist.set_xdata(event.xdata)
-        self.current_artist.set_ydata(event.ydata)
+      elif isinstance(self.current_artist, AxesImage):
+        half_width: float = self.current_artist.get_extent()[2]/2
+        half_height: float = self.current_artist.get_extent()[3]/2
+        image_extent = (
+          event.xdata - half_width,
+          event.xdata + half_width,
+          event.ydata - half_height,
+          event.ydata + half_height
+        )
+        self.current_artist.set_extent(image_extent)
 
       self.canvas.draw_idle()
 

@@ -167,7 +167,9 @@ class Particle_Label(Graph_Particle):
       # load installed font
       self.img_font = ImageFont.load(font)
       self.img_font.set_size(fontsize)
-    width, height = self.img_font.getsize(label)
+    width, height = self.img_font.getsize(label, stroke_width=5)
+    print(f"size with width 1: {self.img_font.getsize(label, stroke_width=1)}")
+    print(f"size with width 5: {self.img_font.getsize(label, stroke_width=5)}")
     # normalize height
     width /= height
     height = 1

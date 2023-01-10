@@ -256,7 +256,7 @@ class Board_Layout_GUI:
     # variables for plot
     self.board_width = tk.DoubleVar(value=83.1, name="board_width")
     self.board_height = tk.DoubleVar(value=54.0, name="board_height")
-    self.background_image_offset_x = tk.DoubleVar(value=20.0, name="background_image_offset_x")
+    self.background_image_offset_x = tk.DoubleVar(value=15.0, name="background_image_offset_x")
     self.background_image_offset_y = tk.DoubleVar(value=3.0, name="background_image_offset_y")
     self.board_scale_factor = tk.DoubleVar(value=1.25, name="board_scale_factor")
     self.node_scale_factor = tk.DoubleVar(value=0.8, name="node_scale_factor")
@@ -1014,13 +1014,13 @@ class Board_Layout_GUI:
     row_index = 0
     column_index = 0
     # add label for physical board size
-    label = tk.Label(plot_param_frame, text="Board size")
+    label = tk.Label(plot_param_frame, text="Board size", justify="center")
     self.add_label_style(label)
     label.grid(
         row=row_index,
         column=column_index,
         columnspan=4,
-        sticky="ne",
+        sticky="nsew",
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
     row_index += 1
@@ -1031,13 +1031,13 @@ class Board_Layout_GUI:
     column_index += 2
     row_index += 1
     # add label for background image offset
-    label = tk.Label(plot_param_frame, text="Background image offset")
+    label = tk.Label(plot_param_frame, text="Background image offset", justify="center")
     self.add_label_style(label)
     label.grid(
         row=row_index,
         column=0,
         columnspan=4,
-        sticky="ne",
+        sticky="nsew",
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
     row_index += 1
@@ -1049,13 +1049,13 @@ class Board_Layout_GUI:
     column_index += 2
     row_index += 1
     # add label for node and background scale factor
-    label = tk.Label(plot_param_frame, text="scale factors")
+    label = tk.Label(plot_param_frame, text="scale factors", justify="center")
     self.add_label_style(label)
     label.grid(
         row=row_index,
         column=0,
         columnspan=4,
-        sticky="ne",
+        sticky="nsew",
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
     row_index += 1
@@ -1076,7 +1076,7 @@ class Board_Layout_GUI:
     self.animation = anim.FuncAnimation(
         self.fig,
         self.update_canvas,
-        interval=100,
+        interval=1000,
         blit=False)
 
   def init_particle_graph(self):

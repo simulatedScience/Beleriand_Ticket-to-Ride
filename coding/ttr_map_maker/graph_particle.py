@@ -5,7 +5,7 @@ from typing import Tuple, List
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon as PolygonPatch
+from matplotlib.patches import Rectangle
 from shapely.geometry import Polygon
 
 class Graph_Particle:
@@ -359,8 +359,12 @@ class Graph_Particle:
     if color is None:
       print("Warning: Particle not shown since no color was given")
       return
-    polygon_patch = PolygonPatch(
-        self.get_bounding_box(),
+    polygon_patch = Rectangle(
+        self.position - np.array([self.bounding_box_size[0] / 2, self.bounding_box_size[1] / 2]),
+        width=self.bounding_box_size[0],
+        height=self.bounding_box_size[1],
+        angle=-np.rad2deg(self.rotation),
+        rotation_point="center",
         facecolor=color,
         edgecolor=border_color,
         alpha=alpha,
