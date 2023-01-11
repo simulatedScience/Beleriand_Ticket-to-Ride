@@ -2,6 +2,7 @@
 base class for particles in a particle graph
 """
 from typing import Tuple, List
+import json
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -48,15 +49,15 @@ class Graph_Particle:
     
     self.connected_particles = list() # particles that this particle is attracted to
     self.attraction_strength = 0.001 # strength of attraction force between this particle and its connected particles
-    self.target_location = target_position
+    self.target_position: np.ndarray = target_position # target location for this particle
     # bounding box properties
-    self.bounding_box_size = bounding_box_size # corners of bounding box, in counter-clockwise order
+    self.bounding_box_size: Tuple[float, float] = bounding_box_size # size of particle's bounding box (width, height)
     self.bounding_box, self.bounding_box_polygon = self.update_bounding_box() # bounding box as a list of points and as a shapely polygon
 
+    self.plotted_objects: list = list() # objects that are plotted a graph
     # variables for Verlet list algorithm
     self.neighbors = []
     self.interaction_radius = interaction_radius
-    self.plotted_objects: list = list() # objects that are plotted a graph
 
 
   def set_connected_particles(self, particles: List["Graph_Particle"]):
@@ -267,9 +268,9 @@ class Graph_Particle:
           self.angular_velocity > 0 or \
           self.angular_acceleration > 0:
       # update velocity
-      if self.target_location is not None:
+      if self.target_position is not None:
         # if target location is set, apply force towards target location
-        target_vector = self.target_location - self.position
+        target_vector = self.target_position - self.position
         if np.linalg.norm(target_vector) > 0:
           target_vector /= np.linalg.norm(target_vector)
         self.acceleration += target_vector * self.attraction_strength / self.mass
@@ -399,6 +400,73 @@ class Graph_Particle:
     for obj in self.plotted_objects:
       obj.remove()
     self.plotted_objects = []
+
+
+  def to_json(self) -> str:
+    """
+    converts a particle to a JSON string representation containing all information required to recreate the particle.
+    This requires particle ids to be set.
+
+    args:
+      file_path (str): path to json file
+
+    
+    """
+    particle_info = self.to_dict()
+    return json.dumps(particle_info, indent=2)
+
+  def to_dict(self) -> dict:
+    particle_info = {
+      "type": self.__class__.__name__,
+      "id": self.particle_id,
+      "position": self.position.tolist(),
+      "rotation": self.rotation,
+      "mass": self.mass,
+      "bounding_box_size": list(self.bounding_box_size),
+      "velocity_decay": self.velocity_decay,
+      "angular_velocity_decay": self.angular_velocity_decay,
+      "interaction_radius": self.interaction_radius,
+      "connected_particles": [p.get_id() for p in self.connected_particles],
+      "repulsion_strength": self.repulsion_strength,
+    }
+    if self.target_position is not None:
+      particle_info["target_position"] = self.target_position.tolist()
+    else:
+      particle_info["target_position"] = None
+    particle_info = self.add_json_info(particle_info)
+    return particle_info
+
+  def add_json_info(self, particle_info: dict) -> dict:
+    """
+    add additional information to the particle info dictionary. This should be overwritten by subclasses to add subclass-specific information.
+
+    args:
+      particle_info (dict): dictionary containing particle information
+
+    returns:
+      (dict): dictionary containing particle information
+    """
+    print("Warning: add_json_info() method of Particle class should be overwritten by subclasses. Falling back to default implementation.")
+    return particle_info
+
+  def set_id(self, id: int) -> None:
+    """
+    set id of particle
+
+    args:
+      id (int): id of particle
+    """
+    self.particle_id = id
+
+  def get_id(self) -> int:
+    """
+    get id of particle
+
+    returns:
+      (int): id of particle
+    """
+    return self.particle_id
+      
 
 def get_box_overlap(box1_poly: Polygon, box2_poly: Polygon) -> Tuple[np.ndarray, float]:
     """

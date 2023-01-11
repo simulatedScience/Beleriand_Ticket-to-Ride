@@ -544,7 +544,7 @@ class Board_Layout_GUI:
     """
     # try loading particle graph
     try:
-      self.particle_graph = ttr_reader.load_particle_graph(self.particle_graph_file.get())
+      self.particle_graph = ttr_reader.load_particle_graph_pickle(self.particle_graph_file.get())
       locations = self.particle_graph.get_locations()
       paths = self.particle_graph.get_paths()
     except FileNotFoundError:
@@ -944,6 +944,7 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     self.particle_graph.move_edges_to_nodes(self.ax, alpha=1)
+    self.show_edges.set(True)
 
   def scale_background_image(self):
     """
@@ -1096,7 +1097,7 @@ class Board_Layout_GUI:
       self.particle_graph = TTR_Particle_Graph(
           locations = self.graph_data["locations"],
           paths = self.graph_data["paths"],
-          location_positions = node_positions,
+          node_positions = node_positions,
           particle_parameters = self.get_particle_parameters()
       )
     if self.show_nodes.get():
@@ -1107,7 +1108,7 @@ class Board_Layout_GUI:
       self.particle_graph.draw_edges(self.ax)
 
 
-  def init_node_positions(self, node_spacing: float = 3) -> dict:
+  def init_node_positions(self, node_spacing: float = 1.5) -> dict:
     """
     Initialize the node positions along the left edge of the plot.
 

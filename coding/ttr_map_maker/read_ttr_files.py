@@ -2,6 +2,9 @@
 this module contains functions to read the input files for TTR maps represented as graphs
 """
 import pickle
+import json
+
+from ttr_particle_graph import TTR_Particle_Graph
 
 def read_locations(location_file: str):
   """
@@ -65,7 +68,7 @@ def read_tasks(task_file: str):
   return tasks
 
 
-def load_particle_graph(particle_graph_file):
+def load_particle_graph_pickle(particle_graph_file):
   """
   load a particle graph from a pickle file
 
@@ -79,3 +82,18 @@ def load_particle_graph(particle_graph_file):
     particle_graph = pickle.load(file)
 
   return particle_graph
+
+
+def save_particle_graph(particle_graph: TTR_Particle_Graph, particle_graph_file: str):
+  """
+  save a particle graph to a JSON file
+
+  Args:
+      particle_graph (ParticleGraph): particle graph
+      particle_graph_file (str): path to the pickle file
+  """
+  with open(particle_graph_file, "w") as file:
+    file.write(particle_graph.to_json())
+
+if __name__ == "__main__":
+  save_particle_graph(None, "particle_graph.json")

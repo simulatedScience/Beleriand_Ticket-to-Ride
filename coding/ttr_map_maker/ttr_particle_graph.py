@@ -7,6 +7,7 @@ Each edge has a length and a color. Each node has a label close to it.
 A particle graph's layout can be optimized using a simple particle method.
 """
 import pickle
+import json
 from typing import List, Tuple, Dict
 
 import numpy as np
@@ -21,7 +22,7 @@ class TTR_Particle_Graph:
   def __init__(self,
         locations: List[str],
         paths: List[Tuple[str, str, int, str]],
-        location_positions: Dict[str, np.ndarray] = None,
+        node_positions: Dict[str, np.ndarray] = None,
         particle_parameters: dict = {
           "velocity_decay": 0.99,
           "edge-edge": 0.01,
@@ -47,7 +48,7 @@ class TTR_Particle_Graph:
     self.paths = paths
     *self.edges, self.edge_lengths, self.edge_colors = list(zip(*paths))
     self.edges = list(zip(*self.edges))
-    self.location_positions = location_positions
+    self.node_positions = node_positions
     self.particle_parameters = particle_parameters
 
     self.particle_nodes = dict()
@@ -59,10 +60,10 @@ class TTR_Particle_Graph:
 
   def create_particle_system(self):
     for i, label in enumerate(self.node_labels):
-      if self.location_positions is not None:
-        position = self.location_positions[label]
+      if self.node_positions is not None:
+        position = self.node_positions[label]
       else:
-        position = np.array([5*i, 0], dtype=np.float64)
+        position = np.array([3*i, 0], dtype=np.float64)
       self.particle_nodes[label] = Particle_Node(
           label,
           position=position,
@@ -81,7 +82,7 @@ class TTR_Particle_Graph:
           velocity_decay=self.particle_parameters["velocity_decay"],
           repulsion_strength=self.particle_parameters["repulsion_strength"],)
       self.particle_labels[label].position = \
-          self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0], 0]) + np.array([1, 0], dtype=np.float64)
+          self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0] / 2, 0]) + np.array([1, 0], dtype=np.float64)
       self.particle_labels[label].add_connected_particle(self.particle_nodes[label])
       # print(f"node position {label}: {self.particle_nodes[label].position}")
       # print(f"label position {label}: {self.particle_labels[label].position}")
@@ -355,15 +356,53 @@ class TTR_Particle_Graph:
       return f"Particle graph with {len(self.node_labels)} nodes and {len(self.edges)} edges."
 
 
-  def save(self, filename: str):
+  def to_json(self) -> str:
     """
-    save particle graph as a file using pickle
+    converts a particle graph `self` into a JSON string containing info about the graph itself as well as all the particles it contains.
+    Particles are saved in three separate arrays:
+    - `nodes`: contains all node particles
+    - `edges`: contains all edge particles
+    - `labels`: contains all label particles
+
+    Returns:
+        str: JSON string representing the particle graph
+    """
+    all_particles = self.get_particle_list()
+    # add id's to all particles
+    particle_id = 0
+    for particle_node in all_particles:
+      try:
+        particle_node.set_id(particle_id)
+      except AttributeError:
+        particle_node.particle_id = particle_id
+      particle_id += 1
+    # get json string for all particles
+    all_particles_json = []
+    for particle in all_particles:
+      all_particles_json.append(particle.to_dict())
+
+    particle_graph = {
+        "particle_graph": {
+            "n_nodes": len(self.particle_nodes),
+            "n_edges": len(self.particle_edges),
+            "n_labels": len(self.particle_labels),
+            "particles": all_particles_json,
+            "particle_parameters": self.particle_parameters,
+        }
+    }
+    return json.dumps(particle_graph, indent=2)
+
+  def save_json(self, filepath: str) -> None:
+    """
+    Save particle graph as JSON file.
 
     Args:
-        filename (str): filename to save particle graph to
+        filepath (str): filepath to save particle graph to. If the filepath does not end with `.json`, the extension will be added automatically.
     """
-    with open(filename, "wb") as file:
-      pickle.dump(self, file)
+    if not filepath.endswith(".json"):
+      filepath += ".json"
+    with open(filepath, "w") as file:
+      file.write(self.to_json())
 
 
 if __name__ == "__main__":
@@ -390,17 +429,17 @@ if __name__ == "__main__":
   dt = 0.1
   print_at = 0
 
-  fig, ax = plt.subplots()
-  particle_graph.draw(ax, alpha_multiplier=0.1)
+  fig, ax = plt.subplots(dpi=300)
+  # particle_graph.draw(ax, alpha_multiplier=0.1)
   # particle_graph.optimize_layout(iterations=print_at, dt=dt)
   # particle_graph.draw(ax, alpha_multiplier=0.5)
-  particle_graph.optimize_layout(iterations=n_iter-print_at, dt=dt)
+  # particle_graph.optimize_layout(iterations=n_iter-print_at, dt=dt)
   particle_graph.draw(ax, alpha_multiplier=1.0)
   # particle_graph.draw_connections(ax, alpha_multiplier=0.5)
   particle_graph.draw_edge_attractors(ax, alpha_multiplier=0.5)
 
   
-  particle_graph.save("test_particle_graph.pickle")
+  particle_graph.save_json("test_particle_graph.pickle")
 
   ax.set_xlim(-15, 15)
   ax.set_ylim(-10, 10)

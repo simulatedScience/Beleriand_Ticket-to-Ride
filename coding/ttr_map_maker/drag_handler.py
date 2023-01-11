@@ -70,13 +70,16 @@ class Drag_Handler:
       self.on_release(event)
     # Get the rectangle artist that was picked
     self.current_artist = event.artist
+    print(f"found artist: {self.current_artist}")
     # if artist is a circle, get its center
     if isinstance(self.current_artist, (Circle, Rectangle)):
       artist_center: np.ndarray = self.current_artist.get_center()
     # if artist is an image, get its center
     elif isinstance(self.current_artist, AxesImage):
       artist_extent: Tuple[float] = self.current_artist.get_extent()
-      artist_center: np.ndarray = np.array(artist_extent[:2]) + np.array(artist_extent[2:])/2
+      artist_center: np.ndarray = \
+          np.array([artist_extent[0], artist_extent[2]]) + \
+          np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]]) / 2
       print(f"found image at: {artist_center}")
     else:
       print(f"Warning: unknown artist type: {type(self.current_artist)}")
@@ -92,6 +95,9 @@ class Drag_Handler:
       self.current_particle = self.find_particle_in_list(artist_center, potential_particles)
     else:
       self.current_particle = self.find_particle_in_list(artist_center, self.particle_list)
+    if self.current_particle is None:
+      print(f"Warning: no particle found for {type(self.current_artist)} at {artist_center}")
+      self.current_artist = None
 
     print(f"picked artist: {event.artist}")
     print(f"picked particle: {self.current_particle}, type: {type(self.current_particle)}")

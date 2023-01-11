@@ -89,3 +89,17 @@ class Particle_Node(Graph_Particle):
     self.velocity_decay = node_parameters.get("node_velocity_decay", self.velocity_decay)
     self.interaction_radius = node_parameters.get("interaction_radius", self.interaction_radius)
     self.repulsion_strength = node_parameters.get("repulsion_strength", self.repulsion_strength)
+
+  def add_json_info(self, particle_info: dict) -> dict:
+    """
+    add node-specific particle information to json dictionary for saving.
+
+    Args:
+        particle_info (dict): json dictionary
+
+    Returns:
+        dict: json dictionary with node-specific information
+    """
+    particle_info["color"] = self.color
+    particle_info["target_attraction"] = self.target_attraction
+    return particle_info

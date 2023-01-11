@@ -24,7 +24,7 @@ class Particle_Label(Graph_Particle):
         velocity_decay: float = 0.9999,
         repulsion_strength: float = 1,
         node_attraction: float = 0.1,
-        fontsize: int = 20,
+        fontsize: int = 150,
         font_name: str = None,
         font_path: str = "beleriand_ttr\\MiddleEarth.ttf"):
     """
@@ -38,12 +38,14 @@ class Particle_Label(Graph_Particle):
         font_name (str, optional): name of the font. Defaults to None.
         font_path (str, optional): path to the font file as `.ttf`. This is only used  Defaults to "beleriand_ttr\\MiddleEarth.ttf".
     """
+    self.inside_stroke_width = fontsize // 15
+    self.outline_stroke_width = fontsize // 5
     if font_name is None:
       font_name = font_path.split("\\")[-1].strip(".ttf")
       fontManager.addfont(font_path)
-      width, height = self.get_label_size(label, fontsize, font_path)
+      width, height, *offset = self.get_label_size(label, fontsize, font_path)
     else:
-      width, height = self.get_label_size(label, fontsize, font_name)
+      width, height, *offset = self.get_label_size(label, fontsize, font_name)
     self.font_name = font_name
     super().__init__(
         position,
@@ -55,6 +57,8 @@ class Particle_Label(Graph_Particle):
         velocity_decay = velocity_decay,
         repulsion_strength = repulsion_strength,
     )
+    self.text_x_offset = offset[0]
+    self.text_y_offset = offset[1]
     self.label = label
     self.fontsize = fontsize
     self.color = "#222222"
@@ -114,41 +118,48 @@ class Particle_Label(Graph_Particle):
       color = self.color
     text_image_size = self.img_font.getsize(self.label)
     if border_color is not None:
-      self.draw_label_outline(ax, border_color, alpha, zorder)
+      text_image = self.draw_label_outline(ax, border_color, alpha, zorder)
+    else:
+      text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
 
-    text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
     text_draw = ImageDraw.Draw(text_image)
-    text_draw.text((0, 0), self.label, font=self.img_font, fill=color, picker=True, stroke_width=1)
+    text_draw.text((self.text_x_offset, self.text_y_offset), self.label, font=self.img_font, fill=color, picker=True, stroke_width=self.inside_stroke_width)
 
     label_extent = (
         self.position[0] - self.bounding_box_size[0] / 2,
         self.position[0] + self.bounding_box_size[0] / 2,
         self.position[1] - self.bounding_box_size[1] / 2,
         self.position[1] + self.bounding_box_size[1] / 2)
-    self.plotted_objects.append(ax.imshow(text_image, extent=label_extent, zorder=zorder, alpha=alpha))
+    self.plotted_objects.append(ax.imshow(
+        text_image,
+        extent=label_extent,
+        zorder=zorder,
+        alpha=alpha,
+        picker=True))
     
 
   def draw_label_outline(self,
       ax: plt.Axes,
-      border_color: str = "#ffffff",
+      border_color: str = "#ff00ff",
       alpha: float = 1,
       zorder: int = 4):
 
-    text_image_size = self.img_font.getsize(self.label)
+    text_image_size = self.img_font.getsize(self.label, stroke_width=self.outline_stroke_width)
     outline_image = Image.new("RGBA", text_image_size, (0,0,0,0))
     text_draw = ImageDraw.Draw(outline_image)
-    text_draw.text((0, 0), self.label, font=self.img_font, fill="#eeeeee", picker=True, border=1, borderfill=border_color, stroke_width=5, stroke_fill=border_color)
+    text_draw.text((self.text_x_offset, self.text_y_offset), self.label, font=self.img_font, fill=border_color, picker=True, border=1, borderfill=border_color, stroke_width=self.outline_stroke_width, stroke_fill=border_color)
 
-    label_extent = (
-        self.position[0] - self.bounding_box_size[0] / 2,
-        self.position[0] + self.bounding_box_size[0] / 2,
-        self.position[1] - self.bounding_box_size[1] / 2,
-        self.position[1] + self.bounding_box_size[1] / 2)
+    return outline_image
+    # label_extent = (
+    #     self.position[0] - self.bounding_box_size[0] / 2,
+    #     self.position[0] + self.bounding_box_size[0] / 2,
+    #     self.position[1] - self.bounding_box_size[1] / 2,
+    #     self.position[1] + self.bounding_box_size[1] / 2)
 
-    self.plotted_objects.append(
-        ax.imshow(outline_image, extent=label_extent, alpha=alpha, zorder=zorder))
+    # self.plotted_objects.append(
+    #     ax.imshow(outline_image, extent=label_extent, alpha=alpha, zorder=zorder))
 
-  def get_label_size(self, label: str, fontsize: int, font: str) -> Tuple[float, float]:
+  def get_label_size(self, label: str, fontsize: int, font: str) -> Tuple[float, float, float, float]:
     """
     get size of a label with a given font size
 
@@ -167,13 +178,31 @@ class Particle_Label(Graph_Particle):
       # load installed font
       self.img_font = ImageFont.load(font)
       self.img_font.set_size(fontsize)
-    width, height = self.img_font.getsize(label, stroke_width=5)
-    print(f"size with width 1: {self.img_font.getsize(label, stroke_width=1)}")
-    print(f"size with width 5: {self.img_font.getsize(label, stroke_width=5)}")
+    width, height = self.img_font.getsize(label, stroke_width=self.outline_stroke_width)
+    small_width, small_height = self.img_font.getsize(label, stroke_width=self.inside_stroke_width)
+    text_x_offset = (width - small_width) // 2
+    text_y_offset = (height - small_height) // 2
     # normalize height
     width /= height
     height = 1
-    return width, height
+    return width, height, text_x_offset, text_y_offset
+
+  def add_json_info(self, particle_info: dict) -> dict:
+    """
+    Add label-specific particle information to json dictionary for saving.
+
+    Args:
+        particle_info (dict): json dictionary
+
+    Returns:
+        (dict): json dictionary with label-specific information
+    """
+    particle_info["label"] = self.label
+    particle_info["color"] = self.color
+    particle_info["fontsize"] = self.fontsize
+    particle_info["font_name"] = self.font_name
+    particle_info["node_attraction"] = self.node_attraction
+    return particle_info
 
 
 if __name__ == "__main__":

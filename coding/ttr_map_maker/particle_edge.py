@@ -187,3 +187,19 @@ class Particle_Edge(Graph_Particle):
     # self.plotted_objects.append(
     #     ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder)
     # )
+
+  def add_json_info(self, particle_info: dict) -> dict:
+    """
+    add edge-specific particle information to json dictionary for saving.
+
+    Args:
+        particle_info (dict): json dictionary
+
+    Returns:
+        dict: json dictionary with edge-specific information
+    """
+    particle_info["node_attraction"] = self.node_attraction
+    particle_info["edge_attraction"] = self.edge_attraction
+    particle_info["color"] = self.color
+    particle_info["border_color"] = self.border_color
+    return particle_info
