@@ -234,8 +234,16 @@ class Particle_Edge(Graph_Particle):
         self.position[1] + self.bounding_box_size[1] / 2)
       plotted_image = ax.imshow(mpl_image, extent=edge_extent, zorder=zorder, picker=True)
       # rotate image using transformation
+      # keep image upright
+      if self.rotation >= np.pi/2:
+        image_rotation = -self.rotation + np.pi
+      elif self.rotation <= -np.pi/2:
+        image_rotation = -self.rotation - np.pi
+      else:
+        image_rotation = -self.rotation
+      # print(f"image rotation {self.location_1_name}-{self.location_2_name}-{self.path_index}: {image_rotation}")
       plotted_image.set_transform(
-        transforms.Affine2D().rotate_around(self.position[0], self.position[1], -self.rotation) + ax.transData
+        transforms.Affine2D().rotate_around(self.position[0], self.position[1], image_rotation) + ax.transData
       )
       self.plotted_objects.append(plotted_image)
 

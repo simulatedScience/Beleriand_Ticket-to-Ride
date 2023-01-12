@@ -66,4 +66,4 @@ def color_to_energy_type(color: str) -> bool:
   elif color == "white":
     return "fairy"
   else:
-    raise ValueError(f"Color '{color}' could not be converted. Color must be one of the following: 'green', 'red', 'blue', 'yellow', 'orange', 'purple', 'black', 'gray'/'grey', 'pink'")
+    raise ValueError(f"Color '{color}' could not be converted. Color must be one of the following: 'green', 'red', 'blue', 'yellow', 'orange', 'purple', 'black', 'gray'/'grey', 'white'")

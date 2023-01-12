@@ -123,8 +123,7 @@ class Graph_Particle:
     args:
       rotation (float): new rotation of particle
     """
-    self.rotation = rotation % np.pi - np.pi
-    print(self.rotation)
+    self.rotation = rotation % (2*np.pi)
     self.bounding_box, self.bounding_box_polygon = self.update_bounding_box()
 
   def get_rotation(self):

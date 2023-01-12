@@ -32,7 +32,6 @@ User interactions:
 import tkinter as tk
 from tkinter import ttk
 from typing import Callable
-import threading
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -195,8 +194,6 @@ class Board_Layout_GUI:
     self.ax.set_xlim(0, 20)
     self.ax.set_ylim(0, 15)
     self.ax.axis("scaled")
-    self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=None, hspace=None)
-    self.update_frame()
     
     # create canvas for matplotlib figure
     self.canvas = FigureCanvasTkAgg(self.fig, master=self.animation_frame)
@@ -213,7 +210,10 @@ class Board_Layout_GUI:
         sticky="nsew",
         padx=(0, 0),
         pady=(self.grid_pad_y, 0))
-    self.canvas.draw()
+
+    self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=None, hspace=None)
+    self.update_frame()
+    # self.canvas.draw_idle()
 
 
   def init_tk_variables(self):
@@ -797,6 +797,7 @@ class Board_Layout_GUI:
       self.particle_graph.draw_nodes(self.ax)
     else:
       self.particle_graph.erase_nodes()
+    self.canvas.draw_idle()
 
   def update_edges(self, *args):
     """
@@ -808,6 +809,7 @@ class Board_Layout_GUI:
       self.particle_graph.draw_edges(self.ax)
     else:
       self.particle_graph.erase_edges()
+    self.canvas.draw_idle()
 
   def update_labels(self, *args):
     """
@@ -819,6 +821,7 @@ class Board_Layout_GUI:
       self.particle_graph.draw_labels(self.ax)
     else:
       self.particle_graph.erase_labels()
+    self.canvas.draw_idle()
 
   def update_frame(self):
     """
@@ -841,6 +844,7 @@ class Board_Layout_GUI:
     else:
       self.ax.grid(False)
       self.fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
+    self.canvas.draw_idle()
 
   def update_background_image(self):
     """
@@ -857,6 +861,7 @@ class Board_Layout_GUI:
       self.plotted_background_image = self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent)
     elif self.plotted_background_image is not None:
       self.plotted_background_image.remove()
+    self.canvas.draw_idle()
 
   def update_edge_images(self):
     """
@@ -866,16 +871,18 @@ class Board_Layout_GUI:
       return
     if self.use_edge_images.get():
       edge_colors = self.particle_graph.get_edge_colors()
-      color_map = self.get_edge_color_map(edge_colors)
-      self.particle_graph.set_edge_images(color_map)
+      image_map = self.get_edge_color_map(edge_colors)
+      self.particle_graph.set_edge_images(image_map)
       self.particle_graph.erase_edges()
       self.particle_graph.draw_edges(self.ax)
     else:
       edge_colors = self.particle_graph.get_edge_colors()
-      color_map = {color: None for color in edge_colors}
+      color_map = {color: color for color in edge_colors}
       self.particle_graph.set_edge_colors(color_map)
       self.particle_graph.erase_edges()
       self.particle_graph.draw_edges(self.ax)
+    
+    self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:
     """
@@ -978,6 +985,7 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     self.particle_graph.move_labels_to_nodes(self.ax)
+    self.canvas.draw_idle()
 
   def move_edges_to_nodes(self):
     """
@@ -987,6 +995,7 @@ class Board_Layout_GUI:
       return
     self.particle_graph.move_edges_to_nodes(self.ax, alpha=1)
     self.show_edges.set(True)
+    self.canvas.draw_idle()
 
   def scale_background_image(self):
     """
@@ -1116,11 +1125,11 @@ class Board_Layout_GUI:
     Initialize the animation.
     """
     # pass
-    self.animation = anim.FuncAnimation(
-        self.fig,
-        self.update_canvas,
-        interval=10000,
-        blit=False)
+    # self.animation = anim.FuncAnimation(
+    #     self.fig,
+    #     self.update_canvas,
+    #     interval=10000,
+    #     blit=False)
 
   def init_particle_graph(self):
     """
