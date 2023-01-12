@@ -13,29 +13,56 @@ from graph_particle import Graph_Particle
 class Particle_Edge(Graph_Particle):
   def __init__(self,
         color: str,
+        location_1_name: str,
+        location_2_name: str,
         position: np.ndarray = np.array([0, 0]),
         rotation: float = 0,
         mass: float = 0.1,
+        bounding_box_size: tuple = (4, 1),
+        border_color: str = "#555555",
         node_attraction: float = 0.1,
         edge_attraction: float = 0.1,
         interaction_radius: float = 5,
         velocity_decay: float = 0.9999,
+        angular_velocity_decay: float = 0.9999,
         repulsion_strength: float = 1,
+        path_index: int = 0,
         ):
+    """
+    initialize a particle edge as a part of a connection two nodes `location_1` and `location_2`.  `path_index` is the index of the edge along the path between the two given locations. Counting starts at index 0, up  to path length -1.
+
+    Args:
+        color (str): color of the edge
+        location_1_name (str): name of the first location
+        location_2_name (str): name of the second location
+        position (np.ndarray, optional): position of the edge. Defaults to np.array([0, 0]).
+        rotation (float, optional): rotation of the edge in radians. Defaults to 0.
+        mass (float, optional): mass of the edge. Defaults to 0.1.
+        node_attraction (float, optional): attraction force between the edge and connected nodes. Defaults to 0.1.
+        edge_attraction (float, optional): attraction force between the edge and the other edges. Defaults to 0.1.
+        interaction_radius (float, optional): interaction radius of the edge for repulsion. Defaults to 5.
+        velocity_decay (float, optional): velocity decay factor of the edge. Defaults to 0.9999.
+        repulsion_strength (float, optional): repulsion strength of the edge. Defaults to 1.
+        path_index (int, optional): index of the edge along the path between the two given locations. Defaults to 1.
+    """
     super().__init__(
         position,
         rotation = rotation,
         target_position = None,
         mass = mass,
-        bounding_box_size = (4, 1),
+        bounding_box_size = bounding_box_size,
         interaction_radius = interaction_radius,
         velocity_decay = velocity_decay,
+        angular_velocity_decay=angular_velocity_decay,
         repulsion_strength=repulsion_strength,
     )
     self.node_attraction = node_attraction
     self.edge_attraction = edge_attraction
     self.color = color
-    self.border_color = "#555555"
+    self.border_color = border_color
+    self.location_1_name = location_1_name
+    self.location_2_name = location_2_name
+    self.path_index = path_index
 
 
   def get_attraction_forces(self, other_particle):
@@ -202,4 +229,7 @@ class Particle_Edge(Graph_Particle):
     particle_info["edge_attraction"] = self.edge_attraction
     particle_info["color"] = self.color
     particle_info["border_color"] = self.border_color
+    particle_info["location_1_name"] = self.location_1_name
+    particle_info["location_2_name"] = self.location_2_name
+    particle_info["path_index"] = self.path_index
     return particle_info

@@ -1,0 +1,390 @@
+{
+  "particle_graph": {
+    "n_nodes": 3,
+    "n_edges": 7,
+    "n_labels": 3,
+    "particles": [
+      {
+        "particle_type": "Particle_Node",
+        "id": 0,
+        "position": [
+          0.0,
+          6.0
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15,
+        "connected_particles": [],
+        "repulsion_strength": 2,
+        "target_position": [
+          0.0,
+          6.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Menegroth"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 1,
+        "position": [
+          -6.0,
+          -2.0
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15,
+        "connected_particles": [],
+        "repulsion_strength": 2,
+        "target_position": [
+          -6.0,
+          -2.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Nargothrond"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 2,
+        "position": [
+          4.0,
+          -5.0
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15,
+        "connected_particles": [],
+        "repulsion_strength": 2,
+        "target_position": [
+          4.0,
+          -5.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Hithlum"
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 3,
+        "position": [
+          0.0,
+          8.0
+        ],
+        "rotation": 0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          5.0,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          0
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "label": "Menegroth",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.001
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 4,
+        "position": [
+          -6.0,
+          0.0
+        ],
+        "rotation": 0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          5.878787878787879,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          1
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "label": "Nargothrond",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.001
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 5,
+        "position": [
+          4.0,
+          -3.0
+        ],
+        "rotation": 1.0995574287564276,
+        "mass": 0.2,
+        "bounding_box_size": [
+          3.7662337662337664,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          2
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "label": "Hithlum",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.001
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 6,
+        "position": [
+          -1.8826565499935777,
+          3.741002663049456
+        ],
+        "rotation": 2.214297435588181,
+        "mass": 1,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          0,
+          7
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "#dd0000",
+        "border_color": "#555555",
+        "location_1_name": "Menegroth",
+        "location_2_name": "Nargothrond",
+        "path_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 7,
+        "position": [
+          -4.475597682938072,
+          0.33431936604259427
+        ],
+        "rotation": 2.214297435588181,
+        "mass": 1,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          6,
+          1
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "#dd0000",
+        "border_color": "#555555",
+        "location_1_name": "Menegroth",
+        "location_2_name": "Nargothrond",
+        "path_index": 1
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 8,
+        "position": [
+          2.475691311764189,
+          4.844381868557751
+        ],
+        "rotation": 0.4366271598135407,
+        "mass": 1,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          0,
+          9
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "#5588ff",
+        "border_color": "#555555",
+        "location_1_name": "Menegroth",
+        "location_2_name": "Hithlum",
+        "path_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 9,
+        "position": [
+          5.082424684777537,
+          1.7549200931345252
+        ],
+        "rotation": 1.2743852007708192,
+        "mass": 1,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          8,
+          10
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "#5588ff",
+        "border_color": "#555555",
+        "location_1_name": "Menegroth",
+        "location_2_name": "Hithlum",
+        "path_index": 1
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 10,
+        "position": [
+          4.958294524157855,
+          -2.493089848072413
+        ],
+        "rotation": 1.8852504389688347,
+        "mass": 1,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          9,
+          2
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "#5588ff",
+        "border_color": "#555555",
+        "location_1_name": "Menegroth",
+        "location_2_name": "Hithlum",
+        "path_index": 2
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 11,
+        "position": [
+          -3.054996955846142,
+          -2.948233770344585
+        ],
+        "rotation": 0.2914567944778671,
+        "mass": 1,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          1,
+          12
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "#22dd22",
+        "border_color": "#555555",
+        "location_1_name": "Nargothrond",
+        "location_2_name": "Hithlum",
+        "path_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 12,
+        "position": [
+          1.1654285052230886,
+          -4.217119856679124
+        ],
+        "rotation": 0.2914567944778671,
+        "mass": 1,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15,
+        "connected_particles": [
+          11,
+          2
+        ],
+        "repulsion_strength": 2,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "#22dd22",
+        "border_color": "#555555",
+        "location_1_name": "Nargothrond",
+        "location_2_name": "Hithlum",
+        "path_index": 1
+      }
+    ],
+    "particle_parameters": {
+      "velocity_decay": 0.99,
+      "edge-edge": 0.01,
+      "edge-node": 0.01,
+      "node-label": 0.001,
+      "node-target": 0.001,
+      "node_mass": 1,
+      "edge_mass": 1,
+      "label_mass": 0.2,
+      "interaction_radius": 15,
+      "repulsion_strength": 2
+    }
+  }
+}

@@ -13,6 +13,7 @@ from typing import List, Tuple, Dict
 import numpy as np
 import matplotlib.pyplot as plt
 
+from graph_particle import Graph_Particle
 from particle_node import Particle_Node
 from particle_label import Particle_Label
 from particle_edge import Particle_Edge
@@ -46,8 +47,6 @@ class TTR_Particle_Graph:
     """
     self.node_labels = locations
     self.paths = paths
-    *self.edges, self.edge_lengths, self.edge_colors = list(zip(*paths))
-    self.edges = list(zip(*self.edges))
     self.node_positions = node_positions
     self.particle_parameters = particle_parameters
 
@@ -59,6 +58,9 @@ class TTR_Particle_Graph:
 
 
   def create_particle_system(self):
+    """
+    Create the particle system from the given locations and paths connecting them.
+    """
     for i, label in enumerate(self.node_labels):
       if self.node_positions is not None:
         position = self.node_positions[label]
@@ -88,18 +90,21 @@ class TTR_Particle_Graph:
       # print(f"label position {label}: {self.particle_labels[label].position}")
 
     # create edges and add connections between particles
-    for ((location_1, location_2), length, color) in zip(self.edges, self.edge_lengths, self.edge_colors):
-      node_1 = self.particle_nodes[location_1]
-      node_2 = self.particle_nodes[location_2]
-      last_particle = node_1
-      
+    for (location_1, location_2, length, color) in self.paths:
+      node_1: Graph_Particle = self.particle_nodes[location_1]
+      node_2: Graph_Particle = self.particle_nodes[location_2]
+      last_particle: Graph_Particle = node_1 # connect the first edge particle to the first node
+      # create `length` edge particles between `node_1` and `node_2``
       for i in range(length):
-        edge_position = node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
-        edge_rotation = -np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
-        edge_particle = Particle_Edge(
-            color,
-            edge_position,
-            edge_rotation,
+        edge_position: np.ndarray = node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
+        edge_rotation: float = -np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
+        edge_particle: Graph_Particle = Particle_Edge(
+            color=color,
+            location_1_name=location_1,
+            location_2_name=location_2,
+            path_index=i,
+            position=edge_position,
+            rotation=edge_rotation,
             mass=self.particle_parameters["edge_mass"],
             node_attraction=self.particle_parameters["edge-node"],
             edge_attraction=self.particle_parameters["edge-edge"],
@@ -107,10 +112,11 @@ class TTR_Particle_Graph:
             velocity_decay=self.particle_parameters["velocity_decay"],
             repulsion_strength=self.particle_parameters["repulsion_strength"],)
         edge_particle.add_connected_particle(last_particle)
-        if i >= 1:
+        if i >= 1: # if not the first edge particle, add connection to previous edge particle
           last_particle.add_connected_particle(edge_particle)
         self.particle_edges[(location_1, location_2, i)] = edge_particle
         last_particle = edge_particle
+      # connect last edge particle to node_2
       last_particle.add_connected_particle(node_2)
 
 
@@ -169,13 +175,13 @@ class TTR_Particle_Graph:
     for path in self.paths:
       location_1 = path[0]
       location_2 = path[1]
-      lenght = path[2]
+      length = path[2]
       node_1 = self.particle_nodes[location_1]
       node_2 = self.particle_nodes[location_2]
-      edge_particles = [self.particle_edges[(location_1, location_2, i)] for i in range(lenght)]
+      edge_particles = [self.particle_edges[(location_1, location_2, i)] for i in range(length)]
       for i, particle in enumerate(edge_particles):
         particle.set_position(
-          node_1.position + (node_2.position - node_1.position) * (i+1) / (lenght+1)
+          node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
         )
         particle.set_rotation(
           -np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
@@ -352,8 +358,8 @@ class TTR_Particle_Graph:
             head_length=0.4,
             zorder=0)
 
-  def __str__(self):
-      return f"Particle graph with {len(self.node_labels)} nodes and {len(self.edges)} edges."
+  # def __str__(self): # TODO
+  #     return f"Particle graph with {len(self.node_labels)} nodes and {len(self.edges)} edges."
 
 
   def to_json(self) -> str:
@@ -401,8 +407,103 @@ class TTR_Particle_Graph:
     """
     if not filepath.endswith(".json"):
       filepath += ".json"
-    with open(filepath, "w") as file:
+    with open(filepath, "w", encoding="utf-8") as file:
       file.write(self.to_json())
+
+
+  def add_particle(self, particle: Graph_Particle) -> None:
+    """
+    add a particle to the particle graph.
+
+    Args:
+        particle (Graph_Particle): particle to add
+    """
+    if isinstance(particle, Particle_Node):
+      self.particle_nodes[particle.label] = particle
+    elif isinstance(particle, Particle_Edge):
+      loc_1 = particle.location_1_name
+      loc_2 = particle.location_2_name
+      path_index = particle.path_index
+      self.particle_edges[(loc_1, loc_2, path_index)] = particle
+    elif isinstance(particle, Particle_Label):
+      self.particle_labels[particle.label] = particle
+
+  def build_paths(self) -> None:
+    """
+    calculate a list of all paths in the particle graph as tuples (location_1, location_2, length, color) from the list of edges
+    """
+    locations_to_lengths = dict()
+    for (loc_1, loc_2, min_path_length), edge in self.particle_edges.items():
+      temp_key = (loc_1, loc_2, edge.color)
+      if not temp_key in locations_to_lengths:
+        locations_to_lengths[temp_key] = min_path_length
+        continue
+      if min_path_length > locations_to_lengths[temp_key]:
+        locations_to_lengths[temp_key] = min_path_length
+    self.paths = []
+    for (loc_1, loc_2, color), length in locations_to_lengths.items():
+      self.paths.append((loc_1, loc_2, length+1, color))
+
+  @staticmethod
+  def load_json(filepath: str) -> None:
+    """
+    create a particle graph from a JSON string.
+
+    Args:
+        filepath (str): filepath to JSON file containing info for a particle graph
+
+    Returns:
+        TTR_Particle_Graph: particle graph
+    """
+    # read JSON string from file
+    with open(filepath, "r", encoding="utf-8") as file:
+      json_string = file.read()
+    # load JSON string into python dictionary
+    graph_info = json.loads(json_string)
+    particle_dicts = graph_info["particle_graph"]["particles"]
+    if len(particle_dicts) == 0:
+      print("Warning: no particles found in JSON")
+      return None
+    particle_parameters = graph_info["particle_graph"]["particle_parameters"]
+    particle_graph = TTR_Particle_Graph(
+        locations = [],
+        paths = [],
+        node_positions = [],
+        particle_parameters = particle_parameters,
+      )
+    particle_list = []
+    for particle_info in particle_dicts:
+      connected_particles = particle_info.pop("connected_particles")
+      particle_type = particle_info.pop("particle_type")
+      id = particle_info.pop("id")
+      
+      particle_info["position"] = np.array(particle_info["position"])
+      particle_info["bounding_box_size"] = tuple(particle_info["bounding_box_size"])
+      if particle_type == "Particle_Node":
+        particle_info.pop("rotation")
+        particle_info.pop("angular_velocity_decay")
+        particle_info["target_position"] = np.array(particle_info["target_position"])
+        particle = Particle_Node(**particle_info)
+        particle_graph.add_particle(particle)
+      elif particle_type == "Particle_Edge":
+        particle_info.pop("target_position")
+        particle = Particle_Edge(**particle_info)
+        particle_graph.add_particle(particle)
+      elif particle_type == "Particle_Label":
+        particle_info.pop("bounding_box_size")
+        particle_info.pop("target_position")
+        particle = Particle_Label(**particle_info)
+        particle_graph.add_particle(particle)
+      # add connected particles back to particle info
+      particle_info["connected_particles"] = connected_particles
+      particle_list.append(particle)
+    # add connections to particles
+    for particle, particle_info in zip(particle_list, particle_dicts):
+      for connected_particle_id in particle_info["connected_particles"]:
+        particle.add_connected_particle(particle_list[connected_particle_id])
+    # build list of paths in graph
+    particle_graph.build_paths()
+    return particle_graph
 
 
 if __name__ == "__main__":
@@ -439,11 +540,22 @@ if __name__ == "__main__":
   particle_graph.draw_edge_attractors(ax, alpha_multiplier=0.5)
 
   
-  particle_graph.save_json("test_particle_graph.pickle")
+  particle_graph.save_json("test_particle_graph.json")
 
   ax.set_xlim(-15, 15)
   ax.set_ylim(-10, 10)
   ax.legend()
+  ax.set_aspect("equal")
+  plt.grid(color="#dddddd", linestyle="--", linewidth=1)
+  plt.show()
+
+  recovered_graph = TTR_Particle_Graph.load_json("test_particle_graph.json")
+
+  fig, ax = plt.subplots(dpi=100)
+  recovered_graph.draw(ax, alpha_multiplier=1.0)
+  ax.set_xlim(-15, 15)
+  ax.set_ylim(-10, 10)
+  ax.set_title("recovered graph")
   ax.set_aspect("equal")
   plt.grid(color="#dddddd", linestyle="--", linewidth=1)
   plt.show()

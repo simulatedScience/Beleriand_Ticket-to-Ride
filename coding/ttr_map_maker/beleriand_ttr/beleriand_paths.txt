@@ -20,7 +20,7 @@ Barad Nimras ; Cape Balar ; 7 ; gray
 Barad Nimras ; Eglarest ; 2 ; green
 Belegost ; Nogrod ; 1 ; red
 Belegost ; Sarn Athrud ; 3 ; gray
-Belegost ; Targelion ; 3 ; gray
+Belegost ; Thargelion ; 3 ; gray
 Brithombar ; Vinyamar ; 5 ; gray
 Cape Balar ; Havens of Sirion ; 3 ; red
 Cirith Ninniach ; Linaewen ; 2 ; green
@@ -46,10 +46,10 @@ Isle of Balar ; Cape Balar ; 2 ; yellow
 Isle of Balar ; Havens of Sirion ; 5 ; white
 Ladros ; Taur-Nu-Fuin ; 3 ; gray
 Lake Heleron ; Belegost ; 4 ; yellow
-Lake Heleron ; Targelion ; 2 ; black
+Lake Heleron ; Thargelion ; 2 ; black
 Lake Mithrim ; Cirith Ninniach ; 3 ; gray
 Lake Mithrim ; Ered Wethrin ; 3 ; black
-Linaewen ; Nuath ; 3 ; orange
+Linaewen ; Eithel Ivrin ; 3 ; orange
 Menegroth ; Forest of Neldoreth ; 1 ; yellow
 Nan Elmoth ; Andrum ; 5 ; gray
 Nan Elmoth ; Menegroth ; 3 ; gray
@@ -65,19 +65,19 @@ Nargothrond ; Eglarest ; 3 ; gray
 Nargothrond ; Gates of Sirion ; 2 ; gray
 Nargothrond ; River Nenning ; 3 ; red
 Nogrod ; Sarn Athrud ; 3 ; green
-Nuath ; Ered Wethrin ; 1 ; purple
-Nuath ; Nargothrond ; 4 ; gray
+Eithel Ivrin ; Ered Wethrin ; 1 ; purple
+Eithel Ivrin ; Nargothrond ; 4 ; gray
 Pass of Aglon ; Ladros ; 3 ; yellow
 Pass of Aglon ; Menegroth ; 4 ; gray
 River Nenning ; Brithombar ; 2 ; gray
-River Nenning ; Nuath ; 3 ; gray
-Targelion ; Himring ; 3 ; gray
-Targelion ; Nan Elmoth ; 3 ; orange
-Targelion ; Sarn Athrud ; 3 ; blue
+River Nenning ; Eithel Ivrin ; 3 ; gray
+Thargelion ; Himring ; 3 ; gray
+Thargelion ; Nan Elmoth ; 3 ; orange
+Thargelion ; Sarn Athrud ; 3 ; blue
 Taur-Nu-Fuin ; Eithel Sirion ; 3 ; gray
 Taur-Nu-Fuin ; Tol Sirion ; 2 ; gray
 Tol Sirion ; Ered Wethrin ; 2 ; gray
 Vinyamar ; Linaewen ; 2 ; gray
-Vinyamar ; Nuath ; 5 ; yellow
+Vinyamar ; Eithel Ivrin ; 5 ; yellow
 Vinyamar ; River Nenning ; 4 ; gray
 West Taur-im-Duinath ; Havens of Sirion ; 3 ; gray

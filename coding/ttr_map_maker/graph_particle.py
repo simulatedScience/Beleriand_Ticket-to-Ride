@@ -123,10 +123,18 @@ class Graph_Particle:
     args:
       rotation (float): new rotation of particle
     """
-    if rotation > np.pi or rotation < - np.pi:
-      rotation = rotation % (2 * np.pi)
-    self.rotation = rotation
+    self.rotation = rotation % (2 * np.pi)
+    print(self.rotation)
     self.bounding_box, self.bounding_box_polygon = self.update_bounding_box()
+
+  def get_rotation(self):
+    """
+    Get the rotation of the particle.
+
+    returns:
+      (float): rotation of particle
+    """
+    return self.rotation
 
   def __str__(self):
     return f"Particle at\t {self.position} with mass\t {self.mass} and inertia\t {self.inertia}."
@@ -417,7 +425,7 @@ class Graph_Particle:
 
   def to_dict(self) -> dict:
     particle_info = {
-      "type": self.__class__.__name__,
+      "particle_type": self.__class__.__name__,
       "id": self.particle_id,
       "position": self.position.tolist(),
       "rotation": self.rotation,

@@ -38,7 +38,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.animation as anim
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
 from ttr_particle_graph import TTR_Particle_Graph
 from particle_edge import Particle_Edge
@@ -102,7 +102,7 @@ class Board_Layout_GUI:
       bg=self.color_config["frame_bg_color"],
       )
 
-  def add_label_style(self, label: tk.Label, headline_level=5):
+  def add_label_style(self, label: tk.Label, headline_level: int = 5, font_type: str = "normal"):
     if headline_level == 1:
       font_size = self.font_size + 6
     elif headline_level == 2:
@@ -116,7 +116,7 @@ class Board_Layout_GUI:
     label.configure(
       bg=self.color_config["label_bg_color"],
       fg=self.color_config["label_fg_color"],
-      font=(self.font, font_size),
+      font=(self.font, font_size, font_type),
       )
 
   def add_button_style(self, button: tk.Button):
@@ -203,6 +203,15 @@ class Board_Layout_GUI:
         row=0,
         column=0,
         sticky="nsew")
+    # add toolbar
+    self.toolbar = NavigationToolbar2Tk(self.canvas, self.animation_frame, pack_toolbar=False)
+    self.toolbar.update()
+    self.toolbar.grid(
+        row=1,
+        column=0,
+        sticky="nsew",
+        padx=(0, 0),
+        pady=(self.grid_pad_y, 0))
     self.canvas.draw()
 
 
@@ -215,7 +224,7 @@ class Board_Layout_GUI:
     self.edge_file = tk.StringVar(value="beleriand_ttr//beleriand_paths.txt", name="edge_file")
     self.task_file = tk.StringVar(value="beleriand_ttr//beleriand_tasks.txt", name="task_file")
     self.background_file = tk.StringVar(value="beleriand_ttr//beleriand_map.png", name="background_file")
-    self.particle_graph_file = tk.StringVar(value="beleriand_ttr//beleriand_particle_graph_labeled.pickle", name="particle_graph_file")
+    self.particle_graph_file = tk.StringVar(value="beleriand_ttr//beleriand_particle_graph.json", name="particle_graph_file")
 
     base_colors = [
       "#000000", # black
@@ -365,7 +374,7 @@ class Board_Layout_GUI:
         pady=(self.grid_pad_y, self.grid_pad_y))
     node_file_button = tk.Button(file_frame, 
         text="Browse",
-        command=lambda: self.browse_txt_file("browse locations file (.txt)", self.node_file))
+        command=lambda: self.browse_txt_file("browse locations file", self.node_file))
     self.add_button_style(node_file_button)
     node_file_button.grid(
         row=row_index,
@@ -394,7 +403,7 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     edge_file_button = tk.Button(file_frame, 
         text="Browse",
-        command=lambda: self.browse_txt_file("browse paths file (.txt)", self.edge_file))
+        command=lambda: self.browse_txt_file("browse paths file", self.edge_file))
     self.add_button_style(edge_file_button)
     edge_file_button.grid(
         row=row_index,
@@ -423,7 +432,7 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     task_file_button = tk.Button(file_frame,
         text="Browse",
-        command=lambda: self.browse_txt_file("browse tasks file (.txt)", self.task_file))
+        command=lambda: self.browse_txt_file("browse tasks file", self.task_file))
     self.add_button_style(task_file_button)
     task_file_button.grid(
         row=row_index,
@@ -452,7 +461,7 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     particle_graph_file_button = tk.Button(file_frame,
         text="Browse",
-        command=lambda: self.browse_pickle_file("browse particle graph file (.pickle)", self.particle_graph_file))
+        command=lambda: self.browse_json_file("browse particle graph file", self.particle_graph_file))
     self.add_button_style(particle_graph_file_button)
     particle_graph_file_button.grid(
         row=row_index,
@@ -526,15 +535,15 @@ class Board_Layout_GUI:
     if file_path:
       var.set(file_path)
 
-  def browse_pickle_file(self, browse_request: str, var: tk.StringVar):
+  def browse_json_file(self, browse_request: str, var: tk.StringVar):
     """
-    Open a file dialog to select a pickle file.
+    Open a file dialog to select a json file.
 
     Args:
         browse_request (str): text to display in the file dialog
         var (tk.StringVar): variable to store the file path in
     """
-    file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.pickle")])
+    file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.json")])
     if file_path:
       var.set(file_path)
 
@@ -544,7 +553,7 @@ class Board_Layout_GUI:
     """
     # try loading particle graph
     try:
-      self.particle_graph = ttr_reader.load_particle_graph_pickle(self.particle_graph_file.get())
+      self.particle_graph = TTR_Particle_Graph.load_json(self.particle_graph_file.get())
       locations = self.particle_graph.get_locations()
       paths = self.particle_graph.get_paths()
     except FileNotFoundError:
@@ -914,11 +923,11 @@ class Board_Layout_GUI:
       return
     # save particle graph object
     filepath = tk.filedialog.asksaveasfilename(
-        title="Save particle graph object with pickle",
-        filetypes=(("PICKLE", "*.pickle"), ("all files", "*.*")))
+        title="Save particle graph as JSON",
+        filetypes=(("JSON", "*.json"), ("all files", "*.*")))
     if filepath == "":
       return
-    self.particle_graph.save(filepath)
+    self.particle_graph.save_json(filepath)
   
   def save_image(self):
     # save canvas as image

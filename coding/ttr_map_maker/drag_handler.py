@@ -7,6 +7,7 @@ from typing import List, Tuple
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.transforms as transforms
 from matplotlib.image import AxesImage
 from matplotlib.patches import Circle, Rectangle
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -50,7 +51,7 @@ class Drag_Handler:
     self.cid_2: int = None # the id of the release event
     self.current_artist: plt.Artist = None # the artist that is currently being dragged
     self.current_particle: Graph_Particle = None # the particle associated to the artist that is currently being dragged
-    self.canvas.mpl_connect("pick_event", self.on_pick)
+    self.pick_id = self.canvas.mpl_connect("pick_event", self.on_pick)
     print("Drag handler initialized.")
 
   def on_pick(self, event):
@@ -70,7 +71,8 @@ class Drag_Handler:
       self.on_release(event)
     # Get the rectangle artist that was picked
     self.current_artist = event.artist
-    print(f"found artist: {self.current_artist}")
+    self.new_rotation_deg = 0
+    # print(f"found artist: {self.current_artist}")
     # if artist is a circle, get its center
     if isinstance(self.current_artist, (Circle, Rectangle)):
       artist_center: np.ndarray = self.current_artist.get_center()
@@ -80,14 +82,15 @@ class Drag_Handler:
       artist_center: np.ndarray = \
           np.array([artist_extent[0], artist_extent[2]]) + \
           np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]]) / 2
-      print(f"found image at: {artist_center}")
     else:
       print(f"Warning: unknown artist type: {type(self.current_artist)}")
       return
-    print(f"found artist at: {artist_center}")
+    # print(f"found artist at: {artist_center}")
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
     self.cid_2 = self.canvas.mpl_connect("button_release_event", self.on_release)
+    # bind scrolling to rotate the artist
+    self.cid_3 = self.canvas.mpl_connect("scroll_event", self.on_scroll)
 
     # find the particle associated to the artist
     if self.use_cell_list:
@@ -99,8 +102,9 @@ class Drag_Handler:
       print(f"Warning: no particle found for {type(self.current_artist)} at {artist_center}")
       self.current_artist = None
 
+    self.canvas.mpl_disconnect(self.pick_id)
     print(f"picked artist: {event.artist}")
-    print(f"picked particle: {self.current_particle}, type: {type(self.current_particle)}")
+    print(f"picked a particle: {type(self.current_particle)}")
 
   def on_motion(self, event):
     """
@@ -121,8 +125,9 @@ class Drag_Handler:
             event.ydata - self.current_artist.get_height()/2))
       # if artist is an image, move its center
       elif isinstance(self.current_artist, AxesImage):
-        half_width: float = self.current_artist.get_extent()[2]/2
-        half_height: float = self.current_artist.get_extent()[3]/2
+        old_extent = self.current_artist.get_extent()
+        half_width: float = (old_extent[1] - old_extent[0]) / 2
+        half_height: float = (old_extent[3] - old_extent[2]) / 2
         image_extent = (
           event.xdata - half_width,
           event.xdata + half_width,
@@ -133,6 +138,32 @@ class Drag_Handler:
 
       self.canvas.draw_idle()
 
+  def on_scroll(self, event):
+    """
+    This function is called when the mouse wheel is scrolled.
+    It rotates the current artist by 1° per scroll step.
+
+    Args:
+      event (matplotlib.backend_bases.MouseEvent): The mouse scroll event.
+    """
+    if event.inaxes:
+      ax = event.inaxes
+      self.new_rotation_deg += event.step
+      self.new_rotation_deg %= 360
+      
+      # rotate artist
+      if isinstance(self.current_artist, (Circle, Rectangle)):
+        artist_center: np.ndarray = self.current_artist.get_center()
+      elif isinstance(self.current_artist, AxesImage):
+        artist_extent: Tuple[float] = self.current_artist.get_extent()
+        artist_center: np.ndarray = \
+            np.array([artist_extent[0], artist_extent[2]]) + \
+            np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]]) / 2
+      self.current_artist.set_transform(
+        transforms.Affine2D().rotate_deg_around(artist_center[0], artist_center[1], self.new_rotation_deg) + ax.transData
+      )
+
+      self.canvas.draw_idle()
 
   def on_release(self, event):
     """
@@ -148,15 +179,23 @@ class Drag_Handler:
     if self.cid_2 is not None:
       self.canvas.mpl_disconnect(self.cid_2)
       self.cid_2 = None
+    if self.cid_3 is not None:
+      self.canvas.mpl_disconnect(self.cid_3)
+      self.cid_3 = None
 
     # update the particle's position
     x_pos, y_pos = event.xdata, event.ydata
     self.current_particle.set_position(np.array([x_pos, y_pos]))
+    new_rotation_rad = np.deg2rad(self.new_rotation_deg)
+    old_rotation_rad = self.current_particle.get_rotation()
+    self.current_particle.set_rotation(old_rotation_rad - new_rotation_rad)
     self.current_particle.erase()
     self.current_particle.draw(self.ax)
 
+    print(f"artist released: {self.current_artist}")
     self.current_artist = None
     self.current_particle = None
+    self.pick_id = self.canvas.mpl_connect('pick_event', self.on_pick)
 
 
   def find_particle_in_list(self, event_position: np.ndarray, particle_list: List[Graph_Particle]) -> Graph_Particle:

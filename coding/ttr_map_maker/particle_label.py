@@ -19,9 +19,12 @@ class Particle_Label(Graph_Particle):
   def __init__(self,
         label: str,
         position: np.ndarray = np.array([0, 0]),
+        rotation: float = 0,
         mass: float = 1,
+        color: str = "#222222",
         interaction_radius: float = 5,
         velocity_decay: float = 0.9999,
+        angular_velocity_decay: float = 0.9999,
         repulsion_strength: float = 1,
         node_attraction: float = 0.1,
         fontsize: int = 150,
@@ -41,27 +44,29 @@ class Particle_Label(Graph_Particle):
     self.inside_stroke_width = fontsize // 15
     self.outline_stroke_width = fontsize // 5
     if font_name is None:
-      font_name = font_path.split("\\")[-1].strip(".ttf")
+      # font_name = font_path.split("\\")[-1].strip(".ttf")
       fontManager.addfont(font_path)
       width, height, *offset = self.get_label_size(label, fontsize, font_path)
+      self.font_name = None
     else:
       width, height, *offset = self.get_label_size(label, fontsize, font_name)
-    self.font_name = font_name
+      self.font_name = font_name
     super().__init__(
         position,
-        rotation = 0,
+        rotation = rotation,
         target_position = None,
         mass = mass,
         bounding_box_size = (width, height),
         interaction_radius = interaction_radius,
         velocity_decay = velocity_decay,
+        angular_velocity_decay = angular_velocity_decay,
         repulsion_strength = repulsion_strength,
     )
     self.text_x_offset = offset[0]
     self.text_y_offset = offset[1]
     self.label = label
     self.fontsize = fontsize
-    self.color = "#222222"
+    self.color = color
     self.node_attraction = node_attraction
 
 

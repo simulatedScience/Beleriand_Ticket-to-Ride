@@ -10,6 +10,7 @@ Cirith Ninniach
 Crossing of Teiglin
 East Taur-im-Duinath
 Eglarest
+Eithel Ivrin
 Eithel Sirion
 Ered Wethrin
 Forest of Neldoreth
@@ -28,12 +29,11 @@ Nan Elmoth
 Nan Tathren
 Nargothrond
 Nogrod
-Nuath
 Pass of Aglon
 River Nenning
 Sarn Athrud
-Targelion
 Taur-Nu-Fuin
+Thargelion
 Tol Sirion
 Vinyamar
 West Taur-im-Duinath

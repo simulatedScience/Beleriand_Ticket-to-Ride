@@ -84,16 +84,17 @@ def load_particle_graph_pickle(particle_graph_file):
   return particle_graph
 
 
-def save_particle_graph(particle_graph: TTR_Particle_Graph, particle_graph_file: str):
+def load_particle_graph_json(particle_graph_file: str) -> TTR_Particle_Graph:
   """
-  save a particle graph to a JSON file
+  load a particle graph from a JSON file
 
   Args:
-      particle_graph (ParticleGraph): particle graph
       particle_graph_file (str): path to the pickle file
-  """
-  with open(particle_graph_file, "w") as file:
-    file.write(particle_graph.to_json())
 
-if __name__ == "__main__":
-  save_particle_graph(None, "particle_graph.json")
+  Returns:
+      ParticleGraph: particle graph
+  """
+  with open(particle_graph_file, "r") as file:
+    particle_graph = TTR_Particle_Graph.load_json(file.read())
+
+  return particle_graph

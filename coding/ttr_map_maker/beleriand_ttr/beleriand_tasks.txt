@@ -1,9 +1,9 @@
 Isle of Balar ; West Taur-im-Duinath ; 8
 Linaewen ; Forest of Neldoreth ; 8
-Nuath ; Pass of Aglon ; 10
+Eithel Ivrin ; Pass of Aglon ; 10
 Nan Elmoth ; East Taur-im-Duinath ; 8
 Himring ; Amon Ereb ; 7
-Targelion ; Forest of Region ; 7
+Thargelion ; Forest of Region ; 7
 Ered Wethrin ; Himring ; 10
 Barad Nimras ; Gates of Sirion ; 7
 River Nenning ; Cape Balar ; 7

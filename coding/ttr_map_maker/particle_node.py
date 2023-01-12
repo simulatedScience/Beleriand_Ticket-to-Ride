@@ -12,9 +12,11 @@ from graph_particle import Graph_Particle
 
 class Particle_Node(Graph_Particle):
   def __init__(self,
-        label: str,
+        location_name: str,
+        color: str = "#222222",
         position: np.ndarray = np.array([0, 0]),
         mass: float = 0.1,
+        bounding_box_size: tuple = (1, 1),
         target_attraction: float = 0.001,
         target_position: np.ndarray = None,
         interaction_radius: float = 5,
@@ -27,14 +29,14 @@ class Particle_Node(Graph_Particle):
         rotation = 0,
         target_position = target_position,
         mass = mass,
-        bounding_box_size = (1, 1),
+        bounding_box_size = bounding_box_size,
         interaction_radius = interaction_radius,
         velocity_decay = velocity_decay,
         repulsion_strength=repulsion_strength,
     )
-    self.label = label
+    self.label = location_name
     self.target_attraction = target_attraction
-    self.color = "#222222"
+    self.color = color
 
 
   def draw(self,
@@ -102,4 +104,5 @@ class Particle_Node(Graph_Particle):
     """
     particle_info["color"] = self.color
     particle_info["target_attraction"] = self.target_attraction
+    particle_info["location_name"] = self.label
     return particle_info
