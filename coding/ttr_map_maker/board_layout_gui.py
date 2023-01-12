@@ -39,6 +39,7 @@ import matplotlib.image as mpimg
 import matplotlib.animation as anim
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
+from multi_monitor_handling import get_current_monitor
 from ttr_particle_graph import TTR_Particle_Graph
 from particle_edge import Particle_Edge
 import read_ttr_files as ttr_reader
@@ -95,7 +96,17 @@ class Board_Layout_GUI:
     self.master.mainloop()
 
   def toggle_fullscreen(self, event=None):
+    """
+    toggle window between windowed and fullscreen mode. The window always tries to stay on the same monitor.
+
+    Args:
+        event (_type_, optional): _description_. Defaults to None.
+    """
+    monitor_x, monitor_y, monitor_width, monitor_height = get_current_monitor(self.master)
+    self.master.geometry(f"{monitor_width}x{monitor_height}+{monitor_x}+{monitor_y}")
     self.master.attributes("-fullscreen", not self.master.attributes("-fullscreen"))
+
+
 
   def add_frame_style(self, frame: tk.Frame):
     frame.configure(
@@ -267,8 +278,8 @@ class Board_Layout_GUI:
     # variables for plot
     self.board_width = tk.DoubleVar(value=83.1, name="board_width")
     self.board_height = tk.DoubleVar(value=54.0, name="board_height")
-    self.background_image_offset_x = tk.DoubleVar(value=15.0, name="background_image_offset_x")
-    self.background_image_offset_y = tk.DoubleVar(value=3.0, name="background_image_offset_y")
+    self.background_image_offset_x = tk.DoubleVar(value=0.0, name="background_image_offset_x")
+    self.background_image_offset_y = tk.DoubleVar(value=0.0, name="background_image_offset_y")
     self.board_scale_factor = tk.DoubleVar(value=1.25, name="board_scale_factor")
     self.node_scale_factor = tk.DoubleVar(value=0.8, name="node_scale_factor")
 

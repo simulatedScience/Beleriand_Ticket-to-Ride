@@ -9,8 +9,9 @@ This project implements tools to create your very own, custom ticket to ride gam
 ### planned features:
 - improve the UI and add more controls
 - visualize the tasks on the graph
+- automatic graph analysis tools
 - automatically generate images for task cards
-- allow adding nodes and edges to the graph through the UI
+- allow adding and removing nodes and edges to the graph through the UI
 - allow editing colors and text of nodes and edges through the UI
 - select an image for each node in the UI
 - automatically optimze the graph layout from the UI
@@ -33,6 +34,7 @@ At the current stage, I highly recommend being familiar with Python and some ima
 - matplotlib 3.6 or higher
 - numpy 
 - shapely
+- (screeninfo) -> not yet used successfully
 
 ### How to run the program
 The code is currently not packaged as a standalone application, so you will have to run it from the source code (written in python). You can find the code in `coding/ttr_map_maker`. There, execute `board_layout_gui.py` to start the program, which will open a new window. Try out the many buttons!
