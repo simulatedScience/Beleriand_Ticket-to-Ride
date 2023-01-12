@@ -245,6 +245,49 @@ class TTR_Particle_Graph:
       particle.set_parameters(particle_parameters)
 
 
+  def get_edge_colors(self) -> List[str]:
+    """
+    return a list of all edge colors occuring in the graph.
+    edge border colors are not included.
+
+    Returns:
+        List[str]: list of edge colors
+    """
+    edge_colors = set()
+    for particle_edge in self.particle_edges.values():
+      edge_colors.add(particle_edge.color)
+    return list(edge_colors)
+
+  def set_edge_colors(self, edge_color_map: dict):
+    """
+    set the colors of all edges in the graph according to a color map.
+    The color map is a dictionary mapping current edge colors to new colors.
+    To ensure the correct dict keys are used, use the get_edge_colors method.
+
+    Args:
+        edge_color_map (dict): dictionary mapping edge colors to new colors
+    """
+    for particle_edge in self.particle_edges.values():
+      if particle_edge.color in edge_color_map.keys():
+        particle_edge.color = edge_color_map[particle_edge.color]
+        particle_edge.set_image(None)
+
+  def set_edge_images(self, edge_color_map: dict):
+    """
+    set edges to display images instead of flat colored rectangles.
+    The color map is a dictionary mapping current edge colors to image file paths.
+    Each color corresponds to one image. Different images for edges of the same color are not supported.
+
+    Args:
+        edge_color_map (dict): dictionary mapping edge colors to image file paths
+    """
+    for particle_edge in self.particle_edges.values():
+      try:
+        particle_edge.set_image(edge_color_map[particle_edge.color])
+      except KeyError:
+        raise ValueError(f"no image file path specified for edge color '{particle_edge.color}'")
+
+
   def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
     """
     draw particle graph

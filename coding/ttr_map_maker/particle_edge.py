@@ -6,6 +6,8 @@ A node can be connected to other nodes by edges.
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import matplotlib.transforms as transforms
 
 from graph_particle import Graph_Particle
 
@@ -63,6 +65,7 @@ class Particle_Edge(Graph_Particle):
     self.location_1_name = location_1_name
     self.location_2_name = location_2_name
     self.path_index = path_index
+    self.image_file_path = None
 
 
   def get_attraction_forces(self, other_particle):
@@ -164,7 +167,7 @@ class Particle_Edge(Graph_Particle):
         float: attraction force
     """
     return distance**2 / 2
-    return (np.exp(distance) - 1) / 3
+    # return (np.exp(distance) - 1) / 3
 
 
   def set_parameters(self, edge_parameters):
@@ -183,6 +186,15 @@ class Particle_Edge(Graph_Particle):
     self.interaction_radius = edge_parameters.get("interaction_radius", self.interaction_radius)
 
 
+  def set_image(self, image_file_path: str = None):
+    """
+    Set edge to display the image at the given filepath when drawn.
+    If `image_file_path` is `None`, the image will be removed and the edge is drawn as a flat colored rectangle.
+
+    Args:
+        image_file_path (str, optional): filepath to image file. Image aspect ratio should match bounding box aspect ratio. Otherwise the image gets stretched. Defaults to None.
+    """
+    self.image_file_path = image_file_path
 
   def draw(self,
       ax: plt.Axes,
@@ -199,21 +211,34 @@ class Particle_Edge(Graph_Particle):
         alpha (float, optional): alpha. Defaults to 0.7.
         zorder (int, optional): zorder. Defaults to 4.
     """
-    if color is None:
-      color = self.color
-    if border_color is None:
-      # if particle has no  border color, initialize it as gray
-      try:
-        border_color = self.border_color
-      except AttributeError:
-        border_color = "#555555"
-        self.border_color = border_color
-      
-    super().draw_bounding_box(ax, color, border_color, alpha, zorder)
-    # midpoints = self.get_edge_midpoints()
-    # self.plotted_objects.append(
-    #     ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder)
-    # )
+    if self.image_file_path is None: # draw mpl Rectangle
+      if color is None:
+        color = self.color
+      if border_color is None:
+        # if particle has no  border color, initialize it as gray
+        try:
+          border_color = self.border_color
+        except AttributeError:
+          border_color = "#555555"
+          self.border_color = border_color
+      super().draw_bounding_box(ax, color, border_color, alpha, zorder)
+      # midpoints = self.get_edge_midpoints()
+      # self.plotted_objects.append(
+      #     ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder))
+    else:
+      mpl_image = mpimg.imread(self.image_file_path)
+      edge_extent = (
+        self.position[0] - self.bounding_box_size[0] / 2,
+        self.position[0] + self.bounding_box_size[0] / 2,
+        self.position[1] - self.bounding_box_size[1] / 2,
+        self.position[1] + self.bounding_box_size[1] / 2)
+      plotted_image = ax.imshow(mpl_image, extent=edge_extent, zorder=zorder, picker=True)
+      # rotate image using transformation
+      plotted_image.set_transform(
+        transforms.Affine2D().rotate_around(self.position[0], self.position[1], -self.rotation) + ax.transData
+      )
+      self.plotted_objects.append(plotted_image)
+
 
   def add_json_info(self, particle_info: dict) -> dict:
     """

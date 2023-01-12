@@ -44,6 +44,7 @@ from ttr_particle_graph import TTR_Particle_Graph
 from particle_edge import Particle_Edge
 import read_ttr_files as ttr_reader
 from drag_handler import Drag_Handler
+import pokemon_colors as pkmn_colors
 
 class Board_Layout_GUI:
   def __init__(self,
@@ -261,6 +262,7 @@ class Board_Layout_GUI:
     self.show_task_paths = tk.BooleanVar(value=True, name="show_task_paths")
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused")
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
+    self.use_edge_images = tk.BooleanVar(value=False, name="use_edge_images")
 
     # variables for plot
     self.board_width = tk.DoubleVar(value=83.1, name="board_width")
@@ -776,6 +778,7 @@ class Board_Layout_GUI:
     row_index += 1
     add_label_and_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.update_frame)
     row_index += 1
+    add_label_and_checkbutton(row_index, column_index, "edge images", self.use_edge_images, command=self.update_edge_images)
 
   def update_canvas(self, *args):
     """
@@ -854,6 +857,36 @@ class Board_Layout_GUI:
       self.plotted_background_image = self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent)
     elif self.plotted_background_image is not None:
       self.plotted_background_image.remove()
+
+  def update_edge_images(self):
+    """
+    Update the edge images with the current settings.
+    """
+    if self.particle_graph is None:
+      return
+    if self.use_edge_images.get():
+      edge_colors = self.particle_graph.get_edge_colors()
+      color_map = self.get_edge_color_map(edge_colors)
+      self.particle_graph.set_edge_images(color_map)
+      self.particle_graph.erase_edges()
+      self.particle_graph.draw_edges(self.ax)
+    else:
+      edge_colors = self.particle_graph.get_edge_colors()
+      color_map = {color: None for color in edge_colors}
+      self.particle_graph.set_edge_colors(color_map)
+      self.particle_graph.erase_edges()
+      self.particle_graph.draw_edges(self.ax)
+
+  def get_edge_color_map(self, edge_colors) -> dict:
+    """
+    Get the edge color map.
+
+    Returns:
+        dict: edge color map mapping colors to edge image paths
+    """
+    return {color: pkmn_colors.type_to_edge_image(
+        pkmn_colors.color_to_energy_type(color)) for color in edge_colors}
+
 
   def draw_button_widgets(self, button_frame: tk.Frame):
     """
@@ -1086,7 +1119,7 @@ class Board_Layout_GUI:
     self.animation = anim.FuncAnimation(
         self.fig,
         self.update_canvas,
-        interval=1000,
+        interval=10000,
         blit=False)
 
   def init_particle_graph(self):
