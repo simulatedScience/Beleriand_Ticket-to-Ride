@@ -4,12 +4,15 @@ There is an attraction force between the node and target position as well as bet
 
 A node can be connected to other nodes by edges.
 """
+import colorsys
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.transforms as transforms
 
 from graph_particle import Graph_Particle
+from particle_node import Particle_Node
 
 
 class Particle_Edge(Graph_Particle):
@@ -17,6 +20,7 @@ class Particle_Edge(Graph_Particle):
         color: str,
         location_1_name: str,
         location_2_name: str,
+        id: int,
         position: np.ndarray = np.array([0, 0]),
         rotation: float = 0,
         mass: float = 0.1,
@@ -37,6 +41,7 @@ class Particle_Edge(Graph_Particle):
         color (str): color of the edge
         location_1_name (str): name of the first location
         location_2_name (str): name of the second location
+        id (int): unique numeric id of the particle
         position (np.ndarray, optional): position of the edge. Defaults to np.array([0, 0]).
         rotation (float, optional): rotation of the edge in radians. Defaults to 0.
         mass (float, optional): mass of the edge. Defaults to 0.1.
@@ -48,13 +53,14 @@ class Particle_Edge(Graph_Particle):
         path_index (int, optional): index of the edge along the path between the two given locations. Defaults to 1.
     """
     super().__init__(
-        position,
-        rotation = rotation,
-        target_position = None,
-        mass = mass,
-        bounding_box_size = bounding_box_size,
-        interaction_radius = interaction_radius,
-        velocity_decay = velocity_decay,
+        id,
+        position=position,
+        rotation=rotation,
+        target_position=None,
+        mass=mass,
+        bounding_box_size=bounding_box_size,
+        interaction_radius=interaction_radius,
+        velocity_decay=velocity_decay,
         angular_velocity_decay=angular_velocity_decay,
         repulsion_strength=repulsion_strength,
     )
@@ -235,17 +241,102 @@ class Particle_Edge(Graph_Particle):
       plotted_image = ax.imshow(mpl_image, extent=edge_extent, zorder=zorder, picker=True)
       # rotate image using transformation
       # keep image upright
-      if self.rotation >= np.pi/2:
-        image_rotation = -self.rotation + np.pi
-      elif self.rotation <= -np.pi/2:
-        image_rotation = -self.rotation - np.pi
-      else:
-        image_rotation = -self.rotation
+      image_rotation, normal_vec = self.get_image_rotation()
       # print(f"image rotation {self.location_1_name}-{self.location_2_name}-{self.path_index}: {image_rotation}")
       plotted_image.set_transform(
         transforms.Affine2D().rotate_around(self.position[0], self.position[1], image_rotation) + ax.transData
       )
       self.plotted_objects.append(plotted_image)
+      # debug: draw arrow to show direction of particle
+      # hue indicates direction of particle
+      color = colorsys.hsv_to_rgb((image_rotation % (2 * np.pi)) / (2 * np.pi), 1, 1)
+      self.plotted_objects.append(
+          ax.arrow(
+              self.position[0],
+              self.position[1],
+              np.cos(image_rotation),
+              np.sin(image_rotation),
+              color = color,
+              linewidth=2,
+              alpha=0.8,
+              zorder=zorder))
+      # debug: draw arrow to show direction of normal
+      # hue indicates direction of particle
+      rotation = np.arctan2(normal_vec[1], normal_vec[0])
+      color = colorsys.hsv_to_rgb((rotation % (2 * np.pi)) / (2 * np.pi), 0.8, .5)
+      self.plotted_objects.append(
+          ax.arrow(
+              self.position[0],
+              self.position[1],
+              np.cos(rotation),
+              np.sin(rotation),
+              color = color,
+              linewidth=2,
+              alpha=0.8,
+              zorder=zorder))
+    rotation = self.rotation
+    color = colorsys.hsv_to_rgb((rotation % (2 * np.pi)) / (2 * np.pi), 0.8, .5)
+    self.plotted_objects.append(
+        ax.arrow(
+            self.position[0],
+            self.position[1],
+            np.cos(rotation),
+            np.sin(rotation),
+            color = color,
+            linewidth=2,
+            alpha=0.8,
+            zorder=zorder))
+
+
+  def get_image_rotation(self) -> float:
+    """
+    calculate image rotation based on `self.rotation` and the location of the nodes this edge is connected to.
+
+    Returns:
+        float: rotation in radians
+    """
+    # find noes this edge is connected to
+    visited_particle_ids = {self.get_id()}
+    connected_nodes = [self, self]
+    for i in range(2):
+      while True:
+        connected_index = 0
+        new_node = connected_nodes[i].connected_particles[connected_index]
+        while True:
+          if not new_node.get_id() in visited_particle_ids:
+            break
+          # print(f"visited {type(new_node)}: id = {new_node.get_id()} at {new_node.position}")
+          connected_index += 1
+          if connected_index >= len(connected_nodes[i].connected_particles):
+            raise ValueError("Could not find connected particle that has not been visited yet. Ensure that the graph is connected properly.")
+          new_node = connected_nodes[i].connected_particles[connected_index]
+        connected_nodes[i] = new_node
+        visited_particle_ids.add(connected_nodes[i].get_id())
+        if isinstance(connected_nodes[i], Particle_Node):
+          break
+      # print(f"visited particles to find node: {visited_particle_ids}")
+      # print(f"found node {connected_nodes[i].get_id()} at {connected_nodes[i].position}")
+    # calculate normal vector of direct connection between nodes
+    node_1_position = connected_nodes[0].position
+    node_2_position = connected_nodes[1].position
+    node_1_to_node_2 = node_2_position - node_1_position
+    norm = np.linalg.norm(node_1_to_node_2)
+    if norm == 0:
+      print(f"WARNING: edge {self.location_1_name}-{self.location_2_name} has length zero. Using original rotation of edge particle.")
+      return self.rotation
+    node_1_to_node_2 = node_1_to_node_2 / norm
+    normal_vector = np.array([-node_1_to_node_2[1], node_1_to_node_2[0]]) # rotate by 90°
+    # ensure that normal vector direction is always pointing upwards
+    if normal_vector[1] < 0:
+      normal_vector = -normal_vector
+    # if angle between normal vector and particle rotation is larger than 90°, rotate edge by 180°
+    if np.cross(normal_vector, np.array([np.cos(self.rotation), np.sin(self.rotation)])) > 0:
+      return self.rotation + np.pi, normal_vector
+    return self.rotation, normal_vector
+
+
+
+
 
 
   def add_json_info(self, particle_info: dict) -> dict:

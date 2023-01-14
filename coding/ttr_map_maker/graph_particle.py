@@ -11,6 +11,7 @@ from shapely.geometry import Polygon
 
 class Graph_Particle:
   def __init__(self,
+        id: int,
         position: np.ndarray = np.array([0, 0]),
         rotation: float = 0,
         target_position: np.ndarray = None,
@@ -25,6 +26,7 @@ class Graph_Particle:
     moment of inertia is calculated from bounding box size and mass assuming a uniform density and a rectangular shape
 
     args:
+      id (int): unique numeric id of the particle
       position (np.ndarray): position of particle's center
       rotation (float): rotation of particle in radians, counter-clockwise from positive x-axis
       mass (float): mass of particle
@@ -32,6 +34,7 @@ class Graph_Particle:
       interaction_radius (float): particle's interaction radius. Particles will only interact with other particles where the distance between their bounding boxes is less than `interaction_radius`.
       velocity_decay (float): factor by which the particle's velocity is multiplied each time step. This is used to simulate friction.
     """
+    self.id = id
     # translation properties
     self.position = position.astype(np.float64) # position of particle's center
     self.velocity = np.zeros(2)
@@ -371,7 +374,7 @@ class Graph_Particle:
         self.position - np.array([self.bounding_box_size[0] / 2, self.bounding_box_size[1] / 2]),
         width=self.bounding_box_size[0],
         height=self.bounding_box_size[1],
-        angle=-np.rad2deg(self.rotation),
+        angle=np.rad2deg(self.rotation),
         rotation_point="center",
         facecolor=color,
         edgecolor=border_color,
@@ -425,7 +428,7 @@ class Graph_Particle:
   def to_dict(self) -> dict:
     particle_info = {
       "particle_type": self.__class__.__name__,
-      "id": self.particle_id,
+      "id": self.id,
       "position": self.position.tolist(),
       "rotation": self.rotation,
       "mass": self.mass,
@@ -463,7 +466,7 @@ class Graph_Particle:
     args:
       id (int): id of particle
     """
-    self.particle_id = id
+    self.id = id
 
   def get_id(self) -> int:
     """
@@ -472,7 +475,7 @@ class Graph_Particle:
     returns:
       (int): id of particle
     """
-    return self.particle_id
+    return self.id
       
 
 def get_box_overlap(box1_poly: Polygon, box2_poly: Polygon) -> Tuple[np.ndarray, float]:

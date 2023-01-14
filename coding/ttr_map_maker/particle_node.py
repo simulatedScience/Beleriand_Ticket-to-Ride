@@ -13,6 +13,7 @@ from graph_particle import Graph_Particle
 class Particle_Node(Graph_Particle):
   def __init__(self,
         location_name: str,
+        id: int,
         color: str = "#222222",
         position: np.ndarray = np.array([0, 0]),
         mass: float = 0.1,
@@ -22,16 +23,33 @@ class Particle_Node(Graph_Particle):
         interaction_radius: float = 5,
         velocity_decay: float = 0.9999,
         repulsion_strength: float = 1,):
+    """
+    Initialize a particle node
+
+    Args:
+        location_name (str): name of the location
+        id (int): unique numeric id of the particle
+        color (str, optional): color of the node. Defaults to "#222222".
+        position (np.ndarray, optional): position of the particle. Defaults to np.array([0, 0]).
+        mass (float, optional): mass of the particle. Defaults to 0.1.
+        bounding_box_size (tuple, optional): size of the bounding box. Defaults to (1, 1).
+        target_attraction (float, optional): attraction force to the target position. Defaults to 0.001.
+        target_position (np.ndarray, optional): target position of the particle. Defaults to None.
+        interaction_radius (float, optional): radius of the interaction. Defaults to 5.
+        velocity_decay (float, optional): decay of the velocity. Defaults to 0.9999.
+        repulsion_strength (float, optional): strength of the repulsion force. Defaults to 1.
+    """
     if target_position is None:
       target_position = position
     super().__init__(
-        position,
-        rotation = 0,
-        target_position = target_position,
-        mass = mass,
-        bounding_box_size = bounding_box_size,
-        interaction_radius = interaction_radius,
-        velocity_decay = velocity_decay,
+        id,
+        position=position,
+        rotation=0,
+        target_position=target_position,
+        mass=mass,
+        bounding_box_size=bounding_box_size,
+        interaction_radius=interaction_radius,
+        velocity_decay=velocity_decay,
         repulsion_strength=repulsion_strength,
     )
     self.label = location_name

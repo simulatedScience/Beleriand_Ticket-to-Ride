@@ -50,6 +50,8 @@ class TTR_Particle_Graph:
     self.node_positions = node_positions
     self.particle_parameters = particle_parameters
 
+    self.max_particle_id = 0
+
     self.particle_nodes = dict()
     self.particle_edges = dict()
     self.particle_labels = dict()
@@ -61,6 +63,8 @@ class TTR_Particle_Graph:
     """
     Create the particle system from the given locations and paths connecting them.
     """
+    particle_id = self.max_particle_id + 1
+    n_nodes = len(self.node_labels)
     for i, label in enumerate(self.node_labels):
       if self.node_positions is not None:
         position = self.node_positions[label]
@@ -68,6 +72,7 @@ class TTR_Particle_Graph:
         position = np.array([3*i, 0], dtype=np.float64)
       self.particle_nodes[label] = Particle_Node(
           label,
+          id=particle_id,
           position=position,
           mass=self.particle_parameters["node_mass"],
           target_attraction=self.particle_parameters["node-target"],
@@ -77,6 +82,7 @@ class TTR_Particle_Graph:
           )
       self.particle_labels[label] = Particle_Label(
           label,
+          id=particle_id+n_nodes,
           position=position,
           mass=self.particle_parameters["label_mass"],
           node_attraction=self.particle_parameters["node-label"],
@@ -86,6 +92,7 @@ class TTR_Particle_Graph:
       self.particle_labels[label].position = \
           self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0] / 2, 0]) + np.array([1, 0], dtype=np.float64)
       self.particle_labels[label].add_connected_particle(self.particle_nodes[label])
+      particle_id += 1
       # print(f"node position {label}: {self.particle_nodes[label].position}")
       # print(f"label position {label}: {self.particle_labels[label].position}")
 
@@ -97,11 +104,12 @@ class TTR_Particle_Graph:
       # create `length` edge particles between `node_1` and `node_2``
       for i in range(length):
         edge_position: np.ndarray = node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
-        edge_rotation: float = -np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
+        edge_rotation: float = np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
         edge_particle: Graph_Particle = Particle_Edge(
             color=color,
             location_1_name=location_1,
             location_2_name=location_2,
+            id=particle_id,
             path_index=i,
             position=edge_position,
             rotation=edge_rotation,
@@ -116,8 +124,10 @@ class TTR_Particle_Graph:
           last_particle.add_connected_particle(edge_particle)
         self.particle_edges[(location_1, location_2, i)] = edge_particle
         last_particle = edge_particle
+        particle_id += 1
       # connect last edge particle to node_2
       last_particle.add_connected_particle(node_2)
+      self.max_particle_id = particle_id
 
 
   def optimize_layout(self,
@@ -184,7 +194,7 @@ class TTR_Particle_Graph:
           node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
         )
         particle.set_rotation(
-          -np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
+          np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
         )
         particle.erase()
         particle.draw(ax, **draw_kwargs)
@@ -420,7 +430,7 @@ class TTR_Particle_Graph:
     """
     all_particles = self.get_particle_list()
     # add id's to all particles
-    particle_id = 0
+    particle_id = self.max_particle_id
     for particle_node in all_particles:
       try:
         particle_node.set_id(particle_id)
@@ -520,7 +530,6 @@ class TTR_Particle_Graph:
     for particle_info in particle_dicts:
       connected_particles = particle_info.pop("connected_particles")
       particle_type = particle_info.pop("particle_type")
-      id = particle_info.pop("id")
       
       particle_info["position"] = np.array(particle_info["position"])
       particle_info["bounding_box_size"] = tuple(particle_info["bounding_box_size"])
