@@ -67,12 +67,11 @@ class Drag_Handler:
       event.xdata = event.mouseevent.x
       event.ydata = event.mouseevent.y
       if self.current_particle is None:
-        print("weird")
+        print("Warning: encountered unexpected state in drag handler: internal state not reset properly.")
       self.on_release(event)
     # Get the rectangle artist that was picked
     self.current_artist = event.artist
     self.new_rotation_deg = 0
-    # print(f"found artist: {self.current_artist}")
     # if artist is a circle, get its center
     if isinstance(self.current_artist, (Circle, Rectangle)):
       artist_center: np.ndarray = self.current_artist.get_center()
@@ -85,7 +84,6 @@ class Drag_Handler:
     else:
       print(f"Warning: unknown artist type: {type(self.current_artist)}")
       return
-    # print(f"found artist at: {artist_center}")
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
     self.cid_2 = self.canvas.mpl_connect("button_release_event", self.on_release)
@@ -103,8 +101,6 @@ class Drag_Handler:
       self.current_artist = None
 
     self.canvas.mpl_disconnect(self.pick_id)
-    print(f"picked artist: {event.artist}")
-    print(f"picked a particle: {type(self.current_particle)}")
 
   def on_motion(self, event):
     """
@@ -188,11 +184,10 @@ class Drag_Handler:
     self.current_particle.set_position(np.array([x_pos, y_pos]))
     new_rotation_rad = np.deg2rad(self.new_rotation_deg)
     old_rotation_rad = self.current_particle.get_rotation()
-    self.current_particle.set_rotation(old_rotation_rad - new_rotation_rad)
+    self.current_particle.set_rotation(old_rotation_rad + new_rotation_rad)
     self.current_particle.erase()
     self.current_particle.draw(self.ax)
 
-    print(f"artist released: {self.current_artist}")
     self.current_artist = None
     self.current_particle = None
     self.pick_id = self.canvas.mpl_connect('pick_event', self.on_pick)
