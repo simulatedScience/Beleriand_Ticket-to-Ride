@@ -298,7 +298,6 @@ class TTR_Particle_Graph:
         particle_edge.set_image(edge_color_map[particle_edge.color])
       except KeyError:
         raise ValueError(f"no image file path specified for edge color '{particle_edge.color}'")
-    print(f"set edge images to {edge_color_map.values()}")
 
 
   def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
