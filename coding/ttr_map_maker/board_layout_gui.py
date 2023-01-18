@@ -39,7 +39,7 @@ import matplotlib.image as mpimg
 import matplotlib.animation as anim
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
-from multi_monitor_handling import get_current_monitor
+from multi_monitor_handling import toggle_full_screen
 from ttr_particle_graph import TTR_Particle_Graph
 from particle_edge import Particle_Edge
 import read_ttr_files as ttr_reader
@@ -72,11 +72,11 @@ class Board_Layout_GUI:
     self.master = tk.Tk()
     # maximize window
     self.master.configure(bg=self.color_config["bg_color"])
-    self.master.minsize(800, 700)
-    self.master.state("zoomed")
-    # add fullscreen toggle
-    self.master.bind("<F11>", self.toggle_fullscreen)
     self.master.title("Ticket-to-Ride board layout optimizer")
+    self.master.state("zoomed")
+    # self.master.resizable(False, False)
+    # add fullscreen toggle
+    self.master.bind("<F11>", lambda event: toggle_full_screen(self.master))
 
     self.grid_pad_x = 5
     self.grid_pad_y = 5
@@ -94,18 +94,6 @@ class Board_Layout_GUI:
     self.init_animation()
 
     self.master.mainloop()
-
-  def toggle_fullscreen(self, event=None):
-    """
-    toggle window between windowed and fullscreen mode. The window always tries to stay on the same monitor.
-
-    Args:
-        event (_type_, optional): _description_. Defaults to None.
-    """
-    monitor_x, monitor_y, monitor_width, monitor_height = get_current_monitor(self.master)
-    self.master.geometry(f"{monitor_width}x{monitor_height}+{monitor_x}+{monitor_y}")
-    self.master.attributes("-fullscreen", not self.master.attributes("-fullscreen"))
-
 
 
   def add_frame_style(self, frame: tk.Frame):
@@ -174,30 +162,46 @@ class Board_Layout_GUI:
     # configure grid
     self.main_frame.columnconfigure(0, weight=1)
     self.main_frame.columnconfigure(1, weight=0)
+    self.main_frame.rowconfigure(0, weight=1)
     # create frame for matplotlib animation
     self.animation_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
     self.animation_frame.grid(
         row=0,
         column=0,
-        sticky="w",
+        sticky="nsew",
         padx=(2*self.grid_pad_x, 2*self.grid_pad_x),
         pady=(2*self.grid_pad_y, 2*self.grid_pad_y))
+    # stretch animation frame to fill window
+    self.animation_frame.grid_columnconfigure(0, weight=1)
+    self.animation_frame.grid_rowconfigure(0, weight=1)
+    self.animation_frame.grid_rowconfigure(1, weight=0)
 
     # create frame for controls
     self.control_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
     self.control_frame.grid(
         row=0,
         column=1,
-        sticky="e",
+        sticky="nsew",
         padx=(2*self.grid_pad_x, 0),
         pady=(0,0),
         ipadx=2*self.grid_pad_x,
         ipady=2*self.grid_pad_y)
 
     self.draw_control_widgets()
-
+    self.master.update()
     # create matplotlib figure
-    self.fig = plt.figure(figsize=(15, 10), dpi=100)
+    self.animation_frame.update()
+    px = 1 / plt.rcParams["figure.dpi"]
+    total_width = self.master.winfo_width()
+    total_height = self.master.winfo_height()
+    navigation_bar_height: int = 150 # height of navigation bar in pixels # TODO: get height of navigation bar
+    width = (total_width - (self.control_frame.winfo_width() + 2 * self.grid_pad_x))
+    height = (total_height - (2 * self.grid_pad_y + navigation_bar_height))
+    print(f"window size: {total_width}x{total_height}")
+    print(f"px to inches factor: {px}")
+    print(f"plot size: {width}x{height}")
+    self.fig = plt.figure(figsize=(15,10), dpi=100)
+    # self.fig = plt.figure(figsize=(width*px, height*px), dpi=100)
     self.fig.patch.set_facecolor(self.color_config["plot_bg_color"])
     self.ax = self.fig.add_subplot(111)
     self.ax.set_facecolor(self.color_config["plot_bg_color"])
@@ -268,12 +272,12 @@ class Board_Layout_GUI:
     self.show_nodes = tk.BooleanVar(value=True, name="show_nodes")
     self.show_edges = tk.BooleanVar(value=True, name="show_edges")
     self.show_labels = tk.BooleanVar(value=True, name="show_labels")
-    self.show_targets = tk.BooleanVar(value=False, name="show_targets")
+    self.show_targets = tk.BooleanVar(value=False, name="show_targets") # unused # TODO: implement
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
-    self.show_task_paths = tk.BooleanVar(value=True, name="show_task_paths")
-    self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused")
+    self.show_task_paths = tk.BooleanVar(value=False, name="show_task_paths") # unused # TODO: implement
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
     self.use_edge_images = tk.BooleanVar(value=False, name="use_edge_images")
+    self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
 
     # variables for plot
     self.board_width = tk.DoubleVar(value=83.1, name="board_width")
@@ -564,6 +568,22 @@ class Board_Layout_GUI:
     """
     Load the files specified in the file inputs.
     """
+    # print info about self.master position
+    print("self.master.winfo_rootx():", self.master.winfo_rootx())
+    print("self.master.winfo_rooty():", self.master.winfo_rooty())
+    print("self.master.winfo_x():", self.master.winfo_x())
+    print("self.master.winfo_y():", self.master.winfo_y())
+    print("self.master.winfo_width():", self.master.winfo_width())
+    print("self.master.winfo_height():", self.master.winfo_height())
+    print("self.master.winfo_screenwidth():", self.master.winfo_screenwidth())
+    print("self.master.winfo_screenheight():", self.master.winfo_screenheight())
+    print("self.master.winfo_geometry():", self.master.winfo_geometry())
+    # clear figure
+    self.fig.clear()
+    # reset variables
+    self.particle_graph = None
+    self.background_image = None
+    self.graph_data = None
     # try loading particle graph
     try:
       self.particle_graph = TTR_Particle_Graph.load_json(self.particle_graph_file.get())
@@ -950,7 +970,7 @@ class Board_Layout_GUI:
     column_index += 1
     add_control_button(row_index, column_index, "Snap labels", self.move_labels_to_nodes)
     column_index += 1
-    add_control_button(row_index, column_index, "Scale nodes", self.scale_node_positions)
+    add_control_button(row_index, column_index, "Scale graph", self.scale_graph_posistions)
     row_index += 1
     column_index = 0
     add_control_button(row_index, column_index, "Save img", self.save_image)
@@ -987,7 +1007,7 @@ class Board_Layout_GUI:
         filetypes=(("PNG", "*.png"), ("all files", "*.*")))
     if filepath == "":
       return
-    self.fig.savefig(filepath, dpi=600)
+    self.fig.savefig(filepath, dpi=600, transparent=True)
 
   def move_labels_to_nodes(self):
     """
@@ -1004,7 +1024,7 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_edges_to_nodes(self.ax, alpha=1)
+    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7)
     self.show_edges.set(True)
     self.canvas.draw_idle()
 
@@ -1031,13 +1051,14 @@ class Board_Layout_GUI:
     self.ax.set_ylim(y_offset, new_height + y_offset)
     self.update_background_image()
 
-  def scale_node_positions(self):
+  def scale_graph_posistions(self):
     """
     Scale the node positions to fit the new background image size.
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.scale_node_positions(self.ax, self.node_scale_factor.get())
+    self.particle_graph.scale_graph_positions(self.ax, self.node_scale_factor.get())
+    self.canvas.draw_idle()
 
   def draw_plot_param_widgets(self, plot_param_frame: tk.Frame):
     """
@@ -1128,7 +1149,6 @@ class Board_Layout_GUI:
     column_index += 2
     # add Entry for node scale factor
     add_label_and_entry(row_index, column_index, "nodes", self.node_scale_factor)
-
 
 
   def init_animation(self):

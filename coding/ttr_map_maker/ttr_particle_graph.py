@@ -200,14 +200,15 @@ class TTR_Particle_Graph:
         particle.draw(ax, **draw_kwargs)
 
 
-  def scale_node_positions(self, ax, scale_factor: float = 0.8):
+  def scale_graph_positions(self, ax: plt.Axes, scale_factor: float = 0.8):
     """
-    scale the positions of all nodes by a scale factor
+    scale the positions of all graph particles by a given factor. Then redraw the particles.
 
     Args:
+        ax (plt.Axes): axes to draw on
         scale_factor (float, optional): scale factor. Defaults to 0.8.
     """
-    for particle_node in self.particle_nodes.values():
+    for particle_node in self.get_particle_list():
       particle_node.set_position(
         particle_node.position*scale_factor)
       particle_node.erase()

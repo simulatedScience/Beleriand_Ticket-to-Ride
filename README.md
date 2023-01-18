@@ -31,10 +31,10 @@ To store the game board, cards and LEGO bricks, you can find or buy a box (appro
 At the current stage, I highly recommend being familiar with Python and some image editing software like GIMP.
 - Python 3.6 or higher
 #### Dependencies
-- matplotlib 3.6 or higher
-- numpy 
-- shapely
-- (screeninfo) -> not yet used successfully
+- matplotlib 3.6 or higher -> essential for the UI
+- numpy -> for efficient calculations
+- shapely -> for particle simulation
+- screeninfo -> to get proper multi-monitor support
 
 ### How to run the program
 The code is currently not packaged as a standalone application, so you will have to run it from the source code (written in python). You can find the code in `coding/ttr_map_maker`. There, execute `board_layout_gui.py` to start the program, which will open a new window. Try out the many buttons!
