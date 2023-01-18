@@ -40,6 +40,7 @@ import matplotlib.animation as anim
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
 from multi_monitor_handling import toggle_full_screen
+from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
 from particle_edge import Particle_Edge
 import read_ttr_files as ttr_reader
@@ -74,6 +75,7 @@ class Board_Layout_GUI:
     self.master.configure(bg=self.color_config["bg_color"])
     self.master.title("Ticket-to-Ride board layout optimizer")
     self.master.state("zoomed")
+    self.master.minsize(500, 400)
     # self.master.resizable(False, False)
     # add fullscreen toggle
     self.master.bind("<F11>", lambda event: toggle_full_screen(self.master))
@@ -91,7 +93,7 @@ class Board_Layout_GUI:
 
     self.init_tk_variables()
     self.init_frames()
-    self.init_animation()
+    # self.init_animation() # TODO: implement animation
 
     self.master.mainloop()
 
@@ -177,29 +179,51 @@ class Board_Layout_GUI:
     self.animation_frame.grid_rowconfigure(1, weight=0)
 
     # create frame for controls
-    self.control_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
-    self.control_frame.grid(
+    control_outer_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"], height=self.master.winfo_height()-2*self.grid_pad_y, )
+    self.master.bind("<Configure>", lambda event: self.control_frame_size_update(event, control_outer_frame))
+    control_outer_frame.grid(
         row=0,
         column=1,
-        sticky="nsew",
+        sticky="e")
+    self.control_frame = Auto_Scroll_Frame(control_outer_frame, 
+        frame_kwargs=dict(background=self.color_config["bg_color"]),
+        scrollbar_kwargs=dict(
+            troughcolor=self.color_config["bg_color"],
+            activebackground=self.color_config["button_active_bg_color"],
+            bg=self.color_config["button_bg_color"],
+            border=0,
+            width=10,
+            highlightthickness=0,
+            highlightbackground=self.color_config["bg_color"],
+            highlightcolor=self.color_config["bg_color"],
+            )
+        )
+    self.control_frame.grid(
+        row=0,
+        column=0,
+        sticky="e",
         padx=(2*self.grid_pad_x, 0),
         pady=(0,0),
         ipadx=2*self.grid_pad_x,
         ipady=2*self.grid_pad_y)
+    self.control_frame = self.control_frame.scrollframe
+    self.master.update()
 
     self.draw_control_widgets()
-    self.master.update()
+    # control_outer_frame.grid_propagate(False)
+
     # create matplotlib figure
-    self.animation_frame.update()
-    px = 1 / plt.rcParams["figure.dpi"]
-    total_width = self.master.winfo_width()
-    total_height = self.master.winfo_height()
-    navigation_bar_height: int = 150 # height of navigation bar in pixels # TODO: get height of navigation bar
-    width = (total_width - (self.control_frame.winfo_width() + 2 * self.grid_pad_x))
-    height = (total_height - (2 * self.grid_pad_y + navigation_bar_height))
-    print(f"window size: {total_width}x{total_height}")
-    print(f"px to inches factor: {px}")
-    print(f"plot size: {width}x{height}")
+    # self.master.update()
+    # self.animation_frame.update()
+    # px = 1 / plt.rcParams["figure.dpi"]
+    # total_width = self.master.winfo_width()
+    # total_height = self.master.winfo_height()
+    # navigation_bar_height: int = 150 # height of navigation bar in pixels # TODO: get height of navigation bar
+    # width = (total_width - (self.control_frame.winfo_width() + 2 * self.grid_pad_x))
+    # height = (total_height - (2 * self.grid_pad_y + navigation_bar_height))
+    # print(f"window size: {total_width}x{total_height}")
+    # print(f"px to inches factor: {px}")
+    # print(f"plot size: {width}x{height}")
     self.fig = plt.figure(figsize=(15,10), dpi=100)
     # self.fig = plt.figure(figsize=(width*px, height*px), dpi=100)
     self.fig.patch.set_facecolor(self.color_config["plot_bg_color"])
@@ -230,6 +254,15 @@ class Board_Layout_GUI:
     self.update_frame()
     # self.canvas.draw_idle()
 
+  def control_frame_size_update(self, event: tk.Event, control_outer_frame: tk.Frame):
+    """
+    Update control frame size when window size changes
+    """
+    if event.widget != self.master:
+      return
+    height = self.master.winfo_height() - 4*self.grid_pad_y
+    control_outer_frame.config(height=height, width=control_outer_frame.winfo_width() - 4*self.grid_pad_x)
+    control_outer_frame.update()
 
   def init_tk_variables(self):
     """
@@ -579,7 +612,7 @@ class Board_Layout_GUI:
     print("self.master.winfo_screenheight():", self.master.winfo_screenheight())
     print("self.master.winfo_geometry():", self.master.winfo_geometry())
     # clear figure
-    self.fig.clear()
+    # self.fig.clear()
     # reset variables
     self.particle_graph = None
     self.background_image = None

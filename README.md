@@ -1,10 +1,11 @@
 # Custom Ticket to Ride
+## Overview & current features
 This project implements tools to create your very own, custom ticket to ride game:
 - Load your own background map.
 - Create your own graph from locations and "rail" connections.
 - All graph elements (nodes, edges and labels) can be moved in the UI to improve the layout.
 - The background and graph elements can be rescaled such that everything fits well when printed.
-- Show the graph on top of the background map to export it as a large image, which can then be printed.
+- Show the graph on top of the background map to export it as a large image, which can then be printed. 
 
 ### planned features:
 - improve the UI and add more controls
@@ -38,3 +39,7 @@ At the current stage, I highly recommend being familiar with Python and some ima
 
 ### How to run the program
 The code is currently not packaged as a standalone application, so you will have to run it from the source code (written in python). You can find the code in `coding/ttr_map_maker`. There, execute `board_layout_gui.py` to start the program, which will open a new window. Try out the many buttons!
+
+
+## how the program was created
+Most of the code was written with some level of support or inspiration from GitHub Copilot and/or OpenAI's ChatGPT. Other than that, if files contain code that is not my own, I tried to mention it in the file header and/or function docstring. Most of the code is my own though.

@@ -1082,7 +1082,7 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.732142857142857,
+          3.6964285714285716,
           1
         ],
         "velocity_decay": 0.99,
@@ -1832,10 +1832,10 @@
         "particle_type": "Particle_Label",
         "id": 69,
         "position": [
-          93.98313805635965,
-          31.94340688980068
+          94.66474999999998,
+          28.521625000000007
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
           3.4663677130044843,
