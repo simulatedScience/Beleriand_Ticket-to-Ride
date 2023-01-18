@@ -15,7 +15,7 @@ Menegroth ; Arvenien ; 8
 Taur-Nu-Fuin ; Forest of Region ; 6
 Gondolin ; Havens of Sirion ; 10
 Tol Sirion ; Nan Elmoth ; 10
-Ladros ; Andrum ; 10
+Ladros ; Andram ; 10
 Cirith Ninniach ; Ladros ; 11
 Crossing of Teiglin ; Nan Tathren ; 5
 Brithombar ; Nargothrond ; 5

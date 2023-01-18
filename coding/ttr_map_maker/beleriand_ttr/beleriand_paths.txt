@@ -1,4 +1,4 @@
-Amon Ereb ; Andrum ; 3 ; yellow
+Amon Ereb ; Andram ; 3 ; yellow
 Amon Ereb ; Nan Elmoth ; 5 ; purple
 Amon Ereb ; Sarn Athrud ; 3 ; gray
 Amon Rudh ; Crossing of Teiglin ; 2 ; blue
@@ -6,11 +6,11 @@ Amon Rudh ; Forest of Neldoreth ; 3 ; gray
 Amon Rudh ; Forest of Region ; 3 ; white
 Amon Rudh ; Gates of Sirion ; 2 ; gray
 Amon Rudh ; Nargothrond ; 2 ; gray
-Andrum ; East Taur-im-Duinath ; 4 ; gray
-Andrum ; Forest of Region ; 3 ; gray
-Andrum ; Gates of Sirion ; 4 ; blue
-Andrum ; Menegroth ; 4 ; green
-Andrum ; West Taur-im-Duinath ; 4 ; purple
+Andram ; East Taur-im-Duinath ; 4 ; gray
+Andram ; Forest of Region ; 3 ; gray
+Andram ; Gates of Sirion ; 4 ; blue
+Andram ; Menegroth ; 4 ; green
+Andram ; West Taur-im-Duinath ; 4 ; purple
 Arvenien ; Cape Balar ; 2 ; black
 Arvenien ; Eglarest ; 4 ; orange
 Arvenien ; Havens of Sirion ; 3 ; blue
@@ -51,7 +51,7 @@ Lake Mithrim ; Cirith Ninniach ; 3 ; gray
 Lake Mithrim ; Ered Wethrin ; 3 ; black
 Linaewen ; Eithel Ivrin ; 3 ; orange
 Menegroth ; Forest of Neldoreth ; 1 ; yellow
-Nan Elmoth ; Andrum ; 5 ; gray
+Nan Elmoth ; Andram ; 5 ; gray
 Nan Elmoth ; Menegroth ; 3 ; gray
 Nan Elmoth ; Pass of Aglon ; 2 ; green
 Nan Elmoth ; Sarn Athrud ; 4 ; black
