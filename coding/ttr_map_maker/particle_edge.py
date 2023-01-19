@@ -205,7 +205,7 @@ class Particle_Edge(Graph_Particle):
       color: str = None,
       border_color: str = None,
       alpha: float = 0.7,
-      zorder: int = 4):
+      zorder: int = 2):
     """
     draw this edge as a rectangle
 

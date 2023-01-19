@@ -269,6 +269,7 @@ class TTR_Particle_Graph:
       edge_colors.add(particle_edge.color)
     return list(edge_colors)
 
+
   def set_edge_colors(self, edge_color_map: dict):
     """
     set the colors of all edges in the graph according to a color map.
@@ -282,7 +283,6 @@ class TTR_Particle_Graph:
       if particle_edge.color in edge_color_map.keys():
         particle_edge.color = edge_color_map[particle_edge.color]
         particle_edge.set_image(None)
-    print(f"set edge colors to {edge_color_map.values()}")
 
   def set_edge_images(self, edge_color_map: dict):
     """
@@ -307,12 +307,12 @@ class TTR_Particle_Graph:
     Args:
         ax (plt.Axes): axes to draw on
     """
+    for particle_edge in self.particle_edges.values():
+      particle_edge.draw(ax, color=particle_edge.color, border_color="#555555", alpha=0.8 * alpha_multiplier)
     for particle_node in self.particle_nodes.values():
       particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier)
     for particle_label in self.particle_labels.values():
       particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
-    for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, border_color="#555555", alpha=0.8 * alpha_multiplier)
 
   def erase(self):
     """
