@@ -26,7 +26,7 @@ def toggle_full_screen(root):
   monitor_geom = get_monitor_geometry(root)
   if root.winfo_width() == monitor_geom[2] and root.winfo_height() == monitor_geom[3]:
     root.geometry(f"{monitor_geom[2]}x{monitor_geom[3]}+{monitor_geom[0]}+{monitor_geom[1]}")
-    root.state("zoomed")
+    # root.state("zoomed")
     root.overrideredirect(False)
   else:
     root.geometry(f"{monitor_geom[2]}x{monitor_geom[3]}+{monitor_geom[0]}+{monitor_geom[1]}")

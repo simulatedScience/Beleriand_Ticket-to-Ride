@@ -8,7 +8,7 @@ class Auto_Scroll_Frame(tk.Frame):
     # Create a canvas and a scrollbar
 
     self.canvas = tk.Canvas(parent, borderwidth=0, highlightthickness=0, **canvas_kwargs)
-    self.canvas.grid(column=0, row=0, sticky="e")
+    self.canvas.grid(column=0, row=0, sticky="ne")
     self.vbar = tk.Scrollbar(parent, orient="vertical", command=self.canvas.yview, elementborderwidth=0, relief="flat", **scrollbar_kwargs)
     self.vbar.grid(column=1, row=0, sticky="wns")
     self.vbar.grid_remove()
@@ -17,7 +17,7 @@ class Auto_Scroll_Frame(tk.Frame):
 
     # Create a frame and place it inside the canvas
     self.scrollframe = tk.Frame(self.canvas, **frame_kwargs)
-    self.window = self.canvas.create_window((0, 0), window=self.scrollframe, anchor="e")
+    self.window = self.canvas.create_window((0, 0), window=self.scrollframe, anchor="ne")
 
     self.scrollframe.bind("<Configure>", self._on_configure)
     self.master.bind("<Configure>", self._on_configure)
