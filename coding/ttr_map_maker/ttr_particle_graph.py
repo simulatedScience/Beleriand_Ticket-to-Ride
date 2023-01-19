@@ -6,7 +6,6 @@ Each edge has a length and a color. Each node has a label close to it.
 
 A particle graph's layout can be optimized using a simple particle method.
 """
-import pickle
 import json
 from typing import List, Tuple, Dict
 
@@ -17,12 +16,14 @@ from graph_particle import Graph_Particle
 from particle_node import Particle_Node
 from particle_label import Particle_Label
 from particle_edge import Particle_Edge
+from graph_analysis import TTR_Graph_Analysis
 
 
 class TTR_Particle_Graph:
   def __init__(self,
         locations: List[str],
         paths: List[Tuple[str, str, int, str]],
+        tasks: List[Tuple[str, str, int]],
         node_positions: Dict[str, np.ndarray] = None,
         particle_parameters: dict = {
           "velocity_decay": 0.99,
@@ -43,23 +44,27 @@ class TTR_Particle_Graph:
     Args:
         locations (List[str]): list of location labels
         paths (List[Tuple[str, str, int, str]]): list of paths. Each path is a tuple of (node_1, node_2, length, color)
+        tasks (List[Tuple[str, str, int]]): list of tasks. Each task is a tuple of (node_1, node_2, length)
+        node_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
         location_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
     """
-    self.node_labels = locations
-    self.paths = paths
-    self.node_positions = node_positions
-    self.particle_parameters = particle_parameters
+    self.node_labels: List[str] = locations
+    self.paths: List[Tuple[str, str, int, str]] = paths
+    self.tasks: List[Tuple[str, str, int]] = tasks
+    self.node_positions: Dict[str, np.ndarray] = node_positions
+    self.particle_parameters: dict = particle_parameters
 
     self.max_particle_id = 0
 
     self.particle_nodes = dict()
     self.particle_edges = dict()
     self.particle_labels = dict()
+    self.analysis_graph: TTR_Graph_Analysis = None
     
     self.create_particle_system()
 
 
-  def create_particle_system(self):
+  def create_particle_system(self) -> None:
     """
     Create the particle system from the given locations and paths connecting them.
     """
@@ -132,7 +137,7 @@ class TTR_Particle_Graph:
 
   def optimize_layout(self,
       iterations: int = 1000,
-      dt: float = 0.02):
+      dt: float = 0.02) -> None:
     """
     optimize layout of particle graph by calling the interact() and update() methods of each particle.
     Use Cell lists and Verlet lists to speed up the computation.
@@ -200,7 +205,7 @@ class TTR_Particle_Graph:
         particle.draw(ax, **draw_kwargs)
 
 
-  def scale_graph_positions(self, ax: plt.Axes, scale_factor: float = 0.8):
+  def scale_graph_positions(self, ax: plt.Axes, scale_factor: float = 0.8) -> None:
     """
     scale the positions of all graph particles by a given factor. Then redraw the particles.
 
@@ -233,8 +238,7 @@ class TTR_Particle_Graph:
     """
     return self.paths
 
-
-  def get_particle_list(self):
+  def get_particle_list(self) -> List[Graph_Particle]:
     """
     get all particles in particle graph
 
@@ -244,7 +248,7 @@ class TTR_Particle_Graph:
     return list(self.particle_nodes.values()) + list(self.particle_labels.values()) + list(self.particle_edges.values())
 
 
-  def set_parameters(self, particle_parameters: dict):
+  def set_parameters(self, particle_parameters: dict) -> None:
     """
     update all given particle parameters
     These changes are applied to all particles in the particle graph.
@@ -269,8 +273,7 @@ class TTR_Particle_Graph:
       edge_colors.add(particle_edge.color)
     return list(edge_colors)
 
-
-  def set_edge_colors(self, edge_color_map: dict):
+  def set_edge_colors(self, edge_color_map: dict) -> None:
     """
     set the colors of all edges in the graph according to a color map.
     The color map is a dictionary mapping current edge colors to new colors.
@@ -284,7 +287,7 @@ class TTR_Particle_Graph:
         particle_edge.color = edge_color_map[particle_edge.color]
         particle_edge.set_image(None)
 
-  def set_edge_images(self, edge_color_map: dict):
+  def set_edge_images(self, edge_color_map: dict) -> None:
     """
     set edges to display images instead of flat colored rectangles.
     The color map is a dictionary mapping current edge colors to image file paths.
@@ -300,7 +303,7 @@ class TTR_Particle_Graph:
         raise ValueError(f"no image file path specified for edge color '{particle_edge.color}'")
 
 
-  def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+  def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
     """
     draw particle graph
 
@@ -314,7 +317,7 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
 
-  def erase(self):
+  def erase(self) -> None:
     """
     erase particle graph
     """
@@ -325,7 +328,7 @@ class TTR_Particle_Graph:
     for particle_edge in self.particle_edges.values():
       particle_edge.erase()
 
-  def draw_nodes(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+  def draw_nodes(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
     """draw nodes of particle graph
 
     Args:
@@ -335,14 +338,14 @@ class TTR_Particle_Graph:
     for particle_node in self.particle_nodes.values():
       particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier)
 
-  def erase_nodes(self):
+  def erase_nodes(self) -> None:
     """
     erase nodes of particle graph
     """
     for particle_node in self.particle_nodes.values():
       particle_node.erase()
 
-  def draw_labels(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+  def draw_labels(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
     """draw labels of particle graph
 
     Args:
@@ -352,14 +355,14 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
 
-  def erase_labels(self):
+  def erase_labels(self) -> None:
     """
     erase labels of particle graph
     """
     for particle_label in self.particle_labels.values():
       particle_label.erase()
 
-  def draw_edges(self, ax: plt.Axes, alpha_multiplier: float = 1.0):
+  def draw_edges(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
     """draw edges of particle graph
 
     Args:
@@ -413,9 +416,40 @@ class TTR_Particle_Graph:
             head_length=0.4,
             zorder=0)
 
-  # def __str__(self): # TODO
-  #     return f"Particle graph with {len(self.node_labels)} nodes and {len(self.edges)} edges."
+  def __str__(self) -> str:
+    """
+    return information about the particle graph:
+    - number of nodes
+    - number of edges
 
+    Returns:
+        str: information about the particle graph
+    """
+    return f"Particle graph with {len(self.node_labels)} nodes and {len(self.paths)} edges."
+
+  def draw_tasks(self, ax: plt.Axes, alpha_multiplier: float = 1.0, color = "#ff00ff") -> None:
+    """
+    draw tasks of particle graph.
+    1. Calculate the shortest route(s) for each task.
+    2. Count how many shortest routes go through each connection.
+    3. Color all connections according to this number.
+    Bonus: If there are multiple shortest routes for tasks, add a button that displays a random combination of these routes.
+
+    Args:
+        ax (plt.Axes): matplotlib axes to draw on
+        alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
+    """
+    if self.analysis_graph is None:
+      self.init_analysis_graph()
+
+  def init_analysis_graph(self) -> None:
+    """
+    initialize the analysis graph.
+    """
+    self.analysis_graph: TTR_Graph_Analysis = TTR_Graph_Analysis(
+        self.node_labels,
+        self.paths,
+        self.tasks)
 
   def to_json(self) -> str:
     """
@@ -523,6 +557,7 @@ class TTR_Particle_Graph:
     particle_graph = TTR_Particle_Graph(
         locations = [],
         paths = [],
+        tasks = [],
         node_positions = [],
         particle_parameters = particle_parameters,
       )

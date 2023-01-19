@@ -10,10 +10,11 @@ This project implements tools to create your very own, custom ticket to ride gam
 ### planned features:
 - improve the UI and add more controls
 - visualize the tasks on the graph
-- automatic graph analysis tools
+- automatic graph analysis tools ([see here](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
 - automatically generate images for task cards
 - allow adding and removing nodes and edges to the graph through the UI
 - allow editing colors and text of nodes and edges through the UI
+- allow adding and removing tasks through the UI
 - select an image for each node in the UI
 - automatically optimze the graph layout from the UI
 

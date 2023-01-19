@@ -69,11 +69,14 @@ def create_graph(locations: List[str], paths: List[Tuple[str, str, int, str]]):
 
 def draw_graph(G: nx.Graph, tasks: List[Tuple[str, str, int]]):
     # Get the positions of all nodes
-    pos = nx.fruchterman_reingold_layout(G)
+    # pos = nx.fruchterman_reingold_layout(G)
+    # get positions for planar graph ignoring edge weights
+    pos = nx.planar_layout(G)
 
-    # Draw all edges
+    # Draw all edges with the specified length and color
     for (loc1, loc2, length) in G.edges.data("length", "color"):
-        nx.draw_networkx_edges(G, pos, edgelist=[(loc1, loc2)], width=length/10)#, edge_color=color)
+        color = G.edges[loc1, loc2]["color"]
+        nx.draw_networkx_edges(G, pos, edgelist=[(loc1, loc2)], width=length, edge_color=color)
 
     # Draw all nodes
     nx.draw_networkx_nodes(G, pos, node_size=500)

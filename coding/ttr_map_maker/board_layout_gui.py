@@ -250,7 +250,7 @@ class Board_Layout_GUI:
         pady=(self.grid_pad_y, 0))
 
     self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=None, hspace=None)
-    self.update_frame()
+    self.toggle_mpl_frame_visibility()
     # self.canvas.draw_idle()
 
   def control_frame_size_update(self, event: tk.Event, control_outer_frame: tk.Frame):
@@ -306,7 +306,7 @@ class Board_Layout_GUI:
     self.show_labels = tk.BooleanVar(value=True, name="show_labels")
     self.show_targets = tk.BooleanVar(value=False, name="show_targets") # unused # TODO: implement
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
-    self.show_task_paths = tk.BooleanVar(value=False, name="show_task_paths") # unused # TODO: implement
+    self.show_task_paths = tk.BooleanVar(value=False, name="show_task_paths")
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
     self.use_edge_images = tk.BooleanVar(value=False, name="use_edge_images")
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
@@ -598,7 +598,7 @@ class Board_Layout_GUI:
     except FileNotFoundError:
       print("Background image file not found.")
     self.ax.clear()
-    self.update_background_image()
+    self.toggle_background_image_visibility()
 
     self.init_particle_graph()
 
@@ -790,22 +790,22 @@ class Board_Layout_GUI:
         column_index=0,
         columnspan=2)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Nodes", self.show_nodes, command=self.update_nodes)
+    add_checkbutton(row_index, column_index, "Nodes", self.show_nodes, command=self.toggle_node_visibility)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Edges", self.show_edges, command=self.update_edges)
+    add_checkbutton(row_index, column_index, "Edges", self.show_edges, command=self.toggle_edge_visibility)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Labels", self.show_labels, command=self.update_labels)
+    add_checkbutton(row_index, column_index, "Labels", self.show_labels, command=self.toggle_label_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Targets", self.show_targets)
     row_index = 1 # reset for second column
     column_index = 1
     add_checkbutton(row_index, column_index, "Show Tasks", self.show_task_paths)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Background Image", self.show_background_image, command=self.update_background_image)
+    add_checkbutton(row_index, column_index, "Background Image", self.show_background_image, command=self.toggle_background_image_visibility)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.update_frame)
+    add_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.toggle_mpl_frame_visibility)
     row_index += 1
-    add_checkbutton(row_index, column_index, "edge images", self.use_edge_images, command=self.update_edge_images)
+    add_checkbutton(row_index, column_index, "edge images", self.use_edge_images, command=self.toggle_edge_images)
   
   def toggle_toggle_widgets(self):
     """
@@ -824,7 +824,7 @@ class Board_Layout_GUI:
     """
     pass # TODO
 
-  def update_nodes(self, *args):
+  def toggle_node_visibility(self, *args) -> None:
     """
     Update the nodes with the current settings.
     """
@@ -836,7 +836,7 @@ class Board_Layout_GUI:
       self.particle_graph.erase_nodes()
     self.canvas.draw_idle()
 
-  def update_edges(self, *args):
+  def toggle_edge_visibility(self, *args) -> None:
     """
     Update the edges with the current settings.
     """
@@ -848,7 +848,7 @@ class Board_Layout_GUI:
       self.particle_graph.erase_edges()
     self.canvas.draw_idle()
 
-  def update_labels(self, *args):
+  def toggle_label_visibility(self, *args) -> None:
     """
     Update the labels with the current settings.
     """
@@ -860,7 +860,22 @@ class Board_Layout_GUI:
       self.particle_graph.erase_labels()
     self.canvas.draw_idle()
 
-  def update_frame(self):
+  def toggle_task_visibility(self, *args) -> None:
+    """
+    Update the tasks with the current settings.
+    """
+    if self.particle_graph is None:
+      return
+    if self.show_task_paths.get():
+      self.use_edge_images.set(False)
+      self.particle_graph.draw_tasks(self.ax)
+    elif self.show_edges.get():
+      self.particle_graph.draw_edges(self.ax)
+    else:
+      self.particle_graph.erase_edges()
+    self.canvas.draw_idle()
+
+  def toggle_mpl_frame_visibility(self) -> None:
     """
     Update the frame with the current settings.
     """
@@ -883,7 +898,7 @@ class Board_Layout_GUI:
       self.fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
     self.canvas.draw_idle()
 
-  def update_background_image(self):
+  def toggle_background_image_visibility(self) -> None:
     """
     Update the background image in self.ax if the background image is shown.
     """
@@ -900,13 +915,14 @@ class Board_Layout_GUI:
       self.plotted_background_image.remove()
     self.canvas.draw_idle()
 
-  def update_edge_images(self):
+  def toggle_edge_images(self) -> None:
     """
     Update the edge images with the current settings.
     """
     if self.particle_graph is None:
       return
     if self.use_edge_images.get():
+      self.show_task_paths.set(False)
       edge_colors = self.particle_graph.get_edge_colors()
       image_map = self.get_edge_color_map(edge_colors)
       self.particle_graph.set_edge_images(image_map)
@@ -932,7 +948,7 @@ class Board_Layout_GUI:
         pkmn_colors.color_to_energy_type(color)) for color in edge_colors}
 
 
-  def draw_button_widgets(self, button_frame: tk.Frame):
+  def draw_button_widgets(self, button_frame: tk.Frame) -> None:
     """
     Draw the button widgets in the given frame.
     """
@@ -1057,7 +1073,7 @@ class Board_Layout_GUI:
     # update plot limits
     self.ax.set_xlim(x_offset, new_width + x_offset)
     self.ax.set_ylim(y_offset, new_height + y_offset)
-    self.update_background_image()
+    self.toggle_background_image_visibility()
 
   def scale_graph_posistions(self):
     """
@@ -1231,7 +1247,7 @@ class Board_Layout_GUI:
       # update plot limits
       self.ax.set_xlim(0, self.background_image_mpl.shape[1]*scale_factor)
       self.ax.set_ylim(0, image_height)
-      self.update_background_image()
+      self.toggle_background_image_visibility()
     else:
       self.ax.set_xlim(0, image_height*2)
       self.ax.set_ylim(0, image_height)

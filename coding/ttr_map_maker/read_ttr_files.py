@@ -82,19 +82,3 @@ def load_particle_graph_pickle(particle_graph_file):
     particle_graph = pickle.load(file)
 
   return particle_graph
-
-
-def load_particle_graph_json(particle_graph_file: str) -> TTR_Particle_Graph:
-  """
-  load a particle graph from a JSON file
-
-  Args:
-      particle_graph_file (str): path to the pickle file
-
-  Returns:
-      ParticleGraph: particle graph
-  """
-  with open(particle_graph_file, "r") as file:
-    particle_graph = TTR_Particle_Graph.load_json(file.read())
-
-  return particle_graph
