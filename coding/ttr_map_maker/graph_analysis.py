@@ -1,22 +1,24 @@
 """
 This module contains graph analysis class `TTR_Graph_Analysis`, which is used to analyze a given graph.
 Key features:
-- find the shortest path between two nodes - done (untested)
-- find the shortest paths for all tasks - done (untested)
+- find the shortest path between two nodes - done
+- find the shortest paths for all tasks - done
 - analyze importance of nodes
 - analyze importance of edges
-- calculate statistics for the graph:
-  - distribution of node degrees - done (untested)
-  - distribution of edge lengths - done (untested)
-  - distribution of edge colors - done (untested)
-  - distribution of task lengths - done (untested)
-  - distribution of colors needed for tasks
-- tools for visualization of the analysis
+- calculate statistics for the graph: - done
+  - distribution of node degrees - done
+  - distribution of edge lengths - done
+  - distribution of edge colors - done
+  - distribution of task lengths - done
+  - distribution of colors needed for tasks - done
+- tools for visualization of the analysis - partially done
 """
 import random
+from math import sqrt, ceil
 from typing import List, Tuple
 
 import networkx as nx
+import matplotlib.pyplot as plt
 
 class TTR_Graph_Analysis:
   """
@@ -25,16 +27,81 @@ class TTR_Graph_Analysis:
   def __init__(self,
       locations: List[str],
       paths: List[Tuple[str, str, int, str]],
-      tasks: List[Tuple[str, str, int]]
+      tasks: List[Tuple[str, str]]
       ):
     """
     Initialize the class with a graph.
-    """
-    self.locations = locations
-    self.paths = paths
-    self.tasks = tasks
-    self.networkx_graph = create_graph(locations, paths)
 
+    Args:
+        locations (List[str]): list of location names (nodes)
+        paths (List[Tuple[str, str, int, str]]): list of paths (start location, end location, length, color)
+        tasks (List[Tuple[str, str]]): list of tasks (start location, end location)
+    """
+    self.locations: List[str] = locations # list of location names (nodes)
+    self.paths: List[Tuple[str, str, int, str]] = paths # list of paths (start location, end location, length, color)
+    self.tasks: List[Tuple[str, str]] = tasks # list of tasks (start location, end location)
+
+    self.networkx_graph: nx.Graph = create_graph(locations, paths) # networkx graph object containing location and path information
+    self.task_lengths: dict[Tuple[str, str], int] = self.get_task_lengths() # shortest path lengths for all tasks
+
+# access methods for basic graph information
+
+  def get_locations(self) -> List[str]:
+    """
+    Get the list of location names (nodes).
+
+    Returns:
+        List[str]: list of locations
+    """
+    return self.locations
+
+  def get_paths(self) -> List[Tuple[str, str, int, str]]:
+    """
+    Get the list of paths (edges)
+
+    Returns:
+        List[Tuple[str, str, int, str]]: list of edges
+    """
+    return self.paths
+
+  def get_tasks_with_lengths(self) -> List[Tuple[str, str]]:
+    """
+    Get the list of tasks.
+
+    Returns:
+        List[Tuple[str, str, int]]: list of tasks (start location, end location)
+    """
+    tasks_with_lengths = [(loc1, loc2, length) for (loc1, loc2), length in zip(self.tasks, self.task_lengths)]
+    return tasks_with_lengths
+
+  def number_of_locations(self) -> int:
+    """
+    Get the number of locations (nodes) in the graph.
+
+    Returns:
+        int: number of locations
+    """
+    return len(self.locations)
+
+  def number_of_paths(self) -> int:
+    """
+    Get the number of paths (edges) in the graph.
+
+    Returns:
+        int: number of paths
+    """
+    return len(self.paths)
+
+  def number_of_tasks(self) -> int:
+    """
+    Get the number of tasks in the graph.
+
+    Returns:
+        int: number of tasks
+    """
+    return len(self.tasks)
+
+# methods to calculate basic graph information
 
   def get_path_cost(self, location_list: List[str]) -> int:
     """
@@ -48,9 +115,24 @@ class TTR_Graph_Analysis:
     """
     cost = 0
     for i in range(len(location_list) - 1):
-      cost += self.networkx_graph[location_list[i]][location_list[i+1]]["length"]
+      edge = (location_list[i], location_list[i+1])
+      cost += self.networkx_graph.edges[edge]['length']
     return cost
 
+  def get_task_lengths(self) -> dict[Tuple[str, str], int]:
+    """
+    Get the lengths of all tasks.
+
+    Returns:
+        dict[Tuple[str, str], int]: dictionary of lengths for each task.
+    """
+    task_lengths = {}
+    for (loc1, loc2) in self.tasks:
+      path, length = self.get_shortest_path(loc1, loc2)
+      task_lengths[(loc1, loc2)] = length
+    return task_lengths
+
+# pathfinding methods
 
   def get_shortest_path(self, loc1: str, loc2: str) -> List[str]:
     """
@@ -76,7 +158,7 @@ class TTR_Graph_Analysis:
         loc2 (str): end location
 
     Returns:
-        List[Tuple[List[str], int]]: list of shortest paths and their lengths
+        List[Tuple[List[str], int]]: list of shortest paths between te given locations and their lengths
     """
     paths = nx.all_shortest_paths(self.networkx_graph, loc1, loc2)
     shortest_paths = []
@@ -86,29 +168,51 @@ class TTR_Graph_Analysis:
 
   def get_shortest_task_paths(self) -> List[Tuple[List[str], int]]:
     """
-    Find the shortest path for all tasks.
+    Find a shortest path for all tasks. If there are multiple shortest paths, there is no guarantee which one will be returned.
 
     Returns:
-        List[Tuple[List[str], int]]: list of shortest paths and their lengths for each task
+        List[Tuple[List[str], int]]: list of a shortest path and it's length for each task
     """
     shortest_task_paths = []
-    for (loc1, loc2, length) in self.tasks:
-      shortest_task_paths.append(self.get_shortest_path(loc1, loc2))
+    for (loc1, loc2) in self.tasks:
+      shortest_path = self.get_shortest_path(loc1, loc2)
+      length = self.get_path_cost(shortest_path)
+      shortest_task_paths.append((shortest_path, length))
     return shortest_task_paths
 
   def get_random_shortest_task_paths(self) -> List[Tuple[List[str], int]]:
     """
-    Find shortest path for all tasks. If there are multiple shortest paths, choose one (uniformly) randomly.
+    Find shortest path for all tasks. If there are multiple shortest paths, choose one (uniformly) randomly. Multiple calls to this function will likely return different paths.
 
     Returns:
-        List[Tuple[List[str], int]]: list of shortest paths and their lengths for each task
+        List[Tuple[List[str], int]]: list of a random shortest path and it's length for each task
     """
     shortest_task_paths = []
-    for (loc1, loc2, length) in self.tasks:
+    for (loc1, loc2) in self.tasks:
       shortest_paths = self.get_shortest_path(loc1, loc2)
-      shortest_task_paths.append(random.choice(shortest_paths))
+      shortest_path = random.choice(shortest_paths)
+      length = self.get_path_cost(shortest_path)
+      shortest_task_paths.append((shortest_path, length))
     return shortest_task_paths
 
+  def get_random_shortest_task_paths_edge_counts(self) -> dict[[str, str], int]:
+    """
+    For each edge, count how many of the shortest paths for all tasks go through that edge.
+    Returns a dictionary with edges as keys (pairs of location names) and the number of shortest paths that go through that edge as values.
+    If there are multiple shortest paths for a task, choose one (uniformly) randomly.
+    """
+    shortest_task_paths = self.get_random_shortest_task_paths()
+    edge_counts = {}
+    for (path, length) in shortest_task_paths:
+      for i in range(len(path) - 1):
+        edge = (path[i], path[i+1])
+        if edge in edge_counts:
+          edge_counts[edge] += 1
+        else:
+          edge_counts[edge] = 1
+    return edge_counts
+
+# plottable graph information (various distributions)
 
   def get_node_degree_distribution(self) -> dict[int, int]:
     """
@@ -126,6 +230,28 @@ class TTR_Graph_Analysis:
         degree_distribution[degree] = 1
     return degree_distribution
 
+  def plot_node_degree_distribution(self, ax: plt.Axes, color: str = "#5588ff", grid_color: str = None, **bar_plot_kwargs):
+    """
+    Plot the degree distribution of the nodes as a bar plot.
+
+    Args:
+        ax (plt.Axes, optional): axis to plot on. Defaults to None (a new figure is created).
+        color (str, optional): color of the bars. Defaults to "#5588ff".
+        grid_color (str, optional): color of the grid. Defaults to None (no grid).
+        bar_plot_kwargs: keyword arguments passed to the `matplotlib.pyplot.bar` plot function
+    """
+    degree_distribution = self.get_node_degree_distribution()
+    ax.bar(degree_distribution.keys(), degree_distribution.values(), color=color, **bar_plot_kwargs)
+    ax.set_xticks(range(1, max(degree_distribution.keys()) + 1))
+    ax.set_xticklabels(range(1, max(degree_distribution.keys()) + 1))
+    ax.set_yticks(range(0, max(degree_distribution.values()) + 1))
+    ax.set_yticklabels(range(0, max(degree_distribution.values()) + 1))
+    ax.set_xlabel("node degree")
+    ax.set_ylabel("count")
+    ax.set_title("Node Degree Distribution")
+    if grid_color is not None:
+      ax.grid(axis="y", color=grid_color)
+
   def get_edge_length_distribution(self, color: str = None) -> dict[int, int]:
     """
     Calculate the distribution of edge lengths. If a color is given, only edges of that color are considered.
@@ -134,7 +260,7 @@ class TTR_Graph_Analysis:
         color (str, optional): color of the edges to consider. Defaults to None (all edges are considered).
 
     Returns:
-        dict[int, int]: dictionary of edge lengths and their counts
+        dict[int, int]: dictionary of edge lengths and how often they occur in the graph
     """
     edge_length_distribution = {}
     for edge in self.networkx_graph.edges:
@@ -146,6 +272,36 @@ class TTR_Graph_Analysis:
       else:
         edge_length_distribution[length] = 1
     return edge_length_distribution
+
+  def plot_edge_length_distribution(self, ax: plt.Axes, color: str = None, plot_color: str = None, grid_color: str = None, **bar_plot_kwargs):
+    """
+    Plot the distribution of edge lengths as a bar plot. If a color is given, only edges of that color are considered.
+
+    Args:
+        ax (plt.Axes, optional): axis to plot on. Defaults to None (a new figure is created).
+        color (str, optional): color of the edges to consider. Defaults to None (all edges are considered).
+        plot_color (str, optional): color of the bars. Defaults to None (the color of the edges is used).
+        grid_color (str, optional): color of the grid. Defaults to None (no grid).
+        bar_plot_kwargs: keyword arguments passed to the `matplotlib.pyplot.bar` plot function
+    """
+    if color is not None and plot_color is None:
+      plot_color = color
+    if color is None and plot_color is None:
+      plot_color = "#5588ff"
+    edge_length_distribution = self.get_edge_length_distribution(color)
+    ax.bar(edge_length_distribution.keys(), edge_length_distribution.values(), color=plot_color, **bar_plot_kwargs)
+    ax.set_xticks(range(1, max(edge_length_distribution.keys()) + 1))
+    ax.set_xticklabels(range(1, max(edge_length_distribution.keys()) + 1))
+    ax.set_yticks(range(0, max(edge_length_distribution.values()) + 1))
+    ax.set_yticklabels(range(0, max(edge_length_distribution.values()) + 1))
+    ax.set_xlabel("edge length")
+    ax.set_ylabel("count")
+    title = "Edge Length Distribution"
+    if color is not None:
+      title += f" for color {color}"
+    ax.set_title(title)
+    if grid_color is not None:
+      ax.grid(axis="y", color=grid_color)
 
   def get_edge_color_length_distribution(self) -> dict[str, dict[int, int]]:
     """
@@ -166,6 +322,53 @@ class TTR_Graph_Analysis:
         edge_color_length_distribution[color][length]: int = 1
     return edge_color_length_distribution
 
+  def plot_edge_color_length_distribution(self,
+      ax: plt.Axes,
+      color_map: dict[str, str] = None,
+      alpha: float = 0.7,
+      grid_color: str = None,
+      **plot_kwargs):
+    """
+    Plot the distribution of edge lengths for each color. Each color is plotted as a line.
+
+    Args:
+        ax (plt.Axes, optional): axis to plot on. Defaults to None (a new figure is created).
+        color_map (dict[str, str], optional): mapping from edge colors to colors for plotting. Defaults to None (each color is plotted in its own color).
+        alpha (float, optional): alpha value for the lines. Defaults to 0.7.
+        plot_kwargs: additional keyword arguments for the plot function
+    """
+    edge_color_length_distribution: dict[str, dict[int, int]] = self.get_edge_color_length_distribution()
+    if color_map is None:
+      color_map = {color: color for color in edge_color_length_distribution}
+    max_length = max([max(edge_color_length_distribution[color].keys()) for color in edge_color_length_distribution])
+    # add value 0 for missing lengths, then plot
+    for color in edge_color_length_distribution:
+      for length in range(1, max_length + 1):
+        if length not in edge_color_length_distribution[color]:
+          edge_color_length_distribution[color][length] = 0
+      # sort by length
+      x_values = sorted(edge_color_length_distribution[color].keys())
+      y_values = [edge_color_length_distribution[color][length] for length in x_values]
+      ax.plot(
+          x_values,
+          y_values,
+          color=color_map[color],
+          linestyle="--",
+          marker=".",
+          alpha=alpha,
+          label=color,
+          **plot_kwargs)
+    ax.set_xticks(range(1, max_length + 1))
+    ax.set_xticklabels(range(1, max_length + 1))
+    ax.set_yticks(range(0, max([max(edge_color_length_distribution[color].values()) for color in edge_color_length_distribution]) + 1))
+    ax.set_yticklabels(range(0, max([max(edge_color_length_distribution[color].values()) for color in edge_color_length_distribution]) + 1))
+    ax.set_xlabel("edge length")
+    ax.set_ylabel("count")
+    ax.set_title("Edge Length Distribution for Each Color")
+    ax.legend()
+    if grid_color is not None:
+      ax.grid(axis="both", color=grid_color)
+
   def get_edge_color_distribution(self) -> dict[str, int]:
     """
     Calculate the distribution of edge colors counting each edge once towards the color regardless of its length.
@@ -178,6 +381,32 @@ class TTR_Graph_Analysis:
     for color in edge_color_length_distribution:
       edge_color_distribution[color] = sum(edge_color_length_distribution[color].values())
     return edge_color_distribution
+
+  def plot_edge_color_distribution(self, ax: plt.Axes, color_map: dict[str, str] = None, grid_color: str = None, **bar_plot_kwargs):
+    """
+    Plot the distribution of edge colors counting each edge once towards the color regardless of its length as a bar plot.
+
+    Args:
+        ax (plt.Axes, optional): axis to plot on. Defaults to None (a new figure is created).
+        color_map (dict[str, str], optional): mapping from edge colors to colors for plotting. Defaults to None (each color is plotted in its own color).
+        grid_color (str, optional): color of the grid. Defaults to None (no grid).
+        bar_plot_kwargs: keyword arguments passed to the `matplotlib.pyplot.bar` plot function
+    """
+    edge_color_distribution = self.get_edge_color_distribution()
+    if color_map is None:
+      color_map = {color: color for color in edge_color_distribution}
+    ax.bar(
+        edge_color_distribution.keys(),
+        edge_color_distribution.values(),
+        color=[color_map[color] for color in edge_color_distribution],
+        **bar_plot_kwargs)
+    ax.set_yticks(range(0, max(edge_color_distribution.values()) + 1))
+    ax.set_yticklabels(range(0, max(edge_color_distribution.values()) + 1))
+    ax.set_xlabel("edge color")
+    ax.set_ylabel("count")
+    ax.set_title("Edge Color Distribution")
+    if grid_color is not None:
+      ax.grid(axis="y", color=grid_color)
 
   def get_edge_color_total_length_distribution(self) -> dict[str, int]:
     """
@@ -192,6 +421,28 @@ class TTR_Graph_Analysis:
       edge_color_total_length_distribution[color] = sum([length * count for length, count in edge_color_length_distribution[color].items()])
     return edge_color_total_length_distribution
 
+  def plot_edge_color_total_length_distribution(self, ax: plt.Axes, color_map: dict[str, str] = None, grid_color: str = None, **bar_plot_kwargs):
+    """
+    Plot the total length of edges for each color as a bar plot.
+
+    Args:
+        ax (plt.Axes, optional): axis to plot on. Defaults to None (a new figure is created).
+        color_map (dict[str, str], optional): mapping from edge colors to colors for plotting. Defaults to None (each color is plotted in its own color).
+        grid_color (str, optional): color of the grid. Defaults to None (no grid).
+        bar_plot_kwargs: keyword arguments passed to the `matplotlib.pyplot.bar` plot function
+    """
+    edge_color_total_length_distribution = self.get_edge_color_total_length_distribution()
+    if color_map is None:
+      color_map = {color: color for color in edge_color_total_length_distribution}
+    ax.bar(edge_color_total_length_distribution.keys(), edge_color_total_length_distribution.values(), color=[color_map[color] for color in edge_color_total_length_distribution], **bar_plot_kwargs)
+    ax.set_yticks(range(0, max(edge_color_total_length_distribution.values()) + 1))
+    ax.set_yticklabels(range(0, max(edge_color_total_length_distribution.values()) + 1))
+    ax.set_xlabel("edge color")
+    ax.set_ylabel("total length")
+    ax.set_title("Edge Color Total Length Distribution")
+    if grid_color is not None:
+      ax.grid(axis="y", color=grid_color)
+
   def get_task_length_distribution(self) -> dict[int, int]:
     """
     Calculate the distribution of task lengths.
@@ -200,26 +451,119 @@ class TTR_Graph_Analysis:
         dict[int, int]: dictionary of task lengths and their counts
     """
     task_length_distribution = {}
-    for (loc1, loc2, length) in self.tasks:
+    for length in self.task_lengths.values():
       if length in task_length_distribution:
         task_length_distribution[length] += 1
       else:
         task_length_distribution[length] = 1
     return task_length_distribution
 
-  def get_task_color_avg_distribution(self) -> dict[str, Tuple(float, float)]:
+  def plot_task_length_distribution(self, ax: plt.Axes, plot_color: str = "#5588ff", grid_color: str = None, **bar_plot_kwargs):
     """
-    Calculate how often each color is required to complete all tasks. Assume that the shortest path for each task is used. If there are multiple shortest paths, choose one (uniformly) randomly.
+    Plot the distribution of task lengths as a bar plot.
+
+    Args:
+        ax (plt.Axes, optional): axis to plot on. Defaults to None (a new figure is created).
+        plot_color (str, optional): color of the bars. Defaults to "#5588ff".
+        grid_color (str, optional): color of the grid. Defaults to None (no grid).
+        bar_plot_kwargs: keyword arguments passed to the `matplotlib.pyplot.bar` plot function
+    """
+    task_length_distribution = self.get_task_length_distribution()
+    ax.bar(
+        task_length_distribution.keys(),
+        task_length_distribution.values(),
+        color=plot_color,
+        **bar_plot_kwargs)
+    ax.set_xticks(range(1, max(task_length_distribution.keys()) + 1))
+    ax.set_xticklabels(range(1, max(task_length_distribution.keys()) + 1))
+    ax.set_yticks(range(0, max(task_length_distribution.values()) + 1))
+    ax.set_yticklabels(range(0, max(task_length_distribution.values()) + 1))
+    ax.set_xlabel("task length")
+    ax.set_ylabel("count")
+    ax.set_title("Task Length Distribution")
+    if grid_color is not None:
+      ax.grid(axis="y", color=grid_color)
+
+  def get_task_color_avg_distribution(self, n_random_paths: int = 1000) -> dict[str, Tuple[float, float]]:
+    """
+    Calculate how often each color is required to complete all tasks.
+    Assume that the shortest path for each task is used.
+    If there are multiple shortest paths, choose one (uniformly) randomly.
     Repeat this process for a large number of times and calculate the average and standard deviation of the distribution.
+
+    Algorithm used:
+      For each task:
+        Get all shortest paths
+        For k in {1,…,n_repetitions}:
+          Choose random shortest path
+          For each edge in shortest path:
+            Add length to it's color
+      Calculate average & (corrected sample) standard deviation
+
+    Args:
+        n_random_paths (int, optional): number of times to repeat the process. Defaults to 1000.
 
     Returns:
         dict[str, Tuple(float, float)]: dictionary of edge colors and their average and standard deviation of the number of times they are required to complete all tasks
+          key: color
+          value: tuple of average and standard deviation
     """
-    task_color_avg_distribution = {}
-    for (loc1, loc2, length) in self.tasks:
-      shortest_paths = self.get_all_shortest_paths(loc1, loc2)
-      # TODO: complete this function
+    task_color_length_counts: dict[str, dict[int, int]] = {}
+    for task in self.tasks:
+      shortest_paths = self.get_all_shortest_paths(loc1=task[0], loc2=task[1])
+      for _ in range(n_random_paths):
+        path, length = random.choice(shortest_paths)
+        for (loc1, loc2) in zip(path[:-1], path[1:]):
+          edge = (loc1, loc2)
+          color = self.networkx_graph.edges[edge]["color"]
+          length = self.networkx_graph.edges[edge]["length"]
+          if color not in task_color_length_counts: # initialize dict for color
+            task_color_length_counts[color] = {}
+          if length not in task_color_length_counts[color]: # initialize dict for length
+            task_color_length_counts[color][length] = 0
+          task_color_length_counts[color][length] += 1
+    # calculate average and standard deviation for each color
+    task_color_avg_distribution: dict[str, Tuple(float, float)] = {}
+    for color in task_color_length_counts:
+      # calculate average
+      avg = sum([length * count for length, count in task_color_length_counts[color].items()]) / n_random_paths
+      # calculate standard deviation
+      std = sqrt(sum([((length - avg) ** 2) * count for length, count in task_color_length_counts[color].items()]) / (n_random_paths - 1))
+      task_color_avg_distribution[color] = (avg, std)
 
+    return task_color_avg_distribution
+
+  def plot_task_color_avg_distribution(self,
+      ax: plt.Axes,
+      color_map: dict[str, str] = None,
+      errorbar_color: str = "#222222",
+      grid_color: str = None,
+      **bar_plot_kwargs):
+    """
+    Plot the average distribution of task colors as a bar plot.
+
+    Args:
+        ax (plt.Axes, optional): axis to plot on. Defaults to None (a new figure is created).
+        color_map (dict[str, str], optional): mapping from edge colors to colors for plotting. Defaults to None (each color is plotted in its own color).
+        bar_plot_kwargs: keyword arguments passed to the `matplotlib.pyplot.bar` plot function
+    """
+    task_color_avg_distribution = self.get_task_color_avg_distribution()
+    if color_map is None:
+      color_map = {color: color for color in task_color_avg_distribution}
+    mapped_colors = [color_map[color] for color in task_color_avg_distribution]
+    ax.bar(
+        task_color_avg_distribution.keys(),
+        [avg for avg, _ in task_color_avg_distribution.values()],
+        color=mapped_colors,
+        yerr=[std for _, std in task_color_avg_distribution.values()],
+        capsize=5,
+        ecolor=errorbar_color,
+        **bar_plot_kwargs)
+    ax.set_xlabel("task color")
+    ax.set_ylabel("average number of times required")
+    ax.set_title("Task Color Average Distribution")
+    if grid_color is not None:
+      ax.grid(axis="y", color=grid_color)
 
 
 def create_graph(locations: List[str], paths: List[Tuple[str, str, int, str]]) -> nx.Graph:
@@ -240,3 +584,44 @@ def create_graph(locations: List[str], paths: List[Tuple[str, str, int, str]]) -
   for (loc1, loc2, length, color) in paths:
       nx_graph.add_edge(loc1, loc2, length=length, color=color)
   return nx_graph
+
+
+if __name__ == "__main__":
+  # Create a graph
+  locations = ["Menegroth", "Nargothrond", "Dor-Lomin", "Amon-Rudh"]
+  paths = [
+    ("Menegroth", "Nargothrond", 4, "blue"),
+    ("Menegroth", "Dor-Lomin", 4, "red"),
+    ("Menegroth", "Amon-Rudh", 3, "blue"),
+    ("Nargothrond", "Dor-Lomin", 2, "blue"),
+    ("Nargothrond", "Amon-Rudh", 2, "red"),
+  ]
+  tasks = [
+    ("Amon-Rudh", "Dor-Lomin"),
+    ("Nargothrond", "Menegroth"),
+  ]
+
+  ttr_graph = TTR_Graph_Analysis(locations=locations, paths=paths, tasks=tasks)
+
+  # test plot functions
+  grid_color: str = "#dddddd"
+  # create 3x3 grid of plots
+  fig, axs = plt.subplots(3, 3, figsize=(15, 15))
+  # plot node degree distribution
+  ttr_graph.plot_node_degree_distribution(ax=axs[0, 0], grid_color=grid_color)
+  # plot edge length distribution
+  ttr_graph.plot_edge_length_distribution(ax=axs[1, 0], grid_color=grid_color)
+  # plot edge color distribution
+  ttr_graph.plot_edge_color_distribution(ax=axs[2, 0], grid_color=grid_color)
+  # plot edge color length distribution
+  ttr_graph.plot_edge_color_length_distribution(ax=axs[0, 1], grid_color=grid_color)
+  # plot edge color total length distribution
+  ttr_graph.plot_edge_color_total_length_distribution(ax=axs[1, 1], grid_color=grid_color)
+  # plot task length distribution
+  ttr_graph.plot_task_length_distribution(ax=axs[1, 2], grid_color=grid_color)
+  # plot task color distribution
+  ttr_graph.plot_task_color_avg_distribution(ax=axs[0, 2], grid_color=grid_color)
+  
+  fig.tight_layout()
+  fig.subplots_adjust(left=0.025, bottom=0.05, right=0.975, top=0.95, wspace=0.15, hspace=0.3)
+  plt.show()
