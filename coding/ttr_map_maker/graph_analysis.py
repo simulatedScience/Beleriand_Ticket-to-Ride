@@ -136,7 +136,6 @@ class TTR_Graph_Analysis:
     for (loc1, loc2) in self.tasks:
       path, length = self.get_shortest_path(loc1, loc2, graph)
       task_lengths[(loc1, loc2)] = length
-      print(f"Task: {loc1} -> {loc2}, length: {length}")
     return task_lengths
 
 # pathfinding methods

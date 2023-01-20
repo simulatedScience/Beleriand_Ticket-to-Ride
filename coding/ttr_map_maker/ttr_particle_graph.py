@@ -469,6 +469,35 @@ class TTR_Particle_Graph:
       color = get_gradient_color(base_color, edge_weight, max_weight)
       particle_edge.draw(ax, color=color, alpha=alpha_multiplier)
 
+  def draw_edge_importance(self, ax: plt.Axes, alpha_multiplier: float = 1.0, base_color = "#cc00cc") -> None:
+    """
+    draw edge importance of particle graph. Importance is measured by the increase in task lengths if the edge is removed.
+
+    Args:
+        ax (plt.Axes): matplotlib axes to draw on
+        alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
+        base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
+    """
+    if self.analysis_graph is None:
+      self.init_analysis_graph()
+
+    edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_edge_importance()
+    if len(edge_weights) == 0:
+      print("No tasks to analyse edges with.")
+      self.analysis_graph = None
+      return
+    max_weight = max(edge_weights.values())
+    
+    for (edge_key, particle_edge) in self.particle_edges.items():
+      try:
+        locations_key = (edge_key[0], edge_key[1])
+        edge_weight = edge_weights[locations_key]
+      except KeyError:
+        locations_key = (edge_key[1], edge_key[0])
+        edge_weight = edge_weights.get(locations_key, 0)
+      color = get_gradient_color(base_color, edge_weight, max_weight)
+      particle_edge.draw(ax, color=color, alpha=alpha_multiplier)
+
 
   def init_analysis_graph(self) -> None:
     """

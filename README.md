@@ -6,10 +6,10 @@ This project implements tools to create your very own, custom ticket to ride gam
 - All graph elements (nodes, edges and labels) can be moved in the UI to improve the layout.
 - The background and graph elements can be rescaled such that everything fits well when printed.
 - Show the graph on top of the background map to export it as a large image, which can then be printed. 
+- visualize the tasks on the graph
 
 ### planned features:
 - improve the UI and add more controls
-- visualize the tasks on the graph
 - automatic graph analysis tools ([see here](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
 - automatically generate images for task cards
 - allow adding and removing nodes and edges to the graph through the UI

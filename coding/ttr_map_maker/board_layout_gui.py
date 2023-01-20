@@ -153,6 +153,15 @@ class Board_Layout_GUI:
       selectcolor=self.color_config["button_active_bg_color"],
       )
 
+  def add_radiobutton_style(self, radiobutton: tk.Radiobutton):
+    radiobutton.configure(
+      bg=self.color_config["label_bg_color"],
+      fg=self.color_config["label_fg_color"],
+      activebackground=self.color_config["bg_color"],
+      activeforeground=self.color_config["fg_color"],
+      selectcolor=self.color_config["button_active_bg_color"],
+      )
+
 
   def init_frames(self):
     """
@@ -302,14 +311,15 @@ class Board_Layout_GUI:
 
     # variables for toggles
     self.show_nodes = tk.BooleanVar(value=True, name="show_nodes")
-    self.show_edges = tk.BooleanVar(value=True, name="show_edges")
+    # self.show_edges = tk.BooleanVar(value=True, name="show_edges") # unused # merged into edge_style
     self.show_labels = tk.BooleanVar(value=True, name="show_labels")
     self.show_targets = tk.BooleanVar(value=False, name="show_targets") # unused # TODO: implement
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
-    self.show_task_paths = tk.BooleanVar(value=False, name="show_task_paths")
+    # self.show_task_paths = tk.BooleanVar(value=False, name="show_task_paths") # unused # merged into edge_style
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
-    self.use_edge_images = tk.BooleanVar(value=False, name="use_edge_images")
+    # self.use_edge_images = tk.BooleanVar(value=False, name="use_edge_images") # unused # merged into edge_style
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
+    self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
 
     # variables for plot
     self.board_width = tk.DoubleVar(value=83.1, name="board_width")
@@ -641,7 +651,7 @@ class Board_Layout_GUI:
 
     self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
 
-  def load_nodes(self) -> None:
+  def load_nodes(self) -> None: # TODO: test functionality
     """
     load nodes from a txt file and add them to the particle graph. If no particle graph exists, create a new one.
     """
@@ -795,6 +805,7 @@ class Board_Layout_GUI:
       "repulsion_strength": float(self.repulsion_strength.get())}
     self.particle_graph.set_parameters(particle_parameters)	
 
+
   def draw_toggle_widgets(self, toggle_frame: tk.Frame):
     """
     Draw widgets for toggling the display of different elements. Place them in the given frame using grid layout.
@@ -818,7 +829,7 @@ class Board_Layout_GUI:
         column_index: int,
         text: str,
         var: tk.BooleanVar,
-        command: Callable = self.update_canvas):
+        command: Callable = None):
       """
       Add a label and checkbutton widget to the given frame.
 
@@ -827,14 +838,6 @@ class Board_Layout_GUI:
           text (str): text to display in the label
           var (tk.BooleanVar): variable to store the checkbutton value in
       """
-      # label = tk.Label(toggle_frame, text=text)
-      # self.add_label_style(label)
-      # label.grid(
-      #     row=row_index,
-      #     column=0,
-      #     sticky="ne",
-      #     padx=(self.grid_pad_x, self.grid_pad_x),
-      #     pady=(0, self.grid_pad_y))
       checkbutton = tk.Checkbutton(toggle_frame, 
           text=text,
           variable=var,
@@ -847,6 +850,35 @@ class Board_Layout_GUI:
           padx=(self.grid_pad_x, self.grid_pad_x),
           pady=(0, self.grid_pad_y))
       checkbox_toggle_widgets.append(checkbutton)
+
+    def add_radiobutton(
+        row_index: int,
+        column_index: int,
+        text: str,
+        var: tk.BooleanVar,
+        command: Callable = None):
+      """
+      Add a label and radiobutton widget to the given frame.
+
+      Args:
+          row_index (int): row index to place the widgets in
+          text (str): text to display in the label
+          var (tk.BooleanVar): variable to store the radiobutton value in
+          value (bool): value to set the variable to when the radiobutton is selected
+      """
+      radiobutton = tk.Radiobutton(toggle_frame, 
+          text=text,
+          variable=var,
+          value=text,
+          command=command)
+      self.add_radiobutton_style(radiobutton)
+      radiobutton.grid(
+          row=row_index,
+          column=column_index,
+          sticky="nw",
+          padx=(self.grid_pad_x, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
+      checkbox_toggle_widgets.append(radiobutton)
     
     # configure grid layout
     toggle_frame.columnconfigure(0, weight=1)
@@ -864,37 +896,35 @@ class Board_Layout_GUI:
     row_index += 1
     add_checkbutton(row_index, column_index, "Nodes", self.show_nodes, command=self.toggle_node_visibility)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Edges", self.show_edges, command=self.toggle_edge_visibility)
-    row_index += 1
     add_checkbutton(row_index, column_index, "Labels", self.show_labels, command=self.toggle_label_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Targets", self.show_targets)
-    row_index = 1 # reset for second column
-    column_index = 1
-    add_checkbutton(row_index, column_index, "Show Tasks", self.show_task_paths, command=self.toggle_task_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Background Image", self.show_background_image, command=self.toggle_background_image_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.toggle_mpl_frame_visibility)
-    row_index += 1
-    add_checkbutton(row_index, column_index, "edge images", self.use_edge_images, command=self.toggle_edge_images)
-  
-  def toggle_toggle_widgets(self):
-    """
-    Toggle the visibility of the toggle widgets (checkboxes).
-    """
-    for widget in checkbox_toggle_widgets:
-      if widget.winfo_ismapped():
-        widget.grid_remove()
-      else:
-        widget.grid()
 
-  def update_canvas(self, *args):
-    """
-    Update the canvas with the current settings.
-    This method will likely not be necessary in the future but will be replaced by more specific methods.
-    """
-    pass # TODO
+    row_index = 1 # reset for second column
+    column_index = 1
+    edge_style_label = tk.Label(toggle_frame, text="Edge Style")
+    self.add_label_style(edge_style_label)
+    edge_style_label.grid(
+        row=row_index,
+        column=column_index,
+        sticky="ew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    add_radiobutton(row_index, column_index, "Hidden", var=self.edge_style, command=self.toggle_edge_visibility)
+    row_index += 1
+    add_radiobutton(row_index, column_index, "Flat colors", self.edge_style, command=self.toggle_edge_visibility)
+    row_index += 1
+    add_radiobutton(row_index, column_index, "Edge images", self.edge_style, command=self.toggle_edge_images)
+    row_index += 1
+    add_radiobutton(row_index, column_index, "Show tasks", self.edge_style, command=self.toggle_task_visibility)
+    row_index += 1
+    add_radiobutton(row_index, column_index, "Edge importance", self.edge_style, command=self.toggle_edge_importance)
+    row_index += 1
 
   def toggle_node_visibility(self, *args) -> None:
     """
@@ -908,18 +938,6 @@ class Board_Layout_GUI:
       self.particle_graph.erase_nodes()
     self.canvas.draw_idle()
 
-  def toggle_edge_visibility(self, *args) -> None:
-    """
-    Update the edges with the current settings.
-    """
-    if self.particle_graph is None:
-      return
-    if self.show_edges.get():
-      self.particle_graph.draw_edges(self.ax)
-    else:
-      self.particle_graph.erase_edges()
-    self.canvas.draw_idle()
-
   def toggle_label_visibility(self, *args) -> None:
     """
     Update the labels with the current settings.
@@ -930,21 +948,6 @@ class Board_Layout_GUI:
       self.particle_graph.draw_labels(self.ax)
     else:
       self.particle_graph.erase_labels()
-    self.canvas.draw_idle()
-
-  def toggle_task_visibility(self, *args) -> None:
-    """
-    Update the tasks with the current settings.
-    """
-    if self.particle_graph is None:
-      return
-    if self.show_task_paths.get():
-      self.use_edge_images.set(False)
-      self.particle_graph.draw_tasks(self.ax)
-    elif self.show_edges.get():
-      self.particle_graph.draw_edges(self.ax)
-    else:
-      self.particle_graph.erase_edges()
     self.canvas.draw_idle()
 
   def toggle_mpl_frame_visibility(self) -> None:
@@ -987,14 +990,23 @@ class Board_Layout_GUI:
       self.plotted_background_image.remove()
     self.canvas.draw_idle()
 
+  def toggle_edge_visibility(self, *args) -> None:
+    """
+    Update the edges with the current settings.
+    """
+    if self.particle_graph is None:
+      return
+    if self.edge_style.get() == "Hidden":
+      self.particle_graph.erase_edges()
+    self.canvas.draw_idle()
+
   def toggle_edge_images(self) -> None:
     """
     Update the edge images with the current settings.
     """
     if self.particle_graph is None:
       return
-    if self.use_edge_images.get():
-      self.show_task_paths.set(False)
+    if self.edge_style.get() == "Edge images":
       edge_colors = self.particle_graph.get_edge_colors()
       image_map = self.get_edge_color_map(edge_colors)
       self.particle_graph.set_edge_images(image_map)
@@ -1007,6 +1019,26 @@ class Board_Layout_GUI:
       self.particle_graph.erase_edges()
       self.particle_graph.draw_edges(self.ax)
     
+    self.canvas.draw_idle()
+
+  def toggle_task_visibility(self, *args) -> None:
+    """
+    Update the tasks with the current settings.
+    """
+    if self.particle_graph is None:
+      return
+    if self.edge_style.get() == "Show tasks":
+      self.particle_graph.draw_tasks(self.ax)
+    self.canvas.draw_idle()
+
+  def toggle_edge_importance(self, *args) -> None:
+    """
+    Update the edge importance with the current settings.
+    """
+    if self.particle_graph is None:
+      return
+    if self.edge_style.get() == "Edge importance":
+      self.particle_graph.draw_edge_importance(self.ax)
     self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:
@@ -1028,7 +1060,7 @@ class Board_Layout_GUI:
         row_index: int,
         column_index: int,
         text: str,
-        command: Callable = self.update_canvas):
+        command: Callable = None):
       """
       Add a label and checkbutton widget to the given frame.
 
@@ -1291,7 +1323,7 @@ class Board_Layout_GUI:
       self.particle_graph.draw_nodes(self.ax)
     if self.show_labels.get():
       self.particle_graph.draw_labels(self.ax)
-    if self.show_edges.get():
+    if self.edge_style.get() != "None":
       self.particle_graph.draw_edges(self.ax)
 
 
