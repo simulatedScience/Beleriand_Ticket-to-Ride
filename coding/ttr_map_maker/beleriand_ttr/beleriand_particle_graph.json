@@ -9343,6 +9343,120 @@
       "label_mass": 1.0,
       "interaction_radius": 15.0,
       "repulsion_strength": 2.0
-    }
+    },
+    "tasks": [
+      [
+        "Isle of Balar",
+        "West Taur-im-Duinath"
+      ],
+      [
+        "Linaewen",
+        "Forest of Neldoreth"
+      ],
+      [
+        "Eithel Ivrin",
+        "Pass of Aglon"
+      ],
+      [
+        "Nan Elmoth",
+        "East Taur-im-Duinath"
+      ],
+      [
+        "Himring",
+        "Amon Ereb"
+      ],
+      [
+        "Thargelion",
+        "Forest of Region"
+      ],
+      [
+        "Ered Wethrin",
+        "Himring"
+      ],
+      [
+        "Barad Nimras",
+        "Gates of Sirion"
+      ],
+      [
+        "River Nenning",
+        "Cape Balar"
+      ],
+      [
+        "Nogrod",
+        "West Taur-im-Duinath"
+      ],
+      [
+        "Sarn Athrud",
+        "Gates of Sirion"
+      ],
+      [
+        "Eglarest",
+        "Amon Ereb"
+      ],
+      [
+        "Gates of Sirion",
+        "Isle of Balar"
+      ],
+      [
+        "Menegroth",
+        "Arvenien"
+      ],
+      [
+        "Taur-Nu-Fuin",
+        "Forest of Region"
+      ],
+      [
+        "Gondolin",
+        "Havens of Sirion"
+      ],
+      [
+        "Tol Sirion",
+        "Nan Elmoth"
+      ],
+      [
+        "Ladros",
+        "Andram"
+      ],
+      [
+        "Cirith Ninniach",
+        "Ladros"
+      ],
+      [
+        "Crossing of Teiglin",
+        "Nan Tathren"
+      ],
+      [
+        "Brithombar",
+        "Nargothrond"
+      ],
+      [
+        "Eithel Sirion",
+        "Amon Rudh"
+      ],
+      [
+        "Forest of Neldoreth",
+        "West Taur-im-Duinath"
+      ],
+      [
+        "Nogrod",
+        "Menegroth"
+      ],
+      [
+        "Pass of Aglon",
+        "East Taur-im-Duinath"
+      ],
+      [
+        "Himring",
+        "Belegost"
+      ],
+      [
+        "Vinyamar",
+        "Amon Rudh"
+      ],
+      [
+        "Cirith Ninniach",
+        "Nargothrond"
+      ]
+    ]
   }
 }

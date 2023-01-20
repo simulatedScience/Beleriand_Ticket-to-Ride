@@ -436,7 +436,7 @@ class TTR_Particle_Graph:
     """
     return f"Particle graph with {len(self.node_labels)} nodes and {len(self.paths)} edges."
 
-  def draw_tasks(self, ax: plt.Axes, alpha_multiplier: float = 1.0, base_color = "#ff00ff") -> None:
+  def draw_tasks(self, ax: plt.Axes, alpha_multiplier: float = 1.0, base_color = "#cc00cc") -> None:
     """
     draw tasks of particle graph.
     1. Calculate the shortest route(s) for each task.
@@ -511,6 +511,7 @@ class TTR_Particle_Graph:
             "n_labels": len(self.particle_labels),
             "particles": all_particles_json,
             "particle_parameters": self.particle_parameters,
+            "tasks": self.tasks
         }
     }
     return json.dumps(particle_graph, indent=2)
@@ -620,6 +621,7 @@ class TTR_Particle_Graph:
         particle.add_connected_particle(particle_list[connected_particle_id])
     # build list of paths in graph
     particle_graph.build_paths()
+    particle_graph.update_tasks(graph_info["particle_graph"]["tasks"])
     return particle_graph
 
 
@@ -628,7 +630,7 @@ def get_gradient_color(
     color: str,
     weight: int,
     max_weight: int,
-    min_color_factor: float = 0.3,
+    min_color_factor: float = 0.1,
     weight_zero_color: str = "#aaaaaa") -> str:
   """
   get a color that is a gradient between white and the given color

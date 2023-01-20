@@ -117,7 +117,7 @@ class TTR_Graph_Analysis:
     cost = 0
     for i in range(len(location_list) - 1):
       edge = (location_list[i], location_list[i+1])
-      cost += self.networkx_graph.edges[edge]['length']
+      cost += self.networkx_graph.edges[edge]["length"]
     return cost
 
   def get_task_lengths(self, graph: nx.Graph = None) -> dict[Tuple[str, str], int]:
@@ -136,6 +136,7 @@ class TTR_Graph_Analysis:
     for (loc1, loc2) in self.tasks:
       path, length = self.get_shortest_path(loc1, loc2, graph)
       task_lengths[(loc1, loc2)] = length
+      print(f"Task: {loc1} -> {loc2}, length: {length}")
     return task_lengths
 
 # pathfinding methods
@@ -155,7 +156,7 @@ class TTR_Graph_Analysis:
     """
     if graph is None:
       graph = self.networkx_graph
-    path = nx.shortest_path(graph, loc1, loc2)
+    path = nx.shortest_path(graph, loc1, loc2, weight="length")
     return path, self.get_path_cost(path)
 
   def get_all_shortest_paths(self, loc1: str, loc2: str) -> List[Tuple[List[str], int]]:
@@ -169,7 +170,7 @@ class TTR_Graph_Analysis:
     Returns:
         List[Tuple[List[str], int]]: list of shortest paths between te given locations and their lengths
     """
-    paths = nx.all_shortest_paths(self.networkx_graph, loc1, loc2)
+    paths = nx.all_shortest_paths(self.networkx_graph, loc1, loc2, weight="length")
     shortest_paths = []
     for path in paths:
       shortest_paths.append((path, self.get_path_cost(path)))
@@ -203,25 +204,40 @@ class TTR_Graph_Analysis:
       shortest_task_paths.append((shortest_path, length))
     return shortest_task_paths
 
-  def get_random_shortest_task_paths_edge_counts(self) -> dict[Tuple[str, str], int]:
+  def get_random_shortest_task_paths_edge_counts(self, n_random_paths: int = 10000) -> dict[Tuple[str, str], int]:
     """
     For each edge, count how many of the shortest paths for all tasks go through that edge.
     Returns a dictionary with edges as keys (pairs of location names) and the number of shortest paths that go through that edge as values.
     If there are multiple shortest paths for a task, choose one (uniformly) randomly.
 
+    Args:
+        n_random_paths (int, optional): number of random paths to use. Defaults to 1000.
+
     Returns:
         dict[[str, str], int]: dictionary of edges and the number of shortest paths that go through that edge
     """
-    shortest_task_paths = self.get_random_shortest_task_paths()
-    edge_counts = {}
-    for (path, length) in shortest_task_paths:
-      for i in range(len(path) - 1):
-        edge = (path[i], path[i+1])
-        if edge in edge_counts:
-          edge_counts[edge] += 1
-        else:
-          edge_counts[edge] = 1
-    return edge_counts
+    # shortest_task_paths = self.get_random_shortest_task_paths()
+    # edge_counts = {}
+    # for (path, length) in shortest_task_paths:
+    #   for i in range(len(path) - 1):
+    #     edge = (path[i], path[i+1])
+    #     if edge in edge_counts:
+    #       edge_counts[edge] += 1
+    #     else:
+    #       edge_counts[edge] = 1
+    # return edge_counts
+    task_edge_counts: dict[Tuple[str, str], int] = {}
+    for task in self.tasks:
+      shortest_paths = self.get_all_shortest_paths(loc1=task[0], loc2=task[1])
+      for _ in range(n_random_paths):
+        path, length = random.choice(shortest_paths)
+        for (loc1, loc2) in zip(path[:-1], path[1:]):
+          edge = (loc1, loc2)
+          if edge in task_edge_counts:
+            task_edge_counts[edge] += 1
+          else:
+            task_edge_counts[edge] = 1
+    return task_edge_counts
 
 # connectedness analysis methods
 
