@@ -3,15 +3,16 @@ This module contains graph analysis class `TTR_Graph_Analysis`, which is used to
 Key features:
 - find the shortest path between two nodes - done
 - find the shortest paths for all tasks - done
-- analyze importance of nodes
-- analyze importance of edges
+- visulization tool for tasks - done (untested)
+- analyze importance of nodes - done (untested)
+- analyze importance of edges - done (untested)
 - calculate statistics for the graph: - done
   - distribution of node degrees - done
   - distribution of edge lengths - done
   - distribution of edge colors - done
   - distribution of task lengths - done
   - distribution of colors needed for tasks - done
-- tools for visualization of the analysis - partially done
+- tools for visualization of the analysis - done
 """
 import random
 from math import sqrt, ceil
@@ -119,34 +120,42 @@ class TTR_Graph_Analysis:
       cost += self.networkx_graph.edges[edge]['length']
     return cost
 
-  def get_task_lengths(self) -> dict[Tuple[str, str], int]:
+  def get_task_lengths(self, graph: nx.Graph = None) -> dict[Tuple[str, str], int]:
     """
     Get the lengths of all tasks.
+
+    Args:
+        graph (nx.Graph, optional): graph to use for the analysis. Defaults to None (use the graph from the class)
 
     Returns:
         dict[Tuple[str, str], int]: dictionary of lengths for each task.
     """
+    if graph is None:
+      graph = self.networkx_graph
     task_lengths = {}
     for (loc1, loc2) in self.tasks:
-      path, length = self.get_shortest_path(loc1, loc2)
+      path, length = self.get_shortest_path(loc1, loc2, graph)
       task_lengths[(loc1, loc2)] = length
     return task_lengths
 
 # pathfinding methods
 
-  def get_shortest_path(self, loc1: str, loc2: str) -> List[str]:
+  def get_shortest_path(self, loc1: str, loc2: str, graph: nx.Graph = None) -> Tuple[List[str], int]:
     """
     Find the shortest path between two locations.
 
     Args:
         loc1 (str): start location
         loc2 (str): end location
+        graph (nx.Graph, optional): graph to use for the analysis. Defaults to None (use the graph from the class)
 
     Returns:
         List[str]: list of locations on the shortest path
         int: length of the shortest path
     """
-    path = nx.shortest_path(self.networkx_graph, loc1, loc2)
+    if graph is None:
+      graph = self.networkx_graph
+    path = nx.shortest_path(graph, loc1, loc2)
     return path, self.get_path_cost(path)
 
   def get_all_shortest_paths(self, loc1: str, loc2: str) -> List[Tuple[List[str], int]]:
@@ -189,17 +198,19 @@ class TTR_Graph_Analysis:
     """
     shortest_task_paths = []
     for (loc1, loc2) in self.tasks:
-      shortest_paths = self.get_shortest_path(loc1, loc2)
-      shortest_path = random.choice(shortest_paths)
-      length = self.get_path_cost(shortest_path)
+      shortest_paths = self.get_all_shortest_paths(loc1, loc2)
+      shortest_path, length = random.choice(shortest_paths)
       shortest_task_paths.append((shortest_path, length))
     return shortest_task_paths
 
-  def get_random_shortest_task_paths_edge_counts(self) -> dict[[str, str], int]:
+  def get_random_shortest_task_paths_edge_counts(self) -> dict[Tuple[str, str], int]:
     """
     For each edge, count how many of the shortest paths for all tasks go through that edge.
     Returns a dictionary with edges as keys (pairs of location names) and the number of shortest paths that go through that edge as values.
     If there are multiple shortest paths for a task, choose one (uniformly) randomly.
+
+    Returns:
+        dict[[str, str], int]: dictionary of edges and the number of shortest paths that go through that edge
     """
     shortest_task_paths = self.get_random_shortest_task_paths()
     edge_counts = {}
@@ -211,6 +222,55 @@ class TTR_Graph_Analysis:
         else:
           edge_counts[edge] = 1
     return edge_counts
+
+# connectedness analysis methods
+
+  def get_node_importance(self) -> dict[str, float]:
+    """
+    Calculate the importance of each node in the graph: how much the average task length is increased if that node is removed.
+
+    Returns:
+        dict[str, float]: dictionary of nodes and the avergae increase in task length if that node is removed
+    """
+    node_importance = {}
+    average_task_length = self.get_average_task_length()
+    for node in self.networkx_graph.nodes:
+      # copy graph and remove node
+      new_graph = self.networkx_graph.copy()
+      new_graph.remove_node(node)
+      node_importance[node] = self.get_average_task_length(new_graph) - average_task_length
+    return node_importance
+
+  def get_edge_importance(self) -> dict[Tuple[str, str], float]:
+    """
+    Calculate the importance of each edge in the graph: how much the average task length is increased if that edge is removed.
+
+    Returns:
+        dict[Tuple[str, str], float]: dictionary of edges and the avergae increase in task length if that edge is removed
+    """
+    edge_importance = {}
+    average_task_length = self.get_average_task_length()
+    for edge in self.networkx_graph.edges:
+      # copy graph and remove edge
+      new_graph = self.networkx_graph.copy()
+      new_graph.remove_edge(*edge)
+      edge_importance[edge] = self.get_average_task_length(new_graph) - average_task_length
+    return edge_importance
+
+  def get_average_task_length(self, graph: nx.Graph = None) -> float:
+    """
+    Calculate the average task length in the graph.
+
+    Args:
+        graph (nx.Graph, optional): graph to use for the analysis. Defaults to None (use the graph from the class)
+
+    Returns:
+        float: average task length
+    """
+    if graph is None:
+      graph = self.networkx_graph
+    task_lengths = list(self.get_task_lengths(graph).values())
+    return sum(task_lengths) / len(task_lengths)
 
 # plottable graph information (various distributions)
 

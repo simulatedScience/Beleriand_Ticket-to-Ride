@@ -23,7 +23,7 @@ class TTR_Particle_Graph:
   def __init__(self,
         locations: List[str],
         paths: List[Tuple[str, str, int, str]],
-        tasks: List[Tuple[str, str, int]],
+        tasks: List[Tuple[str, str]],
         node_positions: Dict[str, np.ndarray] = None,
         particle_parameters: dict = {
           "velocity_decay": 0.99,
@@ -44,13 +44,13 @@ class TTR_Particle_Graph:
     Args:
         locations (List[str]): list of location labels
         paths (List[Tuple[str, str, int, str]]): list of paths. Each path is a tuple of (node_1, node_2, length, color)
-        tasks (List[Tuple[str, str, int]]): list of tasks. Each task is a tuple of (node_1, node_2, length)
+        tasks (List[Tuple[str, str]]): list of tasks. Each task is a tuple of (node_1, node_2)
         node_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
         location_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
     """
     self.node_labels: List[str] = locations
     self.paths: List[Tuple[str, str, int, str]] = paths
-    self.tasks: List[Tuple[str, str, int]] = tasks
+    self.tasks: List[Tuple[str, str]] = tasks
     self.node_positions: Dict[str, np.ndarray] = node_positions
     self.particle_parameters: dict = particle_parameters
 
@@ -259,6 +259,15 @@ class TTR_Particle_Graph:
     for particle in self.get_particle_list():
       particle.set_parameters(particle_parameters)
 
+  def update_tasks(self, task_list: List[Tuple[str, str]]) -> None:
+    """
+    update the list of tasks saved in the particle graph.
+    The previous list of tasks is overwritten.
+
+    Args:
+        task_list (List[str, str]): list of tasks. Each task is a tuple of the form (location_1, location_2)
+    """
+    self.tasks = task_list
 
   def get_edge_colors(self) -> List[str]:
     """
@@ -427,7 +436,7 @@ class TTR_Particle_Graph:
     """
     return f"Particle graph with {len(self.node_labels)} nodes and {len(self.paths)} edges."
 
-  def draw_tasks(self, ax: plt.Axes, alpha_multiplier: float = 1.0, color = "#ff00ff") -> None:
+  def draw_tasks(self, ax: plt.Axes, alpha_multiplier: float = 1.0, base_color = "#ff00ff") -> None:
     """
     draw tasks of particle graph.
     1. Calculate the shortest route(s) for each task.
@@ -438,9 +447,28 @@ class TTR_Particle_Graph:
     Args:
         ax (plt.Axes): matplotlib axes to draw on
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
+        base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
     """
     if self.analysis_graph is None:
       self.init_analysis_graph()
+
+    edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_random_shortest_task_paths_edge_counts()
+    if len(edge_weights) == 0:
+      print("No tasks to draw.")
+      self.analysis_graph = None
+      return
+    max_weight = max(edge_weights.values())
+    
+    for (edge_key, particle_edge) in self.particle_edges.items():
+      try:
+        locations_key = (edge_key[0], edge_key[1])
+        edge_weight = edge_weights[locations_key]
+      except KeyError:
+        locations_key = (edge_key[1], edge_key[0])
+        edge_weight = edge_weights.get(locations_key, 0) # if the edge is not in the dict, set the weight to 0
+      color = get_gradient_color(base_color, edge_weight, max_weight)
+      particle_edge.draw(ax, color=color, alpha=alpha_multiplier)
+
 
   def init_analysis_graph(self) -> None:
     """
@@ -594,6 +622,37 @@ class TTR_Particle_Graph:
     particle_graph.build_paths()
     return particle_graph
 
+
+
+def get_gradient_color(
+    color: str,
+    weight: int,
+    max_weight: int,
+    min_color_factor: float = 0.3,
+    weight_zero_color: str = "#aaaaaa") -> str:
+  """
+  get a color that is a gradient between white and the given color
+
+  Args:
+      color (str): color as hex string to use for maximum weight
+      weight (int): weight of current object
+      max_weight (int): maximum weight of all objects
+      min_color_factor (float, optional): proportion of color to use for weight 1. Defaults to 0.3.
+
+  Returns:
+      str: color in hex format
+  """
+  # convert color to rgb
+  rgb_tuple = tuple(int(color[i:i+2], 16) for i in (1, 3, 5))
+  if weight == 0:
+    return weight_zero_color
+  # calculate color factor
+  color_factor = min_color_factor + (1-min_color_factor) * (weight-1) / (max_weight-1)
+  # calculate gradient color
+  gradient_color = tuple(int(color_factor * rgb_tuple[i] + (1-color_factor) * 255) for i in range(3))
+  # convert gradient color to hex
+  gradient_color = f"#{''.join([hex(component)[2:].zfill(2) for component in gradient_color])}"
+  return gradient_color
 
 if __name__ == "__main__":
   locations = [

@@ -62,8 +62,8 @@ def read_tasks(task_file: str):
     for line in task_file:
       line = line.strip()
       if line:
-        loc_1, loc_2, length = line.split(" ; ")
-        tasks.append((loc_1, loc_2, int(length)))
+        loc_1, loc_2, *length = line.split(" ; ")
+        tasks.append((loc_1, loc_2))
 
   return tasks
 

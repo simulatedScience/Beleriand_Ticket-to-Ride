@@ -468,7 +468,7 @@ class Board_Layout_GUI:
           padx=(self.grid_pad_x, self.grid_pad_x),
           pady=(self.grid_pad_y, self.grid_pad_y))
       file_widgets.append(label)
-      entry = tk.Entry(file_frame, textvariable=variable)
+      entry = tk.Entry(file_frame, textvariable=variable, width=10)
       self.add_entry_style(entry)
       entry.grid(
           row=row_index,
@@ -507,6 +507,7 @@ class Board_Layout_GUI:
       """
       self.load_files()
       toggle_file_input_submenu()
+
     load_button = tk.Button(file_frame, text="Load", command=load_files_hide_menu)
     self.add_button_style(load_button)
     load_button.grid(
@@ -517,6 +518,42 @@ class Board_Layout_GUI:
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(self.grid_pad_y, self.grid_pad_y))
     file_widgets.append(load_button)
+    row_index += 1
+    # add separate load buttons for nodes, edges and tasks
+    single_file_load_frame = tk.Frame(file_frame, bg=self.color_config["frame_bg_color"])
+    single_file_load_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=3,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    file_widgets.append(single_file_load_frame)
+    single_file_load_frame.columnconfigure(0, weight=1)
+    single_file_load_frame.columnconfigure(1, weight=1)
+    single_file_load_frame.columnconfigure(2, weight=1)
+
+    def add_load_button(column_index: int, text: str, command: Callable):
+      """
+      Add a button to load a specific part of the graph from a file.
+      """
+      button = tk.Button(
+          single_file_load_frame,
+          text=text,
+          command=command)
+      self.add_button_style(button)
+      padx = (self.grid_pad_x, self.grid_pad_x) if column_index == 0 else (0, self.grid_pad_x)
+      button.grid(
+          row=0,
+          column=column_index,
+          sticky="nsew",
+          padx=padx,
+          pady=(0, self.grid_pad_y))
+      file_widgets.append(button)
+
+    add_load_button(0, "Load Nodes", lambda: self.load_nodes())
+    add_load_button(1, "Load Edges", lambda: self.load_edges())
+    add_load_button(2, "Load Tasks", lambda: self.load_tasks())
 
   def browse_txt_file(self, browse_request: str, var: tk.StringVar):
     """
@@ -604,8 +641,43 @@ class Board_Layout_GUI:
 
     self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
 
+  def load_nodes(self) -> None:
+    """
+    load nodes from a txt file and add them to the particle graph. If no particle graph exists, create a new one.
+    """
+    # load node file (locations)
+    locations = ttr_reader.read_locations(self.node_file.get())
+    if self.particle_graph is None:
+      self.graph_data = {
+          "locations": locations,
+          "paths": [],
+          "tasks": []}
+      self.init_particle_graph()
+    else:
+      self.graph_data["locations"] = locations
+      self.particle_graph.update_nodes(locations)
+      # TODO: implement warning and create new particle graph
 
-  def draw_particle_widgets(self, particle_frame: tk.Frame):
+    if self.show_nodes.get():
+      self.particle_graph.draw_nodes(self.ax)
+
+  def load_tasks(self) -> None:
+    """
+    load tasks from a txt file and add them to the particle graph. If no particle graph exists, create a new one.
+    """
+    # load task file (tasks)
+    tasks = ttr_reader.read_tasks(self.task_file.get())
+    if self.particle_graph is None:
+      self.graph_data = {
+          "locations": [],
+          "paths": [],
+          "tasks": tasks}
+      print("Cannot initialize particle graph with just tasks. No nodes specified.")
+    else:
+      self.graph_data["tasks"] = tasks
+      self.particle_graph.update_tasks(tasks)
+
+  def draw_particle_widgets(self, particle_frame: tk.Frame) -> None:
     """
     Draw widgets for particle simulation parameters. Place them in the given frame using grid layout.
 
@@ -799,7 +871,7 @@ class Board_Layout_GUI:
     add_checkbutton(row_index, column_index, "Targets", self.show_targets)
     row_index = 1 # reset for second column
     column_index = 1
-    add_checkbutton(row_index, column_index, "Show Tasks", self.show_task_paths)
+    add_checkbutton(row_index, column_index, "Show Tasks", self.show_task_paths, command=self.toggle_task_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Background Image", self.show_background_image, command=self.toggle_background_image_visibility)
     row_index += 1
@@ -1195,21 +1267,26 @@ class Board_Layout_GUI:
     Initialize the particle graph.
     arange nodes along left edge and corresponding labels to their right
     """
-    print("init_particle_graph")
-    node_positions = self.init_node_positions()
+    print("Initialize particle graph")
     if self.particle_graph is None:
       if self.graph_data is None:
-        print("No graph data available.")
+        print("No graph data available. Cannot initialize graph.")
+        return
+      if not self.graph_data["locations"]:
+        print("No location data available. Cannot initialize graph.")
         return
       print("new graph")
+      node_positions = self.init_node_positions()
       if self.particle_graph is not None:
         self.particle_graph.erase()
       self.particle_graph = TTR_Particle_Graph(
           locations = self.graph_data["locations"],
           paths = self.graph_data["paths"],
+          tasks = self.graph_data["tasks"],
           node_positions = node_positions,
           particle_parameters = self.get_particle_parameters()
       )
+      print("loaded tasks: ", self.graph_data["tasks"])
     if self.show_nodes.get():
       self.particle_graph.draw_nodes(self.ax)
     if self.show_labels.get():
