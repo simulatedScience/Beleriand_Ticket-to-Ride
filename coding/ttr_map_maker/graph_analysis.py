@@ -19,6 +19,7 @@ from math import sqrt, ceil
 from typing import List, Tuple
 
 import networkx as nx
+import numpy as np
 import matplotlib.pyplot as plt
 
 class TTR_Graph_Analysis:
@@ -320,13 +321,15 @@ class TTR_Graph_Analysis:
     """
     degree_distribution = self.get_node_degree_distribution()
     ax.bar(degree_distribution.keys(), degree_distribution.values(), color=color, **bar_plot_kwargs)
-    ax.set_xticks(range(1, max(degree_distribution.keys()) + 1))
-    ax.set_xticklabels(range(1, max(degree_distribution.keys()) + 1))
-    ax.set_yticks(range(0, max(degree_distribution.values()) + 1))
-    ax.set_yticklabels(range(0, max(degree_distribution.values()) + 1))
+    x_ticks = get_ticks(1, max(degree_distribution.keys()) + 1, 10)
+    ax.set_xticks(x_ticks)
+    ax.set_xticklabels(x_ticks)
+    y_ticks = get_ticks(0, max(degree_distribution.values()) + 1, 10)
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_ticks)
     ax.set_xlabel("node degree")
     ax.set_ylabel("count")
-    ax.set_title("Node Degree Distribution")
+    ax.set_title("Node degree distribution")
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
@@ -368,13 +371,15 @@ class TTR_Graph_Analysis:
       plot_color = "#5588ff"
     edge_length_distribution = self.get_edge_length_distribution(color)
     ax.bar(edge_length_distribution.keys(), edge_length_distribution.values(), color=plot_color, **bar_plot_kwargs)
-    ax.set_xticks(range(1, max(edge_length_distribution.keys()) + 1))
-    ax.set_xticklabels(range(1, max(edge_length_distribution.keys()) + 1))
-    ax.set_yticks(range(0, max(edge_length_distribution.values()) + 1))
-    ax.set_yticklabels(range(0, max(edge_length_distribution.values()) + 1))
+    x_ticks = get_ticks(1, max(edge_length_distribution.keys()) + 1, 10)
+    ax.set_xticks(x_ticks)
+    ax.set_xticklabels(x_ticks)
+    y_ticks = get_ticks(0, max(edge_length_distribution.values()) + 1, 10)
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_ticks)
     ax.set_xlabel("edge length")
     ax.set_ylabel("count")
-    title = "Edge Length Distribution"
+    title = "Edge length distribution"
     if color is not None:
       title += f" for color {color}"
     ax.set_title(title)
@@ -436,14 +441,16 @@ class TTR_Graph_Analysis:
           alpha=alpha,
           label=color,
           **plot_kwargs)
-    ax.set_xticks(range(1, max_length + 1))
-    ax.set_xticklabels(range(1, max_length + 1))
-    ax.set_yticks(range(0, max([max(edge_color_length_distribution[color].values()) for color in edge_color_length_distribution]) + 1))
-    ax.set_yticklabels(range(0, max([max(edge_color_length_distribution[color].values()) for color in edge_color_length_distribution]) + 1))
+    x_ticks = get_ticks(1, max_length + 1, 10)
+    ax.set_xticks(x_ticks)
+    ax.set_xticklabels(x_ticks)
+    y_ticks = get_ticks(0, max([max(edge_color_length_distribution[color].values()) for color in edge_color_length_distribution]) + 1, 10)
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_ticks)
     ax.set_xlabel("edge length")
     ax.set_ylabel("count")
-    ax.set_title("Edge Length Distribution for Each Color")
-    ax.legend()
+    ax.set_title("Edge length distribution for each color")
+    # ax.legend()
     if grid_color is not None:
       ax.grid(axis="both", color=grid_color)
 
@@ -478,11 +485,12 @@ class TTR_Graph_Analysis:
         edge_color_distribution.values(),
         color=[color_map[color] for color in edge_color_distribution],
         **bar_plot_kwargs)
-    ax.set_yticks(range(0, max(edge_color_distribution.values()) + 1))
-    ax.set_yticklabels(range(0, max(edge_color_distribution.values()) + 1))
+    y_ticks = get_ticks(0, max(edge_color_distribution.values()) + 1, 10)
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_ticks)
     ax.set_xlabel("edge color")
     ax.set_ylabel("count")
-    ax.set_title("Edge Color Distribution")
+    ax.set_title("Edge color distribution")
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
@@ -513,11 +521,12 @@ class TTR_Graph_Analysis:
     if color_map is None:
       color_map = {color: color for color in edge_color_total_length_distribution}
     ax.bar(edge_color_total_length_distribution.keys(), edge_color_total_length_distribution.values(), color=[color_map[color] for color in edge_color_total_length_distribution], **bar_plot_kwargs)
-    ax.set_yticks(range(0, max(edge_color_total_length_distribution.values()) + 1))
-    ax.set_yticklabels(range(0, max(edge_color_total_length_distribution.values()) + 1))
+    y_ticks = get_ticks(0, max(edge_color_total_length_distribution.values()) + 1, 10)
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_ticks)
     ax.set_xlabel("edge color")
     ax.set_ylabel("total length")
-    ax.set_title("Edge Color Total Length Distribution")
+    ax.set_title("Edge color total length distribution")
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
@@ -552,13 +561,15 @@ class TTR_Graph_Analysis:
         task_length_distribution.values(),
         color=plot_color,
         **bar_plot_kwargs)
-    ax.set_xticks(range(1, max(task_length_distribution.keys()) + 1))
-    ax.set_xticklabels(range(1, max(task_length_distribution.keys()) + 1))
-    ax.set_yticks(range(0, max(task_length_distribution.values()) + 1))
-    ax.set_yticklabels(range(0, max(task_length_distribution.values()) + 1))
+    x_ticks = get_ticks(1, max(task_length_distribution.keys()), 10)
+    ax.set_xticks(x_ticks)
+    ax.set_xticklabels(x_ticks)
+    y_ticks = get_ticks(0, max(task_length_distribution.values()), 10)
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_ticks)
     ax.set_xlabel("task length")
     ax.set_ylabel("count")
-    ax.set_title("Task Length Distribution")
+    ax.set_title("Task length distribution")
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
@@ -638,8 +649,8 @@ class TTR_Graph_Analysis:
         ecolor=errorbar_color,
         **bar_plot_kwargs)
     ax.set_xlabel("task color")
-    ax.set_ylabel("average number of times required")
-    ax.set_title("Task Color Average Distribution")
+    ax.set_ylabel("avg color count for all tasks")
+    ax.set_title("Task color avg requirements distribution")
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
@@ -662,6 +673,28 @@ def create_graph(locations: List[str], paths: List[Tuple[str, str, int, str]]) -
   for (loc1, loc2, length, color) in paths:
       nx_graph.add_edge(loc1, loc2, length=length, color=color)
   return nx_graph
+
+def get_ticks(min_val: float, max_val: float, max_n_ticks: int = 10, int_ticks: bool = True):
+  """
+  get ticks for a plot
+
+  Args:
+      min_val (float): minimum value
+      max_val (float): maximum value
+      max_n_ticks (int, optional): maximum number of ticks. Defaults to 10.
+      int_ticks (bool, optional): whether to use integer ticks. Defaults to False.
+
+  Returns:
+      List[float]: list of ticks
+  """
+  # get ticks
+  if not int_ticks:
+    ticks = np.linspace(min_val, max_val, max_n_ticks)
+    return ticks
+
+  tick_step = max(1, int((max_val - min_val) // max_n_ticks))
+  ticks = np.arange(min_val, max_val + 1, tick_step)
+  return ticks
 
 
 if __name__ == "__main__":

@@ -65,7 +65,8 @@ class Board_Layout_GUI:
           "entry_select_color":     "#4477aa", # blue
           "plot_bg_color":          "#cccccc", # darker grey
           "plot_fg_color":          "#000000", # black
-          "plot_grid_color":        "#aaaaaa", # black
+          "plot_grid_color":        "#dddddd", # light gray
+          "task_base_color":        "#cc00cc", # pink
           }):
     self.color_config = color_config
     # create master window in fullscreen
@@ -85,7 +86,7 @@ class Board_Layout_GUI:
     self.font_size = 11
 
     self.background_image_mpl: np.ndarray = None
-    self.plotted_background_image: plt.AxesImage = None
+    self.plotted_background_images: List[plt.AxesImage] = []
     self.background_image_extent: np.ndarray = None
     self.graph_data: dict = None
     self.particle_graph: TTR_Particle_Graph = None
@@ -258,9 +259,9 @@ class Board_Layout_GUI:
         padx=(0, 0),
         pady=(self.grid_pad_y, 0))
 
-    self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=None, hspace=None)
+    self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=0.15, hspace=0.3)
     self.toggle_mpl_frame_visibility()
-    # self.canvas.draw_idle()
+    self.canvas.draw_idle()
 
   def control_frame_size_update(self, event: tk.Event, control_outer_frame: tk.Frame):
     """
@@ -320,6 +321,8 @@ class Board_Layout_GUI:
     # self.use_edge_images = tk.BooleanVar(value=False, name="use_edge_images") # unused # merged into edge_style
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
     self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
+    
+    self.graph_analysis_enabled = tk.BooleanVar(value=False, name="graph_analysis_enabled")
 
     # variables for plot
     self.board_width = tk.DoubleVar(value=83.1, name="board_width")
@@ -954,6 +957,15 @@ class Board_Layout_GUI:
     """
     Update the frame with the current settings.
     """
+    if self.graph_analysis_enabled.get():
+      grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
+      no_grid = [(1,2), (2,2)]
+      for i, ax in enumerate(self.axs.flat):
+        if not (i//3, i%3) in no_grid:
+          ax.grid(axis="y", color=grid_color)
+      self.canvas.draw_idle()
+      return
+    # show/hide frame for large plot
     self.ax.set_frame_on(self.show_plot_frame.get())
     # show/hid ticks
     self.ax.tick_params(
@@ -980,14 +992,20 @@ class Board_Layout_GUI:
     # set background image
     if self.show_background_image.get() and \
         self.background_image_mpl is not None:
-      if self.plotted_background_image is not None:
-        try:
-          self.plotted_background_image.remove()
-        except ValueError: # ignore if image is not plotted
-          pass
-      self.plotted_background_image = self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent)
-    elif self.plotted_background_image is not None:
-      self.plotted_background_image.remove()
+      if len(self.plotted_background_images) > 0:
+        for image in self.plotted_background_images:
+          try:
+            image.remove()
+          except ValueError: # ignore if image is not plotted
+            pass
+      if self.graph_analysis_enabled.get():
+        self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
+        self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
+      else:
+        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent))
+    elif len(self.plotted_background_images) > 0:
+      for image in self.plotted_background_images:
+        image.remove()
     self.canvas.draw_idle()
 
   def update_edge_style(self) -> None:
@@ -1015,57 +1033,6 @@ class Board_Layout_GUI:
       self.particle_graph.draw_edge_importance(self.ax)
     self.canvas.draw_idle()
 
-  # def toggle_edge_visibility(self, *args) -> None:
-  #   """
-  #   Update the edges with the current settings.
-  #   """
-  #   if self.particle_graph is None:
-  #     return
-  #   if self.edge_style.get() == "Hidden":
-  #     self.particle_graph.erase_edges()
-  #   self.canvas.draw_idle()
-
-  # def toggle_edge_images(self) -> None:
-  #   """
-  #   Update the edge images with the current settings.
-  #   """
-  #   if self.particle_graph is None:
-  #     return
-  #   if self.edge_style.get() == "Edge images":
-  #     edge_colors = self.particle_graph.get_edge_colors()
-  #     image_map = self.get_edge_color_map(edge_colors)
-  #     self.particle_graph.set_edge_images(image_map)
-  #     self.particle_graph.erase_edges()
-  #     self.particle_graph.draw_edges(self.ax)
-  #   else:
-  #     edge_colors = self.particle_graph.get_edge_colors()
-  #     color_map = {color: color for color in edge_colors}
-  #     self.particle_graph.set_edge_colors(color_map)
-  #     self.particle_graph.erase_edges()
-  #     self.particle_graph.draw_edges(self.ax)
-    
-  #   self.canvas.draw_idle()
-
-  # def toggle_task_visibility(self, *args) -> None:
-  #   """
-  #   Update the tasks with the current settings.
-  #   """
-  #   if self.particle_graph is None:
-  #     return
-  #   if self.edge_style.get() == "Show tasks":
-  #     self.particle_graph.draw_tasks(self.ax)
-  #   self.canvas.draw_idle()
-
-  # def toggle_edge_importance(self, *args) -> None:
-  #   """
-  #   Update the edge importance with the current settings.
-  #   """
-  #   if self.particle_graph is None:
-  #     return
-  #   if self.edge_style.get() == "Edge importance":
-  #     self.particle_graph.draw_edge_importance(self.ax)
-  #   self.canvas.draw_idle()
-
   def get_edge_color_map(self, edge_colors) -> dict:
     """
     Get the edge color map.
@@ -1085,7 +1052,8 @@ class Board_Layout_GUI:
         row_index: int,
         column_index: int,
         text: str,
-        command: Callable = None):
+        command: Callable = None,
+        columnspan: int = 1):
       """
       Add a label and checkbutton widget to the given frame.
 
@@ -1112,6 +1080,7 @@ class Board_Layout_GUI:
           row=row_index,
           column=column_index,
           sticky="nsew",
+          columnspan=columnspan,
           padx=padx,
           pady=pady)
       button_frame.columnconfigure(column_index, weight=1)
@@ -1132,6 +1101,21 @@ class Board_Layout_GUI:
     column_index += 1
     add_control_button(row_index, column_index, "Scale img", self.scale_background_image)
     column_index += 1
+    row_index += 1
+    column_index = 0
+    graph_analysis_checkbutton = tk.Checkbutton(
+        button_frame,
+        text="Graph analysis",
+        variable=self.graph_analysis_enabled,
+        command=self.toggle_graph_analysis)
+    self.add_checkbutton_style(graph_analysis_checkbutton)
+    graph_analysis_checkbutton.grid(
+        row=row_index,
+        column=column_index,
+        sticky="nsew",
+        columnspan=3,
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
 
   def play_pause(self):
     """
@@ -1160,7 +1144,8 @@ class Board_Layout_GUI:
         filetypes=(("PNG", "*.png"), ("all files", "*.*")))
     if filepath == "":
       return
-    self.fig.savefig(filepath, dpi=600, transparent=True)
+    transparent = not self.graph_analysis_enabled.get()
+    self.fig.savefig(filepath, dpi=600, transparent=transparent)
 
   def move_labels_to_nodes(self):
     """
@@ -1307,6 +1292,34 @@ class Board_Layout_GUI:
     # add Entry for node scale factor
     add_label_and_entry(row_index, column_index, "nodes", self.node_scale_factor)
 
+  def toggle_graph_analysis(self):
+    """
+    Analyze the graph and display the results.
+    """
+    if self.particle_graph is None:
+      return
+    if self.graph_analysis_enabled.get():
+      grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
+      # clear figure and draw graph analysis
+      self.fig.clf()
+      self.axs = self.fig.subplots(3, 3)
+      for ax in self.axs.flat:
+        ax.set_facecolor(self.color_config["plot_bg_color"])
+      self.particle_graph.draw_graph_analysis(
+          self.axs,
+          grid_color=grid_color,
+          base_color=self.color_config["task_base_color"])
+      self.fig.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.15, hspace=0.3)
+      self.canvas.draw_idle()
+    else:
+      # clear figure and draw graph
+      self.fig.clf()
+      self.ax = self.fig.add_subplot(111)
+      self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=0.15, hspace=0.3)
+      self.draw_graph()
+      
+      self.canvas.draw_idle()
+
 
   def init_animation(self):
     """
@@ -1335,7 +1348,7 @@ class Board_Layout_GUI:
       print("new graph")
       node_positions = self.init_node_positions()
       if self.particle_graph is not None:
-        self.particle_graph.erase()
+        self.particle_graph.erase() # clear old graph from figure
       self.particle_graph = TTR_Particle_Graph(
           locations = self.graph_data["locations"],
           paths = self.graph_data["paths"],
@@ -1343,13 +1356,20 @@ class Board_Layout_GUI:
           node_positions = node_positions,
           particle_parameters = self.get_particle_parameters()
       )
-      print("loaded tasks: ", self.graph_data["tasks"])
+      self.draw_graph()
+
+
+  def draw_graph(self):
+    """
+    Draw the graph with nodes, edges and labels according to the current settings.
+    """
     if self.show_nodes.get():
       self.particle_graph.draw_nodes(self.ax)
     if self.show_labels.get():
       self.particle_graph.draw_labels(self.ax)
-    if self.edge_style.get() != "None":
+    if self.edge_style.get() != "Hidden":
       self.particle_graph.draw_edges(self.ax)
+    self.canvas.draw_idle()
 
 
   def init_node_positions(self, node_spacing: float = 1.5) -> dict:
@@ -1436,7 +1456,8 @@ if __name__ == "__main__":
       "entry_select_color":     "#4477aa", # blue
       "plot_bg_color":          "#cccccc", # darker grey
       "plot_fg_color":          "#000000", # black
-      "plot_grid_color":        "#aaaaaa", # black
+      "plot_grid_color":        "#dddddd", # black
+      "task_base_color":        "#cc00cc", # pink
       }
   blender_colors = {
       "bg_color":               "#1d1d1d", # darkest grey
@@ -1455,7 +1476,8 @@ if __name__ == "__main__":
       "entry_select_color":     "#4772b3", # blue
       "plot_bg_color":          "#cccccc", # darker grey
       "plot_fg_color":          "#000000", # black
-      "plot_grid_color":        "#aaaaaa", # black
+      "plot_grid_color":        "#dddddd", # black
+      "task_base_color":        "#cc00cc", # pink
       }
   gui = Board_Layout_GUI(color_config=blender_colors)
   # tk.mainloop()

@@ -500,6 +500,51 @@ class TTR_Particle_Graph:
       color = get_gradient_color(base_color, edge_weight, max_weight)
       particle_edge.draw(ax, color=color, alpha=alpha_multiplier)
 
+  def draw_graph_analysis(self, axs: "np.ndarray[plt.Axes]", grid_color: str = None, base_color="#cc00cc") -> None:
+    """
+    draw analysis of the graph. This includes:
+    1. node degree distribution: how often each node degree occurs
+    2. edge length distribution: how often each edge length occurs
+    3. edge color distribution: how many edges have a certain color
+    4. edge color length distribution: how often each edge length occurs for each color
+    5. edge color total length distribution: combined edge lengths for each color
+    6. edge importance: how much the average task length increases if an edge is removed
+    7. task length distribution: how often each task length occurs
+    8. task color average distribution: how often each color is needed on average for all tasks
+    9. task visualisation: how many shortest task routes go through each edge
+
+    Args:
+        axs (np.ndarray[plt.Axes]): 3x3 array of matplotlib axes to draw on
+        grid_color (str, optional): color of the grid. Defaults to None (no grid).
+        base_color (str, optional): base color for the gradients. This is only used for the edge importance (6.)and task visualisation (9.). Defaults to "#cc00cc" (pink).
+    """
+    if self.analysis_graph is None:
+      self.init_analysis_graph()
+
+    # plot node degree distribution
+    self.analysis_graph.plot_node_degree_distribution(ax=axs[0, 0], grid_color=grid_color)
+    # plot edge length distribution
+    self.analysis_graph.plot_edge_length_distribution(ax=axs[0, 1], grid_color=grid_color)
+    # plot edge color length distribution
+    self.analysis_graph.plot_edge_color_length_distribution(ax=axs[0, 2], grid_color=grid_color)
+    # plot edge color distribution
+    self.analysis_graph.plot_edge_color_distribution(ax=axs[1, 0], grid_color=grid_color)
+    # plot edge color total length distribution
+    self.analysis_graph.plot_edge_color_total_length_distribution(ax=axs[1, 1], grid_color=grid_color)
+    # plot edge importance
+    axs[1, 2].set_title("Edge importance")
+    self.draw_nodes(ax=axs[1, 2])
+    self.draw_labels(ax=axs[1, 2])
+    self.draw_edge_importance(ax=axs[1, 2])
+    # plot task length distribution
+    self.analysis_graph.plot_task_length_distribution(ax=axs[2, 0], grid_color=grid_color)
+    # plot task color distribution
+    self.analysis_graph.plot_task_color_avg_distribution(ax=axs[2, 1], grid_color=grid_color)
+    # plot shortest task paths
+    axs[2, 2].set_title("Task visualisation")
+    self.draw_nodes(ax=axs[2, 2])
+    self.draw_labels(ax=axs[2, 2])
+    self.draw_tasks(ax=axs[2, 2], alpha_multiplier=1, base_color=base_color)
 
   def init_analysis_graph(self) -> None:
     """
