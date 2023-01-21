@@ -7,18 +7,20 @@ This project implements tools to create your very own, custom ticket to ride gam
 - The background and graph elements can be rescaled such that everything fits well when printed.
 - Show the graph on top of the background map to export it as a large image, which can then be printed. 
 - visualize the tasks on the graph
+- automatic graph analysis tools ([inspired by](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
 
 ### planned features:
-- improve the UI and add more controls
-- automatic graph analysis tools ([see here](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
+- support for different monitor resolutions
 - automatically generate images for task cards
 - allow adding and removing nodes and edges to the graph through the UI
 - allow editing colors and text of nodes and edges through the UI
 - allow adding and removing tasks through the UI
 - select an image for each node in the UI
+- add overlay for points for each edge length (possibly implemented via mpl legend?)
 - automatically optimze the graph layout from the UI
+- documentation and user manual
 
-Currently the project is in a very early stage, but it is already possible to create a custom game, although some steps are still manual and very tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. A few performance improvements are still planned though.
+Currently the project is in an early stage, but it is already possible to create a custom game, although some steps are still manual and rather tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. The program is only tested on Windows. While most of the code should be cross-platform compatible, Some features may not work on other operating systems and require modifications (mostly UI related).
 
 ## How to make your physical game
 The program mostly helps just with creating the game board. However, it is still necessary to create the game cards and pieces yourself.  
@@ -37,6 +39,7 @@ At the current stage, I highly recommend being familiar with Python and some ima
 - numpy -> for efficient calculations
 - shapely -> for particle simulation
 - screeninfo -> to get proper multi-monitor support
+- networkx -> for graph analysis
 
 ### How to run the program
 The code is currently not packaged as a standalone application, so you will have to run it from the source code (written in python). You can find the code in `coding/ttr_map_maker`. There, execute `board_layout_gui.py` to start the program, which will open a new window. Try out the many buttons!
