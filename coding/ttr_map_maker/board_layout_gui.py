@@ -915,15 +915,15 @@ class Board_Layout_GUI:
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
     row_index += 1
-    add_radiobutton(row_index, column_index, "Hidden", var=self.edge_style, command=self.toggle_edge_visibility)
+    add_radiobutton(row_index, column_index, "Hidden", var=self.edge_style, command=self.update_edge_style)
     row_index += 1
-    add_radiobutton(row_index, column_index, "Flat colors", self.edge_style, command=self.toggle_edge_visibility)
+    add_radiobutton(row_index, column_index, "Flat colors", self.edge_style, command=self.update_edge_style)
     row_index += 1
-    add_radiobutton(row_index, column_index, "Edge images", self.edge_style, command=self.toggle_edge_images)
+    add_radiobutton(row_index, column_index, "Edge images", self.edge_style, command=self.update_edge_style)
     row_index += 1
-    add_radiobutton(row_index, column_index, "Show tasks", self.edge_style, command=self.toggle_task_visibility)
+    add_radiobutton(row_index, column_index, "Show tasks", self.edge_style, command=self.update_edge_style)
     row_index += 1
-    add_radiobutton(row_index, column_index, "Edge importance", self.edge_style, command=self.toggle_edge_importance)
+    add_radiobutton(row_index, column_index, "Edge importance", self.edge_style, command=self.update_edge_style)
     row_index += 1
 
   def toggle_node_visibility(self, *args) -> None:
@@ -990,22 +990,13 @@ class Board_Layout_GUI:
       self.plotted_background_image.remove()
     self.canvas.draw_idle()
 
-  def toggle_edge_visibility(self, *args) -> None:
+  def update_edge_style(self) -> None:
     """
     Update the edges with the current settings.
     """
     if self.particle_graph is None:
       return
-    if self.edge_style.get() == "Hidden":
-      self.particle_graph.erase_edges()
-    self.canvas.draw_idle()
-
-  def toggle_edge_images(self) -> None:
-    """
-    Update the edge images with the current settings.
-    """
-    if self.particle_graph is None:
-      return
+    self.particle_graph.erase_edges()
     if self.edge_style.get() == "Edge images":
       edge_colors = self.particle_graph.get_edge_colors()
       image_map = self.get_edge_color_map(edge_colors)
@@ -1016,30 +1007,64 @@ class Board_Layout_GUI:
       edge_colors = self.particle_graph.get_edge_colors()
       color_map = {color: color for color in edge_colors}
       self.particle_graph.set_edge_colors(color_map)
-      self.particle_graph.erase_edges()
+    if self.edge_style.get() == "Flat colors":
       self.particle_graph.draw_edges(self.ax)
-    
-    self.canvas.draw_idle()
-
-  def toggle_task_visibility(self, *args) -> None:
-    """
-    Update the tasks with the current settings.
-    """
-    if self.particle_graph is None:
-      return
-    if self.edge_style.get() == "Show tasks":
+    elif self.edge_style.get() == "Show tasks":
       self.particle_graph.draw_tasks(self.ax)
-    self.canvas.draw_idle()
-
-  def toggle_edge_importance(self, *args) -> None:
-    """
-    Update the edge importance with the current settings.
-    """
-    if self.particle_graph is None:
-      return
-    if self.edge_style.get() == "Edge importance":
+    elif self.edge_style.get() == "Edge importance":
       self.particle_graph.draw_edge_importance(self.ax)
     self.canvas.draw_idle()
+
+  # def toggle_edge_visibility(self, *args) -> None:
+  #   """
+  #   Update the edges with the current settings.
+  #   """
+  #   if self.particle_graph is None:
+  #     return
+  #   if self.edge_style.get() == "Hidden":
+  #     self.particle_graph.erase_edges()
+  #   self.canvas.draw_idle()
+
+  # def toggle_edge_images(self) -> None:
+  #   """
+  #   Update the edge images with the current settings.
+  #   """
+  #   if self.particle_graph is None:
+  #     return
+  #   if self.edge_style.get() == "Edge images":
+  #     edge_colors = self.particle_graph.get_edge_colors()
+  #     image_map = self.get_edge_color_map(edge_colors)
+  #     self.particle_graph.set_edge_images(image_map)
+  #     self.particle_graph.erase_edges()
+  #     self.particle_graph.draw_edges(self.ax)
+  #   else:
+  #     edge_colors = self.particle_graph.get_edge_colors()
+  #     color_map = {color: color for color in edge_colors}
+  #     self.particle_graph.set_edge_colors(color_map)
+  #     self.particle_graph.erase_edges()
+  #     self.particle_graph.draw_edges(self.ax)
+    
+  #   self.canvas.draw_idle()
+
+  # def toggle_task_visibility(self, *args) -> None:
+  #   """
+  #   Update the tasks with the current settings.
+  #   """
+  #   if self.particle_graph is None:
+  #     return
+  #   if self.edge_style.get() == "Show tasks":
+  #     self.particle_graph.draw_tasks(self.ax)
+  #   self.canvas.draw_idle()
+
+  # def toggle_edge_importance(self, *args) -> None:
+  #   """
+  #   Update the edge importance with the current settings.
+  #   """
+  #   if self.particle_graph is None:
+  #     return
+  #   if self.edge_style.get() == "Edge importance":
+  #     self.particle_graph.draw_edge_importance(self.ax)
+  #   self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:
     """

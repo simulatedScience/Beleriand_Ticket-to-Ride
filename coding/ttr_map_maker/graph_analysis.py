@@ -155,7 +155,10 @@ class TTR_Graph_Analysis:
     """
     if graph is None:
       graph = self.networkx_graph
-    path = nx.shortest_path(graph, loc1, loc2, weight="length")
+    try:
+      path = nx.shortest_path(graph, loc1, loc2, weight="length")
+    except nx.exception.NetworkXNoPath:
+      return [], float("inf")
     return path, self.get_path_cost(path)
 
   def get_all_shortest_paths(self, loc1: str, loc2: str) -> List[Tuple[List[str], int]]:

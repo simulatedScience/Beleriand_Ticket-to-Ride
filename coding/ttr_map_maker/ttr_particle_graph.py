@@ -8,6 +8,7 @@ A particle graph's layout can be optimized using a simple particle method.
 """
 import json
 from typing import List, Tuple, Dict
+from math import isinf
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -486,7 +487,8 @@ class TTR_Particle_Graph:
       print("No tasks to analyse edges with.")
       self.analysis_graph = None
       return
-    max_weight = max(edge_weights.values())
+    # get maximum finite weight
+    max_weight = max([weight for weight in edge_weights.values() if weight != float("inf")])
     
     for (edge_key, particle_edge) in self.particle_edges.items():
       try:
@@ -660,7 +662,8 @@ def get_gradient_color(
     weight: int,
     max_weight: int,
     min_color_factor: float = 0.1,
-    weight_zero_color: str = "#aaaaaa") -> str:
+    weight_zero_color: str = "#aaaaaa",
+    inf_color: str = "#111111") -> str:
   """
   get a color that is a gradient between white and the given color
 
@@ -677,8 +680,10 @@ def get_gradient_color(
   rgb_tuple = tuple(int(color[i:i+2], 16) for i in (1, 3, 5))
   if weight == 0:
     return weight_zero_color
+  if isinf(weight):
+    return inf_color
   # calculate color factor
-  color_factor = min_color_factor + (1-min_color_factor) * (weight-1) / (max_weight-1)
+  color_factor = min_color_factor + (1-min_color_factor) * weight / max_weight
   # calculate gradient color
   gradient_color = tuple(int(color_factor * rgb_tuple[i] + (1-color_factor) * 255) for i in range(3))
   # convert gradient color to hex
