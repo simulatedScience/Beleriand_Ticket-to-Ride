@@ -96,8 +96,6 @@ class Board_Layout_GUI:
     self.init_frames()
     # self.init_animation() # TODO: implement animation
 
-    self.master.mainloop()
-
 
   def add_frame_style(self, frame: tk.Frame):
     frame.configure(
@@ -1015,6 +1013,7 @@ class Board_Layout_GUI:
     elif len(self.plotted_background_images) > 0:
       for image in self.plotted_background_images:
         image.remove()
+      self.plotted_background_images = []
     self.canvas.draw_idle()
 
   def update_edge_style(self) -> None:
@@ -1179,7 +1178,7 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_labels_to_nodes(self.ax)
+    self.particle_graph.move_labels_to_nodes(self.ax, picker=self.move_labels_enabled.get())
     self.canvas.draw_idle()
 
   def move_edges_to_nodes(self):
@@ -1188,8 +1187,8 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7)
-    self.show_edges.set(True)
+    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7, picker=self.move_edges_enabled.get())
+    self.edge_style.set("Flat colors")
     self.canvas.draw_idle()
 
   def scale_background_image(self):
@@ -1529,6 +1528,7 @@ class Board_Layout_GUI:
     #     interval=10000,
     #     blit=False)
 
+
   def init_particle_graph(self):
     """
     Initialize the particle graph.
@@ -1677,4 +1677,4 @@ if __name__ == "__main__":
       "task_base_color":        "#cc00cc", # pink
       }
   gui = Board_Layout_GUI(color_config=blender_colors)
-  # tk.mainloop()
+  tk.mainloop()

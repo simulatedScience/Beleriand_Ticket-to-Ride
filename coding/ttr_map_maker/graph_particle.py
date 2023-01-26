@@ -170,11 +170,11 @@ class Graph_Particle:
     if np.linalg.norm(self.position - other.position) <= self.interaction_radius:
       # get repulsion force
       repulsion_force, repulsion_anchor = self.get_repulsion_forces(other)
-      repulsion_force_radial, repulsion_torque = self.split_force(repulsion_force, repulsion_anchor, self.position)
+      repulsion_force_radial, repulsion_torque = split_force(repulsion_force, repulsion_anchor, self.position)
       # get attraction force
       if other in self.connected_particles:
         attraction_force, attraction_anchor = self.get_attraction_forces(other)
-        attraction_force_radial, attraction_torque = self.split_force(attraction_force, attraction_anchor, self.position)
+        attraction_force_radial, attraction_torque = split_force(attraction_force, attraction_anchor, self.position)
       else:
         attraction_force_radial = np.zeros(2)
         attraction_torque = 0
@@ -230,38 +230,6 @@ class Graph_Particle:
     translation_force = attraction_vector * distance
 
     return translation_force, other.position
-
-
-  def split_force(self,
-        force: np.ndarray,
-        anchor: np.ndarray,
-        center_of_mass: np.ndarray,
-        eps=1e-8) -> Tuple[np.ndarray, float]:
-    """
-    split given force into radial and tangential components to calculate translation and rotation forces
-
-    args:
-      force (np.ndarray): force vector
-      anchor (np.ndarray): anchor point
-      center_of_mass (np.ndarray): center of mass of particle
-
-    returns:
-      (np.ndarray) translation force
-      (float) torque ("rotation force")
-    """
-    # get vector from center of mass to anchor
-    anchor_vector = anchor - center_of_mass
-    # get radial component of force
-    radial_component = np.dot(force, anchor_vector) * anchor_vector / np.linalg.norm(anchor_vector)
-    # get tangential component of force
-    tangential_component = force - radial_component
-    # get torque
-    torque = np.linalg.norm(anchor_vector) * np.linalg.norm(tangential_component)
-    if np.cross(anchor_vector, tangential_component) < 0:
-      torque *= -1
-
-    return radial_component, torque
-
 
   def update(self, dt: float) -> float:
     """
@@ -520,6 +488,36 @@ def get_box_overlap(box1_poly: Polygon, box2_poly: Polygon) -> Tuple[np.ndarray,
     overlap_center = np.array([overlap_poly.centroid.x, overlap_poly.centroid.y])
 
     return overlap_center, overlap_area
+
+def split_force(
+        force: np.ndarray,
+        anchor: np.ndarray,
+        center_of_mass: np.ndarray,
+        eps=1e-8) -> Tuple[np.ndarray, float]:
+    """
+    split given force into radial and tangential components to calculate translation and rotation forces
+
+    args:
+      force (np.ndarray): force vector
+      anchor (np.ndarray): anchor point
+      center_of_mass (np.ndarray): center of mass of particle
+
+    returns:
+      (np.ndarray) translation force
+      (float) torque ("rotation force")
+    """
+    # get vector from center of mass to anchor
+    anchor_vector = anchor - center_of_mass
+    # get radial component of force
+    radial_component = np.dot(force, anchor_vector) * anchor_vector / np.linalg.norm(anchor_vector)
+    # get tangential component of force
+    tangential_component = force - radial_component
+    # get torque
+    torque = np.linalg.norm(anchor_vector) * np.linalg.norm(tangential_component)
+    if np.cross(anchor_vector, tangential_component) < 0:
+      torque *= -1
+
+    return radial_component, torque
 
 
 if __name__ == "__main__":

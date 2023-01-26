@@ -69,7 +69,7 @@ class Drag_Handler:
       if self.current_particle is None:
         print("Warning: encountered unexpected state in drag handler: internal state not reset properly.")
       self.on_release(event)
-    # Get the rectangle artist that was picked
+    # Get the artist that was picked
     self.current_artist = event.artist
     self.new_rotation_deg = 0
     # if artist is a circle, get its center
