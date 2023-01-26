@@ -41,7 +41,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from multi_monitor_fullscreen import toggle_full_screen
 from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
-from particle_edge import Particle_Edge
+from graph_particle import Graph_Particle
 import read_ttr_files as ttr_reader
 from drag_handler import Drag_Handler
 import pokemon_colors as pkmn_colors
@@ -86,10 +86,11 @@ class Board_Layout_GUI:
     self.font_size = 11
 
     self.background_image_mpl: np.ndarray = None
-    self.plotted_background_images: List[plt.AxesImage] = []
+    self.plotted_background_images: List[plt.AxesImage] = list()
     self.background_image_extent: np.ndarray = None
     self.graph_data: dict = None
     self.particle_graph: TTR_Particle_Graph = None
+    self.highlighted_particles: List[Graph_Particle] = list()
 
     self.init_tk_variables()
     self.init_frames()
@@ -152,6 +153,8 @@ class Board_Layout_GUI:
       activebackground=self.color_config["bg_color"],
       activeforeground=self.color_config["fg_color"],
       selectcolor=self.color_config["button_active_bg_color"],
+      relief="flat",
+      border=0,
       )
 
   def add_radiobutton_style(self, radiobutton: tk.Radiobutton):
@@ -316,13 +319,17 @@ class Board_Layout_GUI:
     self.show_labels = tk.BooleanVar(value=True, name="show_labels")
     self.show_targets = tk.BooleanVar(value=False, name="show_targets") # unused # TODO: implement
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
-    # self.show_task_paths = tk.BooleanVar(value=False, name="show_task_paths") # unused # merged into edge_style
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
-    # self.use_edge_images = tk.BooleanVar(value=False, name="use_edge_images") # unused # merged into edge_style
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
     self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
-    
+
+    # variables for different modes of operation
     self.graph_analysis_enabled = tk.BooleanVar(value=False, name="graph_analysis_enabled")
+    self.graph_edit_mode_enabled = tk.BooleanVar(value=False, name="graph_edit_mode_enabled")
+
+    self.move_nodes_enabled = tk.BooleanVar(value=False, name="move_nodes_enabled")
+    self.move_labels_enabled = tk.BooleanVar(value=False, name="move_labels_enabled")
+    self.move_edges_enabled = tk.BooleanVar(value=False, name="move_edges_enabled")
 
     # variables for plot
     self.board_width = tk.DoubleVar(value=83.1, name="board_width")
@@ -672,7 +679,7 @@ class Board_Layout_GUI:
       # TODO: implement warning and create new particle graph
 
     if self.show_nodes.get():
-      self.particle_graph.draw_nodes(self.ax)
+      self.particle_graph.draw_nodes(self.ax, picker=self.move_nodes_enabled.get())
 
   def load_tasks(self) -> None:
     """
@@ -917,6 +924,7 @@ class Board_Layout_GUI:
         sticky="ew",
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
+    checkbox_toggle_widgets.append(edge_style_label)
     row_index += 1
     add_radiobutton(row_index, column_index, "Hidden", var=self.edge_style, command=self.update_edge_style)
     row_index += 1
@@ -936,7 +944,7 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     if self.show_nodes.get():
-      self.particle_graph.draw_nodes(self.ax)
+      self.particle_graph.draw_nodes(self.ax, picker=self.move_nodes_enabled.get())
     else:
       self.particle_graph.erase_nodes()
     self.canvas.draw_idle()
@@ -948,7 +956,7 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     if self.show_labels.get():
-      self.particle_graph.draw_labels(self.ax)
+      self.particle_graph.draw_labels(self.ax, picker=self.move_labels_enabled.get())
     else:
       self.particle_graph.erase_labels()
     self.canvas.draw_idle()
@@ -998,6 +1006,7 @@ class Board_Layout_GUI:
             image.remove()
           except ValueError: # ignore if image is not plotted
             pass
+      self.plotted_background_images = []
       if self.graph_analysis_enabled.get():
         self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
         self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
@@ -1020,17 +1029,17 @@ class Board_Layout_GUI:
       image_map = self.get_edge_color_map(edge_colors)
       self.particle_graph.set_edge_images(image_map)
       self.particle_graph.erase_edges()
-      self.particle_graph.draw_edges(self.ax)
+      self.particle_graph.draw_edges(self.ax, picker=self.move_edges_enabled.get())
     else:
       edge_colors = self.particle_graph.get_edge_colors()
       color_map = {color: color for color in edge_colors}
       self.particle_graph.set_edge_colors(color_map)
     if self.edge_style.get() == "Flat colors":
-      self.particle_graph.draw_edges(self.ax)
+      self.particle_graph.draw_edges(self.ax, picker=self.move_edges_enabled.get())
     elif self.edge_style.get() == "Show tasks":
-      self.particle_graph.draw_tasks(self.ax)
+      self.particle_graph.draw_tasks(self.ax, picker=self.move_edges_enabled.get())
     elif self.edge_style.get() == "Edge importance":
-      self.particle_graph.draw_edge_importance(self.ax)
+      self.particle_graph.draw_edge_importance(self.ax, picker=self.move_edges_enabled.get())
     self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:
@@ -1053,14 +1062,16 @@ class Board_Layout_GUI:
         column_index: int,
         text: str,
         command: Callable = None,
-        columnspan: int = 1):
+        columnspan: int = 2):
       """
       Add a label and checkbutton widget to the given frame.
 
       Args:
           row_index (int): row index to place the widgets in
+          column_index (int): column index to place the widgets in
           text (str): text to display in the label
-          var (tk.BooleanVar): variable to store the checkbutton value in
+          command (Callable, optional): command to execute when the button is pressed. Defaults to None.
+          columnspan (int, optional): columnspan of the button. Defaults to 2.
       """
       # label = tk.Label(toggle_frame, text=text)
       # self.add_label_style(label)
@@ -1083,24 +1094,25 @@ class Board_Layout_GUI:
           columnspan=columnspan,
           padx=padx,
           pady=pady)
-      button_frame.columnconfigure(column_index, weight=1)
+      for config_index in range(column_index, column_index + columnspan):
+        button_frame.columnconfigure(config_index, weight=1)
 
     row_index = 0
     column_index = 0
     # add buttons
     add_control_button(row_index, column_index, "Save graph", self.save_graph)
-    column_index += 1
+    column_index += 2
     add_control_button(row_index, column_index, "Snap labels", self.move_labels_to_nodes)
-    column_index += 1
+    column_index += 2
     add_control_button(row_index, column_index, "Scale graph", self.scale_graph_posistions)
     row_index += 1
     column_index = 0
     add_control_button(row_index, column_index, "Save img", self.save_image)
-    column_index += 1
+    column_index += 2
     add_control_button(row_index, column_index, "Snap edges", self.move_edges_to_nodes)
-    column_index += 1
+    column_index += 2
     add_control_button(row_index, column_index, "Scale img", self.scale_background_image)
-    column_index += 1
+    column_index += 2
     row_index += 1
     column_index = 0
     graph_analysis_checkbutton = tk.Checkbutton(
@@ -1116,8 +1128,22 @@ class Board_Layout_GUI:
         columnspan=3,
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(self.grid_pad_y, self.grid_pad_y))
+    column_index += 3
+    graph_edit_mode_checkbutton = tk.Checkbutton(
+        button_frame,
+        text="Graph edit mode",
+        variable=self.graph_edit_mode_enabled,
+        command=self.toggle_graph_edit_mode)
+    self.add_checkbutton_style(graph_edit_mode_checkbutton)
+    graph_edit_mode_checkbutton.grid(
+        row=row_index,
+        column=column_index,
+        sticky="nsew",
+        columnspan=3,
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
 
-  def play_pause(self):
+  def play_pause_simulation(self):
     """
     Start/stop the particle simulation.
     """
@@ -1297,6 +1323,7 @@ class Board_Layout_GUI:
     Analyze the graph and display the results.
     """
     if self.particle_graph is None:
+      self.graph_analysis_enabled.set(False)
       return
     if self.graph_analysis_enabled.get():
       grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
@@ -1315,10 +1342,180 @@ class Board_Layout_GUI:
       # clear figure and draw graph
       self.fig.clf()
       self.ax = self.fig.add_subplot(111)
+      self.ax.set_facecolor(self.color_config["plot_bg_color"])
       self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=0.15, hspace=0.3)
       self.draw_graph()
       
       self.canvas.draw_idle()
+
+  def toggle_graph_edit_mode(self):
+    """
+    Toggle graph edit mode.
+    """
+    if self.particle_graph is None:
+      self.graph_edit_mode_enabled.set(False)
+      return
+    # create frames for graph edit widgets
+    if not self.graph_edit_mode_enabled.get():
+      self.move_nodes_enabled.set(False)
+      self.move_labels_enabled.set(False)
+      self.move_edges_enabled.set(False)
+
+      self.graph_edit_frame.grid_remove()
+      self.highlighted_particles = list()
+      return
+    self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame, bg=self.color_config["frame_bg_color"])
+    self.graph_edit_frame.grid(
+        row=self.control_frame.grid_size()[1],
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
+    self.graph_edit_frame.columnconfigure(0, weight=1)
+    row_index = 0
+    # TODO: potentially replace this label with a submenu button
+    graph_edit_headline: tk.Label = tk.Label(
+        self.graph_edit_frame,
+        text="Graph editing controls",
+        justify="left",
+        anchor="w",)
+    self.add_label_style(graph_edit_headline, font_type="bold")
+    graph_edit_headline.grid(
+        row=row_index,
+        column=0,
+        sticky="new")
+    row_index += 1
+    # create frame for graph edit buttons
+    self.graph_edit_buttons_frame: tk.Frame = tk.Frame(self.graph_edit_frame, bg=self.color_config["frame_bg_color"])
+    self.graph_edit_buttons_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    self.create_static_edit_buttons(self.graph_edit_buttons_frame)
+    # create frame to show particle settings of selected particle
+    self.particle_settings_frame: tk.Frame = tk.Frame(self.graph_edit_frame, bg=self.color_config["frame_bg_color"])
+    self.particle_settings_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    
+  def create_static_edit_buttons(self, button_frame: tk.Frame) -> None:
+    """
+    Create static buttons for graph editing.
+    Add buttons to:
+    - add a node
+    - add an edge
+    Add toggles to enable moving
+    - nodes
+    - edges
+    - labels
+
+    Args:
+        button_frame (tk.Frame): Frame to add the buttons to.
+    """
+    def add_particle_move_toggle(
+        particle_type: str,
+        row_index: int,
+        column_index: int,
+        toggle_var: tk.BooleanVar) -> None:
+      """
+      Add toggle to enable moving of a particle type.
+
+      Args:
+          particle_type (str): Type of particle to move.
+          row_index (int): Row index to add the toggle to.
+          column_index (int): Column index to add the toggle to.
+          toggle_var (tk.BooleanVar): Variable to store the toggle state.
+          toggle_command (Callable): Command to execute when the toggle is changed.
+      """
+      particle_move_toggle: tk.Checkbutton = tk.Checkbutton(
+          button_frame,
+          text=particle_type,
+          variable=toggle_var,
+          command=self.toggle_move_particle_type)
+      self.add_checkbutton_style(particle_move_toggle)
+      particle_move_toggle.grid(
+          row=row_index,
+          column=column_index,
+          sticky="new",
+          padx=(self.grid_pad_x, 0),
+          pady=(0, self.grid_pad_y))
+
+    for i in range(1,4):
+      button_frame.columnconfigure(i, weight=1)
+
+    row_index = 0
+    add_particle_frame: tk.Frame = tk.Frame(button_frame, background=self.color_config["frame_bg_color"])
+    add_particle_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        columnspan=4,)
+    add_particle_frame.columnconfigure(0, weight=1)
+    add_particle_frame.columnconfigure(1, weight=1)
+    add_node_button: tk.Button = tk.Button(
+        add_particle_frame,
+        text="Add node",
+        command=self.add_node)
+    self.add_button_style(add_node_button)
+    add_node_button.grid(
+        row=0,
+        column=0,
+        sticky="new",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    row_index += 1
+    add_edge_button: tk.Button = tk.Button(
+        add_particle_frame,
+        text="Add edge",
+        command=self.add_edge)
+    self.add_button_style(add_edge_button)
+    add_edge_button.grid(
+        row=0,
+        column=1,
+        sticky="new",
+        padx=(0, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+
+    column_index = 0
+    move_particle_label: tk.Label = tk.Label(button_frame, text="Move:")
+    self.add_label_style(move_particle_label)
+    move_particle_label.grid(
+        row=row_index,
+        column=column_index,
+        sticky="new",
+        padx=(self.grid_pad_x, 0),
+        pady=(0, self.grid_pad_y))
+    column_index += 1
+    add_particle_move_toggle("node", row_index, column_index, self.move_nodes_enabled)
+    column_index += 1
+    add_particle_move_toggle("edge", row_index, column_index, self.move_edges_enabled)
+    column_index += 1
+    add_particle_move_toggle("label", row_index, column_index, self.move_labels_enabled)
+    column_index += 1
+
+  def add_node(self) -> None:
+    """
+    Add a node to the graph.
+    """
+    pass
+
+  def add_edge(self) -> None:
+    """
+    Add an edge to the graph.
+    """
+    pass
+
+  def toggle_move_particle_type(self) -> None:
+    """
+    Toggle moving of particle types by enabling/disabling the picker for each particle.
+    """
+    self.particle_graph.toggle_move_nodes(self.move_nodes_enabled.get())
+    self.particle_graph.toggle_move_labels(self.move_labels_enabled.get())
+    self.particle_graph.toggle_move_edges(self.move_edges_enabled.get())
 
 
   def init_animation(self):
@@ -1356,7 +1553,7 @@ class Board_Layout_GUI:
           node_positions = node_positions,
           particle_parameters = self.get_particle_parameters()
       )
-      self.draw_graph()
+    self.draw_graph()
 
 
   def draw_graph(self):
@@ -1364,11 +1561,11 @@ class Board_Layout_GUI:
     Draw the graph with nodes, edges and labels according to the current settings.
     """
     if self.show_nodes.get():
-      self.particle_graph.draw_nodes(self.ax)
+      self.particle_graph.draw_nodes(self.ax, picker=self.move_nodes_enabled.get())
     if self.show_labels.get():
-      self.particle_graph.draw_labels(self.ax)
+      self.particle_graph.draw_labels(self.ax, picker=self.move_labels_enabled.get())
     if self.edge_style.get() != "Hidden":
-      self.particle_graph.draw_edges(self.ax)
+      self.particle_graph.draw_edges(self.ax, picker=self.move_edges_enabled.get())
     self.canvas.draw_idle()
 
 

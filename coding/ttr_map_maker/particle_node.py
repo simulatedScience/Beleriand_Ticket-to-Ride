@@ -61,7 +61,8 @@ class Particle_Node(Graph_Particle):
       ax: plt.Axes,
       color: str = "#222222",
       alpha: float = 1,
-      zorder: int = 4):
+      zorder: int = 4,
+      picker: bool = True):
     """draw node as circle on given axes
 
     Args:
@@ -70,6 +71,8 @@ class Particle_Node(Graph_Particle):
         alpha (float, optional): alpha value of the node. Defaults to 1.
         zorder (int, optional): zorder of the node. Defaults to 4.
     """
+    if picker is False: # mpl requires picker to be None to disable picking
+      picker = None
     self.plotted_objects.append(
         ax.add_patch(
             plt.Circle(
@@ -78,7 +81,7 @@ class Particle_Node(Graph_Particle):
                 color=color,
                 alpha=alpha,
                 zorder=zorder,
-                picker=True
+                picker=picker,
             )
         )
     )

@@ -57,9 +57,9 @@ class TTR_Particle_Graph:
 
     self.max_particle_id = 0
 
-    self.particle_nodes = dict()
-    self.particle_edges = dict()
-    self.particle_labels = dict()
+    self.particle_nodes: dict[str, Particle_Node] = dict()
+    self.particle_edges: dict[Tuple[str, str, int], Particle_Edge] = dict()
+    self.particle_labels: dict[str, Particle_Label] = dict()
     self.analysis_graph: TTR_Graph_Analysis = None
     
     self.create_particle_system()
@@ -312,8 +312,43 @@ class TTR_Particle_Graph:
       except KeyError:
         raise ValueError(f"no image file path specified for edge color '{particle_edge.color}'")
 
+  def toggle_move_nodes(self, move_nodes: bool = None) -> None:
+    """
+    toggle the ability to move nodes in the graph.
+    If `move_nodes` is None, the current state is toggled.
+    If `move_nodes` is True or False, the state is set to the given value.
 
-  def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
+    Args:
+        move_nodes (bool, optional): new state of node movement. Defaults to None (toggle).
+    """
+    for particle_node in self.particle_nodes.values():
+      particle_node.set_artist_picker(move_nodes)
+
+  def toggle_move_labels(self, move_labels: bool = None) -> None:
+    """
+    toggle the ability to move labels in the graph.
+    If `move_labels` is None, the current state is toggled.
+    If `move_labels` is True or False, the state is set to the given value.
+
+    Args:
+        move_labels (bool, optional): new state of label movement. Defaults to None (toggle).
+    """
+    for particle_label in self.particle_labels.values():
+      particle_label.set_artist_picker(move_labels)
+
+  def toggle_move_edges(self, move_edges: bool = None) -> None:
+    """
+    toggle the ability to move edges in the graph.
+    If `move_edges` is None, the current state is toggled.
+    If `move_edges` is True or False, the state is set to the given value.
+
+    Args:
+        move_edges (bool, optional): new state of edge movement. Defaults to None (toggle).
+    """
+    for particle_edge in self.particle_edges.values():
+      particle_edge.set_artist_picker(move_edges)
+
+  def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
     """
     draw particle graph
 
@@ -321,11 +356,11 @@ class TTR_Particle_Graph:
         ax (plt.Axes): axes to draw on
     """
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, border_color="#555555", alpha=0.8 * alpha_multiplier)
+      particle_edge.draw(ax, color=particle_edge.color, border_color="#555555", alpha=0.8 * alpha_multiplier, picker=picker)
     for particle_node in self.particle_nodes.values():
-      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier)
+      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier, picker=picker)
     for particle_label in self.particle_labels.values():
-      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
+      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier, picker=picker)
 
   def erase(self) -> None:
     """
@@ -338,7 +373,7 @@ class TTR_Particle_Graph:
     for particle_edge in self.particle_edges.values():
       particle_edge.erase()
 
-  def draw_nodes(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
+  def draw_nodes(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
     """draw nodes of particle graph
 
     Args:
@@ -346,7 +381,7 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
     """
     for particle_node in self.particle_nodes.values():
-      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier)
+      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier, picker=picker)
 
   def erase_nodes(self) -> None:
     """
@@ -355,7 +390,7 @@ class TTR_Particle_Graph:
     for particle_node in self.particle_nodes.values():
       particle_node.erase()
 
-  def draw_labels(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
+  def draw_labels(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
     """draw labels of particle graph
 
     Args:
@@ -363,7 +398,7 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
     """
     for particle_label in self.particle_labels.values():
-      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier)
+      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier, picker=picker)
 
   def erase_labels(self) -> None:
     """
@@ -372,7 +407,7 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.erase()
 
-  def draw_edges(self, ax: plt.Axes, alpha_multiplier: float = 1.0) -> None:
+  def draw_edges(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
     """draw edges of particle graph
 
     Args:
@@ -380,7 +415,7 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
     """
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, alpha=0.8 * alpha_multiplier)
+      particle_edge.draw(ax, color=particle_edge.color, alpha=0.8 * alpha_multiplier, picker=picker)
 
   def erase_edges(self):
     """
@@ -426,18 +461,11 @@ class TTR_Particle_Graph:
             head_length=0.4,
             zorder=0)
 
-  def __str__(self) -> str:
-    """
-    return information about the particle graph:
-    - number of nodes
-    - number of edges
-
-    Returns:
-        str: information about the particle graph
-    """
-    return f"Particle graph with {len(self.node_labels)} nodes and {len(self.paths)} edges."
-
-  def draw_tasks(self, ax: plt.Axes, alpha_multiplier: float = 1.0, base_color = "#cc00cc") -> None:
+  def draw_tasks(self,
+      ax: plt.Axes,
+      alpha_multiplier: float = 1.0,
+      base_color: str = "#cc00cc",
+      picker: bool = None) -> None:
     """
     draw tasks of particle graph.
     1. Calculate the shortest route(s) for each task.
@@ -468,9 +496,13 @@ class TTR_Particle_Graph:
         locations_key = (edge_key[1], edge_key[0])
         edge_weight = edge_weights.get(locations_key, 0) # if the edge is not in the dict, set the weight to 0
       color = get_gradient_color(base_color, edge_weight, max_weight)
-      particle_edge.draw(ax, color=color, alpha=alpha_multiplier)
+      particle_edge.draw(ax, color=color, alpha=alpha_multiplier, picker=picker)
 
-  def draw_edge_importance(self, ax: plt.Axes, alpha_multiplier: float = 1.0, base_color = "#cc00cc") -> None:
+  def draw_edge_importance(self,
+      ax: plt.Axes,
+      alpha_multiplier: float = 1.0,
+      base_color: str = "#cc00cc",
+      picker: bool = None) -> None:
     """
     draw edge importance of particle graph. Importance is measured by the increase in task lengths if the edge is removed.
 
@@ -498,7 +530,7 @@ class TTR_Particle_Graph:
         locations_key = (edge_key[1], edge_key[0])
         edge_weight = edge_weights.get(locations_key, 0)
       color = get_gradient_color(base_color, edge_weight, max_weight)
-      particle_edge.draw(ax, color=color, alpha=alpha_multiplier)
+      particle_edge.draw(ax, color=color, alpha=alpha_multiplier, picker=picker)
 
   def draw_graph_analysis(self, axs: "np.ndarray[plt.Axes]", grid_color: str = None, base_color="#cc00cc") -> None:
     """
@@ -554,6 +586,17 @@ class TTR_Particle_Graph:
         self.node_labels,
         self.paths,
         self.tasks)
+
+  def __str__(self) -> str:
+    """
+    return information about the particle graph:
+    - number of nodes
+    - number of edges
+
+    Returns:
+        str: information about the particle graph
+    """
+    return f"Particle graph with {len(self.node_labels)} nodes and {len(self.paths)} edges."
 
   def to_json(self) -> str:
     """

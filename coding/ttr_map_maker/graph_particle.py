@@ -355,7 +355,8 @@ class Graph_Particle:
       color: str = None,
       border_color: str = None,
       alpha: float = 0.3,
-      zorder: int = 3) -> None:
+      zorder: int = 3,
+      picker: bool = True) -> None:
     """
     draw bounding box of particle on `ax`
 
@@ -370,6 +371,8 @@ class Graph_Particle:
     if color is None:
       print("Warning: Particle not shown since no color was given")
       return
+    if picker is False: # mpl requires picker to be None to disable picking
+      picker = None
     polygon_patch = Rectangle(
         self.position - np.array([self.bounding_box_size[0] / 2, self.bounding_box_size[1] / 2]),
         width=self.bounding_box_size[0],
@@ -380,16 +383,16 @@ class Graph_Particle:
         edgecolor=border_color,
         alpha=alpha,
         zorder=zorder,
-        picker=True
+        picker=picker
     )
     self.plotted_objects.append(ax.add_patch(polygon_patch))
-
 
   def draw(self,
       ax: plt.Axes,
       color: str = "",
       alpha: float = 0.7,
-      zorder: int = 4):
+      zorder: int = 4,
+      picker: bool = True):
     """
     draw particle on `ax`. This should be overwritten by subclasses.
 
@@ -400,8 +403,7 @@ class Graph_Particle:
       zorder (int): zorder of particle
     """
     print("Warning: draw() method of Particle class should be overwritten by subclasses. Falling back to draw_bounding_box().")
-    self.draw_bounding_box(ax, color, alpha, zorder)
-
+    self.draw_bounding_box(ax, color, alpha, zorder, picker)
 
   def erase(self):
     """
@@ -410,6 +412,21 @@ class Graph_Particle:
     for obj in self.plotted_objects:
       obj.remove()
     self.plotted_objects = []
+
+  def set_artist_picker(self, picker: bool = None):
+    """
+    Toggle whether a particle can be moved with drag and drop. This is done by setting the picker property of the artist.
+
+    Args:
+        picker (bool, optional): whether to enable picking. Defaults to None (toggle)
+    """
+    for obj in self.plotted_objects:
+      if picker is None:
+        picker = not obj.get_picker()
+      # convert False to None for picker to work
+      if picker is False:
+        picker = None
+      obj.set_picker(picker)
 
 
   def to_json(self) -> str:

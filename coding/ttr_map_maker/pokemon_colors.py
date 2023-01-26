@@ -15,9 +15,10 @@ def type_to_edge_image(energy_type: str) -> str:
         - dark
         - steel
         - fairy
+        - neutral
   """
-  if not energy_type in ("grass", "fire", "water", "electric", "fighting", "psychic", "dark", "steel", "fairy"):
-    raise ValueError("energy_type must be one of the following: 'grass', 'fire', 'water', 'electric', 'fighting', 'psychic', 'dark', 'steel', 'fairy'")
+  if not energy_type in ("grass", "fire", "water", "electric", "fighting", "psychic", "dark", "steel", "fairy", "neutral"):
+    raise ValueError(f"energy_type was {energy_type} but must be one of the following: 'grass', 'fire', 'water', 'electric', 'fighting', 'psychic', 'dark', 'steel', 'fairy', 'neutral'")
   image_name = energy_type + ".png"
   return os.path.join(os.path.dirname(__file__), "edge_images", image_name)
 
@@ -25,7 +26,7 @@ def is_pokemon_energy_type(color: str) -> bool:
   """
   checks if the given color is a pokemon TCG energy type.
   energy types are:
-  'grass', 'fire', 'water', 'electric', 'fighting', 'psychic', 'dark', 'steel', 'fairy'
+  'grass', 'fire', 'water', 'electric', 'fighting', 'psychic', 'dark', 'steel', 'fairy', 'neutral'
 
   Args:
       color (str): any string
@@ -33,7 +34,7 @@ def is_pokemon_energy_type(color: str) -> bool:
   Returns:
       bool: True if the given color is a pokemon TCG energy type, False otherwise
   """
-  if color in ("grass", "fire", "water", "electric", "fighting", "psychic", "dark", "steel", "fairy"):
+  if color in ("grass", "fire", "water", "electric", "fighting", "psychic", "dark", "steel", "fairy", "neutral"):
     return True
   return False
 
@@ -62,7 +63,7 @@ def color_to_energy_type(color: str) -> bool:
   elif color == "black":
     return "dark"
   elif color in ("grey", "gray"):
-    return "steel"
+    return "neutral"
   elif color == "white":
     return "fairy"
   else:

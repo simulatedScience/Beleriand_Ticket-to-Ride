@@ -110,7 +110,8 @@ class Particle_Label(Graph_Particle):
       color: str = None,
       border_color: str = "#eeeeee",
       alpha: float = 1,
-      zorder: int = 4):
+      zorder: int = 4,
+      picker: bool = True) -> None:
     """
     draw the particle on the canvas.
     If a border color is given, the label text will have an outline with the given color.
@@ -130,8 +131,10 @@ class Particle_Label(Graph_Particle):
     else:
       text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
 
+    if picker is False: # mpl requires picker to be None to disable picking
+      picker = None
     text_draw = ImageDraw.Draw(text_image)
-    text_draw.text((self.text_x_offset, self.text_y_offset), self.label, font=self.img_font, fill=color, picker=True, stroke_width=self.inside_stroke_width)
+    text_draw.text((self.text_x_offset, self.text_y_offset), self.label, font=self.img_font, fill=color, picker=picker, stroke_width=self.inside_stroke_width)
 
     label_extent = (
         self.position[0] - self.bounding_box_size[0] / 2,
@@ -143,7 +146,7 @@ class Particle_Label(Graph_Particle):
         extent=label_extent,
         zorder=zorder,
         alpha=alpha,
-        picker=True))
+        picker=picker))
     
 
   def draw_label_outline(self,
