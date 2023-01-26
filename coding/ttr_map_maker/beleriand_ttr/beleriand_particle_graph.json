@@ -9330,6 +9330,66 @@
         "location_1_name": "West Taur-im-Duinath",
         "location_2_name": "Havens of Sirion",
         "path_index": 2
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 320,
+        "position": [
+          33.87417626499999,
+          46.50175109250001
+        ],
+        "rotation": 5.686910960871751,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          12,
+          321
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Eithel Ivrin",
+        "location_2_name": "Crossing of Teiglin",
+        "path_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 321,
+        "position": [
+          37.89812133249998,
+          45.33297036750001
+        ],
+        "rotation": 6.262869614029879,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          320,
+          9
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Eithel Ivrin",
+        "location_2_name": "Crossing of Teiglin",
+        "path_index": 1
       }
     ],
     "particle_parameters": {
