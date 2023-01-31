@@ -30,7 +30,8 @@ class Particle_Label(Graph_Particle):
         node_attraction: float = 0.1,
         fontsize: int = 150,
         font_name: str = None,
-        font_path: str = "beleriand_ttr\\MiddleEarth.ttf"):
+        font_path: str = "beleriand_ttr\\MiddleEarth.ttf",
+        height_scale_factor: float = None):
     """
     Initialize a particle label
     It's bounding box is calculated from the label text, fontsize and font at the given path.
@@ -42,16 +43,25 @@ class Particle_Label(Graph_Particle):
         fontsize (int, optional): fontsize of the label. Defaults to 20.
         font_name (str, optional): name of the font. Defaults to None.
         font_path (str, optional): path to the font file as `.ttf`. This is only used  Defaults to "beleriand_ttr\\MiddleEarth.ttf".
+        height_scale_factor (float, optional) # TODO: complete docstring Args
     """
-    self.inside_stroke_width = fontsize // 15
-    self.outline_stroke_width = fontsize // 5
+    self.label = label
+    self.fontsize = fontsize
+    self.color = color
+    self.node_attraction = node_attraction
+    if height_scale_factor is None:
+      self.height_scale_factor = Particle_Label.get_label_height_scale()
+    else:
+      self.height_scale_factor = height_scale_factor
+    self.inside_stroke_width = fontsize // 25
+    self.outline_stroke_width = fontsize // 8
     if font_name is None:
       # font_name = font_path.split("\\")[-1].strip(".ttf")
       fontManager.addfont(font_path)
-      width, height, *offset = self.get_label_size(label, fontsize, font_path)
+      width, height, pix_width, pix_height, *offset = self.get_label_size(label, fontsize, font_path)
       self.font_name = None
     else:
-      width, height, *offset = self.get_label_size(label, fontsize, font_name)
+      width, height, pix_width, pix_height, *offset = self.get_label_size(label, fontsize, font_name)
       self.font_name = font_name
     super().__init__(
         id,
@@ -65,12 +75,10 @@ class Particle_Label(Graph_Particle):
         angular_velocity_decay=angular_velocity_decay,
         repulsion_strength=repulsion_strength,
     )
+    self.width_pixels = pix_width
+    self.height_pixels = pix_height
     self.text_x_offset = offset[0]
     self.text_y_offset = offset[1]
-    self.label = label
-    self.fontsize = fontsize
-    self.color = color
-    self.node_attraction = node_attraction
 
 
   def get_attraction_force(self, other: Particle_Node) -> Tuple[np.ndarray, np.ndarray]:
@@ -125,9 +133,9 @@ class Particle_Label(Graph_Particle):
     """
     if color is None:
       color = self.color
-    text_image_size = self.img_font.getsize(self.label)
+    text_image_size = (self.width_pixels, self.height_pixels)
     if border_color is not None:
-      text_image = self.draw_label_outline(ax, border_color, alpha, zorder)
+      text_image = self.draw_label_outline(text_image_size, border_color)
     else:
       text_image = Image.new("RGBA", text_image_size, (0, 0, 0, 0))
 
@@ -150,27 +158,16 @@ class Particle_Label(Graph_Particle):
     
 
   def draw_label_outline(self,
-      ax: plt.Axes,
-      border_color: str = "#ff00ff",
-      alpha: float = 1,
-      zorder: int = 4):
-
-    text_image_size = self.img_font.getsize(self.label, stroke_width=self.outline_stroke_width)
+      text_image_size: Tuple[int, int],
+      border_color: str = "#ff00ff") -> Image:
+    
     outline_image = Image.new("RGBA", text_image_size, (0,0,0,0))
     text_draw = ImageDraw.Draw(outline_image)
     text_draw.text((self.text_x_offset, self.text_y_offset), self.label, font=self.img_font, fill=border_color, picker=True, border=1, borderfill=border_color, stroke_width=self.outline_stroke_width, stroke_fill=border_color)
 
     return outline_image
-    # label_extent = (
-    #     self.position[0] - self.bounding_box_size[0] / 2,
-    #     self.position[0] + self.bounding_box_size[0] / 2,
-    #     self.position[1] - self.bounding_box_size[1] / 2,
-    #     self.position[1] + self.bounding_box_size[1] / 2)
 
-    # self.plotted_objects.append(
-    #     ax.imshow(outline_image, extent=label_extent, alpha=alpha, zorder=zorder))
-
-  def get_label_size(self, label: str, fontsize: int, font: str) -> Tuple[float, float, float, float]:
+  def get_label_size(self, label: str, fontsize: int, font: str, image_padding: int = 10) -> Tuple[float, float, float, float]:
     """
     get size of a label with a given font size
 
@@ -178,10 +175,15 @@ class Particle_Label(Graph_Particle):
         label (str): text of the label
         fontsize (int): fontsize of the label
         font (str): name or path of the font to use
+        image_padding (int): number of pixels to add to width and height as padding to ensure text is not cut off. Defaults to 0.1
 
     Returns:
         float: width of the label, normalized to height=1
         float: height of the label, always 1
+        int: width in pixels
+        int: height in pixels
+        int: x offset for text in image in pixels
+        int: y offset for text in image in pixels
     """
     if ".ttf" in font:
       self.img_font = ImageFont.truetype(font, fontsize)
@@ -189,14 +191,16 @@ class Particle_Label(Graph_Particle):
       # load installed font
       self.img_font = ImageFont.load(font)
       self.img_font.set_size(fontsize)
-    width, height = self.img_font.getsize(label, stroke_width=self.outline_stroke_width)
-    small_width, small_height = self.img_font.getsize(label, stroke_width=self.inside_stroke_width)
-    text_x_offset = (width - small_width) // 2
-    text_y_offset = (height - small_height) // 2
+    width_pixels, height_pixels = self.img_font.getsize(label, stroke_width=self.outline_stroke_width)
+    width_pixels = int(width_pixels + image_padding)
+    height_pixels = int(height_pixels + image_padding)
+    small_width_pixels, small_height_pixels = self.img_font.getsize(label, stroke_width=self.inside_stroke_width)
+    text_x_offset = (width_pixels - small_width_pixels) // 2
+    text_y_offset = (height_pixels - small_height_pixels) // 2
     # normalize height
-    width /= height
-    height = 1
-    return width, height, text_x_offset, text_y_offset
+    width = width_pixels * self.height_scale_factor
+    height = height_pixels * self.height_scale_factor
+    return width, height, width_pixels, height_pixels, text_x_offset, text_y_offset
 
   def add_json_info(self, particle_info: dict) -> dict:
     """
@@ -213,7 +217,38 @@ class Particle_Label(Graph_Particle):
     particle_info["fontsize"] = self.fontsize
     particle_info["font_name"] = self.font_name
     particle_info["node_attraction"] = self.node_attraction
+    particle_info["height_scale_factor"] = self.height_scale_factor
     return particle_info
+
+  def get_label_height_scale(
+      fontsize: int = 150,
+      font_name: str = None,
+      font_path: str = "beleriand_ttr\\MiddleEarth.ttf") -> float:
+    """
+    calculate a scale factor to be used for all labels to normalize their height but keep all text the same size.
+    This is necessary because a label "Xy" being scaled to the same height as "xx", would result in a much smaller fontsize because of the capital letter and low reaching y.
+
+    Args:
+        fontsize (int, optional): font size to use. Defaults to 150.
+        font_name (str, optional): font to use if it is a default font Leave this as None when using a custom font. Defaults to None.
+        font_path (str, optional): path to a custom font to use (as ttf file). Defaults to "beleriand_ttr\MiddleEarth.ttf".
+
+    Returns:
+        float: scale factor to use such that no label will have height >1. Labels without vertically large letters may be smaller, but the displayed text will have the same size for all labels.
+    """
+    # load image_font
+    if font_name is None:
+      img_font = ImageFont.truetype(font_path, fontsize)
+    else:
+      # load installed font
+      img_font = ImageFont.load(font_name)
+      img_font.set_size(fontsize)
+    # determine sroke widths
+    outline_stroke_width = fontsize // 8
+    text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz"
+    
+    width, height =  img_font.getsize(text, stroke_width=outline_stroke_width)
+    return 1/height
 
 
 if __name__ == "__main__":

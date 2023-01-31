@@ -6,6 +6,7 @@ import json
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as path_effects
 from matplotlib.patches import Rectangle
 from shapely.geometry import Polygon
 
@@ -372,6 +373,27 @@ class Graph_Particle:
     """
     print("Warning: draw() method of Particle class should be overwritten by subclasses. Falling back to draw_bounding_box().")
     self.draw_bounding_box(ax, color, alpha, zorder, picker)
+
+  def highlight(self, ax: plt.Axes, highlight_color: str = "#cc00cc"):
+    """
+    highlight particle `self` 
+
+    Args:
+        highlilght_color (str, optional): color used to highlight the particle. Defaults to "#cc00cc".
+    """
+    if not self.plotted_objects: # no artists drawn -> can't highlight anything
+      return
+    print("Warning: using highlight method of `Graph_Particle`. This method should be overwritten by subclasses for better performance and more control.")
+    for artist in self.plotted_objects:
+      artist.set_path_effects([path_effects.Stroke(linewidth=20, foreground=highlight_color),
+                       path_effects.Normal()])
+
+  def remove_highlight(self, ax: plt.Axes):
+    """
+    remove highlight of particle `self`.
+    """
+    self.erase()
+    self.draw(ax)
 
   def erase(self):
     """

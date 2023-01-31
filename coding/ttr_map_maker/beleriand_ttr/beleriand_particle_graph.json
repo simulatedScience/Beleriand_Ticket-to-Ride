@@ -1028,8 +1028,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.803571428571429,
-          1
+          4.0534351145038165,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1043,7 +1043,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1055,8 +1056,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.857142857142857,
-          1
+          4.229007633587786,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1070,7 +1071,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1082,8 +1084,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.6964285714285716,
-          1
+          3.1068702290076335,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1097,7 +1099,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1109,8 +1112,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.223214285714286,
-          1
+          3.5572519083969465,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1124,7 +1127,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1136,8 +1140,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          6.151785714285714,
-          1
+          5.206106870229007,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1151,7 +1155,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1163,8 +1168,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.820627802690583,
-          1
+          3.1984732824427478,
+          0.7977099236641221
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1178,7 +1183,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1190,8 +1196,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.142857142857143,
-          1
+          4.480916030534351,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1205,7 +1211,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1217,8 +1224,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.079545454545454,
-          1
+          4.057251908396946,
+          0.9541984732824427
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1232,7 +1239,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1244,8 +1252,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          6.658008658008658,
-          1
+          5.816793893129771,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1259,7 +1267,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1271,8 +1280,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          6.980988593155893,
-          1
+          6.9541984732824424,
+          0.950381679389313
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1286,7 +1295,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1298,8 +1308,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          9.086580086580087,
-          1
+          7.958015267175572,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1313,7 +1323,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1325,8 +1336,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.9730941704035874,
-          1
+          3.32824427480916,
+          0.7977099236641221
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1340,7 +1351,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1352,8 +1364,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.125541125541125,
-          1
+          4.465648854961832,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1367,7 +1379,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1379,8 +1392,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.54978354978355,
-          1
+          4.8396946564885495,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1394,7 +1407,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1406,8 +1420,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          6.090909090909091,
-          1
+          5.316793893129771,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1421,7 +1435,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1433,8 +1448,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          7.064056939501779,
-          1
+          7.522900763358779,
+          1.0190839694656488
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1448,7 +1463,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1460,8 +1476,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.761565836298932,
-          1
+          6.125954198473282,
+          1.0190839694656488
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1475,7 +1491,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1487,8 +1504,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.6311787072243344,
-          1
+          5.599236641221374,
+          0.950381679389313
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1502,7 +1519,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1514,8 +1532,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.160714285714286,
-          1
+          3.5038167938931295,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1529,7 +1547,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1541,8 +1560,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          6.262357414448669,
-          1
+          6.2328244274809155,
+          0.950381679389313
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1556,7 +1575,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1568,8 +1588,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.7719298245614037,
-          1
+          3.229007633587786,
+          0.8167938931297709
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1583,7 +1603,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1595,8 +1616,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.714828897338403,
-          1
+          4.679389312977099,
+          0.950381679389313
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1610,7 +1631,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1622,8 +1644,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.233183856502242,
-          1
+          2.698473282442748,
+          0.7977099236641221
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1637,7 +1659,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1649,8 +1672,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.8384279475982535,
-          1
+          5.049618320610687,
+          0.8206106870229007
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1664,7 +1687,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1676,8 +1700,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          6.064935064935065,
-          1
+          5.293893129770992,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1691,7 +1715,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1703,8 +1728,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.366071428571429,
-          1
+          3.679389312977099,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1718,7 +1743,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1730,8 +1756,8 @@
         "rotation": 5.98647933434055,
         "mass": 1.0,
         "bounding_box_size": [
-          5.0,
-          1
+          4.354961832061068,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1745,7 +1771,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1757,8 +1784,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.242424242424242,
-          1
+          4.568702290076335,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1772,7 +1799,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1784,8 +1812,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.670995670995671,
-          1
+          4.9465648854961835,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1799,7 +1827,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1811,8 +1840,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.878787878787879,
-          1
+          5.129770992366412,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1826,7 +1855,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1838,8 +1868,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.4663677130044843,
-          1
+          2.896946564885496,
+          0.7977099236641221
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1853,7 +1883,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1865,8 +1896,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.917562724014337,
-          1
+          5.183206106870228,
+          1.0114503816793892
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1880,7 +1911,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1892,8 +1924,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          6.53125,
-          1
+          5.530534351145038,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1907,7 +1939,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1919,8 +1952,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          5.528138528138528,
-          1
+          4.8206106870229,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1934,7 +1967,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1946,8 +1980,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.839857651245552,
-          1
+          5.137404580152672,
+          1.0190839694656488
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1961,7 +1995,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -1973,8 +2008,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.887445887445887,
-          1
+          4.255725190839694,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -1988,7 +2023,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -2000,8 +2036,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          4.616071428571429,
-          1
+          3.8931297709923665,
+          0.8015267175572519
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2015,7 +2051,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -2027,8 +2064,8 @@
         "rotation": 0,
         "mass": 1.0,
         "bounding_box_size": [
-          3.8847583643122676,
-          1
+          3.9351145038167936,
+          0.9732824427480916
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2042,7 +2079,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
@@ -2054,8 +2092,8 @@
         "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          9.61038961038961,
-          1
+          8.419847328244275,
+          0.8282442748091603
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2069,7 +2107,8 @@
         "color": "#222222",
         "fontsize": 150,
         "font_name": null,
-        "node_attraction": 0.1
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Edge",

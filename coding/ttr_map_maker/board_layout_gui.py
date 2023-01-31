@@ -45,6 +45,7 @@ from graph_particle import Graph_Particle
 import read_ttr_files as ttr_reader
 from drag_handler import Drag_Handler
 import pokemon_colors as pkmn_colors
+from graph_editor_gui import Graph_Editor_GUI
 
 class Board_Layout_GUI:
   def __init__(self,
@@ -1009,7 +1010,7 @@ class Board_Layout_GUI:
         self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
         self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
       else:
-        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent))
+        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background", picker=True))
     elif len(self.plotted_background_images) > 0:
       for image in self.plotted_background_images:
         image.remove()
@@ -1363,7 +1364,8 @@ class Board_Layout_GUI:
       self.graph_edit_frame.grid_remove()
       self.highlighted_particles = list()
       return
-    self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame, bg=self.color_config["frame_bg_color"])
+    self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame)
+    self.add_frame_style(self.graph_edit_frame)
     self.graph_edit_frame.grid(
         row=self.control_frame.grid_size()[1],
         column=0,
@@ -1384,7 +1386,8 @@ class Board_Layout_GUI:
         sticky="new")
     row_index += 1
     # create frame for graph edit buttons
-    self.graph_edit_buttons_frame: tk.Frame = tk.Frame(self.graph_edit_frame, bg=self.color_config["frame_bg_color"])
+    self.graph_edit_buttons_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
+    self.add_frame_style(self.graph_edit_buttons_frame)
     self.graph_edit_buttons_frame.grid(
         row=row_index,
         column=0,
@@ -1393,13 +1396,28 @@ class Board_Layout_GUI:
     row_index += 1
     self.create_static_edit_buttons(self.graph_edit_buttons_frame)
     # create frame to show particle settings of selected particle
-    self.particle_settings_frame: tk.Frame = tk.Frame(self.graph_edit_frame, bg=self.color_config["frame_bg_color"])
+    self.particle_settings_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
+    self.add_frame_style(self.particle_settings_frame)
     self.particle_settings_frame.grid(
         row=row_index,
         column=0,
         sticky="new",
         pady=(0, self.grid_pad_y))
     row_index += 1
+    self.graph_editor_ui: Graph_Editor_GUI = Graph_Editor_GUI(
+        self.color_config,
+        tk_config_methods={
+          "add_frame_style": self.add_frame_style,
+          "add_label_style": self.add_label_style,
+          "add_button_style": self.add_button_style,
+          "add_entry_style": self.add_entry_style,
+          "add_checkbutton_style": self.add_checkbutton_style,
+          "add_radiobutton_style": self.add_radiobutton_style
+        },
+        particle_graph=self.particle_graph,
+        settings_frame=self.particle_settings_frame,
+        ax=self.ax,
+        canvas=self.canvas)
     
   def create_static_edit_buttons(self, button_frame: tk.Frame) -> None:
     """
@@ -1447,7 +1465,8 @@ class Board_Layout_GUI:
       button_frame.columnconfigure(i, weight=1)
 
     row_index = 0
-    add_particle_frame: tk.Frame = tk.Frame(button_frame, background=self.color_config["frame_bg_color"])
+    add_particle_frame: tk.Frame = tk.Frame(button_frame)
+    self.add_frame_style(add_particle_frame)
     add_particle_frame.grid(
         row=row_index,
         column=0,

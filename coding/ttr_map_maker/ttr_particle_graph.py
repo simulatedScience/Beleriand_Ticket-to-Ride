@@ -70,6 +70,7 @@ class TTR_Particle_Graph:
     Create the particle system from the given locations and paths connecting them.
     """
     particle_id = self.max_particle_id + 1
+    self.label_height_scale = Particle_Label.get_label_height_scale()
     n_nodes = len(self.node_labels)
     for i, label in enumerate(self.node_labels):
       if self.node_positions is not None:
@@ -85,6 +86,7 @@ class TTR_Particle_Graph:
           interaction_radius=self.particle_parameters["interaction_radius"],
           velocity_decay=self.particle_parameters["velocity_decay"],
           repulsion_strength=self.particle_parameters["repulsion_strength"],
+          height_scale_factor=self.label_height_scale,
           )
       self.particle_labels[label] = Particle_Label(
           label,

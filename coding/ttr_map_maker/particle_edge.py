@@ -249,6 +249,13 @@ class Particle_Edge(Graph_Particle):
       )
       self.plotted_objects.append(plotted_image)
 
+  # def highlight(self, ax: plt.Axes,  highlight_color: str = "#cc00cc"):
+  #   self.erase()
+  #   self.draw(ax=ax, border_color=highlight_color)
+
+  # def remove_highlight(self):
+  #   return super().remove_highlight()
+
   def get_image_rotation(self) -> float:
     """
     calculate image rotation based on `self.rotation` and the location of the nodes this edge is connected to.

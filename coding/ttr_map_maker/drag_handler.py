@@ -11,6 +11,7 @@ import matplotlib.transforms as transforms
 from matplotlib.image import AxesImage
 from matplotlib.patches import Circle, Rectangle
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backend_bases import PickEvent, MouseEvent
 
 from graph_particle import Graph_Particle
 
@@ -49,12 +50,13 @@ class Drag_Handler:
 
     self.cid_1: int = None # the id of the motion event
     self.cid_2: int = None # the id of the release event
+    self.cid_3: int = None # the id of the scroll event
     self.current_artist: plt.Artist = None # the artist that is currently being dragged
     self.current_particle: Graph_Particle = None # the particle associated to the artist that is currently being dragged
     self.pick_id = self.canvas.mpl_connect("pick_event", self.on_pick)
     print("Drag handler initialized.")
 
-  def on_pick(self, event):
+  def on_pick(self, event: PickEvent):
     """
     This function is called when an artist is picked.
     It binds the motion and release events to the canvas.
@@ -62,6 +64,10 @@ class Drag_Handler:
     Args:
       event (matplotlib.backend_bases.PickEvent): The pick event.
     """
+    print(f"drag handler pick event")
+    # ignore pick events from scrolling and mouse buttons other than left click
+    if not event.mouseevent.button == 1:
+      return
     if self.current_artist is not None:
       print("Warning: an artist was already being dragged.")
       event.xdata = event.mouseevent.x
@@ -72,18 +78,12 @@ class Drag_Handler:
     # Get the artist that was picked
     self.current_artist = event.artist
     self.new_rotation_deg = 0
-    # if artist is a circle, get its center
-    if isinstance(self.current_artist, (Circle, Rectangle)):
-      artist_center: np.ndarray = self.current_artist.get_center()
-    # if artist is an image, get its center
-    elif isinstance(self.current_artist, AxesImage):
-      artist_extent: Tuple[float] = self.current_artist.get_extent()
-      artist_center: np.ndarray = \
-          np.array([artist_extent[0], artist_extent[2]]) + \
-          np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]]) / 2
-    else:
-      print(f"Warning: unknown artist type: {type(self.current_artist)}")
+    # ignore clicks on artistts in group "background" (i.e. background image)
+    if event.artist.get_gid() == "background":
+      self.current_artist = None
       return
+    # get the center of the artist
+    artist_center = get_artist_center(self.current_artist)
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
     self.cid_2 = self.canvas.mpl_connect("button_release_event", self.on_release)
@@ -93,16 +93,16 @@ class Drag_Handler:
     # find the particle associated to the artist
     if self.use_cell_list:
       potential_particles = self.find_cell_particles(artist_center)
-      self.current_particle = self.find_particle_in_list(artist_center, potential_particles)
+      self.current_particle = find_particle_in_list(artist_center, potential_particles)
     else:
-      self.current_particle = self.find_particle_in_list(artist_center, self.particle_list)
+      self.current_particle = find_particle_in_list(artist_center, self.particle_list)
     if self.current_particle is None:
       print(f"Warning: no particle found for {type(self.current_artist)} at {artist_center}")
       self.current_artist = None
 
     self.canvas.mpl_disconnect(self.pick_id)
 
-  def on_motion(self, event):
+  def on_motion(self, event: MouseEvent):
     """
     This function is called when the mouse is moved while a button is pressed.
     It moves the artist to the mouse position.
@@ -134,7 +134,7 @@ class Drag_Handler:
 
       self.canvas.draw_idle()
 
-  def on_scroll(self, event):
+  def on_scroll(self, event: MouseEvent):
     """
     This function is called when the mouse wheel is scrolled.
     It rotates the current artist by 1° per scroll step.
@@ -193,29 +193,6 @@ class Drag_Handler:
     self.pick_id = self.canvas.mpl_connect('pick_event', self.on_pick)
 
 
-  def find_particle_in_list(self, event_position: np.ndarray, particle_list: List[Graph_Particle]) -> Graph_Particle:
-    """
-    Find the particle associated to the artist in the list of particles.
-    Choose the particle that is closest to the click event but within the maximum pick range.
-
-    Args:
-      event_position (List[float]): The position of the click event.
-      particle_list (List[Graph_Particle]): The list of particles to search in.
-
-    Returns:
-      Graph_Particle: The particle associated to the artist.
-    """
-    min_distance = np.inf
-    for particle in particle_list:
-      distance = np.linalg.norm(particle.position - event_position)
-      if distance < min_distance:
-        min_distance = distance
-        closest_particle = particle
-    if min_distance < self.max_pick_range:
-      return closest_particle
-    return None # if no particle is close enough
-
-
   def find_cell_particles(self, event_position: np.ndarray) -> List[Graph_Particle]:
     """
     Find all particles that can possibly be associated to the click event.
@@ -227,6 +204,7 @@ class Drag_Handler:
     Returns:
         List[Graph_Particle]: list of particles that can be associated to the click event.
     """
+    # TODO: refactor Cell list code into separate module
     # find the cell that contains the click event
     cell_x = int(event_position[0] / self.cell_size)
     cell_y = int(event_position[1] / self.cell_size)
@@ -238,3 +216,53 @@ class Drag_Handler:
           potential_particles.extend(self.particle_cell_list[i][j])
     # convert the list of indices to a list of particles
     return [self.particle_list[i] for i in potential_particles]
+
+
+
+def find_particle_in_list(event_position: np.ndarray, particle_list: List[Graph_Particle], max_pick_range: float = 2.) -> Graph_Particle:
+    """
+    Find the particle associated to the artist in the list of particles.
+    Choose the particle that is closest to the click event but within the maximum pick range.
+
+    Args:
+      event_position (List[float]): The position of the click event.
+      particle_list (List[Graph_Particle]): The list of particles to search in.
+
+    Returns:
+      Graph_Particle: The particle associated to the artist.
+    """
+    # TODO: refactor particle finding code into separate module
+    min_distance = np.inf
+    for particle in particle_list:
+      distance = np.linalg.norm(particle.position - event_position)
+      if distance < min_distance:
+        min_distance = distance
+        closest_particle = particle
+    if min_distance < max_pick_range:
+      return closest_particle
+    return None # if no particle is close enough
+
+
+def get_artist_center(artist) -> np.ndarray:
+    """
+    Get the center of the artist. Currently supported artist types: Circle, Rectangle, AxesImage.
+
+    Args:
+      artist (matplotlib.artist.Artist): The artist.
+
+    Returns:
+      np.ndarray: The center of the artist.
+    """
+    # if artist is a circle, get its center
+    if isinstance(artist, (Circle, Rectangle)):
+      artist_center: np.ndarray = artist.get_center()
+    # if artist is an image, get its center
+    elif isinstance(artist, AxesImage):
+      artist_extent: Tuple[float] = artist.get_extent()
+      artist_center: np.ndarray = \
+          np.array([artist_extent[0], artist_extent[2]]) + \
+          np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]]) / 2
+    else:
+      print(f"Warning: unknown artist type: {type(artist)}")
+      return
+    return artist_center
