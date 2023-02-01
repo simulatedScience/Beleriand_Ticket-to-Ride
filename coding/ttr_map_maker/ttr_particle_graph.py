@@ -298,7 +298,7 @@ class TTR_Particle_Graph:
     for particle_edge in self.particle_edges.values():
       if particle_edge.color in edge_color_map.keys():
         particle_edge.color = edge_color_map[particle_edge.color]
-        particle_edge.set_image(None)
+        particle_edge.set_image_file_path(None)
 
   def set_edge_images(self, edge_color_map: dict) -> None:
     """
@@ -311,7 +311,7 @@ class TTR_Particle_Graph:
     """
     for particle_edge in self.particle_edges.values():
       try:
-        particle_edge.set_image(edge_color_map[particle_edge.color])
+        particle_edge.set_image_file_path(edge_color_map[particle_edge.color])
       except KeyError:
         raise ValueError(f"no image file path specified for edge color '{particle_edge.color}'")
 

@@ -4,10 +4,13 @@ There is an attraction force between the node and target position as well as bet
 
 A node can be connected to other nodes by edges.
 """
+from typing import List, Tuple
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.transforms as transforms
+from matplotlib.patches import Rectangle
 
 from graph_particle import Graph_Particle
 from particle_node import Particle_Node
@@ -71,6 +74,51 @@ class Particle_Edge(Graph_Particle):
     self.path_index = path_index
     self.image_file_path = None
 
+
+  def get_adjustable_settings(self) -> dict[str, object]:
+    """
+    Get the adjustable settings of the particle.
+    Subclasses should override this method to return a dictionary of adjustable settings. Position and rotation should always be included.
+    dict keys:
+      - position (np.ndarray)
+      - rotation (float)
+      - color (str)
+      - image_file_path (str) or (None)
+
+    returns:
+      (dict[str, object]): dictionary of adjustable settings. type of value depends on the key.
+    """
+    return {
+      "position": self.position,
+      "rotation": self.rotation,
+      "color": self.color,
+      "image_file_path": self.image_file_path,
+    }
+
+  def set_adjustable_settings(self, settings: dict[str, object]) -> None:
+    """
+    Set the adjustable settings of the edge particle. If a new image file path is given, the image is loaded and drawn. Allowed settings are:
+      - position (np.ndarray)
+      - rotation (float)
+      - color (str)
+      - image_file_path (str) or (None)
+
+    Args:
+        settings (dict[str, object]): dictionary of adjustable settings. Keys and types of values should match what is returned by `self.get_adjustable_settings()`.
+    """
+    self.set_position(settings["position"])
+    self.set_rotation(settings["rotation"])
+    self.color = settings["color"]
+
+    if len(self.plotted_objects) > 0:
+      for artist in self.plotted_objects:
+        if isinstance(artist, Rectangle):
+          artist.set_facecolor(self.color)
+          artist.set_edgecolor(self.border_color)
+    if settings["image_file_path"] != self.image_file_path:
+      self.set_image_file_path(settings["image_file_path"])
+      self.erase()
+      self.draw()
 
   def get_attraction_forces(self, other_particle):
     """get attraction force between this particle and the other particle
@@ -190,7 +238,7 @@ class Particle_Edge(Graph_Particle):
     self.interaction_radius = edge_parameters.get("interaction_radius", self.interaction_radius)
 
 
-  def set_image(self, image_file_path: str = None):
+  def set_image_file_path(self, image_file_path: str = None):
     """
     Set edge to display the image at the given filepath when drawn.
     If `image_file_path` is `None`, the image will be removed and the edge is drawn as a flat colored rectangle.
@@ -199,6 +247,7 @@ class Particle_Edge(Graph_Particle):
         image_file_path (str, optional): filepath to image file. Image aspect ratio should match bounding box aspect ratio. Otherwise the image gets stretched. Defaults to None.
     """
     self.image_file_path = image_file_path
+
 
   def draw(self,
       ax: plt.Axes,
@@ -320,3 +369,42 @@ class Particle_Edge(Graph_Particle):
     particle_info["location_2_name"] = self.location_2_name
     particle_info["path_index"] = self.path_index
     return particle_info
+
+def get_adjacent_nodes(particle_edge: Particle_Edge) -> Tuple[List[Particle_Node], int]:
+  """
+  Find the two nodes that are connected to the given edge (directly or indirectly via connected edges).
+  These nodes should always correspond to `particle_edge.location_1_name` and `particle_edge.location_2_name`.
+
+  Findnodes by traversing the graph starting from the given edge and following the connected edges until a node is reached. Then follow the other connected particles and repeat the process until the second node has been found.
+
+  Args:
+      particle_edge (Particle_Edge): edge to find connected nodes for
+
+  Raises:
+      ValueError: If the graph is not connected properly, this function will not be able to find the second node and raise an error.
+
+  Returns:
+      List[Particle_Node]: list of two nodes that are connected to the given edge
+      int
+  """
+  # find noes this edge is connected to
+  visited_particle_ids = {particle_edge.get_id()}
+  connected_nodes = [particle_edge, particle_edge]
+  edge_length = 0
+  for i in range(2):
+    while True:
+      connected_index = 0
+      new_node = connected_nodes[i].connected_particles[connected_index]
+      while True: # find a connected node that has not been visited yet
+        if not new_node.get_id() in visited_particle_ids:
+          break
+        connected_index += 1
+        if connected_index >= len(connected_nodes[i].connected_particles):
+          raise ValueError("Could not find connected particle that has not been visited yet. Ensure that the graph is connected properly.")
+        new_node = connected_nodes[i].connected_particles[connected_index]
+      connected_nodes[i] = new_node
+      visited_particle_ids.add(connected_nodes[i].get_id())
+      if isinstance(connected_nodes[i], Particle_Node):
+        break
+
+    return connected_nodes, edge_length

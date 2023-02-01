@@ -139,6 +139,36 @@ class Graph_Particle:
     """
     return self.rotation
 
+  def get_adjustable_settings(self) -> dict[str, object]:
+    """
+    Get the adjustable settings of the particle.
+    Subclasses should override this method to return a dictionary of adjustable settings. Position and rotation should always be included.
+    dict keys:
+      - position (np.ndarray)
+      - rotation (float)
+
+    returns:
+      (dict[str, object]): dictionary of adjustable settings. type of value depends on the key.
+    """
+    return {
+      "position": self.position,
+      "rotation": self.rotation,
+    }
+  
+  def set_adjustable_settings(self, settings: dict[str, object]) -> None:
+    """
+    Set the adjustable settings of the particle.
+    Subclasses should override this method to set the adjustable settings of the particle. Position and rotation should always be included.
+    dict keys:
+      - position (np.ndarray)
+      - rotation (float)
+
+    Args:
+      settings (dict[str, object]): dictionary of adjustable settings. type of value depends on the key.
+    """
+    self.set_position(settings["position"])
+    self.set_rotation(settings["rotation"])
+
   def __str__(self):
     return f"Particle at\t {self.position} with mass\t {self.mass} and inertia\t {self.inertia}."
 
@@ -395,9 +425,6 @@ class Graph_Particle:
     """
     for artist in self.plotted_objects:
       artist.set_path_effects([])
-    # gid = self.plotted_objects[0].get_gid()
-    # self.erase()
-    # self.draw(ax, movable=gid)
 
   def erase(self):
     """
