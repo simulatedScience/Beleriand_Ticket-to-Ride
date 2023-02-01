@@ -325,7 +325,7 @@ class Graph_Particle:
       border_color: str = None,
       alpha: float = 0.3,
       zorder: int = 3,
-      picker: bool = True) -> None:
+      movable: bool = True) -> None:
     """
     draw bounding box of particle on `ax`
 
@@ -334,14 +334,13 @@ class Graph_Particle:
       color (str): color of particle
       alpha (float): alpha value of particle
       zorder (int): zorder of particle
+      movable (bool): whether particle is movable via drag & drop
     """
     if border_color is None:
       border_color = color
     if color is None:
       print("Warning: Particle not shown since no color was given")
       return
-    if picker is False: # mpl requires picker to be None to disable picking
-      picker = None
     polygon_patch = Rectangle(
         self.position - np.array([self.bounding_box_size[0] / 2, self.bounding_box_size[1] / 2]),
         width=self.bounding_box_size[0],
@@ -352,16 +351,17 @@ class Graph_Particle:
         edgecolor=border_color,
         alpha=alpha,
         zorder=zorder,
-        picker=picker
+        picker=True,
     )
     self.plotted_objects.append(ax.add_patch(polygon_patch))
+    self.set_particle_movable(movable)
 
   def draw(self,
       ax: plt.Axes,
       color: str = "",
       alpha: float = 0.7,
       zorder: int = 4,
-      picker: bool = True):
+      movable: bool = True):
     """
     draw particle on `ax`. This should be overwritten by subclasses.
 
@@ -372,7 +372,7 @@ class Graph_Particle:
       zorder (int): zorder of particle
     """
     print("Warning: draw() method of Particle class should be overwritten by subclasses. Falling back to draw_bounding_box().")
-    self.draw_bounding_box(ax, color, alpha, zorder, picker)
+    self.draw_bounding_box(ax, color, alpha, zorder, movable)
 
   def highlight(self, ax: plt.Axes, highlight_color: str = "#cc00cc"):
     """
@@ -383,17 +383,21 @@ class Graph_Particle:
     """
     if not self.plotted_objects: # no artists drawn -> can't highlight anything
       return
-    print("Warning: using highlight method of `Graph_Particle`. This method should be overwritten by subclasses for better performance and more control.")
+    # print("Warning: using highlight method of `Graph_Particle`. This method should be overwritten by subclasses for better performance and more control.")
     for artist in self.plotted_objects:
-      artist.set_path_effects([path_effects.Stroke(linewidth=20, foreground=highlight_color),
-                       path_effects.Normal()])
+      artist.set_path_effects([
+          path_effects.Stroke(linewidth=20, foreground=highlight_color),
+          path_effects.Normal()])
 
   def remove_highlight(self, ax: plt.Axes):
     """
-    remove highlight of particle `self`.
+    remove highlight of particle `self` and set `self.plotted_objects` appropriately.
     """
-    self.erase()
-    self.draw(ax)
+    for artist in self.plotted_objects:
+      artist.set_path_effects([])
+    # gid = self.plotted_objects[0].get_gid()
+    # self.erase()
+    # self.draw(ax, movable=gid)
 
   def erase(self):
     """
@@ -403,20 +407,20 @@ class Graph_Particle:
       obj.remove()
     self.plotted_objects = []
 
-  def set_artist_picker(self, picker: bool = None):
+  def set_particle_movable(self, movable: bool = None):
     """
-    Toggle whether a particle can be moved with drag and drop. This is done by setting the picker property of the artist.
+    Toggle whether a particle can be moved with drag and drop. This is done by setting the group id of the artists to `movable`.
 
     Args:
-        picker (bool, optional): whether to enable picking. Defaults to None (toggle)
+        movable (bool, optional): whether to enable picking. Defaults to None (toggle)
     """
     for obj in self.plotted_objects:
-      if picker is None:
-        picker = not obj.get_picker()
-      # convert False to None for picker to work
-      if picker is False:
-        picker = None
-      obj.set_picker(picker)
+      if movable is None: # toggle movability
+        current_gid = obj.get_gid()
+        movable_gid = "movable" if current_gid is None else None
+      else: # set movability
+        movable_gid = "movable" if movable else None
+      obj.set_gid(movable_gid)
 
 
   def to_json(self) -> str:

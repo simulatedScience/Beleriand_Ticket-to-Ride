@@ -64,6 +64,10 @@ class Graph_Editor_GUI:
 
     self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
     self.selected_particle: Graph_Particle = None # particle for which settings are displayed
+    self.preselected_particle: Graph_Particle = None # intermediate variable to store selected particle between pick and release events
+
+    self.pick_event_cid: int = None # connection id for pick event
+    self.release_event_cid: int = None # connection id for release event
 
     self.bind_mouse_events()
 
@@ -72,83 +76,111 @@ class Graph_Editor_GUI:
     """
     Bind mouse events to the matplotlib Axes object.
     """
-    self.pick_event_id: int = self.ax.figure.canvas.mpl_connect("pick_event", self.on_mouse_click)
+    self.pick_event_cid: int = self.canvas.mpl_connect("pick_event", self.on_mouse_click)
+
+  def unbind_mouse_events(self):
+    if self.pick_event_cid is not None:
+      self.canvas.mpl_disconnect(self.pick_event_cid)
+    if self.release_event_cid is not None:
+      self.canvas.mpl_disconnect(self.release_event_cid)
+    self.pick_event_cid = None
 
   def on_mouse_click(self, event: PickEvent):
     """
     Handle mouse clicks on the matplotlib Axes object.
     """
-    # # check if click is inside the axes
-    # if event.inaxes != self.ax:
-    #   return
-    print(f"graph editor pick event")
-    if event.artist.get_gid() == "background":
-      self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
-      self.remove_highlights()
-      self.selected_particle: Graph_Particle = None
-      self.canvas.draw_idle()
+    # ignore pick events from scrolling and mouse buttons other than left click
+    if not event.mouseevent.button == 1:
       return
+    ## if event.artist.get_gid() == "background" and self.selected_particle is not None:
+    ##   self.clear_selection()
+    ##   return
     # get the center of the artist
     artist_center = get_artist_center(event.artist)
-    # plot a point at artist center
-    self.ax.plot(artist_center[0], artist_center[1], "o", color="red")
-    # check if click is on a particle
-    # TODO: use cell list for faster search
-    # if self.use_cell_list: # search using cell list
-    #   potential_particles = self.find_cell_particles(artist_center)
-    #   particle = find_particle_in_list(artist_center, potential_particles, max_pick_range=self.max_pick_range)
-    # else: # search in all particles
+    ## check if click is on a particle
+    ## TODO: use cell list for faster search
+    ## if self.use_cell_list: # search using cell list
+    ##   potential_particles = self.find_cell_particles(artist_center)
+    ##   particle = find_particle_in_list(artist_center, potential_particles, max_pick_range=self.max_pick_range)
+    ## else: # search in all particles
     particle = find_particle_in_list(artist_center, self.particle_graph.get_particle_list())#, max_pick_range=self.max_pick_range)
+    
     # if no particle was clicked or the selected one was clicked again, deselect all particles
-    print(f"selected particle: {particle}")
-
+    print(f"previous selection: {self.selected_particle.get_id() if self.selected_particle is not None else None}")
+    print(f"current highlighted particles: {[p.get_id() for p in self.highlighted_particles]}")
+    print(f"selected particle: {particle.get_id()}")
     if particle is None or particle == self.selected_particle:
-      self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
-      self.remove_highlights()
-      self.selected_particle: Graph_Particle = None
+      print(f"remove highlights from {self.selected_particle.get_id()} (clicked highlighted particle)")
+      self.clear_selection()
       self.canvas.draw_idle()
+      print(f"new selection: {self.selected_particle.get_id() if self.selected_particle is not None else None}")
+      print(f"new highlighted particles: {[p.get_id() for p in self.highlighted_particles]}")
+      print("-"*25)
       return
+    
+    # select clicked particle
+    self.preselected_particle: Graph_Particle = particle
+    self.release_event_cid: int = self.canvas.mpl_connect("button_release_event", self.on_mouse_release)
+    self.canvas.mpl_disconnect(self.pick_event_cid)
+    
 
+  def on_mouse_release(self, event: MouseEvent):
+    """
+    Handle mouse releases on the matplotlib Axes object.
+    """
+    self.canvas.mpl_disconnect(self.release_event_cid)
+    self.release_event_cid = None
     # if a particle was clicked, select it
-    self.select_particle(particle)
+    self.select_particle(self.preselected_particle)
+    self.preselected_particle = None
     self.canvas.draw_idle()
-
+    print(f"new selection: {self.selected_particle.get_id() if self.selected_particle is not None else None}")
+    print(f"new highlighted particles: {[p.get_id() for p in self.highlighted_particles]}")
+    print("-"*25)
+    self.canvas.mpl_connect("pick_event", self.on_mouse_click)
 
   def select_particle(self, particle: Graph_Particle, add_to_selection: bool = False, highlight_color: str = "#cc00cc"):
     """
     Select a particle to display its settings and highlight it
 
     Args:
-
+        particle (Graph_Particle): The particle to select.
+        add_to_selection (bool, optional): If True, the particle will be added to the current selection. Otherwise the current selection will be replaced. Defaults to False.
+        highlight_color (str, optional): The color to highlight the particle with. Defaults to "#cc00cc".
     """
-    if not self.highlighted_particles: # no particle was selected yet
+    if len(self.highlighted_particles) == 0: # no particle was selected yet
       # select clicked particle, show it's settings and highlight it.
-      print(f"selected particle: {particle}")
+      print("show particle settings")
       self.highlighted_particles = [particle]
-      if isinstance(particle, Particle_Node):
-        self.show_node_settings(particle)
-      elif isinstance(particle, Particle_Label):
-        self.show_label_settings(particle)
-      elif isinstance(particle, Particle_Edge):
-        self.show_edge_settings(particle)
-    if add_to_selection:
+    elif add_to_selection:
       self.highlighted_particles.append(particle)
     else:
-      self.remove_highlights()
-
+      self.clear_selection() # remove highlights from previous selection
+      self.highlighted_particles = [particle]
+    # select particle and highlight it
     self.selected_particle = particle
+    print(f"highlight particle: {particle.get_id()}")
     particle.highlight(ax=self.ax, highlight_color=highlight_color)
+    # show settings
+    if isinstance(particle, Particle_Node):
+      self.show_node_settings(particle)
+    elif isinstance(particle, Particle_Label):
+      self.show_label_settings(particle)
+    elif isinstance(particle, Particle_Edge):
+      self.show_edge_settings(particle)
 
-  def remove_highlights(self):
+
+  def clear_selection(self):
     """
     remove highlights from all highlighted particles, reset internal variables and hide particle settings
     """
     for highlight_particle in self.highlighted_particles:
       highlight_particle.remove_highlight(ax=self.ax)
-    self.highlight_particles = list()
+    self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
     if self.selected_particle is not None:
-      self.selected_particle.remove_highlight(ax=self.ax)
-      self.selected_particle = None
+      # self.selected_particle.remove_highlight(ax=self.ax)
+      self.selected_particle: Graph_Particle = None
+
 
   def show_node_settings(self, particle_node: Particle_Node):
     """

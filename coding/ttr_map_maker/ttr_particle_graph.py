@@ -168,7 +168,7 @@ class TTR_Particle_Graph:
       ax: plt.Axes,
       x_offset: float = 0.,
       y_offset: float = 2.,
-      picker: bool = False) -> None:
+      movable: bool = False) -> None:
     """
     move all labels to the position of their connected node with an offset. Then erase and redraw the labels.
 
@@ -180,10 +180,10 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.position = particle_label.connected_particles[0].position + np.array([x_offset, y_offset], dtype=np.float64)
       particle_label.erase()
-      particle_label.draw(ax, picker=picker)
+      particle_label.draw(ax, movable=movable)
 
 
-  def move_edges_to_nodes(self, ax: plt.Axes, picker: bool=False, **draw_kwargs) -> None:
+  def move_edges_to_nodes(self, ax: plt.Axes, movable: bool=False, **draw_kwargs) -> None:
     """
     move all edges such that tey form straight lines between their connected nodes. Then erase and redraw the edges.
 
@@ -206,7 +206,7 @@ class TTR_Particle_Graph:
           np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
         )
         edge_particle.erase()
-        edge_particle.draw(ax, picker=picker, **draw_kwargs)
+        edge_particle.draw(ax, movable=movable, **draw_kwargs)
 
 
   def scale_graph_positions(self, ax: plt.Axes, scale_factor: float = 0.8) -> None:
@@ -325,7 +325,7 @@ class TTR_Particle_Graph:
         move_nodes (bool, optional): new state of node movement. Defaults to None (toggle).
     """
     for particle_node in self.particle_nodes.values():
-      particle_node.set_artist_picker(move_nodes)
+      particle_node.set_particle_movable(move_nodes)
 
   def toggle_move_labels(self, move_labels: bool = None) -> None:
     """
@@ -337,7 +337,7 @@ class TTR_Particle_Graph:
         move_labels (bool, optional): new state of label movement. Defaults to None (toggle).
     """
     for particle_label in self.particle_labels.values():
-      particle_label.set_artist_picker(move_labels)
+      particle_label.set_particle_movable(move_labels)
 
   def toggle_move_edges(self, move_edges: bool = None) -> None:
     """
@@ -349,9 +349,9 @@ class TTR_Particle_Graph:
         move_edges (bool, optional): new state of edge movement. Defaults to None (toggle).
     """
     for particle_edge in self.particle_edges.values():
-      particle_edge.set_artist_picker(move_edges)
+      particle_edge.set_particle_movable(move_edges)
 
-  def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
+  def draw(self, ax: plt.Axes, alpha_multiplier: float = 1.0, movable: bool = False) -> None:
     """
     draw particle graph
 
@@ -359,11 +359,11 @@ class TTR_Particle_Graph:
         ax (plt.Axes): axes to draw on
     """
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, border_color="#555555", alpha=0.8 * alpha_multiplier, picker=picker)
+      particle_edge.draw(ax, color=particle_edge.color, border_color="#555555", alpha=0.8 * alpha_multiplier, movable=movable)
     for particle_node in self.particle_nodes.values():
-      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier, picker=picker)
+      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier, movable=movable)
     for particle_label in self.particle_labels.values():
-      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier, picker=picker)
+      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier, movable=movable)
 
   def erase(self) -> None:
     """
@@ -376,7 +376,7 @@ class TTR_Particle_Graph:
     for particle_edge in self.particle_edges.values():
       particle_edge.erase()
 
-  def draw_nodes(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
+  def draw_nodes(self, ax: plt.Axes, alpha_multiplier: float = 1.0, movable: bool = False) -> None:
     """draw nodes of particle graph
 
     Args:
@@ -384,7 +384,7 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
     """
     for particle_node in self.particle_nodes.values():
-      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier, picker=picker)
+      particle_node.draw(ax, color="#222222", alpha=0.7 * alpha_multiplier, movable=movable)
 
   def erase_nodes(self) -> None:
     """
@@ -393,7 +393,7 @@ class TTR_Particle_Graph:
     for particle_node in self.particle_nodes.values():
       particle_node.erase()
 
-  def draw_labels(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
+  def draw_labels(self, ax: plt.Axes, alpha_multiplier: float = 1.0, movable: bool = False) -> None:
     """draw labels of particle graph
 
     Args:
@@ -401,7 +401,7 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
     """
     for particle_label in self.particle_labels.values():
-      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier, picker=picker)
+      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier, movable=movable)
 
   def erase_labels(self) -> None:
     """
@@ -410,7 +410,7 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.erase()
 
-  def draw_edges(self, ax: plt.Axes, alpha_multiplier: float = 1.0, picker: bool = False) -> None:
+  def draw_edges(self, ax: plt.Axes, alpha_multiplier: float = 1.0, movable: bool = False) -> None:
     """draw edges of particle graph
 
     Args:
@@ -418,7 +418,7 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
     """
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, alpha=0.8 * alpha_multiplier, picker=picker)
+      particle_edge.draw(ax, color=particle_edge.color, alpha=0.8 * alpha_multiplier, movable=movable)
 
   def erase_edges(self):
     """
@@ -468,7 +468,7 @@ class TTR_Particle_Graph:
       ax: plt.Axes,
       alpha_multiplier: float = 1.0,
       base_color: str = "#cc00cc",
-      picker: bool = None) -> None:
+      movable: bool = None) -> None:
     """
     draw tasks of particle graph.
     1. Calculate the shortest route(s) for each task.
@@ -499,13 +499,13 @@ class TTR_Particle_Graph:
         locations_key = (edge_key[1], edge_key[0])
         edge_weight = edge_weights.get(locations_key, 0) # if the edge is not in the dict, set the weight to 0
       color = get_gradient_color(base_color, edge_weight, max_weight)
-      particle_edge.draw(ax, color=color, alpha=alpha_multiplier, picker=picker)
+      particle_edge.draw(ax, color=color, alpha=alpha_multiplier, movable=movable)
 
   def draw_edge_importance(self,
       ax: plt.Axes,
       alpha_multiplier: float = 1.0,
       base_color: str = "#cc00cc",
-      picker: bool = None) -> None:
+      movable: bool = None) -> None:
     """
     draw edge importance of particle graph. Importance is measured by the increase in task lengths if the edge is removed.
 
@@ -533,7 +533,7 @@ class TTR_Particle_Graph:
         locations_key = (edge_key[1], edge_key[0])
         edge_weight = edge_weights.get(locations_key, 0)
       color = get_gradient_color(base_color, edge_weight, max_weight)
-      particle_edge.draw(ax, color=color, alpha=alpha_multiplier, picker=picker)
+      particle_edge.draw(ax, color=color, alpha=alpha_multiplier, movable=movable)
 
   def draw_graph_analysis(self, axs: "np.ndarray[plt.Axes]", grid_color: str = None, base_color="#cc00cc") -> None:
     """

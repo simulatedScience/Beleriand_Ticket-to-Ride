@@ -206,7 +206,7 @@ class Particle_Edge(Graph_Particle):
       border_color: str = None,
       alpha: float = 0.7,
       zorder: int = 2,
-      picker: bool = True) -> None:
+      movable: bool = True) -> None:
     """
     draw this edge as a rectangle
 
@@ -226,20 +226,18 @@ class Particle_Edge(Graph_Particle):
         except AttributeError:
           border_color = "#555555"
           self.border_color = border_color
-      super().draw_bounding_box(ax, color, border_color, alpha, zorder, picker)
+      super().draw_bounding_box(ax, color, border_color, alpha, zorder, movable)
       # midpoints = self.get_edge_midpoints()
       # self.plotted_objects.append(
       #     ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder))
     else:
-      if picker is False: # mpl requires picker to be None to disable picking
-        picker = None
       mpl_image = mpimg.imread(self.image_file_path)
       edge_extent = (
         self.position[0] - self.bounding_box_size[0] / 2,
         self.position[0] + self.bounding_box_size[0] / 2,
         self.position[1] - self.bounding_box_size[1] / 2,
         self.position[1] + self.bounding_box_size[1] / 2)
-      plotted_image = ax.imshow(mpl_image, extent=edge_extent, zorder=zorder, picker=picker)
+      plotted_image = ax.imshow(mpl_image, extent=edge_extent, zorder=zorder, picker=True)
       # rotate image using transformation
       # keep image upright
       image_rotation = self.get_image_rotation()
@@ -248,6 +246,8 @@ class Particle_Edge(Graph_Particle):
         transforms.Affine2D().rotate_around(self.position[0], self.position[1], image_rotation) + ax.transData
       )
       self.plotted_objects.append(plotted_image)
+      # set movability of particle
+      super().set_particle_movable(movable)
 
   # def highlight(self, ax: plt.Axes,  highlight_color: str = "#cc00cc"):
   #   self.erase()

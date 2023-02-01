@@ -54,7 +54,9 @@ class Drag_Handler:
     self.current_artist: plt.Artist = None # the artist that is currently being dragged
     self.current_particle: Graph_Particle = None # the particle associated to the artist that is currently being dragged
     self.pick_id = self.canvas.mpl_connect("pick_event", self.on_pick)
+    self.click_offset: np.ndarray = None # the offset between the mouse click and the artist's center
     print("Drag handler initialized.")
+
 
   def on_pick(self, event: PickEvent):
     """
@@ -64,26 +66,27 @@ class Drag_Handler:
     Args:
       event (matplotlib.backend_bases.PickEvent): The pick event.
     """
-    print(f"drag handler pick event")
     # ignore pick events from scrolling and mouse buttons other than left click
     if not event.mouseevent.button == 1:
       return
     if self.current_artist is not None:
       print("Warning: an artist was already being dragged.")
-      event.xdata = event.mouseevent.x
-      event.ydata = event.mouseevent.y
+      event.xdata = event.mouseevent.xdata
+      event.ydata = event.mouseevent.ydata
       if self.current_particle is None:
         print("Warning: encountered unexpected state in drag handler: internal state not reset properly.")
       self.on_release(event)
     # Get the artist that was picked
     self.current_artist = event.artist
     self.new_rotation_deg = 0
-    # ignore clicks on artistts in group "background" (i.e. background image)
-    if event.artist.get_gid() == "background":
+    # ignore clicks on artistts not without group id "movable"
+    if self.current_artist.get_gid() != "movable":
       self.current_artist = None
       return
     # get the center of the artist
     artist_center = get_artist_center(self.current_artist)
+    # get mouse event coordinates in axees
+    self.click_offset = np.array([event.mouseevent.xdata - artist_center[0], event.mouseevent.ydata - artist_center[1]])
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
     self.cid_2 = self.canvas.mpl_connect("button_release_event", self.on_release)
@@ -113,22 +116,22 @@ class Drag_Handler:
     if event.inaxes:
       # if artist is a circle, move its center
       if isinstance(self.current_artist, Circle):
-        self.current_artist.set_center(np.array([event.xdata, event.ydata]))
+        self.current_artist.set_center(np.array([event.xdata, event.ydata]) - self.click_offset)
       # if artist is a rectangle, move its center
       elif isinstance(self.current_artist, Rectangle):
         self.current_artist.set_xy((
-            event.xdata - self.current_artist.get_width()/2,
-            event.ydata - self.current_artist.get_height()/2))
+            event.xdata - self.current_artist.get_width()/2 - self.click_offset[0],
+            event.ydata - self.current_artist.get_height()/2 - self.click_offset[1]))
       # if artist is an image, move its center
       elif isinstance(self.current_artist, AxesImage):
         old_extent = self.current_artist.get_extent()
         half_width: float = (old_extent[1] - old_extent[0]) / 2
         half_height: float = (old_extent[3] - old_extent[2]) / 2
         image_extent = (
-          event.xdata - half_width,
-          event.xdata + half_width,
-          event.ydata - half_height,
-          event.ydata + half_height
+          event.xdata - half_width - self.click_offset[0],
+          event.xdata + half_width - self.click_offset[0],
+          event.ydata - half_height - self.click_offset[1],
+          event.ydata + half_height - self.click_offset[1]
         )
         self.current_artist.set_extent(image_extent)
 
@@ -148,13 +151,8 @@ class Drag_Handler:
       self.new_rotation_deg %= 360
       
       # rotate artist
-      if isinstance(self.current_artist, (Circle, Rectangle)):
-        artist_center: np.ndarray = self.current_artist.get_center()
-      elif isinstance(self.current_artist, AxesImage):
-        artist_extent: Tuple[float] = self.current_artist.get_extent()
-        artist_center: np.ndarray = \
-            np.array([artist_extent[0], artist_extent[2]]) + \
-            np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]]) / 2
+      artist_center = get_artist_center(self.current_artist)
+      # artist_center += self.click_offset
       self.current_artist.set_transform(
         transforms.Affine2D().rotate_deg_around(artist_center[0], artist_center[1], self.new_rotation_deg) + ax.transData
       )
@@ -180,13 +178,14 @@ class Drag_Handler:
       self.cid_3 = None
 
     # update the particle's position
-    x_pos, y_pos = event.xdata, event.ydata
-    self.current_particle.set_position(np.array([x_pos, y_pos]))
-    new_rotation_rad = np.deg2rad(self.new_rotation_deg)
-    old_rotation_rad = self.current_particle.get_rotation()
-    self.current_particle.set_rotation(old_rotation_rad + new_rotation_rad)
-    self.current_particle.erase()
-    self.current_particle.draw(self.ax)
+    if self.current_particle is not None:
+      new_rotation_rad = np.deg2rad(self.new_rotation_deg)
+      old_rotation_rad = self.current_particle.get_rotation()
+      self.current_particle.set_rotation(old_rotation_rad + new_rotation_rad)
+      artist_center = get_artist_center(self.current_artist)
+      self.current_particle.set_position(artist_center)
+      self.current_particle.erase()
+      self.current_particle.draw(self.ax)
 
     self.current_artist = None
     self.current_particle = None

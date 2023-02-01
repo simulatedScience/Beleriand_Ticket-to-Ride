@@ -678,7 +678,7 @@ class Board_Layout_GUI:
       # TODO: implement warning and create new particle graph
 
     if self.show_nodes.get():
-      self.particle_graph.draw_nodes(self.ax, picker=self.move_nodes_enabled.get())
+      self.particle_graph.draw_nodes(self.ax, movable=self.move_nodes_enabled.get())
 
   def load_tasks(self) -> None:
     """
@@ -943,7 +943,7 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     if self.show_nodes.get():
-      self.particle_graph.draw_nodes(self.ax, picker=self.move_nodes_enabled.get())
+      self.particle_graph.draw_nodes(self.ax, movable=self.move_nodes_enabled.get())
     else:
       self.particle_graph.erase_nodes()
     self.canvas.draw_idle()
@@ -955,7 +955,7 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     if self.show_labels.get():
-      self.particle_graph.draw_labels(self.ax, picker=self.move_labels_enabled.get())
+      self.particle_graph.draw_labels(self.ax, movable=self.move_labels_enabled.get())
     else:
       self.particle_graph.erase_labels()
     self.canvas.draw_idle()
@@ -1010,7 +1010,7 @@ class Board_Layout_GUI:
         self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
         self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
       else:
-        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background", picker=True))
+        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background"))#, picker=True))
     elif len(self.plotted_background_images) > 0:
       for image in self.plotted_background_images:
         image.remove()
@@ -1029,17 +1029,17 @@ class Board_Layout_GUI:
       image_map = self.get_edge_color_map(edge_colors)
       self.particle_graph.set_edge_images(image_map)
       self.particle_graph.erase_edges()
-      self.particle_graph.draw_edges(self.ax, picker=self.move_edges_enabled.get())
+      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get())
     else:
       edge_colors = self.particle_graph.get_edge_colors()
       color_map = {color: color for color in edge_colors}
       self.particle_graph.set_edge_colors(color_map)
     if self.edge_style.get() == "Flat colors":
-      self.particle_graph.draw_edges(self.ax, picker=self.move_edges_enabled.get())
+      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get())
     elif self.edge_style.get() == "Show tasks":
-      self.particle_graph.draw_tasks(self.ax, picker=self.move_edges_enabled.get())
+      self.particle_graph.draw_tasks(self.ax, movable=self.move_edges_enabled.get())
     elif self.edge_style.get() == "Edge importance":
-      self.particle_graph.draw_edge_importance(self.ax, picker=self.move_edges_enabled.get())
+      self.particle_graph.draw_edge_importance(self.ax, movable=self.move_edges_enabled.get())
     self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:
@@ -1179,7 +1179,7 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_labels_to_nodes(self.ax, picker=self.move_labels_enabled.get())
+    self.particle_graph.move_labels_to_nodes(self.ax, movable=self.move_labels_enabled.get())
     self.canvas.draw_idle()
 
   def move_edges_to_nodes(self):
@@ -1188,7 +1188,7 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7, picker=self.move_edges_enabled.get())
+    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7, movable=self.move_edges_enabled.get())
     self.edge_style.set("Flat colors")
     self.canvas.draw_idle()
 
@@ -1363,6 +1363,7 @@ class Board_Layout_GUI:
 
       self.graph_edit_frame.grid_remove()
       self.highlighted_particles = list()
+      self.graph_editor_ui.unbind_mouse_events()
       return
     self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame)
     self.add_frame_style(self.graph_edit_frame)
@@ -1529,7 +1530,7 @@ class Board_Layout_GUI:
 
   def toggle_move_particle_type(self) -> None:
     """
-    Toggle moving of particle types by enabling/disabling the picker for each particle.
+    Set movability of all particle types to the current settings.
     """
     self.particle_graph.toggle_move_nodes(self.move_nodes_enabled.get())
     self.particle_graph.toggle_move_labels(self.move_labels_enabled.get())
@@ -1580,11 +1581,11 @@ class Board_Layout_GUI:
     Draw the graph with nodes, edges and labels according to the current settings.
     """
     if self.show_nodes.get():
-      self.particle_graph.draw_nodes(self.ax, picker=self.move_nodes_enabled.get())
+      self.particle_graph.draw_nodes(self.ax, movable=self.move_nodes_enabled.get())
     if self.show_labels.get():
-      self.particle_graph.draw_labels(self.ax, picker=self.move_labels_enabled.get())
+      self.particle_graph.draw_labels(self.ax, movable=self.move_labels_enabled.get())
     if self.edge_style.get() != "Hidden":
-      self.particle_graph.draw_edges(self.ax, picker=self.move_edges_enabled.get())
+      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get())
     self.canvas.draw_idle()
 
 
