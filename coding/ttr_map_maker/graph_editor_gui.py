@@ -183,6 +183,125 @@ class Graph_Editor_GUI:
       widget.destroy()
 
 
+  def add_position_setting(self, position: np.ndarray, row_index: int) -> Tuple[tk.DoubleVar, tk.DoubleVar]:
+    """
+    Add a position setting to the settings panel.
+
+    Args:
+        position (np.ndarray): The position to display.
+
+    Returns:
+        (tk.DoubleVar): tk variable for x coordinate of position
+        (tk.DoubleVar): tk variable for y coordinate of position
+    """
+    position_x_var = tk.DoubleVar(value=position[0])
+    position_y_var = tk.DoubleVar(value=position[1])
+
+    position_label = tk.Label(self.settings_frame, text="Position")
+    self.add_label_style(position_label)
+    position_label.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    # frame for position inputs
+    position_inputs_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(position_inputs_frame)
+    position_inputs_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=self.grid_pad_y)
+    # x position input
+    position_x_label = tk.Label(position_inputs_frame, text="x:")
+    self.add_label_style(position_x_label)
+    position_x_label.grid(
+        row=0,
+        column=0,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    position_x_input = tk.Entry(position_inputs_frame, textvariable=position_x_var, width=5)
+    self.add_entry_style(position_x_input)
+    position_x_input.grid(
+        row=0,
+        column=1,
+        sticky="w",
+        padx=(0, 2*self.grid_pad_x),
+        pady=0)
+    # y position input
+    position_y_label = tk.Label(position_inputs_frame, text="y:")
+    self.add_label_style(position_y_label)
+    position_y_label.grid(
+        row=0,
+        column=2,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    position_y_input = tk.Entry(position_inputs_frame, textvariable=position_y_var, width=5)
+    self.add_entry_style(position_y_input)
+    position_y_input.grid(
+        row=0,
+        column=3,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+
+    return [position_x_var, position_y_var]
+
+  def add_rotation_setting(self, rotation: float, row_index: int) -> tk.DoubleVar:
+    """
+    Add a rotation setting to the settings panel in the specified row.
+
+    Args:
+        rotation (float): The rotation to display.
+
+    Returns:
+        (tk.DoubleVar): tk variable for particle rotation in degrees.
+    """
+    rotation_var_deg = tk.DoubleVar(value=np.rad2deg(rotation))
+
+    rotation_label = tk.Label(self.settings_frame, text="Rotation")
+    self.add_label_style(rotation_label)
+    rotation_label.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    # frame for rotation input
+    rotation_input_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(rotation_input_frame)
+    rotation_input_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=self.grid_pad_y)
+    # rotation input
+    rotation_input = tk.Entry(rotation_input_frame, textvariable=rotation_var_deg, width=5)
+    self.add_entry_style(rotation_input)
+    rotation_input.grid(
+        row=0,
+        column=0,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    # rotation unit label
+    rotation_unit_label = tk.Label(rotation_input_frame, text="°")
+    self.add_label_style(rotation_unit_label)
+    rotation_unit_label.grid(
+        row=0,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+
+    return rotation_var_deg
+
+
   def show_node_settings(self, particle_node: Particle_Node):
     """
     Display the settings of a node.
@@ -272,125 +391,63 @@ class Graph_Editor_GUI:
         pady=0,
     )
 
-
-  def add_position_setting(self, position: np.ndarray, row_index: int) -> Tuple[tk.DoubleVar, tk.DoubleVar]:
+  def apply_edge_settings(self,
+      particle_edge: Particle_Edge,
+      posisition_x_var: tk.DoubleVar,
+      position_y_var: tk.DoubleVar,
+      rotation_var_deg: tk.DoubleVar,
+      edge_color_var: tk.IntVar):
     """
-    Add a position setting to the settings panel.
+    Apply the settings of an edge.
 
     Args:
-        position (np.ndarray): The position to display.
-
-    Returns:
-        (tk.DoubleVar): tk variable for x coordinate of position
-        (tk.DoubleVar): tk variable for y coordinate of position
+        particle_edge (Particle_Edge): The edge to apply the settings to.
+        posisition_x_var (tk.DoubleVar): The x position variable.
+        position_y_var (tk.DoubleVar): The y position variable.
+        rotation_var_deg (tk.DoubleVar): The rotation variable in degrees.
+        edge_color_var (tk.IntVar): The color variable.
     """
-    position_x_var = tk.DoubleVar(value=position[0])
-    position_y_var = tk.DoubleVar(value=position[1])
+    new_position = np.array([posisition_x_var.get(), position_y_var.get()])
+    new_rotation = np.deg2rad(rotation_var_deg.get())
+    new_color = self.edge_color_list[edge_color_var.get()]
+    particle_edge.set_adjustable_settings(
+        self.ax,
+        position=new_position,
+        rotation=new_rotation)
+    for connected_edge in get_connected_edges(particle_edge)[0]:
+      connected_edge.set_adjustable_settings(
+        self.ax,
+        color=new_color)
+    self.canvas.draw_idle()
 
-    position_label = tk.Label(self.settings_frame, text="Position")
-    self.add_label_style(position_label)
-    position_label.grid(
-        row=row_index,
-        column=0,
-        sticky="w",
-        padx=self.grid_pad_x,
-        pady=self.grid_pad_y)
-    # frame for position inputs
-    position_inputs_frame = tk.Frame(self.settings_frame)
-    self.add_frame_style(position_inputs_frame)
-    position_inputs_frame.grid(
-        row=row_index,
-        column=1,
-        sticky="w",
-        padx=(0, self.grid_pad_x),
-        pady=self.grid_pad_y)
-    # x position input
-    position_x_label = tk.Label(position_inputs_frame, text="x:")
-    self.add_label_style(position_x_label)
-    position_x_label.grid(
-        row=0,
-        column=0,
-        sticky="w",
-        padx=(0, self.grid_pad_x),
-        pady=0)
-    position_x_input = tk.Entry(position_inputs_frame, textvariable=position_x_var, width=5)
-    self.add_entry_style(position_x_input)
-    position_x_input.grid(
-        row=0,
-        column=1,
-        sticky="w",
-        padx=(0, 2*self.grid_pad_x),
-        pady=0)
-    # y position input
-    position_y_label = tk.Label(position_inputs_frame, text="y:")
-    self.add_label_style(position_y_label)
-    position_y_label.grid(
-        row=0,
-        column=2,
-        sticky="w",
-        padx=(0, self.grid_pad_x),
-        pady=0)
-    position_y_input = tk.Entry(position_inputs_frame, textvariable=position_y_var, width=5)
-    self.add_entry_style(position_y_input)
-    position_y_input.grid(
-        row=0,
-        column=3,
-        sticky="w",
-        padx=(0, self.grid_pad_x),
-        pady=0)
-
-    return [position_x_var, position_y_var]
-
-
-  def add_rotation_setting(self, rotation: float, row_index: int) -> tk.DoubleVar:
+  def delete_edge(self, particle_edge: Particle_Edge, reposition_edges: bool = False) -> None:
     """
-    Add a rotation setting to the settings panel in the specified row.
+    Delete an edge. If there are other edges connected to the giben one, the `reposition_edges` parameter decides whether they are automatically moved to fill the newly empty space.
+    This is  done by calculating the vector(s) from the 
 
     Args:
-        rotation (float): The rotation to display.
-
-    Returns:
-        (tk.DoubleVar): tk variable for particle rotation in degrees.
+        particle_edge (Particle_Edge): The edge to delete.
+        reposition_edges (bool): Whether to automatically recalculae positions and rotations of remaining particles along the same edge.
     """
-    rotation_var_deg = tk.DoubleVar(value=np.rad2deg(rotation))
+    connected_edges, edge_length = get_connected_edges(particle_edge)
+    if len(connected_edges) == 1: # remove connection between the two nodes entirely
+      self.remove_connection(edge_particles=connected_edges)
+    particle_edge.erase()
+    connected_types = [type(particle) for particle in particle_edge.connected_particles]
+    # if Particle_Node in connected_types:
+    #   particle_edge.connected_particles[0].remove_edge(particle_edge)
 
-    rotation_label = tk.Label(self.settings_frame, text="Rotation")
-    self.add_label_style(rotation_label)
-    rotation_label.grid(
-        row=row_index,
-        column=0,
-        sticky="w",
-        padx=self.grid_pad_x,
-        pady=self.grid_pad_y)
-    # frame for rotation input
-    rotation_input_frame = tk.Frame(self.settings_frame)
-    self.add_frame_style(rotation_input_frame)
-    rotation_input_frame.grid(
-        row=row_index,
-        column=1,
-        sticky="w",
-        padx=(0, self.grid_pad_x),
-        pady=self.grid_pad_y)
-    # rotation input
-    rotation_input = tk.Entry(rotation_input_frame, textvariable=rotation_var_deg, width=5)
-    self.add_entry_style(rotation_input)
-    rotation_input.grid(
-        row=0,
-        column=0,
-        sticky="w",
-        padx=(0, self.grid_pad_x),
-        pady=0)
-    # rotation unit label
-    rotation_unit_label = tk.Label(rotation_input_frame, text="°")
-    self.add_label_style(rotation_unit_label)
-    rotation_unit_label.grid(
-        row=0,
-        column=1,
-        sticky="w",
-        padx=(0, self.grid_pad_x),
-        pady=0)
+  def remove_connection(self, particle_edge: Particle_Edge, edge_particles: List[Particle_Edge] = None):
+    if edge_particles is None:
+      edge_particles, *_ = get_connected_edges(particle_edge)
 
-    return rotation_var_deg
+    for end_edge_particle in (edge_particles[0], edge_particles[-1]):
+      for connected_node in particle_edge.connected_particles:
+        connected_node.connected_particles.remove(particle_edge) # remove connection to edge
+    for edge_particle in edge_particles:
+      edge_particle.erase()
+      del edge_particle
+    # TODO: remove connection from particle graph
 
 
   def add_edge_color_setting(self, color: str, row_index: int) -> tk.IntVar:
@@ -417,7 +474,7 @@ class Graph_Editor_GUI:
         pady=self.grid_pad_y
     )
     # color selector frame
-    color_selector_frame = tk.Frame(self.settings_frame)
+    color_selector_frame = tk.Frame(self.settings_frame, cursor="hand2")
     self.add_frame_style(color_selector_frame)
     color_selector_frame.grid(
         row=row_index,
@@ -450,6 +507,18 @@ class Graph_Editor_GUI:
       pady=self.grid_pad_y/2,
     )
     # add bindings to change color of the label (mousewheel and buttons)
+    color_display_border.bind(
+        "<MouseWheel>",
+        func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label: 
+            self.change_widget_color(event.delta, tk_var, tk_widget))
+    color_display_border.bind(
+        "<Button-1>",
+        func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label:
+            self.change_widget_color(-1, tk_var, tk_widget))
+    color_display_border.bind(
+        "<Button-3>",
+        func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label:
+            self.change_widget_color(1, tk_var, tk_widget))
     color_display_label.bind(
         "<MouseWheel>",
         func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label: 
@@ -488,6 +557,7 @@ class Graph_Editor_GUI:
         padx=0,
         pady=0,
     )
+    return edge_color_index_var
 
   def change_widget_color(self, change_dir: int, tk_index_var: tk.IntVar, tk_widget: tk.Widget):
     """
@@ -506,3 +576,67 @@ class Graph_Editor_GUI:
     else:
       return
     tk_widget.config(background=self.edge_color_list[tk_index_var.get()])
+
+
+def get_connected_edges(particle_edge: Particle_Edge) -> Tuple[List[Particle_Edge], int]:
+  """
+  get all edge particles connected to the given edge particle (directly or indirectly through other edges).
+  Returned edges are sorted such that the first edge is connected to `particle_edge.location_1_name` and the last edge is connected to `particle_edge.location_2_name`.
+
+  Args:
+      particle_edge (Particle_Edge): edge particle to get the connected edges of
+
+  Returns:
+      (List[Particle_Edge]): list of connected edges for the given edge particle
+      (int): length of the connection the given edge belongs to
+
+  Raises:
+      TypeError: if the given edge is connected (directly or indirectly through other edges) to a particle other than nodes or edges
+  """
+  visited_edges: set[int] = {particle_edge.get_id()}
+  connected_edges: List[Particle_Edge] = [particle_edge]
+  connection_length = 1
+  connected_nodes: List[Particle_Node] = []
+  i = 0
+  while True: # add edges to the end of the list
+    connected_particle = connected_edges[-1].connected_particles[i]
+    if isinstance(connected_particle, Particle_Node):
+      # end of edge in this direction
+      connected_nodes.append(connected_particle)
+      break
+    elif isinstance(connected_particle, Particle_Edge):
+      if connected_particle.get_id() in visited_edges:
+        i += 1 # edge was already visited
+        if i > 1:
+          print(f"Warning: Encountered unexpected state in `get_connected_edges()` starting from edge {particle_edge.get_id()}.")
+        continue
+      visited_edges.add(connected_particle.get_id())
+      connected_edges.append(connected_particle)
+      connection_length += 1
+      i = 0
+    else:
+      raise TypeError(f"Unexpected type of connected particle: {type(connected_particle)}")
+  i = 1
+  while True: # add edges to the beginning of the list
+    connected_particle = connected_edges[0].connected_particles[i]
+    if isinstance(connected_particle, Particle_Node):
+      # end of edge in this direction
+      connected_nodes.insert(0, connected_particle)
+      break
+    elif isinstance(connected_particle, Particle_Edge):
+      if connected_particle.get_id() in visited_edges:
+        i -= 1
+        if i < 0:
+          print(f"Warning: Encountered unexpected state in `get_connected_edges()` starting from edge {particle_edge.get_id()}.")
+        continue
+      visited_edges.add(connected_particle.get_id())
+      connected_edges.insert(0, connected_particle)
+      connection_length += 1
+      i = 1
+    else:
+      raise TypeError(f"Unexpected type of connected particle: {type(connected_particle)}")
+
+  if connected_nodes[0].label != particle_edge.location_1_name: # reverse list if necessary
+    connected_edges.reverse()
+
+  return connected_edges, connection_length

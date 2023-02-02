@@ -95,7 +95,12 @@ class Particle_Edge(Graph_Particle):
       "image_file_path": self.image_file_path,
     }
 
-  def set_adjustable_settings(self, settings: dict[str, object]) -> None:
+  def set_adjustable_settings(self,
+      ax: plt.Axes,
+      position: np.ndarray = None,
+      rotation: float = None,
+      color: str = None,
+      image_file_path: str = "") -> None:
     """
     Set the adjustable settings of the edge particle. If a new image file path is given, the image is loaded and drawn. Allowed settings are:
       - position (np.ndarray)
@@ -104,21 +109,34 @@ class Particle_Edge(Graph_Particle):
       - image_file_path (str) or (None)
 
     Args:
-        settings (dict[str, object]): dictionary of adjustable settings. Keys and types of values should match what is returned by `self.get_adjustable_settings()`.
+        ax (plt.Axes): Axes to draw the edge on
+        position (np.ndarray, optional): new position. Defaults to None (keep current value)
+        rotation (float, optional): new rotation. Defaults to None (keep current value)
+        color (str, optional): new color. Defaults to None (keep current value)
+        image_file_path (str, optional): new image file path. Defaults to "" (keep current value)
     """
-    self.set_position(settings["position"])
-    self.set_rotation(settings["rotation"])
-    self.color = settings["color"]
+    redraw = False
+    if position is not None and np.any(np.not_equal(position, self.position)):
+      self.set_position(position)
+      redraw = True
+    if rotation is not None and rotation != self.rotation:
+      self.set_rotation(rotation)
+      redraw = True
+    if color is not None and color != self.color:
+      self.color = color
 
-    if len(self.plotted_objects) > 0:
-      for artist in self.plotted_objects:
-        if isinstance(artist, Rectangle):
-          artist.set_facecolor(self.color)
-          artist.set_edgecolor(self.border_color)
-    if settings["image_file_path"] != self.image_file_path:
-      self.set_image_file_path(settings["image_file_path"])
+      if len(self.plotted_objects) > 0 and not redraw:
+        for artist in self.plotted_objects:
+          if isinstance(artist, Rectangle):
+            artist.set_facecolor(self.color)
+            artist.set_edgecolor(self.border_color)
+    if image_file_path not in ("", self.image_file_path):
+      self.set_image_file_path(image_file_path)
+      redraw = True
+
+    if redraw:
       self.erase()
-      self.draw()
+      self.draw(ax)
 
   def get_attraction_forces(self, other_particle):
     """get attraction force between this particle and the other particle
