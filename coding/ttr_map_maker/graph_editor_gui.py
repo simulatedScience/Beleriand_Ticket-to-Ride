@@ -24,11 +24,13 @@ class Graph_Editor_GUI:
   def __init__(self,
       color_config: dict[str, str],
       tk_config_methods: dict[str, Callable],
+      grid_padding: Tuple[float, float],
       particle_graph: TTR_Particle_Graph,
       settings_frame: tk.Frame,
       ax: plt.Axes,
       canvas: FigureCanvasTkAgg,
-      max_pick_range: float = 2.
+      max_pick_range: float = 2.,
+      edge_color_list: List[str] = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white", "gray"]
       ):
     """
     Args:
@@ -46,21 +48,25 @@ class Graph_Editor_GUI:
         canvas: the tkinter canvas where the mpl figure is shown
         max_pick_range: The maximum distance from a particle to the click event to still consider it as a click on the particle.
     """
-    self.particle_graph = particle_graph
-    self.settings_frame = settings_frame
-    self.ax = ax
-    self.canvas = canvas
+    self.particle_graph: TTR_Particle_Graph = particle_graph
+    self.settings_frame: tk.Frame = settings_frame
+    self.ax: plt.Axes = ax
+    self.canvas: FigureCanvasTkAgg = canvas
 
-    self.max_pick_range = max_pick_range
+    self.max_pick_range: float = max_pick_range
     # save color config
-    self.color_config = color_config
+    self.color_config: dict[str, str] = color_config
+    self.edge_color_list: List[str] = edge_color_list # list of all edge colors
+    # save grid padding settings
+    self.grid_pad_x: int = grid_padding[0]
+    self.grid_pad_y: int = grid_padding[1]
     # Initialize methods for configuring tkinter widgets
-    self.add_frame_style = tk_config_methods["add_frame_style"]
-    self.add_label_style = tk_config_methods["add_label_style"]
-    self.add_button_style = tk_config_methods["add_button_style"]
-    self.add_entry_style = tk_config_methods["add_entry_style"]
-    self.add_checkbutton_style = tk_config_methods["add_checkbutton_style"]
-    self.add_radiobutton_style = tk_config_methods["add_radiobutton_style"]
+    self.add_frame_style: Callable = tk_config_methods["add_frame_style"]
+    self.add_label_style: Callable = tk_config_methods["add_label_style"]
+    self.add_button_style: Callable = tk_config_methods["add_button_style"]
+    self.add_entry_style: Callable = tk_config_methods["add_entry_style"]
+    self.add_checkbutton_style: Callable = tk_config_methods["add_checkbutton_style"]
+    self.add_radiobutton_style: Callable = tk_config_methods["add_radiobutton_style"]
 
     self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
     self.selected_particle: Graph_Particle = None # particle for which settings are displayed
@@ -83,7 +89,7 @@ class Graph_Editor_GUI:
       self.canvas.mpl_disconnect(self.pick_event_cid)
     if self.release_event_cid is not None:
       self.canvas.mpl_disconnect(self.release_event_cid)
-    self.pick_event_cid = None
+    self.pick_event_cid: int = None
 
   def on_mouse_click(self, event: PickEvent):
     """
@@ -106,16 +112,9 @@ class Graph_Editor_GUI:
     particle = find_particle_in_list(artist_center, self.particle_graph.get_particle_list())#, max_pick_range=self.max_pick_range)
     
     # if no particle was clicked or the selected one was clicked again, deselect all particles
-    print(f"previous selection: {self.selected_particle.get_id() if self.selected_particle is not None else None}")
-    print(f"current highlighted particles: {[p.get_id() for p in self.highlighted_particles]}")
-    print(f"selected particle: {particle.get_id()}")
     if particle is None or particle == self.selected_particle:
-      print(f"remove highlights from {self.selected_particle.get_id()} (clicked highlighted particle)")
       self.clear_selection()
       self.canvas.draw_idle()
-      print(f"new selection: {self.selected_particle.get_id() if self.selected_particle is not None else None}")
-      print(f"new highlighted particles: {[p.get_id() for p in self.highlighted_particles]}")
-      print("-"*25)
       return
     
     # select clicked particle
@@ -134,10 +133,8 @@ class Graph_Editor_GUI:
     self.select_particle(self.preselected_particle)
     self.preselected_particle = None
     self.canvas.draw_idle()
-    print(f"new selection: {self.selected_particle.get_id() if self.selected_particle is not None else None}")
-    print(f"new highlighted particles: {[p.get_id() for p in self.highlighted_particles]}")
-    print("-"*25)
     self.canvas.mpl_connect("pick_event", self.on_mouse_click)
+
 
   def select_particle(self, particle: Graph_Particle, add_to_selection: bool = False, highlight_color: str = "#cc00cc"):
     """
@@ -150,16 +147,17 @@ class Graph_Editor_GUI:
     """
     if len(self.highlighted_particles) == 0: # no particle was selected yet
       # select clicked particle, show it's settings and highlight it.
-      print("show particle settings")
-      self.highlighted_particles = [particle]
+      self.highlighted_particles: List[Graph_Particle] = [particle]
     elif add_to_selection:
+      # clear settings frame
+      for widget in self.settings_frame.winfo_children():
+        widget.destroy()
       self.highlighted_particles.append(particle)
     else:
       self.clear_selection() # remove highlights from previous selection
       self.highlighted_particles = [particle]
     # select particle and highlight it
     self.selected_particle = particle
-    print(f"highlight particle: {particle.get_id()}")
     particle.highlight(ax=self.ax, highlight_color=highlight_color)
     # show settings
     if isinstance(particle, Particle_Node):
@@ -180,12 +178,14 @@ class Graph_Editor_GUI:
     if self.selected_particle is not None:
       # self.selected_particle.remove_highlight(ax=self.ax)
       self.selected_particle: Graph_Particle = None
+    # clear settings frame
+    for widget in self.settings_frame.winfo_children():
+      widget.destroy()
 
 
   def show_node_settings(self, particle_node: Particle_Node):
     """
     Display the settings of a node.
-
     """
     pass
 
@@ -199,4 +199,310 @@ class Graph_Editor_GUI:
     """
     Display the settings of an edge.
     """
-    pass
+    edge_settings = particle_edge.get_adjustable_settings()
+    row_index: int = 0
+    # headline
+    edge_headline_label = tk.Label(self.settings_frame, text=f"Settings for Edge {particle_edge.get_id()}", justify="center", anchor="n")
+    self.add_label_style(edge_headline_label, headline_level=5, font_type="bold")
+    edge_headline_label.grid(
+      row=row_index,
+      column=0,
+      sticky="new",
+      columnspan=2,
+      padx=self.grid_pad_x,
+      pady=self.grid_pad_y
+    )
+    row_index += 1
+    # particle position
+    posisition_x_var, position_y_var = self.add_position_setting(edge_settings["position"], row_index)
+    row_index += 1
+    # particle rotation
+    rotation_var_deg = self.add_rotation_setting(edge_settings["rotation"], row_index)
+    row_index += 1
+    # edge color
+    edge_color_var = self.add_edge_color_setting(edge_settings["color"], row_index)
+    row_index += 1
+    # edge image file path
+
+    # edge button frame
+    edge_buttons_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(edge_buttons_frame)
+    edge_buttons_frame.grid(
+      row=row_index,
+      column=0,
+      sticky="new",
+      columnspan=2,
+      padx=self.grid_pad_x,
+      pady=self.grid_pad_y
+    )
+    edge_buttons_frame.grid_columnconfigure(0, weight=1)
+    edge_buttons_frame.grid_columnconfigure(1, weight=1)
+    # apply settings button
+    apply_edge_settings_button = tk.Button(
+        edge_buttons_frame,
+        text="Apply",
+        command=lambda: self.apply_edge_settings(
+            particle_edge,
+            posisition_x_var,
+            position_y_var,
+            rotation_var_deg,
+            edge_color_var))
+    self.add_button_style(apply_edge_settings_button)
+    apply_edge_settings_button.grid(
+        row=0,
+        column=0,
+        sticky="new",
+        padx=(0, self.grid_pad_x),
+        pady=0,
+    )
+    # edge delete button
+    delete_edge_button = tk.Button(
+        edge_buttons_frame,
+        text="Delete",
+        command=lambda: self.delete_edge(particle_edge))
+    self.add_button_style(delete_edge_button)
+    delete_edge_button.config(
+        bg=self.color_config["delete_button_bg_color"],
+        fg=self.color_config["delete_button_fg_color"])
+    delete_edge_button.grid(
+        row=0,
+        column=1,
+        sticky="new",
+        padx=0,
+        pady=0,
+    )
+
+
+  def add_position_setting(self, position: np.ndarray, row_index: int) -> Tuple[tk.DoubleVar, tk.DoubleVar]:
+    """
+    Add a position setting to the settings panel.
+
+    Args:
+        position (np.ndarray): The position to display.
+
+    Returns:
+        (tk.DoubleVar): tk variable for x coordinate of position
+        (tk.DoubleVar): tk variable for y coordinate of position
+    """
+    position_x_var = tk.DoubleVar(value=position[0])
+    position_y_var = tk.DoubleVar(value=position[1])
+
+    position_label = tk.Label(self.settings_frame, text="Position")
+    self.add_label_style(position_label)
+    position_label.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    # frame for position inputs
+    position_inputs_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(position_inputs_frame)
+    position_inputs_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=self.grid_pad_y)
+    # x position input
+    position_x_label = tk.Label(position_inputs_frame, text="x:")
+    self.add_label_style(position_x_label)
+    position_x_label.grid(
+        row=0,
+        column=0,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    position_x_input = tk.Entry(position_inputs_frame, textvariable=position_x_var, width=5)
+    self.add_entry_style(position_x_input)
+    position_x_input.grid(
+        row=0,
+        column=1,
+        sticky="w",
+        padx=(0, 2*self.grid_pad_x),
+        pady=0)
+    # y position input
+    position_y_label = tk.Label(position_inputs_frame, text="y:")
+    self.add_label_style(position_y_label)
+    position_y_label.grid(
+        row=0,
+        column=2,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    position_y_input = tk.Entry(position_inputs_frame, textvariable=position_y_var, width=5)
+    self.add_entry_style(position_y_input)
+    position_y_input.grid(
+        row=0,
+        column=3,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+
+    return [position_x_var, position_y_var]
+
+
+  def add_rotation_setting(self, rotation: float, row_index: int) -> tk.DoubleVar:
+    """
+    Add a rotation setting to the settings panel in the specified row.
+
+    Args:
+        rotation (float): The rotation to display.
+
+    Returns:
+        (tk.DoubleVar): tk variable for particle rotation in degrees.
+    """
+    rotation_var_deg = tk.DoubleVar(value=np.rad2deg(rotation))
+
+    rotation_label = tk.Label(self.settings_frame, text="Rotation")
+    self.add_label_style(rotation_label)
+    rotation_label.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    # frame for rotation input
+    rotation_input_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(rotation_input_frame)
+    rotation_input_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=self.grid_pad_y)
+    # rotation input
+    rotation_input = tk.Entry(rotation_input_frame, textvariable=rotation_var_deg, width=5)
+    self.add_entry_style(rotation_input)
+    rotation_input.grid(
+        row=0,
+        column=0,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    # rotation unit label
+    rotation_unit_label = tk.Label(rotation_input_frame, text="°")
+    self.add_label_style(rotation_unit_label)
+    rotation_unit_label.grid(
+        row=0,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+
+    return rotation_var_deg
+
+
+  def add_edge_color_setting(self, color: str, row_index: int) -> tk.IntVar:
+    """
+    Add a color settings to the settings frame in the specified row.
+
+    Args:
+        rotation (float): The rotation to display.
+        row_index (int): row index where to show the widgets.
+
+    Returns:
+        (tk.IntVar): tk variable for the index of the particle's color in `self.edge_color_list`
+    """
+    edge_color_index_var = tk.IntVar(value=self.edge_color_list.index(color))
+
+    # color label
+    edge_color_label = tk.Label(self.settings_frame, text="Edge color")
+    self.add_label_style(edge_color_label)
+    edge_color_label.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y
+    )
+    # color selector frame
+    color_selector_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(color_selector_frame)
+    color_selector_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=self.grid_pad_y
+    )
+    # color selector
+    color_display_border = tk.Frame(color_selector_frame, bg=self.color_config["edge_border_color"])
+    color_display_border.grid(
+      row=0,
+      column=1,
+      sticky="w",
+      padx=0,
+      pady=0,
+    )
+    color_display_label = tk.Label(
+        color_display_border,
+        width=5,
+        height=1,
+        cursor="hand2")
+    self.add_label_style(color_display_label)
+    color_display_label.config(bg=self.edge_color_list[edge_color_index_var.get()])
+    color_display_label.grid(
+      row=0,
+      column=0,
+      sticky="w",
+      padx=self.grid_pad_x/2,
+      pady=self.grid_pad_y/2,
+    )
+    # add bindings to change color of the label (mousewheel and buttons)
+    color_display_label.bind(
+        "<MouseWheel>",
+        func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label: 
+            self.change_widget_color(event.delta, tk_var, tk_widget))
+    color_display_label.bind(
+        "<Button-1>",
+        func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label:
+            self.change_widget_color(-1, tk_var, tk_widget))
+    color_display_label.bind(
+        "<Button-3>",
+        func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label:
+            self.change_widget_color(1, tk_var, tk_widget))
+    # left color change arrow (same as right click/ scroll up)
+    left_color_change_button = tk.Button(
+        color_selector_frame,
+        text="❮",
+        command=lambda: self.change_widget_color(1, edge_color_index_var, color_display_label))
+    self.add_button_style(left_color_change_button)
+    left_color_change_button.grid(
+        row=0,
+        column=0,
+        sticky="w",
+        padx=0,
+        pady=0,
+    )
+    # right color change arrow (same as left click/ scroll down)
+    right_color_change_button = tk.Button(
+        color_selector_frame,
+        text="❯",
+        command=lambda: self.change_widget_color(-1, edge_color_index_var, color_display_label))
+    self.add_button_style(right_color_change_button)
+    right_color_change_button.grid(
+        row=0,
+        column=2,
+        sticky="w",
+        padx=0,
+        pady=0,
+    )
+
+  def change_widget_color(self, change_dir: int, tk_index_var: tk.IntVar, tk_widget: tk.Widget):
+    """
+    change background color of the given widget according to the current value of the given index variable, the change direction and `self.edge_color_list`.
+    First change the index variable by `change_dir` (+-1), then update the background color to the corresponding color in `self.edge_color_list`.
+
+    Args:
+        change_dir (int): direction of the color change (+-1)
+        tk_index_var (tk.IntVar): color index variable
+        tk_widget (tk.Widget): widget of which to change the background color
+    """
+    if change_dir < 0:
+      tk_index_var.set((tk_index_var.get() + 1) % len(self.edge_color_list))
+    elif change_dir > 0:
+      tk_index_var.set((tk_index_var.get() - 1) % len(self.edge_color_list))
+    else:
+      return
+    tk_widget.config(background=self.edge_color_list[tk_index_var.get()])

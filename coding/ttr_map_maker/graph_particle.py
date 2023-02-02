@@ -416,7 +416,7 @@ class Graph_Particle:
     # print("Warning: using highlight method of `Graph_Particle`. This method should be overwritten by subclasses for better performance and more control.")
     for artist in self.plotted_objects:
       artist.set_path_effects([
-          path_effects.Stroke(linewidth=20, foreground=highlight_color),
+          path_effects.Stroke(linewidth=10, foreground=highlight_color),
           path_effects.Normal()])
 
   def remove_highlight(self, ax: plt.Axes):

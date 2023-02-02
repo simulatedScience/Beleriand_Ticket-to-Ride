@@ -56,6 +56,8 @@ class Board_Layout_GUI:
           "label_bg_color":         "#252526", # darker grey
           "label_fg_color":         "#d4d4d4", # light grey
           "button_bg_color":        "#333333", # dark grey
+          "delete_button_bg_color": "#aa0000", # red
+          "delete_button_fg_color": "#f5f5f5", # white
           "button_fg_color":        "#f5f5f5", # white
           "button_hover_bg_color":  "#444444", # dark grey
           "button_hover_fg_color":  "#f5f5f5", # white
@@ -66,8 +68,9 @@ class Board_Layout_GUI:
           "entry_select_color":     "#4477aa", # blue
           "plot_bg_color":          "#cccccc", # darker grey
           "plot_fg_color":          "#000000", # black
-          "plot_grid_color":        "#dddddd", # light gray
+          "plot_grid_color":        "#dddddd", # light grey
           "task_base_color":        "#cc00cc", # pink
+          "edge_border_color":      "#888888", # grey
           }):
     self.color_config = color_config
     # create master window in fullscreen
@@ -131,6 +134,7 @@ class Board_Layout_GUI:
       font=(self.font, self.font_size, "bold"),
       padx=self.grid_pad_x//2,
       pady=self.grid_pad_y//2,
+      cursor="hand2",
       )
 
   def add_entry_style(self, entry: tk.Entry, justify="right"):
@@ -154,6 +158,7 @@ class Board_Layout_GUI:
       selectcolor=self.color_config["button_active_bg_color"],
       relief="flat",
       border=0,
+      cursor="hand2",
       )
 
   def add_radiobutton_style(self, radiobutton: tk.Radiobutton):
@@ -163,6 +168,7 @@ class Board_Layout_GUI:
       activebackground=self.color_config["bg_color"],
       activeforeground=self.color_config["fg_color"],
       selectcolor=self.color_config["button_active_bg_color"],
+      cursor="hand2",
       )
 
 
@@ -1029,17 +1035,17 @@ class Board_Layout_GUI:
       image_map = self.get_edge_color_map(edge_colors)
       self.particle_graph.set_edge_images(image_map)
       self.particle_graph.erase_edges()
-      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get())
+      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
     else:
       edge_colors = self.particle_graph.get_edge_colors()
       color_map = {color: color for color in edge_colors}
       self.particle_graph.set_edge_colors(color_map)
     if self.edge_style.get() == "Flat colors":
-      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get())
+      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
     elif self.edge_style.get() == "Show tasks":
-      self.particle_graph.draw_tasks(self.ax, movable=self.move_edges_enabled.get())
+      self.particle_graph.draw_tasks(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
     elif self.edge_style.get() == "Edge importance":
-      self.particle_graph.draw_edge_importance(self.ax, movable=self.move_edges_enabled.get())
+      self.particle_graph.draw_edge_importance(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
     self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:
@@ -1188,7 +1194,7 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7, movable=self.move_edges_enabled.get())
+    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7, movable=self.move_edges_enabled.get(), edge_border_color=self.color_config["edge_border_color"])
     self.edge_style.set("Flat colors")
     self.canvas.draw_idle()
 
@@ -1365,8 +1371,7 @@ class Board_Layout_GUI:
       self.highlighted_particles = list()
       self.graph_editor_ui.unbind_mouse_events()
       return
-    self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame)
-    self.add_frame_style(self.graph_edit_frame)
+    self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame, bg=self.color_config["bg_color"])
     self.graph_edit_frame.grid(
         row=self.control_frame.grid_size()[1],
         column=0,
@@ -1374,28 +1379,29 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     self.graph_edit_frame.columnconfigure(0, weight=1)
     row_index = 0
-    # TODO: potentially replace this label with a submenu button
-    graph_edit_headline: tk.Label = tk.Label(
-        self.graph_edit_frame,
-        text="Graph editing controls",
-        justify="left",
-        anchor="w",)
-    self.add_label_style(graph_edit_headline, font_type="bold")
-    graph_edit_headline.grid(
-        row=row_index,
-        column=0,
-        sticky="new")
-    row_index += 1
     # create frame for graph edit buttons
-    self.graph_edit_buttons_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
-    self.add_frame_style(self.graph_edit_buttons_frame)
-    self.graph_edit_buttons_frame.grid(
+    graph_edit_buttons_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
+    self.add_frame_style(graph_edit_buttons_frame)
+    graph_edit_buttons_frame.grid(
         row=row_index,
         column=0,
         sticky="new",
         pady=(0, self.grid_pad_y))
     row_index += 1
-    self.create_static_edit_buttons(self.graph_edit_buttons_frame)
+    # TODO: potentially replace this label with a submenu button
+    graph_edit_headline: tk.Label = tk.Label(
+        graph_edit_buttons_frame,
+        text="Graph editing controls",
+        justify="left",
+        anchor="w",)
+    self.add_label_style(graph_edit_headline, font_type="bold")
+    graph_edit_headline.grid(
+        row=0,
+        column=0,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    self.create_static_edit_buttons(graph_edit_buttons_frame)
     # create frame to show particle settings of selected particle
     self.particle_settings_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
     self.add_frame_style(self.particle_settings_frame)
@@ -1404,9 +1410,12 @@ class Board_Layout_GUI:
         column=0,
         sticky="new",
         pady=(0, self.grid_pad_y))
+    self.particle_settings_frame.columnconfigure(0, weight=1)
+    self.particle_settings_frame.columnconfigure(1, weight=1)
     row_index += 1
     self.graph_editor_ui: Graph_Editor_GUI = Graph_Editor_GUI(
         self.color_config,
+        grid_padding=(self.grid_pad_x, self.grid_pad_y),
         tk_config_methods={
           "add_frame_style": self.add_frame_style,
           "add_label_style": self.add_label_style,
@@ -1465,7 +1474,7 @@ class Board_Layout_GUI:
     for i in range(1,4):
       button_frame.columnconfigure(i, weight=1)
 
-    row_index = 0
+    row_index = 1
     add_particle_frame: tk.Frame = tk.Frame(button_frame)
     self.add_frame_style(add_particle_frame)
     add_particle_frame.grid(
@@ -1585,7 +1594,7 @@ class Board_Layout_GUI:
     if self.show_labels.get():
       self.particle_graph.draw_labels(self.ax, movable=self.move_labels_enabled.get())
     if self.edge_style.get() != "Hidden":
-      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get())
+      self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
     self.canvas.draw_idle()
 
 
@@ -1664,6 +1673,8 @@ if __name__ == "__main__":
       "label_fg_color":         "#d4d4d4", # light grey
       "button_bg_color":        "#333333", # dark grey
       "button_fg_color":        "#f5f5f5", # white
+      "delete_button_bg_color": "#aa0000", # red
+      "delete_button_fg_color": "#f5f5f5", # white
       "button_hover_bg_color":  "#444444", # lighter dark grey
       "button_hover_fg_color":  "#f5f5f5", # white
       "button_active_bg_color": "#555555", # light dark grey
@@ -1675,6 +1686,7 @@ if __name__ == "__main__":
       "plot_fg_color":          "#000000", # black
       "plot_grid_color":        "#dddddd", # black
       "task_base_color":        "#cc00cc", # pink
+      "edge_border_color":      "#888888", # grey
       }
   blender_colors = {
       "bg_color":               "#1d1d1d", # darkest grey
@@ -1684,6 +1696,8 @@ if __name__ == "__main__":
       "label_fg_color":         "#ffffff", # light grey
       "button_bg_color":        "#3d3d3d", # dark grey
       "button_fg_color":        "#ffffff", # white
+      "delete_button_bg_color": "#aa0000", # red
+      "delete_button_fg_color": "#f5f5f5", # white
       "button_hover_bg_color":  "#444444", # lighter dark grey
       "button_hover_fg_color":  "#f5f5f5", # white
       "button_active_bg_color": "#555555", # light dark grey
@@ -1695,6 +1709,7 @@ if __name__ == "__main__":
       "plot_fg_color":          "#000000", # black
       "plot_grid_color":        "#dddddd", # black
       "task_base_color":        "#cc00cc", # pink
+      "edge_border_color":      "#888888", # grey
       }
   gui = Board_Layout_GUI(color_config=blender_colors)
   tk.mainloop()
