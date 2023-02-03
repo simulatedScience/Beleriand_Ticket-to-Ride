@@ -10,17 +10,17 @@ This project implements tools to create your very own, custom ticket to ride gam
 - automatic graph analysis tools ([inspired by](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
 
 ### planned features:
+- allow editing colors of edges and text of nodes through the UI
+- allow adding and removing nodes and edges to the graph through the UI
 - support for different monitor resolutions
 - automatically generate images for task cards
-- allow adding and removing nodes and edges to the graph through the UI
-- allow editing colors and text of nodes and edges through the UI
 - allow adding and removing tasks through the UI
 - select an image for each node in the UI
 - add overlay for points for each edge length (possibly implemented via mpl legend?)
 - automatically optimze the graph layout from the UI
 - documentation and user manual
 
-Currently the project is in an early stage, but it is already possible to create a custom game, although some steps are still manual and rather tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. The program is only tested on Windows. While most of the code should be cross-platform compatible, Some features may not work on other operating systems and require modifications (mostly UI related).
+Currently the project is in an early stage, but it is already possible to create a custom game, although some steps are still manual and rather tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. The program is only tested on Windows (Win11 22h2). While most of the code should be cross-platform compatible, some features may not work on other operating systems and require modifications (mostly UI related).
 
 ## How to make your physical game
 The program mostly helps just with creating the game board. However, it is still necessary to create the game cards and pieces yourself.  
