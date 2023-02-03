@@ -1328,10 +1328,13 @@ class Board_Layout_GUI:
     """
     Analyze the graph and display the results.
     """
-    if self.particle_graph is None:
+    if self.particle_graph is None: # cannot open graph analysis without a graph
       self.graph_analysis_enabled.set(False)
       return
-    if self.graph_analysis_enabled.get():
+    if self.graph_analysis_enabled.get(): # open graph analysis
+      if self.graph_edit_mode_enabled.get(): # disable graph edit mode
+        self.graph_edit_mode_enabled.set(False)
+        self.toggle_graph_edit_mode()
       grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
       # clear figure and draw graph analysis
       self.fig.clf()
@@ -1344,7 +1347,7 @@ class Board_Layout_GUI:
           base_color=self.color_config["task_base_color"])
       self.fig.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.15, hspace=0.3)
       self.canvas.draw_idle()
-    else:
+    else: # close graph analysis and show regular graph map 
       # clear figure and draw graph
       self.fig.clf()
       self.ax = self.fig.add_subplot(111)
@@ -1361,8 +1364,7 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       self.graph_edit_mode_enabled.set(False)
       return
-    # create frames for graph edit widgets
-    if not self.graph_edit_mode_enabled.get():
+    if not self.graph_edit_mode_enabled.get(): # disable graph edit mode
       self.move_nodes_enabled.set(False)
       self.move_labels_enabled.set(False)
       self.move_edges_enabled.set(False)
@@ -1371,6 +1373,11 @@ class Board_Layout_GUI:
       self.highlighted_particles = list()
       self.graph_editor_ui.unbind_mouse_events()
       return
+    # enable graph edit mode
+    if self.graph_analysis_enabled.get(): # close graph analysis
+      self.graph_analysis_enabled.set(False)
+      self.toggle_graph_analysis()
+    # create frames for graph edit widgets
     self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame, bg=self.color_config["bg_color"])
     self.graph_edit_frame.grid(
         row=self.control_frame.grid_size()[1],
@@ -1398,6 +1405,7 @@ class Board_Layout_GUI:
     graph_edit_headline.grid(
         row=0,
         column=0,
+        columnspan=4,
         sticky="new",
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
@@ -1514,15 +1522,15 @@ class Board_Layout_GUI:
     move_particle_label.grid(
         row=row_index,
         column=column_index,
-        sticky="new",
+        sticky="nw",
         padx=(self.grid_pad_x, 0),
         pady=(0, self.grid_pad_y))
     column_index += 1
-    add_particle_move_toggle("node", row_index, column_index, self.move_nodes_enabled)
+    add_particle_move_toggle("nodes", row_index, column_index, self.move_nodes_enabled)
     column_index += 1
-    add_particle_move_toggle("edge", row_index, column_index, self.move_edges_enabled)
+    add_particle_move_toggle("edges", row_index, column_index, self.move_edges_enabled)
     column_index += 1
-    add_particle_move_toggle("label", row_index, column_index, self.move_labels_enabled)
+    add_particle_move_toggle("labels", row_index, column_index, self.move_labels_enabled)
     column_index += 1
 
   def add_node(self) -> None:

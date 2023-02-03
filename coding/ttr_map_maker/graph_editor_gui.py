@@ -90,6 +90,7 @@ class Graph_Editor_GUI:
     if self.release_event_cid is not None:
       self.canvas.mpl_disconnect(self.release_event_cid)
     self.pick_event_cid: int = None
+    self.clear_selection()
 
   def on_mouse_click(self, event: PickEvent):
     """
@@ -314,9 +315,12 @@ class Graph_Editor_GUI:
     """
     pass
 
-  def show_edge_settings(self, particle_edge: Particle_Edge):
+  def show_edge_settings(self, particle_edge: Particle_Edge) -> None:
     """
     Display the settings of an edge.
+
+    Args:
+        particle_edge (Particle_Edge): The edge to display the settings for.
     """
     edge_settings = particle_edge.get_adjustable_settings()
     row_index: int = 0
