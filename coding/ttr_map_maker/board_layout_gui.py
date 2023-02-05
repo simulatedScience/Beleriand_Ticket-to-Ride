@@ -325,6 +325,7 @@ class Board_Layout_GUI:
     self.show_targets = tk.BooleanVar(value=False, name="show_targets") # unused # TODO: implement
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
+    self.show_edge_attractors = tk.BooleanVar(value=False, name="show_edge_attractors")
     self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
     self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
 
@@ -918,6 +919,8 @@ class Board_Layout_GUI:
     add_checkbutton(row_index, column_index, "Background Image", self.show_background_image, command=self.toggle_background_image_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.toggle_mpl_frame_visibility)
+    row_index += 1
+    add_checkbutton(row_index, column_index, "Show edge attractos", self.show_edge_attractors, command=self.toggle_edge_attractors_visibility)
 
     row_index = 1 # reset for second column
     column_index = 1
@@ -1021,6 +1024,18 @@ class Board_Layout_GUI:
       for image in self.plotted_background_images:
         image.remove()
       self.plotted_background_images = []
+    self.canvas.draw_idle()
+
+  def toggle_edge_attractors_visibility(self) -> None:
+    """
+    Update the edge attractors with the current settings.
+    """
+    if self.particle_graph is None:
+      return
+    if self.show_edge_attractors.get():
+      self.particle_graph.draw_edge_attractors(self.ax)
+    else:
+      self.particle_graph.erase_edge_attractors()
     self.canvas.draw_idle()
 
   def update_edge_style(self) -> None:

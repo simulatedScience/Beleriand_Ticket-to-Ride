@@ -138,7 +138,7 @@ class Particle_Edge(Graph_Particle):
       self.erase()
       self.draw(ax)
 
-  def get_attraction_forces(self, other_particle):
+  def get_attraction_forces(self, other_particle) -> Tuple[np.ndarray, np.ndarray]:
     """get attraction force between this particle and the other particle
 
     Args:
@@ -146,6 +146,7 @@ class Particle_Edge(Graph_Particle):
 
     Returns:
         np.ndarray: attraction force
+        np.ndarray: closest point on this particle to the other particle
     """
     if isinstance(other_particle, Particle_Edge):
       return self.get_edge_attraction_force(other_particle)
@@ -153,7 +154,7 @@ class Particle_Edge(Graph_Particle):
       return self.get_node_attraction_force(other_particle)
 
 
-  def get_edge_attraction_force(self, other_edge: "Particle_Edge"):
+  def get_edge_attraction_force(self, other_edge: "Particle_Edge") -> Tuple[np.ndarray, np.ndarray]:
     """
     get attraction force between this particle and the other edge depending on the minimum distance between midpoints of edge's bounding boxes shortest edges.
     This uses the helper function `get_edge_midpoints()`
@@ -163,6 +164,7 @@ class Particle_Edge(Graph_Particle):
 
     Returns:
         np.ndarray: attraction force
+        np.ndarray: closest point on this edge to the other edge
     """
     min_distance = np.inf
     closest_points = np.zeros((2, 2))
@@ -179,7 +181,7 @@ class Particle_Edge(Graph_Particle):
     return translation_force, closest_points[0, :]
 
 
-  def get_node_attraction_force(self, node: Graph_Particle):
+  def get_node_attraction_force(self, node: Graph_Particle) -> Tuple[np.ndarray, np.ndarray]:
     """
     get attraction force between this particle and the node depending on the minimum distance between the node and the edge's bounding box's shortest edges.
     This uses the helper function `get_edge_midpoints()`

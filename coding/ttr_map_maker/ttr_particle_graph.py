@@ -61,6 +61,8 @@ class TTR_Particle_Graph:
     self.particle_edges: dict[Tuple[str, str, int], Particle_Edge] = dict()
     self.particle_labels: dict[str, Particle_Label] = dict()
     self.analysis_graph: TTR_Graph_Analysis = None
+
+    self.edge_attractor_artists: List[plt.Artist] = list()
     
     self.create_particle_system()
 
@@ -86,7 +88,6 @@ class TTR_Particle_Graph:
           interaction_radius=self.particle_parameters["interaction_radius"],
           velocity_decay=self.particle_parameters["velocity_decay"],
           repulsion_strength=self.particle_parameters["repulsion_strength"],
-          height_scale_factor=self.label_height_scale,
           )
       self.particle_labels[label] = Particle_Label(
           label,
@@ -96,7 +97,9 @@ class TTR_Particle_Graph:
           node_attraction=self.particle_parameters["node-label"],
           interaction_radius=self.particle_parameters["interaction_radius"],
           velocity_decay=self.particle_parameters["velocity_decay"],
-          repulsion_strength=self.particle_parameters["repulsion_strength"],)
+          repulsion_strength=self.particle_parameters["repulsion_strength"],
+          height_scale_factor=self.label_height_scale,
+          )
       self.particle_labels[label].position = \
           self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0] / 2, 0]) + np.array([1, 0], dtype=np.float64)
       self.particle_labels[label].add_connected_particle(self.particle_nodes[label])
@@ -453,7 +456,7 @@ class TTR_Particle_Graph:
       for connected_particle in particle_edge.connected_particles:
         _, anchor_1 = particle_edge.get_attraction_forces(connected_particle)
         _, anchor_2 = connected_particle.get_attraction_forces(particle_edge)
-        ax.arrow(anchor_1[0], anchor_1[1],
+        self.edge_attractor_artists.append(ax.arrow(anchor_1[0], anchor_1[1],
             anchor_2[0] - anchor_1[0],
             anchor_2[1] - anchor_1[1],
             color="#222222",
@@ -462,7 +465,15 @@ class TTR_Particle_Graph:
             length_includes_head=True,
             head_width=0.3,
             head_length=0.4,
-            zorder=0)
+            zorder=0))
+
+  def erase_edge_attractors(self) -> None:
+    """
+    erase edge attractor visualization
+    """
+    for artist in self.edge_attractor_artists:
+      artist.remove()
+    self.edge_attractor_artists = []
 
   def draw_tasks(self,
       ax: plt.Axes,
@@ -800,8 +811,16 @@ if __name__ == "__main__":
     ("Menegroth", "Hithlum", 3, "#5588ff"),
     ("Nargothrond", "Hithlum", 2, "#22dd22"),
   ]
+  tasks = [
+    ("Menegroth", "Nargothrond"),
+    ("Menegroth", "Hithlum")
+  ]
 
-  particle_graph = TTR_Particle_Graph(locations, paths, location_positions)
+  particle_graph = TTR_Particle_Graph(
+      locations,
+      paths,
+      tasks,
+      location_positions)
 
   n_iter = 100
   dt = 0.1
@@ -815,8 +834,12 @@ if __name__ == "__main__":
   particle_graph.draw(ax, alpha_multiplier=1.0)
   # particle_graph.draw_connections(ax, alpha_multiplier=0.5)
   particle_graph.draw_edge_attractors(ax, alpha_multiplier=0.5)
-
   
+  # # plot midpoints for all edges
+  # for edge in particle_graph.particle_edges.values():
+  #   midpoints = edge.get_edge_midpoints()
+  #   ax.scatter(midpoints[:, 0], midpoints[:, 1], color="#000000", s=1)
+
   particle_graph.save_json("test_particle_graph.json")
 
   ax.set_xlim(-15, 15)

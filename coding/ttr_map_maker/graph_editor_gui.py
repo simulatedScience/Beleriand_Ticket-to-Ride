@@ -8,10 +8,10 @@ This requires a tkinter frame where particle settings are displayed and edited a
 import tkinter as tk
 from typing import Tuple, List, Callable
 
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backend_bases import PickEvent, MouseEvent
-import numpy as np
 
 from ttr_particle_graph import TTR_Particle_Graph
 from graph_particle import Graph_Particle
@@ -19,6 +19,7 @@ from particle_node import Particle_Node
 from particle_label import Particle_Label
 from particle_edge import Particle_Edge
 from drag_handler import find_particle_in_list, get_artist_center
+from ttr_math import rotate_point_around_point
 
 class Graph_Editor_GUI:
   def __init__(self,
@@ -418,34 +419,69 @@ class Graph_Editor_GUI:
         self.ax,
         position=new_position,
         rotation=new_rotation)
-    for connected_edge in get_connected_edges(particle_edge)[0]:
+    for connected_edge in get_edge_connected_particles(particle_edge)[0][1:-1]:
       connected_edge.set_adjustable_settings(
         self.ax,
         color=new_color)
     self.canvas.draw_idle()
 
-  def delete_edge(self, particle_edge: Particle_Edge, reposition_edges: bool = False) -> None:
+  def delete_edge(self, particle_edge: Particle_Edge, reposition_edges: bool = True) -> None:
     """
     Delete an edge. If there are other edges connected to the giben one, the `reposition_edges` parameter decides whether they are automatically moved to fill the newly empty space.
     To do this, consider three cases:
     1. edge has length 1 -> delete connection between the two nodes entirely and remove the edge particle (see `remove_connection()`)
-    2. delete an edge that's connected to a node -> Consider the connection (combination of edge particles between the two nodes).
+    2. delete an edge that's connected to a node -> Rearange the remaining edges to form a connection between the two nodes.
+    3. delete an edge that's only connected to other edges -> Rearange the remaining edges such that the edges connected to the deleted particle are close to each other.
 
     Args:
         particle_edge (Particle_Edge): The edge to delete.
         reposition_edges (bool): Whether to automatically recalculae positions and rotations of remaining particles along the same edge.
     """
-    connected_edges, edge_length = get_connected_edges(particle_edge)
-    if len(connected_edges) == 1: # remove connection between the two nodes entirely
-      self.remove_connection(edge_particles=connected_edges)
+    connected_particles, edge_length = get_edge_connected_particles(particle_edge)
+    # case 1: remove connection between the two nodes entirely
+    if len(connected_particles) == 1:
+      self.remove_connection(edge_particles=connected_particles[1:-1])
+      return
     particle_edge.erase()
+    # reposition edges if necessary
+    if not reposition_edges:
+      return
     connected_types = [type(particle) for particle in particle_edge.connected_particles]
-    # if Particle_Node in connected_types:
-    #   particle_edge.connected_particles[0].remove_edge(particle_edge)
+    deletion_index = connected_particles.index(particle_edge)
+    # case 2: delete an edge that's connected to a node
+    if Particle_Node in connected_types:
+      # get endpoints of current connection
+      target_connection = get_connection_endpoints(connected_particles, added_gap_at_end=0)
+      # get endpoints of new connection (with the deleted edge removed)
+      # rotate around the the node where the connected edge is not deleted
+      if deletion_index == 1:
+        particle_list: List[Graph_Particle] = connected_particles[1:]
+        rotation_center: np.ndarray = connected_particles[-1].position
+        particle_list.reverse()
+        print("case 1: deleted first edge")
+      else:
+        particle_list: List[Graph_Particle] = connected_particles[:-1]
+        rotation_center: np.ndarray = connected_particles[0].position
+        print("case 2: deleted last edge")
+      new_connection: Tuple[np.ndarray, np.ndarray] = get_connection_endpoints(particle_list, added_gap_at_end=0)
+      if deletion_index == 1:
+        target_connection = (target_connection[1], target_connection[0])
+      # rotate and rescale the edges
+      rotate_rescale_edges(
+        particle_list[1:-1],
+        target_connection,
+        new_connection,
+        rotation_center=rotation_center,
+        ax=self.ax)
+      self.canvas.draw_idle()
+      return
+    # case 3: delete an edge that's only connected to other edges
+    raise NotImplementedError("mid-edge deletion is Not implemented yet.")
 
   def remove_connection(self, particle_edge: Particle_Edge, edge_particles: List[Particle_Edge] = None):
     if edge_particles is None:
-      edge_particles, *_ = get_connected_edges(particle_edge)
+      edge_particles, *_ = get_edge_connected_particles(particle_edge)
+      edge_particles = edge_particles[1:-1]
 
     for end_edge_particle in (edge_particles[0], edge_particles[-1]):
       for connected_node in particle_edge.connected_particles:
@@ -584,7 +620,8 @@ class Graph_Editor_GUI:
     tk_widget.config(background=self.edge_color_list[tk_index_var.get()])
 
 
-def get_connected_edges(particle_edge: Particle_Edge) -> Tuple[List[Particle_Edge], int]:
+
+def get_edge_connected_particles(particle_edge: Particle_Edge) -> Tuple[List[Particle_Edge], int]:
   """
   get all edge particles connected to the given edge particle (directly or indirectly through other edges).
   Returned edges are sorted such that the first edge is connected to `particle_edge.location_1_name` and the last edge is connected to `particle_edge.location_2_name`.
@@ -593,22 +630,21 @@ def get_connected_edges(particle_edge: Particle_Edge) -> Tuple[List[Particle_Edg
       particle_edge (Particle_Edge): edge particle to get the connected edges of
 
   Returns:
-      (List[Particle_Edge]): list of connected edges for the given edge particle
+      (List[Particle_Edge]): list of connected edges and nodes for the given edge particle. The connected nodes are the first and last elements of the list. The edges are sorted in between them.
       (int): length of the connection the given edge belongs to
 
   Raises:
       TypeError: if the given edge is connected (directly or indirectly through other edges) to a particle other than nodes or edges
   """
   visited_edges: set[int] = {particle_edge.get_id()}
-  connected_edges: List[Particle_Edge] = [particle_edge]
+  connected_particles: List[Graph_Particle] = [particle_edge]
   connection_length = 1
-  connected_nodes: List[Particle_Node] = []
   i = 0
   while True: # add edges to the end of the list
-    connected_particle = connected_edges[-1].connected_particles[i]
+    connected_particle = connected_particles[-1].connected_particles[i]
     if isinstance(connected_particle, Particle_Node):
       # end of edge in this direction
-      connected_nodes.append(connected_particle)
+      connected_particles.append(connected_particle)
       break
     elif isinstance(connected_particle, Particle_Edge):
       if connected_particle.get_id() in visited_edges:
@@ -617,17 +653,17 @@ def get_connected_edges(particle_edge: Particle_Edge) -> Tuple[List[Particle_Edg
           print(f"Warning: Encountered unexpected state in `get_connected_edges()` starting from edge {particle_edge.get_id()}.")
         continue
       visited_edges.add(connected_particle.get_id())
-      connected_edges.append(connected_particle)
+      connected_particles.append(connected_particle)
       connection_length += 1
       i = 0
     else:
       raise TypeError(f"Unexpected type of connected particle: {type(connected_particle)}")
   i = 1
   while True: # add edges to the beginning of the list
-    connected_particle = connected_edges[0].connected_particles[i]
+    connected_particle = connected_particles[0].connected_particles[i]
     if isinstance(connected_particle, Particle_Node):
       # end of edge in this direction
-      connected_nodes.insert(0, connected_particle)
+      connected_particles.insert(0, connected_particle)
       break
     elif isinstance(connected_particle, Particle_Edge):
       if connected_particle.get_id() in visited_edges:
@@ -636,21 +672,82 @@ def get_connected_edges(particle_edge: Particle_Edge) -> Tuple[List[Particle_Edg
           print(f"Warning: Encountered unexpected state in `get_connected_edges()` starting from edge {particle_edge.get_id()}.")
         continue
       visited_edges.add(connected_particle.get_id())
-      connected_edges.insert(0, connected_particle)
+      connected_particles.insert(0, connected_particle)
       connection_length += 1
       i = 1
     else:
       raise TypeError(f"Unexpected type of connected particle: {type(connected_particle)}")
 
-  if connected_nodes[0].label != particle_edge.location_1_name: # reverse list if necessary
-    connected_edges.reverse()
+  if connected_particles[0].label != particle_edge.location_1_name: # reverse list if necessary
+    connected_particles.reverse()
 
-  return connected_edges, connection_length
+  return connected_particles, connection_length
+
+
+def get_connection_endpoints(edge_list: List[Graph_Particle], added_gap_at_end: float = 0) -> Tuple[np.ndarray, np.ndarray]:
+  """
+  Calculate the endpoints of the given edges. The first and last particle in the list should not be the ones just outside the connection (i.e. a connected node and the deleted edge).
+  The endpoints are the points furthest away from other edges in the given list, but are always in the center of one of the short sides of an edge particle.
+  If `added_gap_at_end > 0`, the second output is moved by `added_gap_at_end` in the direction of the connection between the two outputs.
+  The code uses Particle_Edge.get_attraction_forces() to get the endpoints.
+
+  Args:
+      edge_list (List[Graph_Particle]): list of edge particles including the first particles to either side that are not part of the connection of which the endpoints should be calculated.
+      added_gap_at_end (float, optional): added distance at the end of the connection corresponding to the last edge. Defaults to 0.
+
+  Returns:
+      Tuple[np.ndarray, np.ndarray]: the two endpoints of the connection as numpy arrays with shape (2,)
+  """
+  start_point = edge_list[1].get_attraction_forces(edge_list[0])[1]
+  end_point = edge_list[-2].get_attraction_forces(edge_list[-1])[1]
+  if added_gap_at_end > 0:
+    end_point += added_gap_at_end * (end_point - start_point) / np.linalg.norm(end_point - start_point)
+  return start_point, end_point
+
+
+def rotate_rescale_edges(
+    edge_list: List[Particle_Edge],
+    target_connection: Tuple[np.ndarray, np.ndarray],
+    current_connection: Tuple[np.ndarray, np.ndarray],
+    rotation_center: np.ndarray,
+    ax: plt.Axes):
+  """
+  Rotate remaining particles around start of new connection to match the old connection, then rescale to match the old connection length.
+
+  Args:
+      edge_list (List[Particle_Edge]): list of edge particles to be rotated and rescaled
+      target_connection (Tuple[np.ndarray, np.ndarray]): start and end point of the new connection
+      current_connection (Tuple[np.ndarray, np.ndarray]): start and end point of the old connection
+      rotation_center (np.ndarray): point around which the edges should be rotated
+      ax (plt.Axes): axes to draw the particles on
+  """
+  target_connection_vector = target_connection[1] - target_connection[0]
+  current_connection_vector = current_connection[1] - current_connection[0]
+  rotation_angle = np.arctan2(target_connection_vector[1], target_connection_vector[0]) - np.arctan2(current_connection_vector[1], current_connection_vector[0])
+
+  # plot rotation center
+  ax.plot(rotation_center[0], rotation_center[1], 'o', color='#ff00ff', markersize=10)
+  # plot target connection
+  ax.plot([target_connection[0][0], target_connection[1][0]], [target_connection[0][1], target_connection[1][1]], color='#ff0000', linewidth=5)
+  # plot current connection
+  ax.plot([current_connection[0][0], current_connection[1][0]], [current_connection[0][1], current_connection[1][1]], color='#ff00ff', linewidth=5)
+  # show start points of connections
+  ax.plot([target_connection[0][0], current_connection[0][0]], [target_connection[0][1], current_connection[0][1]], 'go')
+
+  for particle in edge_list:
+    new_position = rotate_point_around_point(particle.position, rotation_center, rotation_angle)
+    # scale new position to match old connection length
+    new_position = target_connection[0] + (new_position - current_connection[0]) / np.linalg.norm(current_connection_vector) * np.linalg.norm(target_connection_vector)
+    particle.set_adjustable_settings(
+      ax,
+      position=new_position,
+      rotation=particle.rotation + rotation_angle)
 
 
 def get_circle_intersection(center_a: np.ndarray, radius_a: np.ndarray, center_b: np.ndarray, radius_b: np.ndarray, epsilon: float = 1e-7) -> np.ndarray:
   """
   Calculate the intersection of two circles given by their centers and radii. Radii are given as vectors pointing from the center to the edge of the circle. The returned intersection point is the one closest to the first center plus the first radius vector.
+  If the circles do not intersect, `None` is returned.
 
   Args:
       center_a (np.ndarray): center of the first circle
@@ -668,27 +765,16 @@ def get_circle_intersection(center_a: np.ndarray, radius_a: np.ndarray, center_b
       return None
   # calculate the distance along the line between the two centers to the closest point to center_a
   a: float = (np.dot(radius_a, radius_a) - np.dot(radius_b, radius_b) + center_distance ** 2) / (2 * center_distance)
-  # visualize a
-  plt.plot([center_a[0], center_b[0]], [center_a[1], center_b[1]], 'k-', label="A-B")
-  plt.plot(
-      [center_a[0], center_a[0] + a * (center_b[0] - center_a[0]) / center_distance],
-      [center_a[1], center_a[1] + a * (center_b[1] - center_a[1]) / center_distance], 'r-', label="a")
   # calculate the perpendicular distance from the closest point to the line between the intersection points
   h: float = np.sqrt(np.dot(radius_a, radius_a) - a ** 2)
-  # visualize h
-  plt.plot(
-      [center_a[0] + a * (center_b[0] - center_a[0]) / center_distance, center_a[0] + a * (center_b[0] - center_a[0]) / center_distance - h * (center_b[1] - center_a[1]) / center_distance],
-      [center_a[1] + a * (center_b[1] - center_a[1]) / center_distance, center_a[1] + a * (center_b[1] - center_a[1]) / center_distance + h * (center_b[0] - center_a[0]) / center_distance], 'g-', label="h")
   # handle case where only one intersection point exists due to numerical instabilities
   if h < epsilon:
     return center_a + a * (center_b - center_a) / center_distance
   # calculate both intersection points by 
   x0: float = center_a[0] + a * (center_b[0] - center_a[0]) / center_distance
   y0: float = center_a[1] + a * (center_b[1] - center_a[1]) / center_distance
-  plt.plot([x0], [y0], 'yo', label="(x0, y0) = center a + a*BA/|BA|")
   rx: float = -(center_b[1] - center_a[1]) * (h / center_distance)
   ry: float = (center_b[0] - center_a[0]) * (h / center_distance)
-  plt.plot([x0, x0 - rx], [y0, y0 - ry], 'm-', label="(x0,y0)-(intersection point 2)")
   intersection_point_1: np.ndarray = np.array([x0 + rx, y0 + ry])
   intersection_point_2: np.ndarray = np.array([x0 - rx, y0 - ry])
   # return the intersection point closest to the center_a plus radius_a
@@ -697,8 +783,6 @@ def get_circle_intersection(center_a: np.ndarray, radius_a: np.ndarray, center_b
   else:
     return intersection_point_2
 
-import numpy as np
-import matplotlib.pyplot as plt
 
 def plot_circles_and_intersection(center_a, radius_a, center_b, radius_b, intersection_point):
     # Plot the two circles and their centers
@@ -715,8 +799,8 @@ def plot_circles_and_intersection(center_a, radius_a, center_b, radius_b, inters
     # Plot the radius vectors and connections between center points and intersection point
     plt.plot([center_a[0], center_a[0]+radius_a[0]], [center_a[1], center_a[1]+radius_a[1]], 'r', alpha=0.5)
     plt.plot([center_b[0], center_b[0]+radius_b[0]], [center_b[1], center_b[1]+radius_b[1]], 'b', alpha=0.5)
-    # plt.plot([center_a[0], intersection_point[0]], [center_a[1], intersection_point[1]], 'g', alpha=0.5)
-    # plt.plot([center_b[0], intersection_point[0]], [center_b[1], intersection_point[1]], 'g', alpha=0.5)
+    plt.plot([center_a[0], intersection_point[0]], [center_a[1], intersection_point[1]], 'g', alpha=0.5)
+    plt.plot([center_b[0], intersection_point[0]], [center_b[1], intersection_point[1]], 'g', alpha=0.5)
 
     # Plot the intersection point
     plt.plot(intersection_point[0], intersection_point[1], 'go', label="intersection point")

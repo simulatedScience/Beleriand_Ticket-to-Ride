@@ -10,6 +10,8 @@ import matplotlib.patheffects as path_effects
 from matplotlib.patches import Rectangle
 from shapely.geometry import Polygon
 
+from ttr_math import get_2d_rotation_matrix
+
 class Graph_Particle:
   def __init__(self,
         id: int,
@@ -337,10 +339,7 @@ class Graph_Particle:
     ])
 
     # rotate bounding box
-    rotation_matrix = np.array([
-      [np.cos(self.rotation), -np.sin(self.rotation)],
-      [np.sin(self.rotation), np.cos(self.rotation)]
-    ])
+    rotation_matrix = get_2d_rotation_matrix(-self.rotation)
     bounding_box = bounding_box @ rotation_matrix
 
     # translate bounding box
