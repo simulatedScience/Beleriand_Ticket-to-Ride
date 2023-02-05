@@ -438,6 +438,7 @@ class Graph_Editor_GUI:
         reposition_edges (bool): Whether to automatically recalculae positions and rotations of remaining particles along the same edge.
     """
     connected_particles, edge_length = get_edge_connected_particles(particle_edge)
+    self.clear_selection()
     # case 1: remove connection between the two nodes entirely
     if len(connected_particles) == 1:
       self.remove_connection(edge_particles=connected_particles[1:-1])
@@ -450,6 +451,7 @@ class Graph_Editor_GUI:
     deletion_index = connected_particles.index(particle_edge)
     # case 2: delete an edge that's connected to a node
     if Particle_Node in connected_types:
+      # TODO: refactor to delete_end_edge(...)
       # get endpoints of current connection
       target_connection = get_connection_endpoints(connected_particles, added_gap_at_end=0)
       # get endpoints of new connection (with the deleted edge removed)
@@ -458,11 +460,9 @@ class Graph_Editor_GUI:
         particle_list: List[Graph_Particle] = connected_particles[1:]
         rotation_center: np.ndarray = connected_particles[-1].position
         particle_list.reverse()
-        print("case 1: deleted first edge")
       else:
         particle_list: List[Graph_Particle] = connected_particles[:-1]
         rotation_center: np.ndarray = connected_particles[0].position
-        print("case 2: deleted last edge")
       new_connection: Tuple[np.ndarray, np.ndarray] = get_connection_endpoints(particle_list, added_gap_at_end=0)
       if deletion_index == 1:
         target_connection = (target_connection[1], target_connection[0])
@@ -476,7 +476,47 @@ class Graph_Editor_GUI:
       self.canvas.draw_idle()
       return
     # case 3: delete an edge that's only connected to other edges
-    raise NotImplementedError("mid-edge deletion is Not implemented yet.")
+    else:
+      # TODO: refactor to delete_middle_edge(...)
+      left_particle_list: List[Graph_Particle] = connected_particles[:deletion_index + 1]
+      right_particle_list: List[Graph_Particle] = connected_particles[deletion_index:]
+      # calculate the gap between the deleted edge and the left edge
+      deleted_edge_anchor = particle_edge.get_attraction_forces(connected_particles[deletion_index - 1])[1]
+      left_edge_anchor = connected_particles[deletion_index - 1].get_attraction_forces(particle_edge)[1]
+      edge_gap: float = np.linalg.norm(deleted_edge_anchor - left_edge_anchor)
+      # get endpoints of current connection
+      left_connection = get_connection_endpoints(left_particle_list, added_gap_at_end=edge_gap)
+      right_connection = get_connection_endpoints(right_particle_list, added_gap_at_end=0)
+      # get endpoints of new connection (with the deleted edge removed) using the intersection point of circles with radii equal to the connection lengths
+      target_point = get_circle_intersection(
+          center_a=left_connection[0],
+          radius_a=left_connection[1] - left_connection[0],
+          center_b=right_connection[-1],
+          radius_b=right_connection[1] - right_connection[0],
+          )
+      if target_point is None:
+        # cannot find a good connection between the two edges
+        print(f"Could not find a good connection between the remaining edges")
+        self.canvas.draw_idle()
+        return
+      # rotate and rescale the edges
+      left_target_connection = (left_connection[0], target_point)
+      right_target_connection = (right_connection[-1], target_point)
+      rotate_rescale_edges(
+        left_particle_list[1:-1],
+        left_target_connection,
+        left_connection,
+        rotation_center=left_particle_list[0].position,
+        ax=self.ax,
+        debug=False)
+      rotate_rescale_edges(
+        right_particle_list[1:-1],
+        right_target_connection,
+        (right_connection[1], right_connection[0]),
+        rotation_center=right_particle_list[-1].position,
+        ax=self.ax,
+        debug=False)
+      self.canvas.draw_idle()
 
   def remove_connection(self, particle_edge: Particle_Edge, edge_particles: List[Particle_Edge] = None):
     if edge_particles is None:
@@ -710,7 +750,8 @@ def rotate_rescale_edges(
     target_connection: Tuple[np.ndarray, np.ndarray],
     current_connection: Tuple[np.ndarray, np.ndarray],
     rotation_center: np.ndarray,
-    ax: plt.Axes):
+    ax: plt.Axes,
+    debug: bool = False):
   """
   Rotate remaining particles around start of new connection to match the old connection, then rescale to match the old connection length.
 
@@ -725,14 +766,15 @@ def rotate_rescale_edges(
   current_connection_vector = current_connection[1] - current_connection[0]
   rotation_angle = np.arctan2(target_connection_vector[1], target_connection_vector[0]) - np.arctan2(current_connection_vector[1], current_connection_vector[0])
 
-  # plot rotation center
-  ax.plot(rotation_center[0], rotation_center[1], 'o', color='#ff00ff', markersize=10)
-  # plot target connection
-  ax.plot([target_connection[0][0], target_connection[1][0]], [target_connection[0][1], target_connection[1][1]], color='#ff0000', linewidth=5)
-  # plot current connection
-  ax.plot([current_connection[0][0], current_connection[1][0]], [current_connection[0][1], current_connection[1][1]], color='#ff00ff', linewidth=5)
-  # show start points of connections
-  ax.plot([target_connection[0][0], current_connection[0][0]], [target_connection[0][1], current_connection[0][1]], 'go')
+  if debug:
+    # plot rotation center
+    ax.plot(rotation_center[0], rotation_center[1], 'o', color='#ff00ff', markersize=10)
+    # plot target connection
+    ax.plot([target_connection[0][0], target_connection[1][0]], [target_connection[0][1], target_connection[1][1]], color='#ff0000', linewidth=5)
+    # plot current connection
+    ax.plot([current_connection[0][0], current_connection[1][0]], [current_connection[0][1], current_connection[1][1]], color='#ff00ff', linewidth=5)
+    # show start points of connections
+    ax.plot([target_connection[0][0], current_connection[0][0]], [target_connection[0][1], current_connection[0][1]], 'go')
 
   for particle in edge_list:
     new_position = rotate_point_around_point(particle.position, rotation_center, rotation_angle)
@@ -759,7 +801,7 @@ def get_circle_intersection(center_a: np.ndarray, radius_a: np.ndarray, center_b
       (np.ndarray): intersection point of the two circles
   """
   # calculate the distance between the two centers
-  center_distance = np.linalg.norm(center_b - center_a)
+  center_distance: float = np.linalg.norm(center_b - center_a)
   # check if the circles are too far away to intersect
   if center_distance > np.linalg.norm(radius_a) + np.linalg.norm(radius_b):
       return None
