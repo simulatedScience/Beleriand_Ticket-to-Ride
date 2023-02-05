@@ -427,7 +427,9 @@ class Graph_Editor_GUI:
   def delete_edge(self, particle_edge: Particle_Edge, reposition_edges: bool = False) -> None:
     """
     Delete an edge. If there are other edges connected to the giben one, the `reposition_edges` parameter decides whether they are automatically moved to fill the newly empty space.
-    This is  done by calculating the vector(s) from the 
+    To do this, consider three cases:
+    1. edge has length 1 -> delete connection between the two nodes entirely and remove the edge particle (see `remove_connection()`)
+    2. delete an edge that's connected to a node -> Consider the connection (combination of edge particles between the two nodes).
 
     Args:
         particle_edge (Particle_Edge): The edge to delete.
@@ -644,3 +646,96 @@ def get_connected_edges(particle_edge: Particle_Edge) -> Tuple[List[Particle_Edg
     connected_edges.reverse()
 
   return connected_edges, connection_length
+
+
+def get_circle_intersection(center_a: np.ndarray, radius_a: np.ndarray, center_b: np.ndarray, radius_b: np.ndarray, epsilon: float = 1e-7) -> np.ndarray:
+  """
+  Calculate the intersection of two circles given by their centers and radii. Radii are given as vectors pointing from the center to the edge of the circle. The returned intersection point is the one closest to the first center plus the first radius vector.
+
+  Args:
+      center_a (np.ndarray): center of the first circle
+      radius_a (np.ndarray): radius vector of the first circle
+      center_b (np.ndarray): center of the second circle
+      radius_b (np.ndarray): radius vector of the second circle
+
+  Returns:
+      (np.ndarray): intersection point of the two circles
+  """
+  # calculate the distance between the two centers
+  center_distance = np.linalg.norm(center_b - center_a)
+  # check if the circles are too far away to intersect
+  if center_distance > np.linalg.norm(radius_a) + np.linalg.norm(radius_b):
+      return None
+  # calculate the distance along the line between the two centers to the closest point to center_a
+  a: float = (np.dot(radius_a, radius_a) - np.dot(radius_b, radius_b) + center_distance ** 2) / (2 * center_distance)
+  # visualize a
+  plt.plot([center_a[0], center_b[0]], [center_a[1], center_b[1]], 'k-', label="A-B")
+  plt.plot(
+      [center_a[0], center_a[0] + a * (center_b[0] - center_a[0]) / center_distance],
+      [center_a[1], center_a[1] + a * (center_b[1] - center_a[1]) / center_distance], 'r-', label="a")
+  # calculate the perpendicular distance from the closest point to the line between the intersection points
+  h: float = np.sqrt(np.dot(radius_a, radius_a) - a ** 2)
+  # visualize h
+  plt.plot(
+      [center_a[0] + a * (center_b[0] - center_a[0]) / center_distance, center_a[0] + a * (center_b[0] - center_a[0]) / center_distance - h * (center_b[1] - center_a[1]) / center_distance],
+      [center_a[1] + a * (center_b[1] - center_a[1]) / center_distance, center_a[1] + a * (center_b[1] - center_a[1]) / center_distance + h * (center_b[0] - center_a[0]) / center_distance], 'g-', label="h")
+  # handle case where only one intersection point exists due to numerical instabilities
+  if h < epsilon:
+    return center_a + a * (center_b - center_a) / center_distance
+  # calculate both intersection points by 
+  x0: float = center_a[0] + a * (center_b[0] - center_a[0]) / center_distance
+  y0: float = center_a[1] + a * (center_b[1] - center_a[1]) / center_distance
+  plt.plot([x0], [y0], 'yo', label="(x0, y0) = center a + a*BA/|BA|")
+  rx: float = -(center_b[1] - center_a[1]) * (h / center_distance)
+  ry: float = (center_b[0] - center_a[0]) * (h / center_distance)
+  plt.plot([x0, x0 - rx], [y0, y0 - ry], 'm-', label="(x0,y0)-(intersection point 2)")
+  intersection_point_1: np.ndarray = np.array([x0 + rx, y0 + ry])
+  intersection_point_2: np.ndarray = np.array([x0 - rx, y0 - ry])
+  # return the intersection point closest to the center_a plus radius_a
+  if np.linalg.norm(intersection_point_1 - (center_a + radius_a)) < np.linalg.norm(intersection_point_2 - (center_a + radius_a)):
+    return intersection_point_1
+  else:
+    return intersection_point_2
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def plot_circles_and_intersection(center_a, radius_a, center_b, radius_b, intersection_point):
+    # Plot the two circles and their centers
+    angle = np.linspace(0, 2 * np.pi, 100)
+    x_a = center_a[0] + np.linalg.norm(radius_a) * np.cos(angle)
+    y_a = center_a[1] + np.linalg.norm(radius_a) * np.sin(angle)
+    x_b = center_b[0] + np.linalg.norm(radius_b) * np.cos(angle)
+    y_b = center_b[1] + np.linalg.norm(radius_b) * np.sin(angle)
+    plt.plot(x_a, y_a, 'r')
+    plt.plot(x_b, y_b, 'b')
+    plt.plot(center_a[0], center_a[1], 'ro')
+    plt.plot(center_b[0], center_b[1], 'bo')
+
+    # Plot the radius vectors and connections between center points and intersection point
+    plt.plot([center_a[0], center_a[0]+radius_a[0]], [center_a[1], center_a[1]+radius_a[1]], 'r', alpha=0.5)
+    plt.plot([center_b[0], center_b[0]+radius_b[0]], [center_b[1], center_b[1]+radius_b[1]], 'b', alpha=0.5)
+    # plt.plot([center_a[0], intersection_point[0]], [center_a[1], intersection_point[1]], 'g', alpha=0.5)
+    # plt.plot([center_b[0], intersection_point[0]], [center_b[1], intersection_point[1]], 'g', alpha=0.5)
+
+    # Plot the intersection point
+    plt.plot(intersection_point[0], intersection_point[1], 'go', label="intersection point")
+
+    # Show the plot
+    plt.grid(color="#dddddd")
+    plt.gca().set_aspect('equal', adjustable='box')
+    plt.legend()
+    plt.show()
+
+
+if __name__ == "__main__":
+  # center_a = np.array([1, 1])
+  # radius_a = np.array([0.7, -1])
+  # center_b = np.array([4, -1])
+  # radius_b = np.array([-1.7, -1.8])
+  center_a = np.array([1, 1])
+  radius_a = np.array([0.7, -1])
+  center_b = np.array([4, 2])
+  radius_b = np.array([-1.2, 1.8])
+  intersection_point = get_circle_intersection(center_a, radius_a, center_b, radius_b)
+  plot_circles_and_intersection(center_a, radius_a, center_b, radius_b, intersection_point)
