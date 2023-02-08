@@ -114,26 +114,7 @@ class Drag_Handler:
       event (matplotlib.backend_bases.MouseEvent): The mouse event.
     """
     if event.inaxes:
-      # if artist is a circle, move its center
-      if isinstance(self.current_artist, Circle):
-        self.current_artist.set_center(np.array([event.xdata, event.ydata]) - self.click_offset)
-      # if artist is a rectangle, move its center
-      elif isinstance(self.current_artist, Rectangle):
-        self.current_artist.set_xy((
-            event.xdata - self.current_artist.get_width()/2 - self.click_offset[0],
-            event.ydata - self.current_artist.get_height()/2 - self.click_offset[1]))
-      # if artist is an image, move its center
-      elif isinstance(self.current_artist, AxesImage):
-        old_extent = self.current_artist.get_extent()
-        half_width: float = (old_extent[1] - old_extent[0]) / 2
-        half_height: float = (old_extent[3] - old_extent[2]) / 2
-        image_extent = (
-          event.xdata - half_width - self.click_offset[0],
-          event.xdata + half_width - self.click_offset[0],
-          event.ydata - half_height - self.click_offset[1],
-          event.ydata + half_height - self.click_offset[1]
-        )
-        self.current_artist.set_extent(image_extent)
+      set_artist_position(self.current_artist, np.array(event.xdata - self.click_offset[0], event.ydata - self.click_offset[1]))
 
       self.canvas.draw_idle()
 
@@ -149,13 +130,8 @@ class Drag_Handler:
       ax = event.inaxes
       self.new_rotation_deg += event.step
       self.new_rotation_deg %= 360
-      
-      # rotate artist
-      artist_center = get_artist_center(self.current_artist)
-      # artist_center += self.click_offset
-      self.current_artist.set_transform(
-        transforms.Affine2D().rotate_deg_around(artist_center[0], artist_center[1], self.new_rotation_deg) + ax.transData
-      )
+
+      set_artist_rotation(self.current_artist, self.new_rotation_deg, ax.transData)
 
       self.canvas.draw_idle()
 
@@ -265,3 +241,51 @@ def get_artist_center(artist) -> np.ndarray:
       print(f"Warning: unknown artist type: {type(artist)}")
       return
     return artist_center
+
+
+def set_artist_position(artist: plt.Artist, position: np.ndarray) -> None:
+  """
+  set a matplotlib artist's position. Currently supported artist types: Circle, Rectangle, AxesImage.
+
+  Args:
+      artist (plt.Artist): the artist to move
+      position (np.ndarray): the new position of the artist's center
+  """
+  # if artist is a circle, move its center
+  if isinstance(artist, Circle):
+    artist.set_center(position)
+  # if artist is a rectangle, move its center
+  elif isinstance(artist, Rectangle):
+    artist.set_xy((
+        position[0] - artist.get_width()/2,
+        position[1] - artist.get_height()/2))
+  # if artist is an image, move its center
+  elif isinstance(artist, AxesImage):
+    old_extent = artist.get_extent()
+    half_width: float = (old_extent[1] - old_extent[0]) / 2
+    half_height: float = (old_extent[3] - old_extent[2]) / 2
+    image_extent = (
+      position[0] - half_width,
+      position[0] + half_width,
+      position[1] - half_height,
+      position[1] + half_height
+    )
+    artist.set_extent(image_extent)
+
+
+def set_artist_rotation(artist: plt.Artist, new_rotation_deg: float, trans_data: transforms.Affine2D) -> None:
+  """
+  set a matplotlib artist's rotation. Currently supported artist types: Circle, Rectangle, AxesImage.
+
+  Args:
+      artist (plt.Artist): the artist to rotate
+      new_rotation_deg (float): the new rotation of the artist in degrees
+      trans_data (transforms.Affine2D): the data transform of the artist (=ax.transData if the artist is in the axes `ax`)
+  """
+
+  # rotate artist
+  artist_center = get_artist_center(artist)
+  # artist_center += self.click_offset
+  artist.set_transform(
+    transforms.Affine2D().rotate_deg_around(artist_center[0], artist_center[1], new_rotation_deg) + trans_data
+  )
