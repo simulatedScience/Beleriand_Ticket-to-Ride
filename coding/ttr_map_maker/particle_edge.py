@@ -296,9 +296,6 @@ class Particle_Edge(Graph_Particle):
           border_color = "#555555"
           self.border_color = border_color
       super().draw_bounding_box(ax, color, border_color, alpha, zorder, movable)
-      # midpoints = self.get_edge_midpoints()
-      # self.plotted_objects.append(
-      #     ax.plot(midpoints[:, 0], midpoints[:, 1], color=color, alpha=alpha, zorder=zorder))
     else:
       mpl_image = mpimg.imread(self.image_file_path)
       edge_extent = (

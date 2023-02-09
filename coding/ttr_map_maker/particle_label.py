@@ -111,7 +111,18 @@ class Particle_Label(Graph_Particle):
     self.repulsion_strength = label_parameters.get("repulsion_strength", self.repulsion_strength)
 
     # self.img_font = ImageFont.truetype(self.font_name, self.fontsize)
+  def set_text(self, text: str, ax: plt.Axes):
+    """
+    set the text of the label
 
+    Args:
+        text (str): text to set
+        ax (plt.Axes): matplotlib axes to draw on
+    """
+    if text != self.label:
+      self.label = text
+      self.erase()
+      self.draw(ax)
 
   def draw(self, 
       ax: plt.Axes,

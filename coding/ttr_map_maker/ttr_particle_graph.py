@@ -701,6 +701,22 @@ class TTR_Particle_Graph:
     elif isinstance(particle, Particle_Label):
       self.particle_labels[particle.label] = particle
 
+  def rename_label(self, old_name: str, new_name: str, ax: plt.Axes) -> None:
+    """
+    rename a given label in the particle graph.
+
+    Args:
+        old_name (str): current label name
+        new_name (str): new label name
+        ax (plt.Axes): axis to draw the new label on
+    """
+    for label, particle_label in self.particle_labels.items():
+      if label == old_name:
+        particle_label.set_text(new_name, ax)
+        self.particle_labels[new_name] = particle_label
+        del self.particle_labels[label]
+        break
+
   def remove_particle(self, particle: Graph_Particle) -> None:
     """
     remove a particle from the particle graph.

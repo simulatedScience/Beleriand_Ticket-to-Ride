@@ -39,6 +39,7 @@ import matplotlib.animation as anim
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
 from multi_monitor_fullscreen import toggle_full_screen
+from file_browsing import browse_image_file, browse_json_file, browse_txt_file
 from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
 from graph_particle import Graph_Particle
@@ -171,6 +172,26 @@ class Board_Layout_GUI:
       cursor="hand2",
       )
 
+  def add_browse_button(self,
+      frame: tk.Frame,
+      row_index: int,
+      column_index: int,
+      command: Callable):
+    """
+    Add a button to browse for a file of the given type.
+    """
+    button = tk.Button(
+        frame,
+        text="Browse",
+        command=command)
+    self.add_button_style(button)
+    button.grid(
+        row=row_index,
+        column=column_index,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    return button
 
   def init_frames(self):
     """
@@ -464,22 +485,6 @@ class Board_Layout_GUI:
     file_frame.columnconfigure(0, weight=1)
     file_frame.columnconfigure(1, weight=1)
     file_frame.columnconfigure(2, weight=1)
-    def add_browse_button(row_index: int, command: Callable):
-      """
-      Add a button to browse for a file of the given type.
-      """
-      button = tk.Button(
-          file_frame,
-          text="Browse",
-          command=command)
-      self.add_button_style(button)
-      button.grid(
-          row=row_index,
-          column=2,
-          sticky="nsew",
-          padx=(self.grid_pad_x, self.grid_pad_x),
-          pady=(self.grid_pad_y, self.grid_pad_y))
-      file_widgets.append(button)
 
     def add_file_input(row_index: int, label_text: str, variable: tk.StringVar, command: Callable):
       """
@@ -490,12 +495,13 @@ class Board_Layout_GUI:
       label.grid(
           row=row_index,
           column=0,
-          sticky="nsew",
+          sticky="nsw",
           padx=(self.grid_pad_x, self.grid_pad_x),
           pady=(self.grid_pad_y, self.grid_pad_y))
       file_widgets.append(label)
       entry = tk.Entry(file_frame, textvariable=variable, width=10)
       self.add_entry_style(entry)
+      entry.xview_moveto(1)
       entry.grid(
           row=row_index,
           column=1,
@@ -503,7 +509,12 @@ class Board_Layout_GUI:
           padx=(self.grid_pad_x, self.grid_pad_x),
           pady=(self.grid_pad_y, self.grid_pad_y))
       file_widgets.append(entry)
-      add_browse_button(row_index, command)
+      browse_button = self.add_browse_button(
+          frame=file_frame,
+          row_index=row_index,
+          column_index=2,
+          command=command)
+      file_widgets.append(browse_button)
 
     row_index = 0
     # add submenu button for file inputs
@@ -515,15 +526,15 @@ class Board_Layout_GUI:
       column_index=0,
       columnspan=3)
     row_index += 1
-    add_file_input(row_index, "Node File", self.node_file, lambda: self.browse_txt_file("browse locations file", self.node_file))
+    add_file_input(row_index, "Node File", self.node_file, lambda: browse_txt_file("browse locations file", self.node_file))
     row_index += 1
-    add_file_input(row_index, "Edge File", self.edge_file, lambda: self.browse_txt_file("browse paths file", self.edge_file))
+    add_file_input(row_index, "Edge File", self.edge_file, lambda: browse_txt_file("browse paths file", self.edge_file))
     row_index += 1
-    add_file_input(row_index, "Task File", self.task_file, lambda: self.browse_txt_file("browse tasks file", self.task_file))
+    add_file_input(row_index, "Task File", self.task_file, lambda: browse_txt_file("browse tasks file", self.task_file))
     row_index += 1
-    add_file_input(row_index, "Particle Graph", self.particle_graph_file, lambda: self.browse_json_file("browse particle graph file", self.particle_graph_file))
+    add_file_input(row_index, "Particle Graph", self.particle_graph_file, lambda: browse_json_file("browse particle graph file", self.particle_graph_file))
     row_index += 1
-    add_file_input(row_index, "Background File", self.background_file, lambda: self.browse_image_file("browse background file", self.background_file))
+    add_file_input(row_index, "Background File", self.background_file, lambda: browse_image_file("browse background file", self.background_file))
     row_index += 1
 
     # load button
@@ -558,6 +569,18 @@ class Board_Layout_GUI:
     single_file_load_frame.columnconfigure(0, weight=1)
     single_file_load_frame.columnconfigure(1, weight=1)
     single_file_load_frame.columnconfigure(2, weight=1)
+    single_file_load_frame.columnconfigure(3, weight=1)
+    single_file_load_frame.columnconfigure(4, weight=1)
+
+    single_load_label = tk.Label(single_file_load_frame, text="Load:")
+    self.add_label_style(single_load_label)
+    single_load_label.grid(
+        row=0,
+        column=0,
+        sticky="nsw",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    file_widgets.append(single_load_label)
 
     def add_load_button(column_index: int, text: str, command: Callable):
       """
@@ -577,45 +600,10 @@ class Board_Layout_GUI:
           pady=(0, self.grid_pad_y))
       file_widgets.append(button)
 
-    add_load_button(0, "Load Nodes", lambda: self.load_nodes())
-    add_load_button(1, "Load Edges", lambda: self.load_edges())
-    add_load_button(2, "Load Tasks", lambda: self.load_tasks())
-
-  def browse_txt_file(self, browse_request: str, var: tk.StringVar):
-    """
-    Open a file dialog to select a txt file.
-
-    Args:
-        browse_request (str): text to display in the file dialog
-        var (tk.StringVar): variable to store the file path in
-    """
-    file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.txt")])
-    if file_path:
-      var.set(file_path)
-
-  def browse_image_file(self, browse_request: str, var: tk.StringVar):
-    """
-    Open a file dialog to select an image file.
-
-    Args:
-        browse_request (str): text to display in the file dialog
-        var (tk.StringVar): variable to store the file path in
-    """
-    file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, ["*.png", "*.jpg", "*.jpeg", "*.bmp", "*.gif"])])
-    if file_path:
-      var.set(file_path)
-
-  def browse_json_file(self, browse_request: str, var: tk.StringVar):
-    """
-    Open a file dialog to select a json file.
-
-    Args:
-        browse_request (str): text to display in the file dialog
-        var (tk.StringVar): variable to store the file path in
-    """
-    file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.json")])
-    if file_path:
-      var.set(file_path)
+    add_load_button(1, "Nodes", lambda: self.load_nodes())
+    add_load_button(2, "Edges", lambda: self.load_edges())
+    add_load_button(3, "Tasks", lambda: self.load_tasks())
+    add_load_button(4, "Bg img", lambda: self.load_background_image())
 
   def load_files(self):
     """
@@ -659,15 +647,10 @@ class Board_Layout_GUI:
       "locations": locations,
       "paths": paths,
       "tasks": tasks}
-    # load background image
-    try:
-      self.background_image_mpl = mpimg.imread(self.background_file.get())
-    except FileNotFoundError:
-      print("Background image file not found.")
     self.ax.clear()
-
     self.init_particle_graph()
-    self.toggle_background_image_visibility()
+
+    self.load_background_image()
 
     self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
 
@@ -706,6 +689,17 @@ class Board_Layout_GUI:
     else:
       self.graph_data["tasks"] = tasks
       self.particle_graph.update_tasks(tasks)
+
+  def load_background_image(self) -> None:
+    """
+    Load the background image specified in the file input.
+    """
+    # load background image
+    try:
+      self.background_image_mpl = mpimg.imread(self.background_file.get())
+    except FileNotFoundError:
+      print("Background image file not found.")
+    self.toggle_background_image_visibility()
 
   def draw_particle_widgets(self, particle_frame: tk.Frame) -> None:
     """
@@ -1216,7 +1210,11 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_edges_to_nodes(self.ax, alpha=0.7, movable=self.move_edges_enabled.get(), edge_border_color=self.color_config["edge_border_color"])
+    self.particle_graph.move_edges_to_nodes(
+        self.ax,
+        # alpha=0.7,
+        movable=self.move_edges_enabled.get(),
+        edge_border_color=self.color_config["edge_border_color"])
     self.edge_style.set("Flat colors")
     self.canvas.draw_idle()
 
@@ -1463,7 +1461,8 @@ class Board_Layout_GUI:
           "add_button_style": self.add_button_style,
           "add_entry_style": self.add_entry_style,
           "add_checkbutton_style": self.add_checkbutton_style,
-          "add_radiobutton_style": self.add_radiobutton_style
+          "add_radiobutton_style": self.add_radiobutton_style,
+          "add_browse_button": self.add_browse_button,
         },
         particle_graph=self.particle_graph,
         settings_frame=self.particle_settings_frame,

@@ -13,13 +13,14 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backend_bases import PickEvent, MouseEvent
 
+from file_browsing import browse_image_file
+from drag_handler import find_particle_in_list, get_artist_center
+from ttr_math import rotate_point_around_point
 from ttr_particle_graph import TTR_Particle_Graph
 from graph_particle import Graph_Particle
 from particle_node import Particle_Node
 from particle_label import Particle_Label
 from particle_edge import Particle_Edge
-from drag_handler import find_particle_in_list, get_artist_center
-from ttr_math import rotate_point_around_point
 
 class Graph_Editor_GUI:
   def __init__(self,
@@ -43,6 +44,7 @@ class Graph_Editor_GUI:
             - `add_entry_style(entry: tk.Entry, justify: str)`
             - `add_checkbutton_style(checkbutton: tk.Checkbutton)
             - `add_radiobutton_style(radiobutton: tk.Radiobutton)
+            - `add_browse_button(frame: tk.Frame, row_index: int, column_index: int, command: Callable) -> tk.Button`
         particle_graph: The particle graph to edit.
         settings_frame: The tkinter frame where the particle settings are displayed.
         ax: The matplotlib Axes object where the particle graph is displayed.
@@ -68,6 +70,7 @@ class Graph_Editor_GUI:
     self.add_entry_style: Callable = tk_config_methods["add_entry_style"]
     self.add_checkbutton_style: Callable = tk_config_methods["add_checkbutton_style"]
     self.add_radiobutton_style: Callable = tk_config_methods["add_radiobutton_style"]
+    self.add_browse_button: Callable = tk_config_methods["add_browse_button"]
 
     self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
     self.selected_particle: Graph_Particle = None # particle for which settings are displayed
@@ -182,7 +185,9 @@ class Graph_Editor_GUI:
       self.selected_particle: Graph_Particle = None
     # clear settings frame
     for widget in self.settings_frame.winfo_children():
+      widget.grid_forget()
       widget.destroy()
+    self.settings_frame.update()
 
 
   def add_position_setting(self, position: np.ndarray, row_index: int) -> Tuple[tk.DoubleVar, tk.DoubleVar]:
@@ -303,6 +308,50 @@ class Graph_Editor_GUI:
 
     return rotation_var_deg
 
+  def add_label_setting(self, text: str, label: str, row_index: int, width=20) -> tk.StringVar:
+    """
+    Add a label setting to the settings panel in the specified row.
+
+    Args:
+        text (str): The text to display in front of the input.
+        label (str): The label to display.
+        row_index (int): The row index to display the setting in (in the `self.settings_frame`)
+
+    Returns:
+        (tk.StringVar): tk variable for particle label.
+    """
+    label_var = tk.StringVar(value=label)
+
+    label_label = tk.Label(self.settings_frame, text=text)
+    self.add_label_style(label_label)
+    label_label.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    # frame for label input
+    label_input_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(label_input_frame)
+    label_input_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=self.grid_pad_y)
+    # label input
+    label_input = tk.Entry(label_input_frame, textvariable=label_var, width=width)
+    self.add_entry_style(label_input)
+    label_input.config(justify="left")
+    label_input.grid(
+        row=0,
+        column=0,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+
+    return label_var
+
   def add_settings_buttons(self, row_index: int, apply_function: Callable, delete_function: Callable) -> None:
     """
     Add the apply and delete buttons to the settings panel in the specified row.
@@ -381,7 +430,11 @@ class Graph_Editor_GUI:
     rotation_var_deg = self.add_rotation_setting(node_settings["rotation"], row_index)
     row_index += 1
     # node label
-    node_label_var = self.add_label_setting(node_settings["label"], row_index)
+    node_label_var = self.add_label_setting("Label", node_settings["label"], row_index)
+    row_index += 1
+    # node image
+    node_image_path_var = self.add_node_image_setting("Node image", node_settings["image_file_path"], row_index)
+    row_index += 1
 
     # add edge buttons (apply & delete)
     apply_function = lambda: self.apply_node_settings(
@@ -389,10 +442,110 @@ class Graph_Editor_GUI:
             posisition_x_var,
             position_y_var,
             rotation_var_deg,
-            node_label_var)
+            node_label_var,
+            node_image_path_var)
     delete_function = lambda: self.delete_node(particle_node)
     self.add_settings_buttons(row_index, apply_function, delete_function)
     row_index += 1
+
+  def apply_node_settings(self,
+      particle_node: Particle_Node,
+      posisition_x_var: tk.StringVar,
+      position_y_var: tk.StringVar,
+      rotation_var_deg: tk.StringVar,
+      node_label_var: tk.StringVar,
+      node_image_path_var: tk.StringVar) -> None:
+    """
+    Apply the settings of a node.
+
+    Args:
+        particle_node (Particle_Node): The node to apply the settings to.
+        posisition_x_var (tk.StringVar): The x position variable.
+        position_y_var (tk.StringVar): The y position variable.
+        rotation_var_deg (tk.StringVar): The rotation variable.
+        node_label_var (tk.StringVar): The label variable.
+        node_image_path_var (tk.StringVar): The image path variable.
+    """
+    new_position = np.array([posisition_x_var.get(), position_y_var.get()])
+    new_rotation = np.deg2rad(rotation_var_deg.get())
+    old_label = particle_node.label
+    particle_node.set_adjustable_settings(
+        self.ax,
+        position=new_position,
+        rotation=new_rotation,
+        label=node_label_var.get(),
+        image_file_path=node_image_path_var.get()
+    )
+    # find Particle_Label corresponding to the node and change its text
+    self.particle_graph.rename_label(old_label, node_label_var.get(), self.ax)
+
+    self.canvas.draw_idle()
+
+  def delete_node(self, particle_node: Particle_Node) -> None:
+    """
+    Delete a node and all connected edges.
+
+    Args:
+        particle_node (Particle_Node): The node to delete.
+    """
+    pass
+
+  def add_node_image_setting(self, text: str, file_path: str, row_index: int, width=10) -> tk.StringVar:
+    """
+    Add a label setting to the settings panel in the specified row.
+
+    Args:
+        text (str): The text to display in front of the input.
+        file_path (str): The file path to display in the input.
+        row_index (int): The row index to display the setting in (in the `self.settings_frame`)
+        width (int, optional): The width of the input. Defaults to 10.
+
+    Returns:
+        (tk.StringVar): tk variable for particle label.
+    """
+    image_path_var = tk.StringVar(value=file_path)
+
+    label_label = tk.Label(self.settings_frame, text=text)
+    self.add_label_style(label_label)
+    label_label.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    # frame for label input
+    label_input_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(label_input_frame)
+    label_input_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=self.grid_pad_y)
+    # label input
+    label_input = tk.Entry(label_input_frame, textvariable=image_path_var, width=width)
+    self.add_entry_style(label_input)
+    label_input.config(justify="left")
+    label_input.grid(
+        row=0,
+        column=0,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    # browse button
+    browse_button: tk.Button = self.add_browse_button(
+        label_input_frame,
+        row_index=0,
+        column_index=1,
+        command=lambda: browse_image_file("browse node image file", image_path_var))
+    browse_button.grid(
+        row=0,
+        column=1,
+        sticky="w",
+        padx=0,
+        pady=0)
+    return image_path_var
+
 
   def show_label_settings(self, particle_label: Particle_Label):
     """

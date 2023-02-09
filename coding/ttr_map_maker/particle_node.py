@@ -6,6 +6,9 @@ A node can be connected to other nodes by edges.
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import matplotlib.transforms as transforms
+from matplotlib.patches import Circle
 
 from graph_particle import Graph_Particle
 
@@ -55,7 +58,52 @@ class Particle_Node(Graph_Particle):
     self.label = location_name
     self.target_attraction = target_attraction
     self.color = color
+    self.image_file_path = None
 
+  def get_adjustable_settings(self) -> dict[str, object]:
+    return {
+      "position": self.position,
+      "rotation": self.rotation,
+      "label": self.label,
+      "image_file_path": self.image_file_path,
+    }
+
+  def set_adjustable_settings(self,
+      ax: plt.Axes,
+      position: np.ndarray = None,
+      rotation: float = None,
+      label: str = None,
+      image_file_path: str = "") -> None:
+    """
+    Set the adjustable settings of the edge particle. If a new image file path is given, the image is loaded and drawn. Allowed settings are:
+      - position (np.ndarray)
+      - rotation (float)
+      - label (str)
+      - image_file_path (str) or (None)
+
+    Args:
+        ax (plt.Axes): Axes to draw the edge on
+        position (np.ndarray, optional): new position. Defaults to None (keep current value)
+        rotation (float, optional): new rotation. Defaults to None (keep current value)
+        label (str, optional): new label. Defaults to None (keep current value)
+        image_file_path (str, optional): new image file path. Defaults to "" (keep current value)
+    """
+    redraw = False
+    if position is not None and np.any(np.not_equal(position, self.position)):
+      self.set_position(position)
+      redraw = True
+    if rotation is not None and rotation != self.rotation:
+      self.set_rotation(rotation)
+      redraw = True
+    if label is not None and label != self.label:
+      self.label = label
+    if image_file_path not in ("", self.image_file_path):
+      self.set_image_file_path(image_file_path)
+      redraw = True
+
+    if redraw:
+      self.erase()
+      self.draw(ax)
 
   def draw(self,
       ax: plt.Axes,
@@ -71,20 +119,48 @@ class Particle_Node(Graph_Particle):
         alpha (float, optional): alpha value of the node. Defaults to 1.
         zorder (int, optional): zorder of the node. Defaults to 4.
     """
-    self.plotted_objects.append(
-        ax.add_patch(
-            plt.Circle(
-                self.position,
-                0.5,
-                color=color,
-                alpha=alpha,
-                zorder=zorder,
-                picker=True,
-            )
-        )
-    )
+    if self.image_file_path is None: # draw mpl Circle
+      self.plotted_objects.append(
+          ax.add_patch(
+              Circle(
+                  self.position,
+                  0.5,
+                  color=color,
+                  alpha=alpha,
+                  zorder=zorder,
+                  picker=True,
+              )
+          )
+      )
+    else:
+      mpl_image = mpimg.imread(self.image_file_path)
+      edge_extent = (
+        self.position[0] - self.bounding_box_size[0] / 2,
+        self.position[0] + self.bounding_box_size[0] / 2,
+        self.position[1] - self.bounding_box_size[1] / 2,
+        self.position[1] + self.bounding_box_size[1] / 2)
+      plotted_image = ax.imshow(mpl_image, extent=edge_extent, zorder=zorder, picker=True)
+      # rotate image using transformation
+      # keep image upright
+      image_rotation = self.rotation
+      # print(f"image rotation {self.location_1_name}-{self.location_2_name}-{self.path_index}: {image_rotation}")
+      plotted_image.set_transform(
+        transforms.Affine2D().rotate_around(self.position[0], self.position[1], image_rotation) + ax.transData
+      )
+      self.plotted_objects.append(plotted_image)
     # set movability of particle
     super().set_particle_movable(movable)
+
+
+  def set_image_file_path(self, image_file_path: str = None):
+    """
+    Set node to display the image at the given filepath when drawn.
+    If `image_file_path` is `None`, the image will be removed and the node is drawn as a flat colored circle.
+
+    Args:
+        image_file_path (str, optional): filepath to image file. Image aspect ratio should match bounding box aspect ratio. Otherwise the image gets stretched. Defaults to None.
+    """
+    self.image_file_path = image_file_path
 
 
   def get_attraction_force(self, other):
