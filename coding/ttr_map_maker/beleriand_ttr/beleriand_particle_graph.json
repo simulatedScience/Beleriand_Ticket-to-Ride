@@ -2408,7 +2408,7 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Sarn Athrud",
-        "path_index": 2
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
