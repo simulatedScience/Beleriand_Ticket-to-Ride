@@ -1,0 +1,47 @@
+Engelsfälle ; Angel Falls
+Hexagon ; Hexagon
+Stinsbruck ; Stornway
+Ost Stinsbruck (Insel) ; East Stornway (Island)
+
+Siechau ; Coffinwell
+Quarantomben ; Quarantomb
+Bühltau ; Zere
+Schloss Schickstal ; Brigadoom
+Turm des Schlafens ; Tower of Nod
+
+Allesneu-Abtei ; Alltrades Abbey
+Labskausen ; Port Llaffan
+Fort Bieldung ; Tower of Trades
+Gruselige Grotte ; Tywil Cave
+
+Altpier ; Slurry Quay
+Welkham ; Dourbridge
+Neu-Bühltau ; Zere Rocks
+Blümlingen ; Bloomingdale
+Einsame Küste ; Lonely Coast
+
+Wasaba ; Gleeba
+Wennichsur-Wüstse (Insel) ; Djust Desert (Island)
+
+Batsureg ; Batsureg
+Jägerjurten ; Hunter's Yurts
+Gerzuun ; Gerzuu
+Ulbaruun ; Ulbaruun
+Urdus-Sümpfe ; Urdus Marshland
+Ondor-Klippen ; Ondor Cliffs
+
+Schweinspickel Schule ; Swinedimples Academy
+Eugenua ; Hermany
+Phantombaum von Humidia ; Pluvi Isle
+Stille Küste ; Cringle Coast
+
+Wurmwald ; Wormwood Creek
+Brennbergen ; Upover
+Olle Kuhle ; The Bowhole
+Drachenhals ; Wyrmneck
+Drachenschwinge ; Wyrmwing
+West-Wurmwald (Insel) ; Western Wormwood (Island)
+
+Fiese Festung ; Gortress
+Schloss Schroffenheim ; Gittingham Palace
+Khaalag Küste ; Khaalag Coast
