@@ -346,6 +346,7 @@ class TTR_Graph_Analysis:
     edge_length_distribution = {}
     for edge in self.networkx_graph.edges:
       if color is not None and self.networkx_graph.edges[edge]["color"] != color:
+        # skip edges of the wrong color
         continue
       length = self.networkx_graph.edges[edge]["length"]
       if length in edge_length_distribution:
@@ -644,9 +645,9 @@ class TTR_Graph_Analysis:
         task_color_avg_distribution.keys(),
         [avg for avg, _ in task_color_avg_distribution.values()],
         color=mapped_colors,
-        yerr=[std for _, std in task_color_avg_distribution.values()],
-        capsize=5,
-        ecolor=errorbar_color,
+        # yerr=[std for _, std in task_color_avg_distribution.values()],
+        # capsize=5,
+        # ecolor=errorbar_color,
         **bar_plot_kwargs)
     ax.set_xlabel("task color")
     ax.set_ylabel("avg color count for all tasks")

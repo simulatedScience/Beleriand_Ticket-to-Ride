@@ -303,12 +303,96 @@ class Graph_Editor_GUI:
 
     return rotation_var_deg
 
+  def add_settings_buttons(self, row_index: int, apply_function: Callable, delete_function: Callable) -> None:
+    """
+    Add the apply and delete buttons to the settings panel in the specified row.
+
+    Args:
+        row_index (int): The row index to add the buttons to.
+        apply_function (Callable): The function to call when the apply button is pressed.
+        delete_function (Callable): The function to call when the delete button is pressed.
+    """
+    
+    # button frame
+    buttons_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(buttons_frame)
+    buttons_frame.grid(
+      row=row_index,
+      column=0,
+      sticky="new",
+      columnspan=2,
+      padx=self.grid_pad_x,
+      pady=self.grid_pad_y
+    )
+    buttons_frame.grid_columnconfigure(0, weight=1)
+    buttons_frame.grid_columnconfigure(1, weight=1)
+    # apply settings button
+    apply_settings_button = tk.Button(
+        buttons_frame,
+        text="Apply",
+        command=apply_function)
+    self.add_button_style(apply_settings_button)
+    apply_settings_button.grid(
+        row=0,
+        column=0,
+        sticky="new",
+        padx=(0, self.grid_pad_x),
+        pady=0,
+    )
+    # delete button
+    delete_button = tk.Button(
+        buttons_frame,
+        text="Delete",
+        command=delete_function)
+    self.add_button_style(delete_button)
+    delete_button.config(
+        bg=self.color_config["delete_button_bg_color"],
+        fg=self.color_config["delete_button_fg_color"])
+    delete_button.grid(
+        row=0,
+        column=1,
+        sticky="new",
+        padx=0,
+        pady=0,
+    )
 
   def show_node_settings(self, particle_node: Particle_Node):
     """
     Display the settings of a node.
     """
-    pass
+    node_settings = particle_node.get_adjustable_settings()
+    row_index: int = 0
+    # headline
+    node_headline_label = tk.Label(self.settings_frame, text=f"Settings for node {particle_node.get_id()}", justify="center", anchor="n")
+    self.add_label_style(node_headline_label, headline_level=5, font_type="bold")
+    node_headline_label.grid(
+      row=row_index,
+      column=0,
+      sticky="new",
+      columnspan=2,
+      padx=self.grid_pad_x,
+      pady=self.grid_pad_y
+    )
+    row_index += 1
+    # particle position
+    posisition_x_var, position_y_var = self.add_position_setting(node_settings["position"], row_index)
+    row_index += 1
+    # particle rotation
+    rotation_var_deg = self.add_rotation_setting(node_settings["rotation"], row_index)
+    row_index += 1
+    # node label
+    node_label_var = self.add_label_setting(node_settings["label"], row_index)
+
+    # add edge buttons (apply & delete)
+    apply_function = lambda: self.apply_node_settings(
+            particle_node,
+            posisition_x_var,
+            position_y_var,
+            rotation_var_deg,
+            node_label_var)
+    delete_function = lambda: self.delete_node(particle_node)
+    self.add_settings_buttons(row_index, apply_function, delete_function)
+    row_index += 1
 
   def show_label_settings(self, particle_label: Particle_Label):
     """
@@ -326,7 +410,7 @@ class Graph_Editor_GUI:
     edge_settings = particle_edge.get_adjustable_settings()
     row_index: int = 0
     # headline
-    edge_headline_label = tk.Label(self.settings_frame, text=f"Settings for Edge {particle_edge.get_id()}", justify="center", anchor="n")
+    edge_headline_label = tk.Label(self.settings_frame, text=f"Settings for edge {particle_edge.get_id()}", justify="center", anchor="n")
     self.add_label_style(edge_headline_label, headline_level=5, font_type="bold")
     edge_headline_label.grid(
       row=row_index,
@@ -348,53 +432,16 @@ class Graph_Editor_GUI:
     row_index += 1
     # edge image file path
 
-    # edge button frame
-    edge_buttons_frame = tk.Frame(self.settings_frame)
-    self.add_frame_style(edge_buttons_frame)
-    edge_buttons_frame.grid(
-      row=row_index,
-      column=0,
-      sticky="new",
-      columnspan=2,
-      padx=self.grid_pad_x,
-      pady=self.grid_pad_y
-    )
-    edge_buttons_frame.grid_columnconfigure(0, weight=1)
-    edge_buttons_frame.grid_columnconfigure(1, weight=1)
-    # apply settings button
-    apply_edge_settings_button = tk.Button(
-        edge_buttons_frame,
-        text="Apply",
-        command=lambda: self.apply_edge_settings(
+    # add edge buttons (apply & delete)
+    apply_function = lambda: self.apply_edge_settings(
             particle_edge,
             posisition_x_var,
             position_y_var,
             rotation_var_deg,
-            edge_color_var))
-    self.add_button_style(apply_edge_settings_button)
-    apply_edge_settings_button.grid(
-        row=0,
-        column=0,
-        sticky="new",
-        padx=(0, self.grid_pad_x),
-        pady=0,
-    )
-    # edge delete button
-    delete_edge_button = tk.Button(
-        edge_buttons_frame,
-        text="Delete",
-        command=lambda: self.delete_edge(particle_edge))
-    self.add_button_style(delete_edge_button)
-    delete_edge_button.config(
-        bg=self.color_config["delete_button_bg_color"],
-        fg=self.color_config["delete_button_fg_color"])
-    delete_edge_button.grid(
-        row=0,
-        column=1,
-        sticky="new",
-        padx=0,
-        pady=0,
-    )
+            edge_color_var)
+    delete_function = lambda: self.delete_edge(particle_edge)
+    self.add_settings_buttons(row_index, apply_function, delete_function)
+    row_index += 1
 
   def apply_edge_settings(self,
       particle_edge: Particle_Edge,
@@ -419,10 +466,12 @@ class Graph_Editor_GUI:
         self.ax,
         position=new_position,
         rotation=new_rotation)
-    for connected_edge in get_edge_connected_particles(particle_edge)[0][1:-1]:
-      connected_edge.set_adjustable_settings(
-        self.ax,
-        color=new_color)
+    if new_color != particle_edge.color:
+      self.particle_graph.update_path_color(particle_edge, particle_edge.color)
+      for connected_edge in get_edge_connected_particles(particle_edge)[0][1:-1]:
+        connected_edge.set_adjustable_settings(
+          self.ax,
+          color=new_color)
     self.canvas.draw_idle()
 
   def delete_edge(self, particle_edge: Particle_Edge, reposition_edges: bool = True) -> None:
@@ -444,6 +493,7 @@ class Graph_Editor_GUI:
       self.remove_connection(edge_particles=connected_particles[1:-1])
       return
     particle_edge.erase()
+    self.particle_graph.remove_particle(particle_edge)
     # reposition edges if necessary
     if not reposition_edges:
       return
@@ -451,72 +501,20 @@ class Graph_Editor_GUI:
     deletion_index = connected_particles.index(particle_edge)
     # case 2: delete an edge that's connected to a node
     if Particle_Node in connected_types:
-      # TODO: refactor to delete_end_edge(...)
-      # get endpoints of current connection
-      target_connection = get_connection_endpoints(connected_particles, added_gap_at_end=0)
-      # get endpoints of new connection (with the deleted edge removed)
-      # rotate around the the node where the connected edge is not deleted
-      if deletion_index == 1:
-        particle_list: List[Graph_Particle] = connected_particles[1:]
-        rotation_center: np.ndarray = connected_particles[-1].position
-        particle_list.reverse()
-      else:
-        particle_list: List[Graph_Particle] = connected_particles[:-1]
-        rotation_center: np.ndarray = connected_particles[0].position
-      new_connection: Tuple[np.ndarray, np.ndarray] = get_connection_endpoints(particle_list, added_gap_at_end=0)
-      if deletion_index == 1:
-        target_connection = (target_connection[1], target_connection[0])
-      # rotate and rescale the edges
-      rotate_rescale_edges(
-        particle_list[1:-1],
-        target_connection,
-        new_connection,
-        rotation_center=rotation_center,
-        ax=self.ax)
-      self.canvas.draw_idle()
-      return
+      delete_end_edge_particle(
+        deleted_edge=particle_edge,
+        connected_particles=connected_particles,
+        deletion_index=deletion_index,
+        ax=self.ax,
+        canvas=self.canvas)
     # case 3: delete an edge that's only connected to other edges
     else:
-      # TODO: refactor to delete_middle_edge(...)
-      left_particle_list: List[Graph_Particle] = connected_particles[:deletion_index + 1]
-      right_particle_list: List[Graph_Particle] = connected_particles[deletion_index:]
-      # calculate the gap between the deleted edge and the left edge
-      deleted_edge_anchor = particle_edge.get_attraction_forces(connected_particles[deletion_index - 1])[1]
-      left_edge_anchor = connected_particles[deletion_index - 1].get_attraction_forces(particle_edge)[1]
-      edge_gap: float = np.linalg.norm(deleted_edge_anchor - left_edge_anchor)
-      # get endpoints of current connection
-      left_connection = get_connection_endpoints(left_particle_list, added_gap_at_end=edge_gap)
-      right_connection = get_connection_endpoints(right_particle_list, added_gap_at_end=0)
-      # get endpoints of new connection (with the deleted edge removed) using the intersection point of circles with radii equal to the connection lengths
-      target_point = get_circle_intersection(
-          center_a=left_connection[0],
-          radius_a=left_connection[1] - left_connection[0],
-          center_b=right_connection[-1],
-          radius_b=right_connection[1] - right_connection[0],
-          )
-      if target_point is None:
-        # cannot find a good connection between the two edges
-        print(f"Could not find a good connection between the remaining edges")
-        self.canvas.draw_idle()
-        return
-      # rotate and rescale the edges
-      left_target_connection = (left_connection[0], target_point)
-      right_target_connection = (right_connection[-1], target_point)
-      rotate_rescale_edges(
-        left_particle_list[1:-1],
-        left_target_connection,
-        left_connection,
-        rotation_center=left_particle_list[0].position,
+      delete_middle_edge_particle(
+        deleted_edge=particle_edge,
+        connected_particles=connected_particles,
+        deletion_index=deletion_index,
         ax=self.ax,
-        debug=False)
-      rotate_rescale_edges(
-        right_particle_list[1:-1],
-        right_target_connection,
-        (right_connection[1], right_connection[0]),
-        rotation_center=right_particle_list[-1].position,
-        ax=self.ax,
-        debug=False)
-      self.canvas.draw_idle()
+        canvas=self.canvas)
 
   def remove_connection(self, particle_edge: Particle_Edge, edge_particles: List[Particle_Edge] = None):
     if edge_particles is None:
@@ -785,7 +783,120 @@ def rotate_rescale_edges(
       position=new_position,
       rotation=particle.rotation + rotation_angle)
 
+# deletion functions
+def delete_end_edge_particle(deleted_edge: Particle_Edge, connected_particles: List[Graph_Particle], deletion_index: int, ax: plt.Axes, canvas: FigureCanvasTkAgg) -> None:
+  """
+  Delete the edge particle at the end of the connection and rotate the remaining particles to match the old connection.
 
+  Args:
+      deleted_edge (Particle_Edge): edge particle to be deleted
+      connected_particles (List[Graph_Particle]): list of particles connected to the edge to be deleted
+      deletion_index (int): index of the edge to be deleted in the list of connected particles
+      ax (plt.Axes): axes to draw the particles on
+  """
+  # get endpoints of current connection
+  target_connection = get_connection_endpoints(connected_particles, added_gap_at_end=0)
+  # get endpoints of new connection (with the deleted edge removed)
+  # rotate around the the node where the connected edge is not deleted
+  if deletion_index == 1:
+    particle_list: List[Graph_Particle] = connected_particles[1:]
+    rotation_center: np.ndarray = connected_particles[-1].position
+    particle_list.reverse()
+  else:
+    particle_list: List[Graph_Particle] = connected_particles[:-1]
+    rotation_center: np.ndarray = connected_particles[0].position
+  new_connection: Tuple[np.ndarray, np.ndarray] = get_connection_endpoints(particle_list, added_gap_at_end=0)
+  if deletion_index == 1:
+    target_connection = (target_connection[1], target_connection[0])
+  # rotate and rescale the edges
+  rotate_rescale_edges(
+      particle_list[1:-1],
+      target_connection,
+      new_connection,
+      rotation_center=rotation_center,
+      ax=ax)
+  relink_delete_edge(deleted_edge)
+  canvas.draw_idle()
+  return
+
+def delete_middle_edge_particle(
+    deleted_edge: Particle_Edge,
+    connected_particles: List[Graph_Particle],
+    deletion_index: int,
+    ax: plt.Axes,
+    canvas: FigureCanvasTkAgg) -> None:
+  """
+  Delete the edge particle in the middle of the connection and rotate the remaining particles to match the old connection.
+
+  Args:
+      deleted_edge (Particle_Edge): edge to be deleted
+      connected_particles (List[Graph_Particle]): list of particles connected to the edge to be deleted
+      deletion_index (int): index of the edge to be deleted in the list of connected particles
+      ax (plt.Axes): axes to draw the particles on
+      canvas (FigureCanvasTkAgg): canvas to draw the particles on
+  """
+  left_particle_list: List[Graph_Particle] = connected_particles[:deletion_index + 1]
+  right_particle_list: List[Graph_Particle] = connected_particles[deletion_index:]
+  # calculate the gap between the deleted edge and the left edge
+  deleted_edge_anchor = deleted_edge.get_attraction_forces(connected_particles[deletion_index - 1])[1]
+  left_edge_anchor = connected_particles[deletion_index - 1].get_attraction_forces(deleted_edge)[1]
+  edge_gap: float = np.linalg.norm(deleted_edge_anchor - left_edge_anchor)
+  # get endpoints of current connection
+  left_connection = get_connection_endpoints(left_particle_list, added_gap_at_end=edge_gap)
+  right_connection = get_connection_endpoints(right_particle_list, added_gap_at_end=0)
+  # get endpoints of new connection (with the deleted edge removed) using the intersection point of circles with radii equal to the connection lengths
+  target_point = get_circle_intersection(
+      center_a=left_connection[0],
+      radius_a=left_connection[1] - left_connection[0],
+      center_b=right_connection[-1],
+      radius_b=right_connection[1] - right_connection[0],
+      )
+  if target_point is None:
+    # cannot find a good connection between the two edges
+    print(f"Could not find a good connection between the remaining edges")
+    relink_delete_edge(deleted_edge)
+    canvas.draw_idle()
+    return
+  # rotate and rescale the edges
+  left_target_connection = (left_connection[0], target_point)
+  right_target_connection = (right_connection[-1], target_point)
+  rotate_rescale_edges(
+    left_particle_list[1:-1],
+    left_target_connection,
+    left_connection,
+    rotation_center=left_particle_list[0].position,
+    ax=ax,
+    debug=False)
+  rotate_rescale_edges(
+    right_particle_list[1:-1],
+    right_target_connection,
+    (right_connection[1], right_connection[0]),
+    rotation_center=right_particle_list[-1].position,
+    ax=ax,
+    debug=False)
+  relink_delete_edge(deleted_edge)
+  canvas.draw_idle()
+
+def relink_delete_edge(particle_edge: Particle_Edge) -> None:
+  """
+  Update the particles connected to the given edge particle when it is deleted.
+
+  Args:
+      edge_particle (Particle_Edge): edge particle to be deleted
+  """
+  # get the particles connected to the edge
+  particle_1, particle_2 = particle_edge.connected_particles
+  # update the connected particles of the connected particles
+  for i, particle in enumerate(particle_1.connected_particles):
+    if particle == particle_edge:
+      particle_1.connected_particles[i] = particle_2
+      break
+  for i, particle in enumerate(particle_2.connected_particles):
+    if particle == particle_edge:
+      particle_2.connected_particles[i] = particle_1
+      break
+
+# helper function for automatic edge repositioning
 def get_circle_intersection(center_a: np.ndarray, radius_a: np.ndarray, center_b: np.ndarray, radius_b: np.ndarray, epsilon: float = 1e-7) -> np.ndarray:
   """
   Calculate the intersection of two circles given by their centers and radii. Radii are given as vectors pointing from the center to the edge of the circle. The returned intersection point is the one closest to the first center plus the first radius vector.

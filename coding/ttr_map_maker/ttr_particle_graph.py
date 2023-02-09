@@ -456,7 +456,9 @@ class TTR_Particle_Graph:
       for connected_particle in particle_edge.connected_particles:
         _, anchor_1 = particle_edge.get_attraction_forces(connected_particle)
         _, anchor_2 = connected_particle.get_attraction_forces(particle_edge)
-        self.edge_attractor_artists.append(ax.arrow(anchor_1[0], anchor_1[1],
+        self.edge_attractor_artists.append(ax.arrow(
+            anchor_1[0],
+            anchor_1[1],
             anchor_2[0] - anchor_1[0],
             anchor_2[1] - anchor_1[1],
             color="#222222",
@@ -680,6 +682,60 @@ class TTR_Particle_Graph:
       self.particle_edges[(loc_1, loc_2, path_index)] = particle
     elif isinstance(particle, Particle_Label):
       self.particle_labels[particle.label] = particle
+
+  def remove_particle(self, particle: Graph_Particle) -> None:
+    """
+    remove a particle from the particle graph.
+
+    Args:
+        particle (Graph_Particle): particle to remove
+    """
+    if isinstance(particle, Particle_Node):
+      del self.particle_nodes[particle.label]
+    elif isinstance(particle, Particle_Edge):
+      loc_1 = particle.location_1_name
+      loc_2 = particle.location_2_name
+      path_index = particle.path_index
+      # update path in self.paths
+      for i, path in enumerate(self.paths):
+        if path[0] == loc_1 and path[1] == loc_2 and path[3] == particle.color:
+          if path[2] == 1:
+            del self.paths[i]
+            break
+          self.paths[i] = (loc_1, loc_2, path[2] - 1, particle.color)
+          break
+      # update path indices of all edge particles with higher path index
+      changed_particle_edges: dict[tuple[str, str, int], Particle_Edge] = dict()
+      for particle_key, particle_edge in self.particle_edges.items():
+        if particle_edge.location_1_name == loc_1 and \
+            particle_edge.location_2_name == loc_2 and \
+            particle_edge.color == particle.color and \
+            particle_edge.path_index > path_index:
+          particle_edge.path_index -= 1
+          changed_particle_edges[particle_key] = particle_edge
+      # update path indices of all edges that needed to change
+      for particle_key, particle_edge in changed_particle_edges.items():
+        self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index)] = particle_edge
+        del self.particle_edges[particle_key]
+      del self.particle_edges[(loc_1, loc_2, path_index)]
+    elif isinstance(particle, Particle_Label):
+      del self.particle_labels[particle.label]
+
+  def update_path_color(self, particle_edge: Particle_Edge, old_color: str) -> None:
+    """
+    update the color of the path in the particle graph.
+
+    Args:
+        particle_edge (Particle_Edge): edge particle whose color has changed
+        old_color (str): old color of the path the edge particle belongs to
+    """
+    # update path in self.paths
+    for i, path in enumerate(self.paths):
+      loc_1 = particle_edge.location_1_name
+      loc_2 = particle_edge.location_2_name
+      if path[0] == loc_1 and path[1] == loc_2 and path[3] == old_color:
+        self.paths[i] = (loc_1, loc_2, path[2], particle_edge.color)
+        break
 
   def build_paths(self) -> None:
     """

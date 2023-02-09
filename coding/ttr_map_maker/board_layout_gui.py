@@ -637,6 +637,10 @@ class Board_Layout_GUI:
     self.particle_graph = None
     self.background_image = None
     self.graph_data = None
+    if self.graph_analysis_enabled.get():
+      self.toggle_graph_analysis()
+    if self.graph_edit_mode_enabled.get():
+      self.toggle_graph_edit_mode()
     # try loading particle graph
     try:
       self.particle_graph = TTR_Particle_Graph.load_json(self.particle_graph_file.get())
@@ -661,9 +665,9 @@ class Board_Layout_GUI:
     except FileNotFoundError:
       print("Background image file not found.")
     self.ax.clear()
-    self.toggle_background_image_visibility()
 
     self.init_particle_graph()
+    self.toggle_background_image_visibility()
 
     self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
 
@@ -978,7 +982,10 @@ class Board_Layout_GUI:
       no_grid = [(1,2), (2,2)]
       for i, ax in enumerate(self.axs.flat):
         if not (i//3, i%3) in no_grid:
-          ax.grid(axis="y", color=grid_color)
+          if grid_color is None:
+            ax.grid(False)
+          else:
+            ax.grid(axis="y", color=grid_color)
       self.canvas.draw_idle()
       return
     # show/hide frame for large plot
@@ -1016,10 +1023,10 @@ class Board_Layout_GUI:
             pass
       self.plotted_background_images = []
       if self.graph_analysis_enabled.get():
-        self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
-        self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent))
+        self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
+        self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
       else:
-        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background"))#, picker=True))
+        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background", zorder=0))#, picker=True))
     elif len(self.plotted_background_images) > 0:
       for image in self.plotted_background_images:
         image.remove()
@@ -1191,7 +1198,7 @@ class Board_Layout_GUI:
         filetypes=(("PNG", "*.png"), ("all files", "*.*")))
     if filepath == "":
       return
-    transparent = not self.graph_analysis_enabled.get()
+    transparent = not self.show_background_image.get()
     self.fig.savefig(filepath, dpi=600, transparent=transparent)
 
   def move_labels_to_nodes(self):
@@ -1213,27 +1220,31 @@ class Board_Layout_GUI:
     self.edge_style.set("Flat colors")
     self.canvas.draw_idle()
 
-  def scale_background_image(self):
+  def scale_background_image(self, get_new_size: bool=True):
     """
     Resize the background image and canvas to ensure the background fits real lego pieces.
     new size will be the board size * scale_factor.
+
+    Args:
+      get_new_size: If True, the new size will be calculated from the board size and scale factor currently set in the GUI. Otherwise, the current size will be used.
     """
     if self.background_image_mpl is None:
       return
-    # get new size
-    new_width = self.board_width.get() * self.board_scale_factor.get()
-    new_height = self.board_height.get() * self.board_scale_factor.get()
-    x_offset = self.background_image_offset_x.get()
-    y_offset = self.background_image_offset_y.get()
+    if get_new_size:
+      # get new size
+      new_width = self.board_width.get() * self.board_scale_factor.get()
+      new_height = self.board_height.get() * self.board_scale_factor.get()
+      x_offset = self.background_image_offset_x.get()
+      y_offset = self.background_image_offset_y.get()
 
-    self.background_image_extent = np.array([
-        x_offset,
-        new_width + x_offset,
-        y_offset,
-        new_height + y_offset])
+      self.background_image_extent = np.array([
+          x_offset,
+          new_width + x_offset,
+          y_offset,
+          new_height + y_offset])
     # update plot limits
-    self.ax.set_xlim(x_offset, new_width + x_offset)
-    self.ax.set_ylim(y_offset, new_height + y_offset)
+    self.ax.set_xlim(self.background_image_extent[0], self.background_image_extent[1])
+    self.ax.set_ylim(self.background_image_extent[2], self.background_image_extent[3])
     self.toggle_background_image_visibility()
 
   def scale_graph_posistions(self):
@@ -1345,8 +1356,23 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None: # cannot open graph analysis without a graph
       self.graph_analysis_enabled.set(False)
+      self.fig.clf()
       return
-    if self.graph_analysis_enabled.get(): # open graph analysis
+    if not self.graph_analysis_enabled.get(): # close graph analysis and show regular graph map 
+      # clear figure and draw graph
+      self.fig.clf()
+      self.ax = self.fig.add_subplot(111)
+      self.ax.set_facecolor(self.color_config["plot_bg_color"])
+      self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=0.15, hspace=0.3)
+      self.draw_graph()
+      self.toggle_background_image_visibility()
+      
+      self.canvas.draw_idle()
+    else: # open graph analysis
+      if self.edge_style.get() == "Edge images": # disable edge images
+        self.edge_style.set("Show tasks")
+        self.update_edge_style()
+        
       if self.graph_edit_mode_enabled.get(): # disable graph edit mode
         self.graph_edit_mode_enabled.set(False)
         self.toggle_graph_edit_mode()
@@ -1360,16 +1386,9 @@ class Board_Layout_GUI:
           self.axs,
           grid_color=grid_color,
           base_color=self.color_config["task_base_color"])
+      if self.background_image_extent is not None:
+        self.scale_background_image(get_new_size=False)
       self.fig.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.15, hspace=0.3)
-      self.canvas.draw_idle()
-    else: # close graph analysis and show regular graph map 
-      # clear figure and draw graph
-      self.fig.clf()
-      self.ax = self.fig.add_subplot(111)
-      self.ax.set_facecolor(self.color_config["plot_bg_color"])
-      self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=0.15, hspace=0.3)
-      self.draw_graph()
-      
       self.canvas.draw_idle()
 
   def toggle_graph_edit_mode(self):
@@ -1378,7 +1397,6 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       self.graph_edit_mode_enabled.set(False)
-      return
     if not self.graph_edit_mode_enabled.get(): # disable graph edit mode
       self.move_nodes_enabled.set(False)
       self.move_labels_enabled.set(False)
@@ -1581,7 +1599,7 @@ class Board_Layout_GUI:
     #     blit=False)
 
 
-  def init_particle_graph(self):
+  def init_particle_graph(self) -> None: # TODO: this method or `draw_graph()` is likely the cause of the background image not being scaled correctly
     """
     Initialize the particle graph.
     arange nodes along left edge and corresponding labels to their right
@@ -1608,7 +1626,7 @@ class Board_Layout_GUI:
     self.draw_graph()
 
 
-  def draw_graph(self):
+  def draw_graph(self) -> None:
     """
     Draw the graph with nodes, edges and labels according to the current settings.
     """

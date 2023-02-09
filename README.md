@@ -47,3 +47,6 @@ The code is currently not packaged as a standalone application, so you will have
 
 ## how the program was created
 Most of the code was written with some level of support or inspiration from GitHub Copilot and/or OpenAI's ChatGPT. Other than that, if files contain code that is not my own, I tried to mention it in the file header and/or function docstring. Most of the code is my own though.
+
+A note on my code style: empty lines between functions/ methods are usually not random. If Methods are closely related, they are grouped together - signified by just one empty line between them. Otherwise they are separated by two empty lines. At the end of a class, there are three empty lines.
+This is a personal preference, but I find it helps with readability.

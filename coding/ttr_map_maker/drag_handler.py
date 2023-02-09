@@ -114,7 +114,9 @@ class Drag_Handler:
       event (matplotlib.backend_bases.MouseEvent): The mouse event.
     """
     if event.inaxes:
-      set_artist_position(self.current_artist, np.array(event.xdata - self.click_offset[0], event.ydata - self.click_offset[1]))
+      set_artist_position(
+          self.current_artist,
+          np.array([event.xdata - self.click_offset[0], event.ydata - self.click_offset[1]]))
 
       self.canvas.draw_idle()
 
@@ -130,9 +132,7 @@ class Drag_Handler:
       ax = event.inaxes
       self.new_rotation_deg += event.step
       self.new_rotation_deg %= 360
-
       set_artist_rotation(self.current_artist, self.new_rotation_deg, ax.transData)
-
       self.canvas.draw_idle()
 
   def on_release(self, event):
@@ -275,7 +275,7 @@ def set_artist_position(artist: plt.Artist, position: np.ndarray) -> None:
 
 def set_artist_rotation(artist: plt.Artist, new_rotation_deg: float, trans_data: transforms.Affine2D) -> None:
   """
-  set a matplotlib artist's rotation. Currently supported artist types: Circle, Rectangle, AxesImage.
+  set a matplotlib artist's rotation. Currently tested artist types: Circle, Rectangle, AxesImage.
 
   Args:
       artist (plt.Artist): the artist to rotate
