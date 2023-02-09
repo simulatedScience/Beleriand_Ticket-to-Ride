@@ -488,7 +488,8 @@ class Graph_Editor_GUI:
     Args:
         particle_node (Particle_Node): The node to delete.
     """
-    pass
+    self.particle_graph.delete_node(particle_node)
+    self.canvas.draw_idle()
 
   def add_node_image_setting(self, text: str, file_path: str, row_index: int, width=10) -> tk.StringVar:
     """
@@ -666,7 +667,7 @@ class Graph_Editor_GUI:
       self.remove_connection(edge_particles=connected_particles[1:-1])
       return
     particle_edge.erase()
-    self.particle_graph.remove_particle(particle_edge)
+    self.particle_graph.delete_edge(particle_edge)
     # reposition edges if necessary
     if not reposition_edges:
       return
@@ -693,18 +694,10 @@ class Graph_Editor_GUI:
     if edge_particles is None:
       edge_particles, *_ = get_edge_connected_particles(particle_edge)
       edge_particles = edge_particles[1:-1]
-      print(f"deleting connection {particle_edge.location_1_name} -> {particle_edge.location_2_name}")
-      print(f"deleting {len(edge_particles)} edge particles with path indices: {[particle.path_index for particle in edge_particles]}")
 
-    # for end_edge_particle in (edge_particles[0], edge_particles[-1]):
-    #   for connected_node in end_edge_particle.connected_particles:
-    #     try:
-    #       connected_node.connected_particles.remove(end_edge_particle) # remove connection of node to edge
-    #     except ValueError:
-    #       pass
     for particle_edge in reversed(edge_particles):
       particle_edge.erase()
-      self.particle_graph.remove_particle(particle_edge)
+      self.particle_graph.delete_edge(particle_edge)
       # del edge_particle
     self.canvas.draw_idle()
 

@@ -49,11 +49,11 @@ class TTR_Particle_Graph:
         node_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
         location_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
     """
-    self.node_labels: List[str] = locations
     self.paths: List[Tuple[str, str, int, str]] = paths
     self.tasks: List[Tuple[str, str]] = tasks
-    self.node_positions: Dict[str, np.ndarray] = node_positions
     self.particle_parameters: dict = particle_parameters
+    self.node_labels: List[str] = locations # deleted after graph creation
+    self.node_positions: Dict[str, np.ndarray] = node_positions # deleted after graph creation
 
     self.max_particle_id = 0
 
@@ -139,6 +139,9 @@ class TTR_Particle_Graph:
       # connect last edge particle to node_2
       last_particle.add_connected_particle(node_2)
       self.max_particle_id = particle_id
+    
+    del self.node_positions
+    del self.node_labels
 
 
   def optimize_layout(self,
@@ -701,6 +704,97 @@ class TTR_Particle_Graph:
     elif isinstance(particle, Particle_Label):
       self.particle_labels[particle.label] = particle
 
+
+  def delete_node(self, particle_node: Particle_Node) -> None:
+    """
+    Remove a single node particle and it's associated label particle from the particle graph.
+    This also deletes:
+    - all edges connected to the node
+    - all labels associated with the node (same label as the node)
+    - all tasks starting or ending in the node
+    Deleting nodes may make some tasks impossible to complete. They are not removed since new edges can be added to make them possible again.
+
+    Args:
+        particle_node (Particle_Node): node particle to be deleted
+    """
+    # delete connected edges
+    to_be_deleted: List[Particle_Edge] = []
+    # find edges to be deleted (all that are associated with the node)
+    for particle_edge in self.particle_edges.values():
+      if particle_edge.location_1_name == particle_node.label or \
+          particle_edge.location_2_name == particle_node.label:
+        to_be_deleted.append(particle_edge)
+    print(f"Deleted {len(to_be_deleted)} edge particles.")
+    # actually delete edges
+    for particle_edge in to_be_deleted:
+      particle_edge.erase()
+      self.delete_edge(particle_edge)
+
+    # delete connected labels
+    self.particle_labels[particle_node.label].erase()
+    del self.particle_labels[particle_node.label]
+
+    # delete tasks starting or ending in the node
+    to_be_deleted: List[Tuple[str, str]] = []
+    # find tasks to delelte
+    for i, task in enumerate(self.tasks):
+      if particle_node.label in task:
+        to_be_deleted.insert(0, i) # delete in reverse order to avoid index errors
+    print(f"Deleted {len(to_be_deleted)} tasks.")
+    for i in to_be_deleted:
+      print(f"Deleting task {i}: {self.tasks[i]}")
+      self.tasks.pop(i)
+
+    # delete node
+    # self.node_labels.remove(particle_node.label)
+    self.particle_nodes[particle_node.label].erase()
+    del self.particle_nodes[particle_node.label]
+    
+
+  def delete_edge(self, particle_edge: Particle_Edge) -> None:
+    """
+    remove a single edge particle from the particle graph. If there are other edges connected to the particle, their `connected_particles` attribute gets updated to reflect the change. For this the connected particle `particle_edge` is removed from the list of connected particles and replaced by the other particle `particle_edge` is connected to (either another edge or a node).
+
+    Args:
+        particle_edge (Particle_Edge): edge particle to be deleted
+    """
+    loc_1 = particle_edge.location_1_name
+    loc_2 = particle_edge.location_2_name
+    path_index = particle_edge.path_index
+    path_length = 0
+    # update path in self.paths
+    for i, path in enumerate(self.paths):
+      if path[0] == loc_1 and path[1] == loc_2 and path[3] == particle_edge.color:
+        if path_length == 0:
+          path_length = path[2]
+        if path[2] == 1:
+          del self.paths[i]
+          break
+        self.paths[i] = (loc_1, loc_2, path[2] - 1, particle_edge.color)
+        break
+    # update path indices of all edge particles with higher path index
+    changed_particle_edges: dict[tuple[str, str, int], Particle_Edge] = dict()
+    for particle_key, particle_edge in self.particle_edges.items():
+      if particle_edge.location_1_name == loc_1 and \
+          particle_edge.location_2_name == loc_2 and \
+          particle_edge.color == particle_edge.color and \
+          particle_edge.path_index > path_index:
+        particle_edge.path_index -= 1
+        changed_particle_edges[particle_key] = particle_edge
+    # update path indices of all edges that needed to change
+    for particle_key, particle_edge in changed_particle_edges.items():
+      self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index)] = particle_edge
+      del self.particle_edges[particle_key]
+    # remove edge particle
+    if (loc_1, loc_2, path_index) in self.particle_edges:
+      del self.particle_edges[(loc_1, loc_2, path_index)]
+    elif (loc_2, loc_1, path_index) in self.particle_edges:
+      del self.particle_edges[(loc_2, loc_1, path_index)]
+    else:
+      print(f"Warning: Could not find edge particle {loc_1} -> {loc_2} ({path_index})")
+      print()
+
+
   def rename_label(self, old_name: str, new_name: str, ax: plt.Axes) -> None:
     """
     rename a given label in the particle graph.
@@ -716,52 +810,6 @@ class TTR_Particle_Graph:
         self.particle_labels[new_name] = particle_label
         del self.particle_labels[label]
         break
-
-  def remove_particle(self, particle: Graph_Particle) -> None:
-    """
-    remove a particle from the particle graph.
-
-    Args:
-        particle (Graph_Particle): particle to remove
-    """
-    if isinstance(particle, Particle_Node):
-      del self.particle_nodes[particle.label]
-    elif isinstance(particle, Particle_Edge):
-      loc_1 = particle.location_1_name
-      loc_2 = particle.location_2_name
-      path_index = particle.path_index
-      path_length = 0
-      # update path in self.paths
-      for i, path in enumerate(self.paths):
-        if path[0] == loc_1 and path[1] == loc_2 and path[3] == particle.color:
-          if path_length == 0:
-            path_length = path[2]
-          if path[2] == 1:
-            del self.paths[i]
-            break
-          self.paths[i] = (loc_1, loc_2, path[2] - 1, particle.color)
-          break
-      print(f"removing edge particle {loc_1} -> {loc_2}, length: {path_length}, color: {particle.color}")
-      # update path indices of all edge particles with higher path index
-      changed_particle_edges: dict[tuple[str, str, int], Particle_Edge] = dict()
-      for particle_key, particle_edge in self.particle_edges.items():
-        if particle_edge.location_1_name == loc_1 and \
-            particle_edge.location_2_name == loc_2 and \
-            particle_edge.color == particle.color and \
-            particle_edge.path_index > path_index:
-          particle_edge.path_index -= 1
-          changed_particle_edges[particle_key] = particle_edge
-      # update path indices of all edges that needed to change
-      for particle_key, particle_edge in changed_particle_edges.items():
-        self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index)] = particle_edge
-        del self.particle_edges[particle_key]
-      # remove edge particle
-      if (loc_1, loc_2, path_index) in self.particle_edges:
-        del self.particle_edges[(loc_1, loc_2, path_index)]
-      else:
-        del self.particle_edges[(loc_2, loc_1, path_index)]
-    elif isinstance(particle, Particle_Label):
-      del self.particle_labels[particle.label]
 
   def update_path_color(self, particle_edge: Particle_Edge, old_color: str) -> None:
     """
