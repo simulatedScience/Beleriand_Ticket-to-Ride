@@ -442,6 +442,25 @@ class Graph_Editor_GUI:
     delete_function = lambda: self.delete_edge(particle_edge)
     self.add_settings_buttons(row_index, apply_function, delete_function)
     row_index += 1
+    # add button to delete entire connection
+    delete_connection_button = tk.Button(
+        self.settings_frame,
+        text="Delete Connection",
+        cursor="hand2",
+        command=lambda: self.remove_connection(particle_edge))
+    self.add_button_style(delete_connection_button)
+    delete_connection_button.config(
+        bg=self.color_config["delete_button_bg_color"],
+        fg=self.color_config["delete_button_fg_color"])
+    delete_connection_button.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        columnspan=2,
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y,
+    )
+    row_index += 1
 
   def apply_edge_settings(self,
       particle_edge: Particle_Edge,
@@ -521,14 +540,20 @@ class Graph_Editor_GUI:
     if edge_particles is None:
       edge_particles, *_ = get_edge_connected_particles(particle_edge)
       edge_particles = edge_particles[1:-1]
+      print(f"deleting connection {particle_edge.location_1_name} -> {particle_edge.location_2_name}")
+      print(f"deleting {len(edge_particles)} edge particles with path indices: {[particle.path_index for particle in edge_particles]}")
 
-    for end_edge_particle in (edge_particles[0], edge_particles[-1]):
-      for connected_node in particle_edge.connected_particles:
-        connected_node.connected_particles.remove(particle_edge) # remove connection to edge
-    for edge_particle in edge_particles:
-      edge_particle.erase()
-      del edge_particle
-    # TODO: remove connection from particle graph
+    # for end_edge_particle in (edge_particles[0], edge_particles[-1]):
+    #   for connected_node in end_edge_particle.connected_particles:
+    #     try:
+    #       connected_node.connected_particles.remove(end_edge_particle) # remove connection of node to edge
+    #     except ValueError:
+    #       pass
+    for particle_edge in reversed(edge_particles):
+      particle_edge.erase()
+      self.particle_graph.remove_particle(particle_edge)
+      # del edge_particle
+    self.canvas.draw_idle()
 
 
   def add_edge_color_setting(self, color: str, row_index: int) -> tk.IntVar:

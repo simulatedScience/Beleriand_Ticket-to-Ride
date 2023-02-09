@@ -696,14 +696,18 @@ class TTR_Particle_Graph:
       loc_1 = particle.location_1_name
       loc_2 = particle.location_2_name
       path_index = particle.path_index
+      path_length = 0
       # update path in self.paths
       for i, path in enumerate(self.paths):
         if path[0] == loc_1 and path[1] == loc_2 and path[3] == particle.color:
+          if path_length == 0:
+            path_length = path[2]
           if path[2] == 1:
             del self.paths[i]
             break
           self.paths[i] = (loc_1, loc_2, path[2] - 1, particle.color)
           break
+      print(f"removing edge particle {loc_1} -> {loc_2}, length: {path_length}, color: {particle.color}")
       # update path indices of all edge particles with higher path index
       changed_particle_edges: dict[tuple[str, str, int], Particle_Edge] = dict()
       for particle_key, particle_edge in self.particle_edges.items():
@@ -714,10 +718,18 @@ class TTR_Particle_Graph:
           particle_edge.path_index -= 1
           changed_particle_edges[particle_key] = particle_edge
       # update path indices of all edges that needed to change
+      print(f"updating {len(changed_particle_edges)} edge particles")
+      print()
       for particle_key, particle_edge in changed_particle_edges.items():
         self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index)] = particle_edge
         del self.particle_edges[particle_key]
-      del self.particle_edges[(loc_1, loc_2, path_index)]
+        print(f"updated edge particle {particle_edge.location_1_name} -> {particle_edge.location_2_name} ({particle_key[-1]}) to ({particle_edge.path_index})")
+      # remove edge particle
+      if (loc_1, loc_2, path_index) in self.particle_edges:
+        del self.particle_edges[(loc_1, loc_2, path_index)]
+      else:
+        del self.particle_edges[(loc_2, loc_1, path_index)]
+      print(f"removed edge particle {loc_1} -> {loc_2} ({path_index})")
     elif isinstance(particle, Particle_Label):
       del self.particle_labels[particle.label]
 
