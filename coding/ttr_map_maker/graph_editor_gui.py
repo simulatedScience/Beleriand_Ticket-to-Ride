@@ -467,11 +467,12 @@ class Graph_Editor_GUI:
         position=new_position,
         rotation=new_rotation)
     if new_color != particle_edge.color:
-      self.particle_graph.update_path_color(particle_edge, particle_edge.color)
+      old_color = particle_edge.color
       for connected_edge in get_edge_connected_particles(particle_edge)[0][1:-1]:
         connected_edge.set_adjustable_settings(
           self.ax,
           color=new_color)
+      self.particle_graph.update_path_color(particle_edge, old_color)
     self.canvas.draw_idle()
 
   def delete_edge(self, particle_edge: Particle_Edge, reposition_edges: bool = True) -> None:

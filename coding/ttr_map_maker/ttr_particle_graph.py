@@ -495,8 +495,8 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
         base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
     """
-    if self.analysis_graph is None:
-      self.init_analysis_graph()
+    # if self.analysis_graph is None:
+    self.init_analysis_graph()
 
     edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_random_shortest_task_paths_edge_counts()
     if len(edge_weights) == 0:
@@ -529,8 +529,8 @@ class TTR_Particle_Graph:
         alpha_multiplier (float, optional): transparency multiplier. Defaults to 1.0.
         base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
     """
-    if self.analysis_graph is None:
-      self.init_analysis_graph()
+    # if self.analysis_graph is None:
+    self.init_analysis_graph()
 
     edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_edge_importance()
     if len(edge_weights) == 0:
@@ -568,8 +568,8 @@ class TTR_Particle_Graph:
         grid_color (str, optional): color of the grid. Defaults to None (no grid).
         base_color (str, optional): base color for the gradients. This is only used for the edge importance (6.)and task visualisation (9.). Defaults to "#cc00cc" (pink).
     """
-    if self.analysis_graph is None:
-      self.init_analysis_graph()
+    # if self.analysis_graph is None:
+    self.init_analysis_graph()
 
     # plot node degree distribution
     self.analysis_graph.plot_node_degree_distribution(ax=axs[0, 0], grid_color=grid_color)
@@ -735,6 +735,7 @@ class TTR_Particle_Graph:
       loc_2 = particle_edge.location_2_name
       if path[0] == loc_1 and path[1] == loc_2 and path[3] == old_color:
         self.paths[i] = (loc_1, loc_2, path[2], particle_edge.color)
+        print(f"updated path {loc_1} <-> {loc_2} from {old_color} to {particle_edge.color}")
         break
 
   def build_paths(self) -> None:
