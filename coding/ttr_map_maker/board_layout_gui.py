@@ -1395,10 +1395,14 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       self.graph_edit_mode_enabled.set(False)
+    movability_tk_variables = [
+        self.move_nodes_enabled,
+        self.move_labels_enabled,
+        self.move_edges_enabled]
     if not self.graph_edit_mode_enabled.get(): # disable graph edit mode
-      self.move_nodes_enabled.set(False)
-      self.move_labels_enabled.set(False)
-      self.move_edges_enabled.set(False)
+      
+      for tk_variable in movability_tk_variables:
+        tk_variable.set(False)
 
       self.graph_edit_frame.grid_remove()
       self.highlighted_particles = list()
@@ -1416,42 +1420,7 @@ class Board_Layout_GUI:
         sticky="nsew",
         pady=(0, self.grid_pad_y))
     self.graph_edit_frame.columnconfigure(0, weight=1)
-    row_index = 0
-    # create frame for graph edit buttons
-    graph_edit_buttons_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
-    self.add_frame_style(graph_edit_buttons_frame)
-    graph_edit_buttons_frame.grid(
-        row=row_index,
-        column=0,
-        sticky="new",
-        pady=(0, self.grid_pad_y))
-    row_index += 1
-    # TODO: potentially replace this label with a submenu button
-    graph_edit_headline: tk.Label = tk.Label(
-        graph_edit_buttons_frame,
-        text="Graph editing controls",
-        justify="left",
-        anchor="w",)
-    self.add_label_style(graph_edit_headline, font_type="bold")
-    graph_edit_headline.grid(
-        row=0,
-        column=0,
-        columnspan=4,
-        sticky="new",
-        padx=self.grid_pad_x,
-        pady=self.grid_pad_y)
-    self.create_static_edit_buttons(graph_edit_buttons_frame)
-    # create frame to show particle settings of selected particle
-    self.particle_settings_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
-    self.add_frame_style(self.particle_settings_frame)
-    self.particle_settings_frame.grid(
-        row=row_index,
-        column=0,
-        sticky="new",
-        pady=(0, self.grid_pad_y))
-    self.particle_settings_frame.columnconfigure(0, weight=1)
-    self.particle_settings_frame.columnconfigure(1, weight=1)
-    row_index += 1
+    # TODO: refactor: move all code for graph edit mode to `graph_editor_ui` class
     self.graph_editor_ui: Graph_Editor_GUI = Graph_Editor_GUI(
         self.color_config,
         grid_padding=(self.grid_pad_x, self.grid_pad_y),
@@ -1464,126 +1433,11 @@ class Board_Layout_GUI:
           "add_radiobutton_style": self.add_radiobutton_style,
           "add_browse_button": self.add_browse_button,
         },
+        movability_tk_variables=movability_tk_variables,
         particle_graph=self.particle_graph,
-        settings_frame=self.particle_settings_frame,
+        graph_edit_frame=self.graph_edit_frame,
         ax=self.ax,
         canvas=self.canvas)
-    
-  def create_static_edit_buttons(self, button_frame: tk.Frame) -> None:
-    """
-    Create static buttons for graph editing.
-    Add buttons to:
-    - add a node
-    - add an edge
-    Add toggles to enable moving
-    - nodes
-    - edges
-    - labels
-
-    Args:
-        button_frame (tk.Frame): Frame to add the buttons to.
-    """
-    def add_particle_move_toggle(
-        particle_type: str,
-        row_index: int,
-        column_index: int,
-        toggle_var: tk.BooleanVar) -> None:
-      """
-      Add toggle to enable moving of a particle type.
-
-      Args:
-          particle_type (str): Type of particle to move.
-          row_index (int): Row index to add the toggle to.
-          column_index (int): Column index to add the toggle to.
-          toggle_var (tk.BooleanVar): Variable to store the toggle state.
-          toggle_command (Callable): Command to execute when the toggle is changed.
-      """
-      particle_move_toggle: tk.Checkbutton = tk.Checkbutton(
-          button_frame,
-          text=particle_type,
-          variable=toggle_var,
-          command=self.toggle_move_particle_type)
-      self.add_checkbutton_style(particle_move_toggle)
-      particle_move_toggle.grid(
-          row=row_index,
-          column=column_index,
-          sticky="new",
-          padx=(self.grid_pad_x, 0),
-          pady=(0, self.grid_pad_y))
-
-    for i in range(1,4):
-      button_frame.columnconfigure(i, weight=1)
-
-    row_index = 1
-    add_particle_frame: tk.Frame = tk.Frame(button_frame)
-    self.add_frame_style(add_particle_frame)
-    add_particle_frame.grid(
-        row=row_index,
-        column=0,
-        sticky="nsew",
-        columnspan=4,)
-    add_particle_frame.columnconfigure(0, weight=1)
-    add_particle_frame.columnconfigure(1, weight=1)
-    add_node_button: tk.Button = tk.Button(
-        add_particle_frame,
-        text="Add node",
-        command=self.add_node)
-    self.add_button_style(add_node_button)
-    add_node_button.grid(
-        row=0,
-        column=0,
-        sticky="new",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
-    row_index += 1
-    add_edge_button: tk.Button = tk.Button(
-        add_particle_frame,
-        text="Add edge",
-        command=self.add_edge)
-    self.add_button_style(add_edge_button)
-    add_edge_button.grid(
-        row=0,
-        column=1,
-        sticky="new",
-        padx=(0, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
-
-    column_index = 0
-    move_particle_label: tk.Label = tk.Label(button_frame, text="Move:")
-    self.add_label_style(move_particle_label)
-    move_particle_label.grid(
-        row=row_index,
-        column=column_index,
-        sticky="nw",
-        padx=(self.grid_pad_x, 0),
-        pady=(0, self.grid_pad_y))
-    column_index += 1
-    add_particle_move_toggle("nodes", row_index, column_index, self.move_nodes_enabled)
-    column_index += 1
-    add_particle_move_toggle("edges", row_index, column_index, self.move_edges_enabled)
-    column_index += 1
-    add_particle_move_toggle("labels", row_index, column_index, self.move_labels_enabled)
-    column_index += 1
-
-  def add_node(self) -> None:
-    """
-    Add a node to the graph.
-    """
-    pass
-
-  def add_edge(self) -> None:
-    """
-    Add an edge to the graph.
-    """
-    pass
-
-  def toggle_move_particle_type(self) -> None:
-    """
-    Set movability of all particle types to the current settings.
-    """
-    self.particle_graph.toggle_move_nodes(self.move_nodes_enabled.get())
-    self.particle_graph.toggle_move_labels(self.move_labels_enabled.get())
-    self.particle_graph.toggle_move_edges(self.move_edges_enabled.get())
 
 
   def init_animation(self):

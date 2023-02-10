@@ -71,14 +71,14 @@ class TTR_Particle_Graph:
     """
     Create the particle system from the given locations and paths connecting them.
     """
-    particle_id = self.max_particle_id + 1
-    self.label_height_scale = Particle_Label.get_label_height_scale()
-    n_nodes = len(self.node_labels)
-    for i, label in enumerate(self.node_labels):
+    particle_id: int = self.max_particle_id + 1
+    self.label_height_scale: float = Particle_Label.get_label_height_scale()
+    n_nodes: int = len(self.node_labels)
+    for path_index, label in enumerate(self.node_labels):
       if self.node_positions is not None:
         position = self.node_positions[label]
       else:
-        position = np.array([3*i, 0], dtype=np.float64)
+        position = np.array([3*path_index, 0], dtype=np.float64)
       self.particle_nodes[label] = Particle_Node(
           label,
           id=particle_id,
@@ -109,36 +109,7 @@ class TTR_Particle_Graph:
 
     # create edges and add connections between particles
     for (location_1, location_2, length, color) in self.paths:
-      node_1: Graph_Particle = self.particle_nodes[location_1]
-      node_2: Graph_Particle = self.particle_nodes[location_2]
-      last_particle: Graph_Particle = node_1 # connect the first edge particle to the first node
-      # create `length` edge particles between `node_1` and `node_2``
-      for i in range(length):
-        edge_position: np.ndarray = node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
-        edge_rotation: float = np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
-        edge_particle: Graph_Particle = Particle_Edge(
-            color=color,
-            location_1_name=location_1,
-            location_2_name=location_2,
-            id=particle_id,
-            path_index=i,
-            position=edge_position,
-            rotation=edge_rotation,
-            mass=self.particle_parameters["edge_mass"],
-            node_attraction=self.particle_parameters["edge-node"],
-            edge_attraction=self.particle_parameters["edge-edge"],
-            interaction_radius=self.particle_parameters["interaction_radius"],
-            velocity_decay=self.particle_parameters["velocity_decay"],
-            repulsion_strength=self.particle_parameters["repulsion_strength"],)
-        edge_particle.add_connected_particle(last_particle)
-        if i >= 1: # if not the first edge particle, add connection to previous edge particle
-          last_particle.add_connected_particle(edge_particle)
-        self.particle_edges[(location_1, location_2, i)] = edge_particle
-        last_particle = edge_particle
-        particle_id += 1
-      # connect last edge particle to node_2
-      last_particle.add_connected_particle(node_2)
-      self.max_particle_id = particle_id
+      self.add_connection(location_1, location_2, length, color)
     
     del self.node_positions
     del self.node_labels
@@ -247,7 +218,7 @@ class TTR_Particle_Graph:
     Returns:
         list: list of location labels
     """
-    return self.particle_nodes
+    return list(self.particle_nodes.keys())
 
   def get_paths(self) -> list:
     """
@@ -618,6 +589,7 @@ class TTR_Particle_Graph:
     self.draw_labels(ax=axs[2, 2])
     self.draw_tasks(ax=axs[2, 2], alpha=1, base_color=base_color)
 
+
   def init_analysis_graph(self) -> None:
     """
     initialize the analysis graph.
@@ -704,6 +676,50 @@ class TTR_Particle_Graph:
       self.particle_edges[(loc_1, loc_2, path_index)] = particle
     elif isinstance(particle, Particle_Label):
       self.particle_labels[particle.label] = particle
+
+  def add_connection(self, location_1: str, location_2: str, length: int, color: str, ax:plt.Axes = None) -> None:
+    """
+    Add a connection between two locations to the particle graph.
+    This will create a new edge particle and add it to the particle graph.
+
+    Args:
+        location_1 (str): name of the first location
+        location_2 (str): name of the second location
+        length (int): length of the connection
+        color (str): color of the connection
+        ax (plt.Axes, optional): axis to draw the connection on. Defaults to None (no drawing)
+    """
+    node_1: Graph_Particle = self.particle_nodes[location_1]
+    node_2: Graph_Particle = self.particle_nodes[location_2]
+    last_particle: Graph_Particle = node_1 # connect the first edge particle to the first node
+    # create `length` edge particles between `node_1` and `node_2``
+    for path_index in range(length):
+      edge_position: np.ndarray = node_1.position + (node_2.position - node_1.position) * (path_index+1) / (length+1)
+      edge_rotation: float = np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
+      edge_particle: Graph_Particle = Particle_Edge(
+          color=color,
+          location_1_name=location_1,
+          location_2_name=location_2,
+          id=self.max_particle_id,
+          path_index=path_index,
+          position=edge_position,
+          rotation=edge_rotation,
+          mass=self.particle_parameters["edge_mass"],
+          node_attraction=self.particle_parameters["edge-node"],
+          edge_attraction=self.particle_parameters["edge-edge"],
+          interaction_radius=self.particle_parameters["interaction_radius"],
+          velocity_decay=self.particle_parameters["velocity_decay"],
+          repulsion_strength=self.particle_parameters["repulsion_strength"],)
+      edge_particle.add_connected_particle(last_particle)
+      if path_index >= 1: # if not the first edge particle, add connection to previous edge particle
+        last_particle.add_connected_particle(edge_particle)
+      self.particle_edges[(location_1, location_2, path_index)] = edge_particle
+      last_particle = edge_particle
+      self.max_particle_id += 1
+      if ax is not None:
+        edge_particle.draw(ax)
+    # connect last edge particle to node_2
+    last_particle.add_connected_particle(node_2)
 
 
   def delete_node(self, particle_node: Particle_Node) -> None:

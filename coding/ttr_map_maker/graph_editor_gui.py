@@ -25,10 +25,11 @@ from particle_edge import Particle_Edge
 class Graph_Editor_GUI:
   def __init__(self,
       color_config: dict[str, str],
-      tk_config_methods: dict[str, Callable],
       grid_padding: Tuple[float, float],
+      tk_config_methods: dict[str, Callable],
+      movability_tk_variables: List[tk.BooleanVar],
       particle_graph: TTR_Particle_Graph,
-      settings_frame: tk.Frame,
+      graph_edit_frame: tk.Frame,
       ax: plt.Axes,
       canvas: FigureCanvasTkAgg,
       max_pick_range: float = 2.,
@@ -45,14 +46,15 @@ class Graph_Editor_GUI:
             - `add_checkbutton_style(checkbutton: tk.Checkbutton)
             - `add_radiobutton_style(radiobutton: tk.Radiobutton)
             - `add_browse_button(frame: tk.Frame, row_index: int, column_index: int, command: Callable) -> tk.Button`
+        movability_tk_variables: List of tkinter boolean variables that control the movability of the particles.
         particle_graph: The particle graph to edit.
-        settings_frame: The tkinter frame where the particle settings are displayed.
+        graph_edit_frame: The tkinter frame where the edit mode widgets are displayed.
         ax: The matplotlib Axes object where the particle graph is displayed.
         canvas: the tkinter canvas where the mpl figure is shown
         max_pick_range: The maximum distance from a particle to the click event to still consider it as a click on the particle.
     """
     self.particle_graph: TTR_Particle_Graph = particle_graph
-    self.settings_frame: tk.Frame = settings_frame
+    self.graph_edit_frame: tk.Frame = graph_edit_frame
     self.ax: plt.Axes = ax
     self.canvas: FigureCanvasTkAgg = canvas
 
@@ -72,6 +74,10 @@ class Graph_Editor_GUI:
     self.add_radiobutton_style: Callable = tk_config_methods["add_radiobutton_style"]
     self.add_browse_button: Callable = tk_config_methods["add_browse_button"]
 
+    self.move_nodes_enabled = movability_tk_variables[0]
+    self.move_labels_enabled = movability_tk_variables[1]
+    self.move_edges_enabled = movability_tk_variables[2]
+
     self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
     self.selected_particle: Graph_Particle = None # particle for which settings are displayed
     self.preselected_particle: Graph_Particle = None # intermediate variable to store selected particle between pick and release events
@@ -79,7 +85,441 @@ class Graph_Editor_GUI:
     self.pick_event_cid: int = None # connection id for pick event
     self.release_event_cid: int = None # connection id for release event
 
+    self.add_node_mode: bool = False # flag to indicate if a node is being added
+    self.add_edge_mode: bool = False # flag to indicate if an edge is being added
+
+    self.init_graph_edit_mode()
+
+
+  def init_graph_edit_mode(self):
+    """
+    Create the static edit buttons for the graph edit mode.
+    """
+    row_index = 0
+    # create frame for graph edit buttons
+    graph_edit_buttons_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
+    self.add_frame_style(graph_edit_buttons_frame)
+    graph_edit_buttons_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    graph_edit_headline: tk.Label = tk.Label(
+        graph_edit_buttons_frame,
+        text="Graph editing controls",
+        justify="left",
+        anchor="w",)
+    self.add_label_style(graph_edit_headline, font_type="bold")
+    graph_edit_headline.grid(
+        row=0,
+        column=0,
+        columnspan=4,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    self.create_static_edit_buttons(graph_edit_buttons_frame)
+    # create frame to show particle settings of selected particle
+    self.settings_frame: tk.Frame = tk.Frame(self.graph_edit_frame)
+    self.add_frame_style(self.settings_frame)
+    self.settings_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        pady=(0, self.grid_pad_y))
+    self.settings_frame.columnconfigure(0, weight=1)
+    self.settings_frame.columnconfigure(1, weight=1)
+    row_index += 1
     self.bind_mouse_events()
+
+  def create_static_edit_buttons(self, button_frame: tk.Frame) -> None:
+    """
+    Create static buttons for graph editing.
+    Add buttons to:
+    - add a node
+    - add an edge
+    Add toggles to enable moving
+    - nodes
+    - edges
+    - labels
+
+    Args:
+        button_frame (tk.Frame): Frame to add the buttons to.
+    """
+    def add_particle_move_toggle(
+        particle_type: str,
+        row_index: int,
+        column_index: int,
+        toggle_var: tk.BooleanVar) -> None:
+      """
+      Add toggle to enable moving of a particle type.
+
+      Args:
+          particle_type (str): Type of particle to move.
+          row_index (int): Row index to add the toggle to.
+          column_index (int): Column index to add the toggle to.
+          toggle_var (tk.BooleanVar): Variable to store the toggle state.
+          toggle_command (Callable): Command to execute when the toggle is changed.
+      """
+      particle_move_toggle: tk.Checkbutton = tk.Checkbutton(
+          button_frame,
+          text=particle_type,
+          variable=toggle_var,
+          command=self.toggle_move_particle_type)
+      self.add_checkbutton_style(particle_move_toggle)
+      particle_move_toggle.grid(
+          row=row_index,
+          column=column_index,
+          sticky="new",
+          padx=(self.grid_pad_x, 0),
+          pady=(0, self.grid_pad_y))
+
+    for i in range(1,4):
+      button_frame.columnconfigure(i, weight=1)
+
+    row_index = 1
+    add_particle_frame: tk.Frame = tk.Frame(button_frame)
+    self.add_frame_style(add_particle_frame)
+    add_particle_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        columnspan=4,)
+    add_particle_frame.columnconfigure(0, weight=1)
+    add_particle_frame.columnconfigure(1, weight=1)
+    add_node_button: tk.Button = tk.Button(
+        add_particle_frame,
+        text="Add node",
+        command=self.start_node_adding_mode)
+    self.add_button_style(add_node_button)
+    add_node_button.grid(
+        row=0,
+        column=0,
+        sticky="new",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    row_index += 1
+    add_edge_button: tk.Button = tk.Button(
+        add_particle_frame,
+        text="Add edge",
+        command=self.start_edge_adding_mode)
+    self.add_button_style(add_edge_button)
+    add_edge_button.grid(
+        row=0,
+        column=1,
+        sticky="new",
+        padx=(0, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
+
+    column_index = 0
+    move_particle_label: tk.Label = tk.Label(button_frame, text="Move:")
+    self.add_label_style(move_particle_label)
+    move_particle_label.grid(
+        row=row_index,
+        column=column_index,
+        sticky="nw",
+        padx=(self.grid_pad_x, 0),
+        pady=(0, self.grid_pad_y))
+    column_index += 1
+    add_particle_move_toggle("nodes", row_index, column_index, self.move_nodes_enabled)
+    column_index += 1
+    add_particle_move_toggle("edges", row_index, column_index, self.move_edges_enabled)
+    column_index += 1
+    add_particle_move_toggle("labels", row_index, column_index, self.move_labels_enabled)
+    column_index += 1
+
+  def start_node_adding_mode(self) -> None:
+    """
+    Add a node to the graph. This initiates a two-step process:
+    1. A new node is created and attached to the mouse cursor.
+    2. Upon clicking on the plot, the node is placed there and the user is prompted to enter a location name.
+    3. (Automatic) Once the location name is entered, the node and corresponding label are added to the graph.
+    """
+    self.add_node_mode: bool = True
+    self.unbind_mouse_events()
+
+
+  def start_edge_adding_mode(self) -> None:
+    """
+    Add an edge to the graph. This initiates a two-step process:
+    1. Enter node selection mode. The user can select two nodes by clicking on them. Clicking on a node that is already selected deselects it.
+    2. When selecting the second node, the user is prompted to enter a length for the connection.
+    3, (Automatic) Once the length is entered, the edge is added to the graph with the default color.
+    """
+    self.clear_selection()
+    self.add_edge_mode: bool = True
+    self.add_edge_node_indices: List[int] = [0, 0] # indices of the nodes to connect
+    self.add_edge_node_widgets: List[tk.Widget] = []
+    self.new_edge_length: tk.IntVar = tk.IntVar(value=3, name="new_edge_length")
+    self.new_edge_color_index: tk.IntVar = None
+    self.node_names: List[str] = ["None"] + sorted(self.particle_graph.get_locations())
+
+    row_index: int = 0
+    # display instructions in the settings frame
+    edge_adding_headline = tk.Label(self.settings_frame, text="Edge adding mode:")
+    self.add_label_style(edge_adding_headline, font_type="bold")
+    edge_adding_headline.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nw",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    row_index += 1
+    edge_adding_instructions = tk.Label(self.settings_frame, text="Click on two nodes to\nconnect them with an edge.", justify="left")
+    self.add_label_style(edge_adding_instructions)
+    edge_adding_instructions.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nw",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    # prepare displaying selected nodes
+    for i in range(2):
+      selected_node_label = tk.Label(self.settings_frame, text=f"Node {i + 1}:")
+      self.add_label_style(selected_node_label)
+      selected_node_label.grid(
+          row=row_index + i,
+          column=0,
+          sticky="nw",
+          padx=self.grid_pad_x,
+          pady=(0, self.grid_pad_y))
+      node_selector_frame = tk.Frame(self.settings_frame)
+      self.add_frame_style(node_selector_frame)
+      node_selector_frame.grid(
+          row=row_index + i,
+          column=1,
+          sticky="w",
+          padx=(0, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
+      # display the name of the currently selected node
+      selected_node_indicator = tk.Label(node_selector_frame, text="None", width = max([len(name) for name in self.node_names]), cursor="hand2")
+      self.add_label_style(selected_node_indicator, font_type="italic")
+      selected_node_indicator.grid(
+          row=row_index + i,
+          column=1,
+          sticky="w",
+          padx=0,
+          pady=(0, self.grid_pad_y))
+      self.add_edge_node_widgets.append(selected_node_indicator)
+      # add bindings to change text of the label (mousewheel and buttons)
+      selected_node_indicator.bind(
+          "<MouseWheel>",
+          func = lambda event, location_indicator_index=i: 
+              self.change_node_label(event.delta, location_indicator_index))
+      selected_node_indicator.bind(
+          "<Button-1>",
+          func = lambda event, location_indicator_index=i:
+              self.change_node_label(-1, location_indicator_index))
+      selected_node_indicator.bind(
+          "<Button-3>",
+          func = lambda event, location_indicator_index=i:
+              self.change_node_label(1, location_indicator_index))
+      # add arrow buttons to change the selected node
+      left_arrow_button = self.add_arrow_button("left", node_selector_frame, lambda location_indicator_index=i: self.change_node_label(-1, location_indicator_index))
+      left_arrow_button.grid(
+          row=row_index + i,
+          column=0,
+          sticky="e",
+          padx=0,
+          pady=0)
+      right_arrow_button = self.add_arrow_button("right", node_selector_frame, lambda location_indicator_index=i: self.change_node_label(1, location_indicator_index))
+      right_arrow_button.grid(
+          row=row_index + i,
+          column=2,
+          sticky="w",
+          padx=0,
+          pady=0)
+    row_index += 2
+
+    # add input for the edge length
+    edge_length_label = tk.Label(self.settings_frame, text="Edge length:")
+    self.add_label_style(edge_length_label)
+    edge_length_label.grid(
+        row=row_index,
+        column=0,
+        sticky="nw",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y))
+    edge_length_input_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(edge_length_input_frame)
+    edge_length_input_frame.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    edge_length_input = tk.Label(edge_length_input_frame, width=5, justify="center", textvariable=self.new_edge_length, cursor="hand2")
+    self.add_label_style(edge_length_input, font_type="italic")
+    edge_length_input.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=0,
+        pady=0)
+    # add bindings to change text of the label (mousewheel and buttons)
+    edge_length_input.bind(
+        "<MouseWheel>",
+        func = lambda event: self.change_edge_length(event.delta))
+    edge_length_input.bind(
+        "<Button-1>",
+        func = lambda event: self.change_edge_length(1))
+    edge_length_input.bind(
+        "<Button-3>",
+        func = lambda event: self.change_edge_length(-1))
+    # add arrow buttons to change the edge length
+    left_arrow_button = self.add_arrow_button("left", edge_length_input_frame, lambda: self.change_edge_length(-1))
+    left_arrow_button.grid(
+        row=row_index,
+        column=0,
+        sticky="e",
+        padx=0,
+        pady=0)
+    right_arrow_button = self.add_arrow_button("right", edge_length_input_frame, lambda: self.change_edge_length(1))
+    right_arrow_button.grid(
+        row=row_index,
+        column=2,
+        sticky="w",
+        padx=0,
+        pady=0)
+    row_index += 1
+
+    # add input for the edge color
+    self.new_edge_color_index: tk.IntVar = self.add_edge_color_setting(color=len(self.edge_color_list) - 1, row_index=row_index)
+    row_index += 1
+
+    # add button to add the edge or abort the process
+    buttons_frame = tk.Frame(self.settings_frame)
+    self.add_frame_style(buttons_frame)
+    buttons_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y))
+    buttons_frame.grid_columnconfigure(0, weight=1)
+    buttons_frame.grid_columnconfigure(1, weight=1)
+    # add button to add the edge
+    add_edge_button = tk.Button(buttons_frame, text="Add edge", command=self.add_connection)
+    self.add_button_style(add_edge_button)
+    add_edge_button.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y))
+    # add button to abort the process
+    abort_button = tk.Button(buttons_frame, text="Abort", command=self.abort_edge_adding)
+    self.add_button_style(abort_button)
+    abort_button.config(
+        bg=self.color_config["delete_button_bg_color"],
+        fg=self.color_config["delete_button_fg_color"])
+    abort_button.grid(
+        row=row_index,
+        column=1,
+        sticky="new",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+
+
+  def change_node_label(self, change_direction: int, location_indicator_index: int) -> None:
+    """
+    change the label of the selected location
+    First change the index variable by `change_direction` (+-1), then update the label text to the corresponding location name.
+
+    Args:
+        change_direction (int): direction of the color change (+-1)
+        location_indicator_index (int): index of the location indicator to change
+    """
+    # remove highlight from the current node
+    if change_direction != 0:
+      current_node_name = self.node_names[self.add_edge_node_indices[location_indicator_index]]
+      if current_node_name != "None":
+        self.particle_graph.particle_nodes[current_node_name].remove_highlight(self.ax)
+
+    if change_direction < 0:
+      self.add_edge_node_indices[location_indicator_index] = (self.add_edge_node_indices[location_indicator_index] + 1) % len(self.node_names)
+      # skip a node if it is already selected (except None)
+      if self.add_edge_node_indices[location_indicator_index] == self.add_edge_node_indices[(location_indicator_index + 1) % 2] and \
+          self.add_edge_node_indices[location_indicator_index] != 0: # don't skip None (index 0)
+        self.add_edge_node_indices[location_indicator_index] = (self.add_edge_node_indices[location_indicator_index] + 1) % len(self.node_names)
+    elif change_direction > 0:
+      self.add_edge_node_indices[location_indicator_index] = (self.add_edge_node_indices[location_indicator_index] - 1) % len(self.node_names)
+      # skip a node if it is already selected (except None)
+      if self.add_edge_node_indices[location_indicator_index] == self.add_edge_node_indices[(location_indicator_index + 1) % 2] and \
+          self.add_edge_node_indices[location_indicator_index] != 0:  # don't skip None (index 0)
+        self.add_edge_node_indices[location_indicator_index] = (self.add_edge_node_indices[location_indicator_index] - 1) % len(self.node_names)
+    else:
+      return
+    # update the label text
+    self.add_edge_node_widgets[location_indicator_index].config(text=self.node_names[self.add_edge_node_indices[location_indicator_index]])
+    # highlight the node corresponding to the new label
+    current_node_name = self.node_names[self.add_edge_node_indices[location_indicator_index]]
+    if current_node_name != "None":
+      self.particle_graph.particle_nodes[current_node_name].highlight(self.ax)
+    self.canvas.draw_idle()
+
+  def change_edge_length(self, change_direction: int) -> None:
+    """
+    Change the length of the new edge by `change_direction` (+-1).
+
+    Args:
+        change_direction (int): direction of the color change (+-1)
+    """
+    current_value = int(self.new_edge_length.get())
+    if change_direction > 0:
+      self.new_edge_length.set(str(current_value + 1))
+    elif change_direction < 0 and current_value > 1:
+      self.new_edge_length.set(str(current_value - 1))
+    else:
+      return
+
+  def add_connection(self) -> None:
+    """
+    Add the new edge to the graph.
+    """
+    # get connection properties
+    node_names = [self.node_names[i] for i in self.add_edge_node_indices]
+    edge_length = int(self.new_edge_length.get())
+    edge_color = self.edge_color_list[self.new_edge_color_index.get()]
+    # add the edge to the graph
+    self.particle_graph.add_connection(*node_names, edge_length, edge_color, ax=self.ax)
+    # abort the edge adding process
+    self.abort_edge_adding() # this also redraws the canvas
+  
+  def abort_edge_adding(self) -> None:
+    """
+    Abort the edge adding process.
+    """
+    # remove the highlight from the nodes
+    for node_index in self.add_edge_node_indices:
+      node_name = self.node_names[node_index]
+      if node_name != "None":
+        self.particle_graph.particle_nodes[node_name].remove_highlight(self.ax)
+    # hide the edge adding widgets
+    for widget in self.settings_frame.winfo_children():
+      widget.destroy()
+    # delete the edge adding variables
+    del self.add_edge_node_indices
+    del self.add_edge_node_widgets
+    del self.new_edge_length
+    del self.new_edge_color_index
+    del self.node_names
+    self.add_edge_mode: bool = False
+    # redraw the canvas
+    self.canvas.draw_idle()
+
+
+  def toggle_move_particle_type(self) -> None:
+    """
+    Set movability of all particle types to the current settings.
+    """
+    self.particle_graph.toggle_move_nodes(self.move_nodes_enabled.get())
+    self.particle_graph.toggle_move_labels(self.move_labels_enabled.get())
+    self.particle_graph.toggle_move_edges(self.move_edges_enabled.get())
 
 
   def bind_mouse_events(self):
@@ -120,6 +560,9 @@ class Graph_Editor_GUI:
     if particle is None or particle == self.selected_particle:
       self.clear_selection()
       self.canvas.draw_idle()
+      if self.add_edge_mode:
+        delete_index = len(self.add_edge_node_indices) - 1
+        self.add_edge_node_widgets[delete_index].set_text("None")
       return
     
     # select clicked particle
@@ -164,13 +607,25 @@ class Graph_Editor_GUI:
     # select particle and highlight it
     self.selected_particle = particle
     particle.highlight(ax=self.ax, highlight_color=highlight_color)
-    # show settings
-    if isinstance(particle, Particle_Node):
-      self.show_node_settings(particle)
-    elif isinstance(particle, Particle_Label):
-      self.show_label_settings(particle)
-    elif isinstance(particle, Particle_Edge):
-      self.show_edge_settings(particle)
+    if not self.add_edge_mode: # handle clicks in edge adding mode separately
+      # show settings
+      if isinstance(particle, Particle_Node):
+        self.show_node_settings(particle)
+      elif isinstance(particle, Particle_Label):
+        self.show_label_settings(particle)
+      elif isinstance(particle, Particle_Edge):
+        self.show_edge_settings(particle)
+    else: # add edge mode
+      self.add_edge_node_selection(particle)
+
+
+  def add_edge_node_selection(self, particle: Graph_Particle):
+    """
+    Handle clicks in edge adding mode. Set the node indicator to the clicked node. If it was the second click, add an edge length setting.
+
+    Args:
+        particle (Graph_Particle): The particle that was clicked.
+    """
 
 
   def clear_selection(self):
@@ -434,7 +889,7 @@ class Graph_Editor_GUI:
     node_label_var = self.add_label_setting("Label", node_settings["label"], row_index)
     row_index += 1
     # node image
-    node_image_path_var = self.add_node_image_setting("Node image", node_settings["image_file_path"], row_index)
+    node_image_path_var = self.add_node_image_setting("Node image", node_settings["image_file_path"], row_index, width=15)
     row_index += 1
 
     # add edge buttons (apply & delete)
@@ -522,9 +977,10 @@ class Graph_Editor_GUI:
     label_input_frame.grid(
         row=row_index,
         column=1,
-        sticky="w",
+        sticky="ew",
         padx=(0, self.grid_pad_x),
         pady=self.grid_pad_y)
+    label_input_frame.columnconfigure(1, weight=1)
     # label input
     label_input = tk.Entry(label_input_frame, textvariable=image_path_var, width=width)
     self.add_entry_style(label_input)
@@ -544,7 +1000,7 @@ class Graph_Editor_GUI:
     browse_button.grid(
         row=0,
         column=1,
-        sticky="w",
+        sticky="e",
         padx=0,
         pady=0)
     return image_path_var
@@ -705,18 +1161,21 @@ class Graph_Editor_GUI:
     self.canvas.draw_idle()
 
 
-  def add_edge_color_setting(self, color: str, row_index: int) -> tk.IntVar:
+  def add_edge_color_setting(self, color, row_index: int) -> tk.IntVar:
     """
     Add a color settings to the settings frame in the specified row.
 
     Args:
-        rotation (float): The rotation to display.
+        color (str) or (int): The color to display or its index in `self.edge_color_list`.
         row_index (int): row index where to show the widgets.
 
     Returns:
         (tk.IntVar): tk variable for the index of the particle's color in `self.edge_color_list`
     """
-    edge_color_index_var = tk.IntVar(value=self.edge_color_list.index(color))
+    if isinstance(color, str):
+      edge_color_index_var = tk.IntVar(value=self.edge_color_list.index(color))
+    elif isinstance(color, int):
+      edge_color_index_var = tk.IntVar(value=color)
 
     # color label
     edge_color_label = tk.Label(self.settings_frame, text="Edge color")
@@ -787,11 +1246,11 @@ class Graph_Editor_GUI:
         func = lambda event, tk_var=edge_color_index_var, tk_widget=color_display_label:
             self.change_widget_color(1, tk_var, tk_widget))
     # left color change arrow (same as right click/ scroll up)
-    left_color_change_button = tk.Button(
+    left_color_change_button = self.add_arrow_button(
+        "left",
         color_selector_frame,
-        text="❮",
-        command=lambda: self.change_widget_color(1, edge_color_index_var, color_display_label))
-    self.add_button_style(left_color_change_button)
+        lambda: self.change_widget_color(1, edge_color_index_var, color_display_label)
+    )
     left_color_change_button.grid(
         row=0,
         column=0,
@@ -800,11 +1259,11 @@ class Graph_Editor_GUI:
         pady=0,
     )
     # right color change arrow (same as left click/ scroll down)
-    right_color_change_button = tk.Button(
+    right_color_change_button = self.add_arrow_button(
+        "right",
         color_selector_frame,
-        text="❯",
-        command=lambda: self.change_widget_color(-1, edge_color_index_var, color_display_label))
-    self.add_button_style(right_color_change_button)
+        lambda: self.change_widget_color(-1, edge_color_index_var, color_display_label)
+    )
     right_color_change_button.grid(
         row=0,
         column=2,
@@ -813,20 +1272,54 @@ class Graph_Editor_GUI:
         pady=0,
     )
     return edge_color_index_var
-
-  def change_widget_color(self, change_dir: int, tk_index_var: tk.IntVar, tk_widget: tk.Widget):
+  
+  def add_arrow_button(self, direction: str, parent_frame: tk.Frame, command: Callable) -> tk.Button:
     """
-    change background color of the given widget according to the current value of the given index variable, the change direction and `self.edge_color_list`.
-    First change the index variable by `change_dir` (+-1), then update the background color to the corresponding color in `self.edge_color_list`.
+    add a button displaying an arrow in the given direction to the given parent frame and bind the command to it.
+    This automatically applies the button style to the button.
 
     Args:
-        change_dir (int): direction of the color change (+-1)
+        direction (str): direction of the arrow (left, right, up, down)
+        parent_frame (tk.Frame): frame to add the button to
+        command (Callable): function to bind to the button
+
+    Returns:
+        (tk.Button): the created button to be placed with a geometry manager
+
+    Raises:
+        ValueError: if the given direction is not one of 'left', 'right', 'up', 'down'
+    """
+    if direction == "left":
+      button_text = "❮"
+    elif direction == "right":
+      button_text = "❯"
+    elif direction == "up":
+      button_text = "︿"
+    elif direction == "down":
+      button_text = "﹀"
+    else:
+      raise ValueError(f"Invalid direction: {direction}. Must be one of 'left', 'right', 'up', 'down'.")
+    button = tk.Button(
+        parent_frame,
+        text=button_text,
+        command=command)
+    self.add_button_style(button)
+    return button
+
+
+  def change_widget_color(self, change_direction: int, tk_index_var: tk.IntVar, tk_widget: tk.Widget):
+    """
+    change background color of the given widget according to the current value of the given index variable, the change direction and `self.edge_color_list`.
+    First change the index variable by `change_direction` (+-1), then update the background color to the corresponding color in `self.edge_color_list`.
+
+    Args:
+        change_direction (int): direction of the color change (+-1)
         tk_index_var (tk.IntVar): color index variable
         tk_widget (tk.Widget): widget of which to change the background color
     """
-    if change_dir < 0:
+    if change_direction < 0:
       tk_index_var.set((tk_index_var.get() + 1) % len(self.edge_color_list))
-    elif change_dir > 0:
+    elif change_direction > 0:
       tk_index_var.set((tk_index_var.get() - 1) % len(self.edge_color_list))
     else:
       return
