@@ -177,6 +177,7 @@ class Graph_Editor_GUI:
     """
     remove highlights from all highlighted particles, reset internal variables and hide particle settings
     """
+    print("clear settings")
     for highlight_particle in self.highlighted_particles:
       highlight_particle.remove_highlight(ax=self.ax)
     self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
@@ -488,6 +489,7 @@ class Graph_Editor_GUI:
     Args:
         particle_node (Particle_Node): The node to delete.
     """
+    self.clear_selection()
     self.particle_graph.delete_node(particle_node)
     self.canvas.draw_idle()
 
@@ -691,6 +693,7 @@ class Graph_Editor_GUI:
         canvas=self.canvas)
 
   def remove_connection(self, particle_edge: Particle_Edge, edge_particles: List[Particle_Edge] = None):
+    self.clear_selection()
     if edge_particles is None:
       edge_particles, *_ = get_edge_connected_particles(particle_edge)
       edge_particles = edge_particles[1:-1]

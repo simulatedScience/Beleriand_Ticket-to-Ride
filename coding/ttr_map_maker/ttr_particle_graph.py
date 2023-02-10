@@ -311,6 +311,7 @@ class TTR_Particle_Graph:
     Args:
         edge_color_map (dict): dictionary mapping edge colors to new colors
     """
+    self.analysis_graph = None
     for particle_edge in self.particle_edges.values():
       if particle_edge.color in edge_color_map.keys():
         particle_edge.color = edge_color_map[particle_edge.color]
@@ -516,8 +517,8 @@ class TTR_Particle_Graph:
         alpha (float, optional): transparency. Defaults to 1.0.
         base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
     """
-    # if self.analysis_graph is None:
-    self.init_analysis_graph()
+    if self.analysis_graph is None:
+      self.init_analysis_graph()
 
     edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_random_shortest_task_paths_edge_counts()
     if len(edge_weights) == 0:
@@ -550,8 +551,8 @@ class TTR_Particle_Graph:
         alpha (float, optional): transparency multiplier. Defaults to 1.0.
         base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
     """
-    # if self.analysis_graph is None:
-    self.init_analysis_graph()
+    if self.analysis_graph is None:
+      self.init_analysis_graph()
 
     edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_edge_importance()
     if len(edge_weights) == 0:
@@ -589,8 +590,8 @@ class TTR_Particle_Graph:
         grid_color (str, optional): color of the grid. Defaults to None (no grid).
         base_color (str, optional): base color for the gradients. This is only used for the edge importance (6.)and task visualisation (9.). Defaults to "#cc00cc" (pink).
     """
-    # if self.analysis_graph is None:
-    self.init_analysis_graph()
+    if self.analysis_graph is None:
+      self.init_analysis_graph()
 
     # plot node degree distribution
     self.analysis_graph.plot_node_degree_distribution(ax=axs[0, 0], grid_color=grid_color)
@@ -622,7 +623,7 @@ class TTR_Particle_Graph:
     initialize the analysis graph.
     """
     self.analysis_graph: TTR_Graph_Analysis = TTR_Graph_Analysis(
-        self.node_labels,
+        list(self.particle_nodes.keys()),
         self.paths,
         self.tasks)
 
@@ -717,6 +718,7 @@ class TTR_Particle_Graph:
     Args:
         particle_node (Particle_Node): node particle to be deleted
     """
+    self.analysis_graph = None
     # delete connected edges
     to_be_deleted: List[Particle_Edge] = []
     # find edges to be deleted (all that are associated with the node)
@@ -758,6 +760,7 @@ class TTR_Particle_Graph:
     Args:
         particle_edge (Particle_Edge): edge particle to be deleted
     """
+    self.analysis_graph = None
     loc_1 = particle_edge.location_1_name
     loc_2 = particle_edge.location_2_name
     path_index = particle_edge.path_index
@@ -819,6 +822,7 @@ class TTR_Particle_Graph:
         particle_edge (Particle_Edge): edge particle whose color has changed
         old_color (str): old color of the path the edge particle belongs to
     """
+    self.analysis_graph = None
     # update path in self.paths
     for i, path in enumerate(self.paths):
       loc_1 = particle_edge.location_1_name
@@ -832,6 +836,7 @@ class TTR_Particle_Graph:
     """
     calculate a list of all paths in the particle graph as tuples (location_1, location_2, length, color) from the list of edges
     """
+    self.analysis_graph = None
     locations_to_lengths = dict()
     for (loc_1, loc_2, min_path_length), edge in self.particle_edges.items():
       temp_key = (loc_1, loc_2, edge.color)
