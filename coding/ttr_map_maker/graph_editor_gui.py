@@ -24,6 +24,7 @@ from particle_edge import Particle_Edge
 
 class Graph_Editor_GUI:
   def __init__(self,
+      master: tk.Tk,
       color_config: dict[str, str],
       grid_padding: Tuple[float, float],
       tk_config_methods: dict[str, Callable],
@@ -36,7 +37,10 @@ class Graph_Editor_GUI:
       edge_color_list: List[str] = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white", "gray"]
       ):
     """
+    Initialize the graph editor GUI. This class handles the editing of particle graphs through a GUI and shows all controls in the given frame `graph_edit_frame`. Changes are made to the given particle graph `particle_graph` and the graph is displayed in the given matplotlib Axes object `ax` and tkinter canvas `canvas`.
+
     Args:
+        master: The tkinter master widget.
         color_config: Dictionary of colors for the UI (see `Board_Layout_GUI`)
         tk_config_methods: Dictionary of methods to configure tkinter widgets (see `Board_Layout_GUI`). These should add styles to the widgets. Expect the following keys:
             - `add_frame_style(frame: tk.Frame)`
@@ -53,6 +57,7 @@ class Graph_Editor_GUI:
         canvas: the tkinter canvas where the mpl figure is shown
         max_pick_range: The maximum distance from a particle to the click event to still consider it as a click on the particle.
     """
+    self.master: tk.Tk = master
     self.particle_graph: TTR_Particle_Graph = particle_graph
     self.graph_edit_frame: tk.Frame = graph_edit_frame
     self.ax: plt.Axes = ax
@@ -93,7 +98,7 @@ class Graph_Editor_GUI:
 
   def init_graph_edit_mode(self):
     """
-    Create the static edit buttons for the graph edit mode.
+    Create the static edit buttons for the graph edit mode and bind a mouse pick event to the canvas.
     """
     row_index = 0
     # create frame for graph edit buttons
@@ -423,6 +428,8 @@ class Graph_Editor_GUI:
         sticky="new",
         padx=(0, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
+    # bind ESC key to abort the process
+    self.master.bind("<Escape>", lambda event: self.abort_edge_adding())
 
 
   def change_node_label(self, change_direction: int, location_indicator_index: int) -> None:
@@ -438,7 +445,9 @@ class Graph_Editor_GUI:
     if change_direction != 0:
       current_node_name = self.node_names[self.add_edge_node_indices[location_indicator_index]]
       if current_node_name != "None":
-        self.particle_graph.particle_nodes[current_node_name].remove_highlight(self.ax)
+        old_node = self.particle_graph.particle_nodes[current_node_name]
+        old_node.remove_highlight(self.ax)
+        self.highlighted_particles.remove(old_node)
 
     if change_direction < 0:
       self.add_edge_node_indices[location_indicator_index] = (self.add_edge_node_indices[location_indicator_index] + 1) % len(self.node_names)
@@ -459,7 +468,9 @@ class Graph_Editor_GUI:
     # highlight the node corresponding to the new label
     current_node_name = self.node_names[self.add_edge_node_indices[location_indicator_index]]
     if current_node_name != "None":
-      self.particle_graph.particle_nodes[current_node_name].highlight(self.ax)
+      new_node = self.particle_graph.particle_nodes[current_node_name]
+      new_node.highlight(self.ax)
+      self.highlighted_particles.append(new_node)
     self.canvas.draw_idle()
 
   def change_edge_length(self, change_direction: int) -> None:
@@ -492,13 +503,18 @@ class Graph_Editor_GUI:
   
   def abort_edge_adding(self) -> None:
     """
-    Abort the edge adding process.
+    Abort the edge adding process:
+    - unbind ESC key
+    - remove the highlight from the nodes
+    - hide the edge adding widgets
+    - delete the edge adding variables
+    - update the canvas
     """
+    # unbind ESC key
+    self.master.unbind("<Escape>")
     # remove the highlight from the nodes
-    for node_index in self.add_edge_node_indices:
-      node_name = self.node_names[node_index]
-      if node_name != "None":
-        self.particle_graph.particle_nodes[node_name].remove_highlight(self.ax)
+    for particle_node in self.highlighted_particles:
+      particle_node.remove_highlight(self.ax)
     # hide the edge adding widgets
     for widget in self.settings_frame.winfo_children():
       widget.destroy()
@@ -557,12 +573,18 @@ class Graph_Editor_GUI:
     particle = find_particle_in_list(artist_center, self.particle_graph.get_particle_list())#, max_pick_range=self.max_pick_range)
     
     # if no particle was clicked or the selected one was clicked again, deselect all particles
-    if particle is None or particle == self.selected_particle:
-      self.clear_selection()
-      self.canvas.draw_idle()
+    if (particle is None or particle in self.highlighted_particles):
       if self.add_edge_mode:
-        delete_index = len(self.add_edge_node_indices) - 1
-        self.add_edge_node_widgets[delete_index].set_text("None")
+        # remove highlight if node was already selected
+        delete_index = self.add_edge_node_indices.index(particle.get_id() + 1)
+        particle.remove_highlight(self.ax)
+        self.highlighted_particles.remove(particle)
+        self.add_edge_node_widgets[delete_index].config(text="None")
+        self.add_edge_node_indices[delete_index] = 0
+      else:
+      # if not self.add_edge_mode:
+        self.clear_selection()
+      self.canvas.draw_idle()
       return
     
     # select clicked particle
@@ -574,11 +596,13 @@ class Graph_Editor_GUI:
   def on_mouse_release(self, event: MouseEvent):
     """
     Handle mouse releases on the matplotlib Axes object.
+    Select the particle that was clicked and update the canvas.
+    Then rebind the mouse click event.
     """
     self.canvas.mpl_disconnect(self.release_event_cid)
     self.release_event_cid = None
     # if a particle was clicked, select it
-    self.select_particle(self.preselected_particle)
+    self.select_particle(self.preselected_particle, add_to_selection=self.add_edge_mode)
     self.preselected_particle = None
     self.canvas.draw_idle()
     self.canvas.mpl_connect("pick_event", self.on_mouse_click)
@@ -593,13 +617,15 @@ class Graph_Editor_GUI:
         add_to_selection (bool, optional): If True, the particle will be added to the current selection. Otherwise the current selection will be replaced. Defaults to False.
         highlight_color (str, optional): The color to highlight the particle with. Defaults to "#cc00cc".
     """
+    if self.add_edge_mode and not isinstance(particle, Particle_Node):
+      return
     if len(self.highlighted_particles) == 0: # no particle was selected yet
       # select clicked particle, show it's settings and highlight it.
       self.highlighted_particles: List[Graph_Particle] = [particle]
     elif add_to_selection:
       # clear settings frame
-      for widget in self.settings_frame.winfo_children():
-        widget.destroy()
+      # for widget in self.settings_frame.winfo_children():
+      #   widget.destroy()
       self.highlighted_particles.append(particle)
     else:
       self.clear_selection() # remove highlights from previous selection
@@ -615,24 +641,46 @@ class Graph_Editor_GUI:
         self.show_label_settings(particle)
       elif isinstance(particle, Particle_Edge):
         self.show_edge_settings(particle)
-    else: # add edge mode
+    elif isinstance(particle, Particle_Node): # add edge mode and particle is a node
       self.add_edge_node_selection(particle)
 
 
-  def add_edge_node_selection(self, particle: Graph_Particle):
+  def add_edge_node_selection(self, particle_node: Particle_Node, highlight_color: str = "#cc00cc"):
     """
     Handle clicks in edge adding mode. Set the node indicator to the clicked node. If it was the second click, add an edge length setting.
 
     Args:
-        particle (Graph_Particle): The particle that was clicked.
+        particle_node (Particle_Node): The particle node that was clicked.
+        highlight_color (str, optional): The color to highlight the particle with. Defaults to "#cc00cc".
     """
+    # find the first empty node indicator
+    if self.add_edge_node_indices[0] == 0:
+      write_index = 0
+    else: # no empty node indicator was found, overwrite the second node indicator
+      if self.add_edge_node_indices[1] != 0: # remove highlight from second node
+        old_node = self.particle_graph.particle_nodes[self.node_names[self.add_edge_node_indices[1]]]
+        self.highlighted_particles.remove(old_node)
+        old_node.remove_highlight(ax=self.ax)
+      write_index = 1
+    # set node indicator to node name
+    self.add_edge_node_widgets[write_index].config(text=particle_node.label)
+    # add node to edge node list
+    self.add_edge_node_indices[write_index] = self.node_names.index(particle_node.label)
+
 
 
   def clear_selection(self):
     """
     remove highlights from all highlighted particles, reset internal variables and hide particle settings
     """
-    print("clear settings")
+    # unbind mouse events
+    if self.release_event_cid is not None:
+      self.canvas.mpl_disconnect(self.release_event_cid)
+      self.release_event_cid = None
+    if self.pick_event_cid is not None:
+      self.canvas.mpl_disconnect(self.pick_event_cid)
+      self.pick_event_cid = None
+    # remove highlights from all highlighted particles
     for highlight_particle in self.highlighted_particles:
       highlight_particle.remove_highlight(ax=self.ax)
     self.highlighted_particles: List[Graph_Particle] = [] # particles that are highlighted
@@ -644,6 +692,7 @@ class Graph_Editor_GUI:
       widget.grid_forget()
       widget.destroy()
     self.settings_frame.update()
+    self.canvas.draw_idle()
 
 
   def add_position_setting(self, position: np.ndarray, row_index: int) -> Tuple[tk.DoubleVar, tk.DoubleVar]:

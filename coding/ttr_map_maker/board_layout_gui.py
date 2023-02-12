@@ -1422,6 +1422,7 @@ class Board_Layout_GUI:
     self.graph_edit_frame.columnconfigure(0, weight=1)
     # TODO: refactor: move all code for graph edit mode to `graph_editor_ui` class
     self.graph_editor_ui: Graph_Editor_GUI = Graph_Editor_GUI(
+        self.master,
         self.color_config,
         grid_padding=(self.grid_pad_x, self.grid_pad_y),
         tk_config_methods={
