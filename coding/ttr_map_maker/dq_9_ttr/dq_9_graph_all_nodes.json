@@ -1,0 +1,2128 @@
+{
+  "particle_graph": {
+    "n_nodes": 39,
+    "n_edges": 0,
+    "n_labels": 39,
+    "particles": [
+      {
+        "particle_type": "Particle_Node",
+        "id": 0,
+        "position": [
+          7.19375,
+          43.26499999999999
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          58.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Angel Falls"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 1,
+        "position": [
+          15.780749999999998,
+          40.72625
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          57.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Hexagon"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 2,
+        "position": [
+          23.882999999999996,
+          43.38125
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          55.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Stornway"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 3,
+        "position": [
+          37.66374999999999,
+          40.357749999999996
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          54.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "East Stornway (Island)"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 4,
+        "position": [
+          32.677749999999996,
+          54.993
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          52.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Coffinwell"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 5,
+        "position": [
+          24.229249999999997,
+          61.3875
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          51.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Quarantomb"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 6,
+        "position": [
+          17.077664,
+          55.014516
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          49.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Zere"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 7,
+        "position": [
+          8.212556000000001,
+          63.7059
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          48.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Brigadoom"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 8,
+        "position": [
+          31.422386000000007,
+          60.740016
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          46.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Tower of Nod"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 9,
+        "position": [
+          49.023225740551595,
+          34.16219816138917
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          45.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Alltrades Abbey"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 10,
+        "position": [
+          50.34230030643515,
+          25.496414708886615
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          43.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Port Llaffan"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 11,
+        "position": [
+          55.552829241661094,
+          32.972084023105914
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          42.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Tower of Trades"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 12,
+        "position": [
+          43.87416346729598,
+          26.9773343665246
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          40.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Tywil Cave"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 13,
+        "position": [
+          58.092499999999994,
+          21.479750000000003
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          39.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Slurry Quay"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 14,
+        "position": [
+          63.286249999999995,
+          19.148750000000007
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          37.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Dourbridge"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 15,
+        "position": [
+          71.527,
+          18.272000000000002
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          36.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Zere Rocks"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 16,
+        "position": [
+          62.31674999999999,
+          7.630999999999998
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          34.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Bloomingdale"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 17,
+        "position": [
+          82.81475,
+          8.139250000000002
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          33.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Lonely Coast"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 18,
+        "position": [
+          72.70425,
+          31.5
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          31.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Gleeba"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 19,
+        "position": [
+          64.39425,
+          36.093999999999994
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          30.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Djust Desert (Island)"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 20,
+        "position": [
+          71.80399999999999,
+          48.0285
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          28.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Batsureg"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 21,
+        "position": [
+          70.07275,
+          52.760999999999996
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          27.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Hunter's Yurts"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 22,
+        "position": [
+          78.03649999999999,
+          55.277499999999996
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          25.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Gerzuu"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 23,
+        "position": [
+          63.21699999999999,
+          50.661249999999995
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          24.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Ulbaruun"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 24,
+        "position": [
+          73.81224999999999,
+          42.23625
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          22.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Urdus Marshland"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 25,
+        "position": [
+          59.61599999999999,
+          41.29025
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          21.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Ondor Cliffs"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 26,
+        "position": [
+          91.95574999999998,
+          43.52975000000001
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          19.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Swinedimples Academy"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 27,
+        "position": [
+          89.94749999999999,
+          33.789
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          18.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Hermany"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 28,
+        "position": [
+          90.57074999999999,
+          18.78525
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          16.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Pluvi Isle"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 29,
+        "position": [
+          92.30199999999999,
+          53.01825
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          15.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Cringle Coast"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 30,
+        "position": [
+          31.569749999999996,
+          26.380499999999998
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          13.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Wormwood Creek"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 31,
+        "position": [
+          19.047274500000004,
+          18.0759125
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          12.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Upover"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 32,
+        "position": [
+          8.353668500000001,
+          34.17869900000001
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          10.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "The Bowhole"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 33,
+        "position": [
+          10.888192000000002,
+          22.7836415
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          9.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Wyrmneck"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 34,
+        "position": [
+          22.866419500000003,
+          7.0486465
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          7.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Wyrmwing"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 35,
+        "position": [
+          16.409390492268198,
+          33.44645808051085
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          6.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Western Wormwood (Island)"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 36,
+        "position": [
+          46.78762932228816,
+          57.771080001718786
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          4.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Gortress"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 37,
+        "position": [
+          52.77594744894508,
+          58.3295643577571
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          3.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Gittingham Palace"
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 38,
+        "position": [
+          66.12490660628447,
+          59.07518365525344
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          1.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "Khaalag Coast"
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 39,
+        "position": [
+          7.19375,
+          45.26499999999999
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.374045801526718,
+          1.0190839694656488
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          0
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Angel Falls",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 40,
+        "position": [
+          15.780749999999998,
+          42.72625
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          3.263358778625954,
+          0.8167938931297709
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          1
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Hexagon",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 41,
+        "position": [
+          23.882999999999996,
+          45.38125
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.0038167938931295,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          2
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Stornway",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 42,
+        "position": [
+          37.66374999999999,
+          42.357749999999996
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          8.63740458015267,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          3
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "East Stornway (Island)",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 43,
+        "position": [
+          32.677749999999996,
+          56.993
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.194656488549618,
+          0.950381679389313
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          4
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Coffinwell",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 44,
+        "position": [
+          24.229249999999997,
+          63.3875
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.812977099236641,
+          1.0038167938931297
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          5
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Quarantomb",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 45,
+        "position": [
+          17.077664,
+          57.014516
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1.881679389312977,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          6
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Zere",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 46,
+        "position": [
+          8.212556000000001,
+          65.7059
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          3.9618320610687023,
+          0.8015267175572519
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          7
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Brigadoom",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 47,
+        "position": [
+          31.422386000000007,
+          62.740016
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          5.125954198473282,
+          0.950381679389313
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          8
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Tower of Nod",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 48,
+        "position": [
+          49.023225740551595,
+          36.16219816138917
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          6.133587786259541,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          9
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Alltrades Abbey",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 49,
+        "position": [
+          50.34230030643515,
+          27.496414708886615
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          5.114503816793893,
+          1.0114503816793892
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          10
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Port Llaffan",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 50,
+        "position": [
+          55.552829241661094,
+          34.972084023105914
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          6.145038167938931,
+          0.950381679389313
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          11
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Tower of Trades",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 51,
+        "position": [
+          43.87416346729598,
+          28.9773343665246
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.240458015267175,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          12
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Tywil Cave",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 52,
+        "position": [
+          58.092499999999994,
+          23.479750000000003
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          5.0,
+          1.0038167938931297
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          13
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Slurry Quay",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 53,
+        "position": [
+          63.286249999999995,
+          21.148750000000007
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.229007633587786,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          14
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Dourbridge",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 54,
+        "position": [
+          71.527,
+          20.272000000000002
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.114503816793893,
+          0.8206106870229007
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          15
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Zere Rocks",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 55,
+        "position": [
+          62.31674999999999,
+          9.630999999999997
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          5.068702290076335,
+          0.8015267175572519
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          16
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Bloomingdale",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 56,
+        "position": [
+          82.81475,
+          10.139250000000002
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.935114503816794,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          17
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Lonely Coast",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 57,
+        "position": [
+          72.70425,
+          33.5
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          2.5725190839694654,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          18
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Gleeba",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 58,
+        "position": [
+          64.39425,
+          38.093999999999994
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          7.515267175572519,
+          0.9351145038167938
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          19
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Djust Desert (Island)",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 59,
+        "position": [
+          71.80399999999999,
+          50.0285
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          3.396946564885496,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          20
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Batsureg",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 60,
+        "position": [
+          70.07275,
+          54.760999999999996
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          5.8206106870229,
+          1.0381679389312977
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          21
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Hunter's Yurts",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 61,
+        "position": [
+          78.03649999999999,
+          57.277499999999996
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          2.8206106870229006,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          22
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Gerzuu",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 62,
+        "position": [
+          63.21699999999999,
+          52.661249999999995
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          3.7862595419847325,
+          0.8015267175572519
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          23
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Ulbaruun",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 63,
+        "position": [
+          73.81224999999999,
+          44.23625
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          6.797709923664122,
+          0.8282442748091603
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          24
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Urdus Marshland",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 64,
+        "position": [
+          59.61599999999999,
+          43.29025
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.717557251908397,
+          0.950381679389313
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          25
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Ondor Cliffs",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 65,
+        "position": [
+          91.95574999999998,
+          45.52975000000001
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          8.538167938931297,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          26
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Swinedimples Academy",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 66,
+        "position": [
+          89.94749999999999,
+          35.789
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          3.66412213740458,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          27
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Hermany",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 67,
+        "position": [
+          90.57074999999999,
+          20.78525
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          3.7671755725190836,
+          1.0114503816793892
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          28
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Pluvi Isle",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 68,
+        "position": [
+          92.30199999999999,
+          55.01825
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          5.015267175572519,
+          0.8015267175572519
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          29
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Cringle Coast",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 69,
+        "position": [
+          31.569749999999996,
+          28.380499999999998
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          6.709923664122137,
+          0.8206106870229007
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          30
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Wormwood Creek",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 70,
+        "position": [
+          19.047274500000004,
+          20.0759125
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          2.931297709923664,
+          0.9541984732824427
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          31
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Upover",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 71,
+        "position": [
+          8.353668500000001,
+          36.17869900000001
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.709923664122138,
+          0.8282442748091603
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          32
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "The Bowhole",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 72,
+        "position": [
+          10.888192000000002,
+          24.7836415
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.374045801526718,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          33
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Wyrmneck",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 73,
+        "position": [
+          22.866419500000003,
+          9.0486465
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4.561068702290076,
+          0.9732824427480916
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          34
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Wyrmwing",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 74,
+        "position": [
+          16.409390492268198,
+          35.44645808051085
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          10.961832061068701,
+          0.9351145038167938
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          35
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Western Wormwood (Island)",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 75,
+        "position": [
+          46.78762932228816,
+          59.771080001718786
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          3.5,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          36
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Gortress",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 76,
+        "position": [
+          52.77594744894508,
+          60.3295643577571
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          6.973282442748092,
+          1.0114503816793892
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          37
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Gittingham Palace",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 77,
+        "position": [
+          66.12490660628447,
+          61.07518365525344
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          5.278625954198473,
+          0.8282442748091603
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          38
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Khaalag Coast",
+        "color": "#222222",
+        "fontsize": 150,
+        "font_name": null,
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      }
+    ],
+    "particle_parameters": {
+      "velocity_decay": 0.99,
+      "edge-edge": 0.1,
+      "edge-node": 0.1,
+      "node-label": 0.1,
+      "node-target": 0.1,
+      "node_mass": 1.0,
+      "edge_mass": 1.0,
+      "label_mass": 1.0,
+      "interaction_radius": 15.0,
+      "repulsion_strength": 2.0
+    },
+    "tasks": []
+  }
+}

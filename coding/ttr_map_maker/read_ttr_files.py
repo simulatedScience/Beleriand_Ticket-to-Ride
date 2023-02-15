@@ -6,7 +6,7 @@ import json
 
 from ttr_particle_graph import TTR_Particle_Graph
 
-def read_locations(location_file: str):
+def read_locations(location_file: str) -> list[str]:
   """
   read locations from txt file
   Each line contains the name of exactly one location.
@@ -17,12 +17,14 @@ def read_locations(location_file: str):
       location_file (str): path to the location file
   """
   locations = []
-  with open(location_file, "r") as loc_file:
-    for line in loc_file:
-      line = line.strip()
-      if line: # skip empty lines
-        locations.append(line)
-
+  try:
+    with open(location_file, "r") as loc_file:
+      for line in loc_file:
+        line = line.strip()
+        if line: # skip empty lines
+          locations.append(line)
+  except FileNotFoundError:
+    print(f"Warning: could not read locations from {location_file}")
   return locations
 
 
@@ -37,13 +39,15 @@ def read_paths(path_file: str):
       List[Tuple[str, str, int, str]]: list of edges as tuples of two location names, path lengths and a color name
   """
   paths = []
-  with open(path_file, "r") as path_file:
-    for line in path_file:
-      line = line.strip()
-      if line:
-        loc_id1, loc_id2, length, color = line.split(" ; ")
-        paths.append((loc_id1, loc_id2, int(length), color))
-
+  try:
+    with open(path_file, "r") as path_file:
+      for line in path_file:
+        line = line.strip()
+        if line:
+          loc_id1, loc_id2, length, color = line.split(" ; ")
+          paths.append((loc_id1, loc_id2, int(length), color))
+  except FileNotFoundError:
+    print(f"Warning: could not read paths from {path_file}")
   return paths
 
 
@@ -58,13 +62,15 @@ def read_tasks(task_file: str):
       List[Tuple[str, str, int]]: list of tasks as tuples of two location names and the length of the shortest path between them
   """
   tasks = []
-  with open(task_file, "r") as task_file:
-    for line in task_file:
-      line = line.strip()
-      if line:
-        loc_1, loc_2, *length = line.split(" ; ")
-        tasks.append((loc_1, loc_2))
-
+  try:
+    with open(task_file, "r") as task_file:
+      for line in task_file:
+        line = line.strip()
+        if line:
+          loc_1, loc_2, *length = line.split(" ; ")
+          tasks.append((loc_1, loc_2))
+  except FileNotFoundError:
+    print(f"Warning: could not read tasks from {task_file}")
   return tasks
 
 

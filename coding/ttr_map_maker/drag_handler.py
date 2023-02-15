@@ -194,7 +194,7 @@ class Drag_Handler:
 
 
 
-def find_particle_in_list(event_position: np.ndarray, particle_list: List[Graph_Particle], max_pick_range: float = 2.) -> Graph_Particle:
+def find_particle_in_list(event_position: np.ndarray, particle_list: List[Graph_Particle], color: str=None, max_pick_range: float = 2.) -> Graph_Particle:
     """
     Find the particle associated to the artist in the list of particles.
     Choose the particle that is closest to the click event but within the maximum pick range.
@@ -202,6 +202,8 @@ def find_particle_in_list(event_position: np.ndarray, particle_list: List[Graph_
     Args:
       event_position (List[float]): The position of the click event.
       particle_list (List[Graph_Particle]): The list of particles to search in.
+      color (str): The color of the artist. If None, the color is ignored, otherwise the color of the particle must match the given color. Defaults to None.
+      max_pick_range (float): The maximum distance between the click event and the particle. Defaults to 2.
 
     Returns:
       Graph_Particle: The particle associated to the artist.
@@ -209,6 +211,8 @@ def find_particle_in_list(event_position: np.ndarray, particle_list: List[Graph_
     # TODO: refactor particle finding code into separate module
     min_distance = np.inf
     for particle in particle_list:
+      if color is not None and particle.color != color:
+        continue # ignore particles with wrong color
       distance = np.linalg.norm(particle.position - event_position)
       if distance < min_distance:
         min_distance = distance

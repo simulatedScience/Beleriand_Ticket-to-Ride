@@ -58,7 +58,7 @@ class TTR_Particle_Graph:
     self.max_particle_id = 0
 
     self.particle_nodes: dict[str, Particle_Node] = dict()
-    self.particle_edges: dict[Tuple[str, str, int], Particle_Edge] = dict()
+    self.particle_edges: dict[Tuple[str, str, int, int], Particle_Edge] = dict()
     self.particle_labels: dict[str, Particle_Label] = dict()
     self.analysis_graph: TTR_Graph_Analysis = None
 
@@ -160,11 +160,11 @@ class TTR_Particle_Graph:
       particle_label.draw(ax, movable=movable)
 
 
-  def move_edges_to_nodes(self,
+  def straighten_connections(self,
       ax: plt.Axes,
-      movable: bool=False,
-      edge_border_color: str=None,
-      alpha=0.8,
+      movable: bool = False,
+      edge_border_color: str = None,
+      alpha = 0.8,
       **draw_kwargs) -> None:
     """
     move all edges such that tey form straight lines between their connected nodes. Then erase and redraw the edges.
@@ -180,20 +180,50 @@ class TTR_Particle_Graph:
       node_1 = self.particle_nodes[location_1]
       node_2 = self.particle_nodes[location_2]
       edge_particles = [self.particle_edges[(location_1, location_2, i)] for i in range(length)]
-      for i, edge_particle in enumerate(edge_particles):
-        edge_particle.set_position(
-          node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
-        )
-        edge_particle.set_rotation(
-          np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
-        )
-        edge_particle.erase()
-        edge_particle.draw(
-            ax,
-            movable=movable,
-            border_color=edge_border_color,
-            alpha=alpha,
-            **draw_kwargs)
+  
+  def straighten_connection(self,
+      location_1: str,
+      location_2: str,
+      connection_index: int,
+      ax: plt.Axes,
+      movable: bool = False,
+      edge_border_color: str = None,
+      alpha = 0.8,
+      **draw_kwargs) -> None:
+    """
+    move an edge such that it forms a straight line between its connected nodes. Then erase and redraw the edge.
+
+    Args:
+        location_1 (str): label of the first node
+        location_2 (str): label of the second node
+        connection_index (int): index of the connection
+        ax (plt.Axes): axes to draw on
+        draw_kwargs (dict): kwargs to pass to the draw method of the edge particle
+    """
+    node_1 = self.particle_nodes[location_1]
+    node_2 = self.particle_nodes[location_2]
+    edge_particles: List[Particle_Edge] = []
+    length = 0
+    while True:
+      if (location_1, location_2, length, connection_index) in self.particle_edges:
+        edge_particles.append(self.particle_edges[(location_1, location_2, length, connection_index)])
+        length += 1
+      else:
+        break
+    for i, edge_particle in enumerate(edge_particles):
+      edge_particle.set_position(
+        node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
+      )
+      edge_particle.set_rotation(
+        np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
+      )
+      edge_particle.erase()
+      edge_particle.draw(
+          ax,
+          movable=movable,
+          border_color=edge_border_color,
+          alpha=alpha,
+          **draw_kwargs)
 
 
   def scale_graph_positions(self, ax: plt.Axes, scale_factor: float = 0.8) -> None:
@@ -312,6 +342,7 @@ class TTR_Particle_Graph:
     Args:
         move_nodes (bool, optional): new state of node movement. Defaults to None (toggle).
     """
+    print(f"toggle movability to {move_nodes} for {len(self.particle_nodes.values())} ndoes")
     for particle_node in self.particle_nodes.values():
       particle_node.set_particle_movable(move_nodes)
 
@@ -491,7 +522,7 @@ class TTR_Particle_Graph:
     if self.analysis_graph is None:
       self.init_analysis_graph()
 
-    edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_random_shortest_task_paths_edge_counts()
+    edge_weights: dict[tuple[str, str, int], int] = self.analysis_graph.get_random_shortest_task_paths_edge_counts()
     if len(edge_weights) == 0:
       print("No tasks to draw.")
       self.analysis_graph = None
@@ -499,11 +530,11 @@ class TTR_Particle_Graph:
     max_weight = max(edge_weights.values())
     
     for (edge_key, particle_edge) in self.particle_edges.items():
-      try:
-        locations_key = (edge_key[0], edge_key[1])
+      locations_key = (edge_key[0], edge_key[1], edge_key[3])
+      if locations_key in edge_weights:
         edge_weight = edge_weights[locations_key]
-      except KeyError:
-        locations_key = (edge_key[1], edge_key[0])
+      else:
+        locations_key = (edge_key[1], edge_key[0], edge_key[3])
         edge_weight = edge_weights.get(locations_key, 0) # if the edge is not in the dict, set the weight to 0
       color = get_gradient_color(base_color, edge_weight, max_weight)
       particle_edge.draw(ax, color=color, alpha=alpha, movable=movable, border_color=border_color)
@@ -525,7 +556,7 @@ class TTR_Particle_Graph:
     if self.analysis_graph is None:
       self.init_analysis_graph()
 
-    edge_weights: dict[tuple[str, str], int] = self.analysis_graph.get_edge_importance()
+    edge_weights: dict[tuple[str, str, int], int] = self.analysis_graph.get_edge_importance()
     if len(edge_weights) == 0:
       print("No tasks to analyse edges with.")
       self.analysis_graph = None
@@ -534,11 +565,11 @@ class TTR_Particle_Graph:
     max_weight = max([weight for weight in edge_weights.values() if weight != float("inf")])
     
     for (edge_key, particle_edge) in self.particle_edges.items():
-      try:
-        locations_key = (edge_key[0], edge_key[1])
+      locations_key = (edge_key[0], edge_key[1], edge_key[3])
+      if locations_key in edge_weights:
         edge_weight = edge_weights[locations_key]
-      except KeyError:
-        locations_key = (edge_key[1], edge_key[0])
+      else:
+        locations_key = (edge_key[1], edge_key[0], edge_key[3])
         edge_weight = edge_weights.get(locations_key, 0)
       color = get_gradient_color(base_color, edge_weight, max_weight)
       particle_edge.draw(ax, color=color, alpha=alpha, movable=movable, border_color=border_color)
@@ -596,7 +627,7 @@ class TTR_Particle_Graph:
     """
     self.analysis_graph: TTR_Graph_Analysis = TTR_Graph_Analysis(
         list(self.particle_nodes.keys()),
-        self.paths,
+        self.particle_edges,
         self.tasks)
 
   def __str__(self) -> str:
@@ -662,7 +693,8 @@ class TTR_Particle_Graph:
 
   def add_particle(self, particle: Graph_Particle) -> None:
     """
-    add a particle to the particle graph.
+    add an existing particle to the particle graph.
+    This is mainly used to load particle graphs from JSON files.
 
     Args:
         particle (Graph_Particle): particle to add
@@ -670,14 +702,15 @@ class TTR_Particle_Graph:
     if isinstance(particle, Particle_Node):
       self.particle_nodes[particle.label] = particle
     elif isinstance(particle, Particle_Edge):
-      loc_1 = particle.location_1_name
-      loc_2 = particle.location_2_name
-      path_index = particle.path_index
-      self.particle_edges[(loc_1, loc_2, path_index)] = particle
+      loc_1: str = particle.location_1_name
+      loc_2: str = particle.location_2_name
+      path_index: int = particle.path_index
+      connection_index: int = particle.connection_index
+      self.particle_edges[(loc_1, loc_2, path_index, connection_index)] = particle
     elif isinstance(particle, Particle_Label):
       self.particle_labels[particle.label] = particle
 
-  def add_connection(self, location_1: str, location_2: str, length: int, color: str, ax:plt.Axes = None) -> None:
+  def add_connection(self, location_1: str, location_2: str, length: int, color: str, add_path: bool=False, ax:plt.Axes = None) -> None:
     """
     Add a connection between two locations to the particle graph.
     This will create a new edge particle and add it to the particle graph.
@@ -687,11 +720,17 @@ class TTR_Particle_Graph:
         location_2 (str): name of the second location
         length (int): length of the connection
         color (str): color of the connection
+        add_path (bool, optional): whether to add the connection to the path list. Defaults to False.
         ax (plt.Axes, optional): axis to draw the connection on. Defaults to None (no drawing)
     """
     node_1: Graph_Particle = self.particle_nodes[location_1]
     node_2: Graph_Particle = self.particle_nodes[location_2]
     last_particle: Graph_Particle = node_1 # connect the first edge particle to the first node
+    # determine number of connections that already exist between the two nodes
+    connection_index: int = 0
+    while (location_1, location_2, 0, connection_index) in self.particle_edges or (location_2, location_1, 0, connection_index) in self.particle_edges:
+      connection_index += 1
+    print(f"Adding connection {connection_index} between {location_1} and {location_2} with {length} particles.")
     # create `length` edge particles between `node_1` and `node_2``
     for path_index in range(length):
       edge_position: np.ndarray = node_1.position + (node_2.position - node_1.position) * (path_index+1) / (length+1)
@@ -713,13 +752,15 @@ class TTR_Particle_Graph:
       edge_particle.add_connected_particle(last_particle)
       if path_index >= 1: # if not the first edge particle, add connection to previous edge particle
         last_particle.add_connected_particle(edge_particle)
-      self.particle_edges[(location_1, location_2, path_index)] = edge_particle
+      self.particle_edges[(location_1, location_2, path_index, connection_index)] = edge_particle
       last_particle = edge_particle
       self.max_particle_id += 1
       if ax is not None:
         edge_particle.draw(ax)
     # connect last edge particle to node_2
     last_particle.add_connected_particle(node_2)
+    if add_path:
+      self.paths.append((location_1, location_2, length, color))
 
 
   def delete_node(self, particle_node: Particle_Node) -> None:
@@ -780,6 +821,7 @@ class TTR_Particle_Graph:
     loc_1 = particle_edge.location_1_name
     loc_2 = particle_edge.location_2_name
     path_index = particle_edge.path_index
+    connection_index = particle_edge.connection_index
     path_length = 0
     # update path in self.paths
     for i, path in enumerate(self.paths):
@@ -792,23 +834,23 @@ class TTR_Particle_Graph:
         self.paths[i] = (loc_1, loc_2, path[2] - 1, particle_edge.color)
         break
     # update path indices of all edge particles with higher path index
-    changed_particle_edges: dict[tuple[str, str, int], Particle_Edge] = dict()
+    changed_particle_edges: dict[tuple[str, str, int, int], Particle_Edge] = dict()
     for particle_key, particle_edge in self.particle_edges.items():
       if particle_edge.location_1_name == loc_1 and \
           particle_edge.location_2_name == loc_2 and \
-          particle_edge.color == particle_edge.color and \
+          particle_edge.connection_index == connection_index and \
           particle_edge.path_index > path_index:
         particle_edge.path_index -= 1
         changed_particle_edges[particle_key] = particle_edge
     # update path indices of all edges that needed to change
     for particle_key, particle_edge in changed_particle_edges.items():
-      self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index)] = particle_edge
+      self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index, connection_index)] = particle_edge
       del self.particle_edges[particle_key]
     # remove edge particle
     if (loc_1, loc_2, path_index) in self.particle_edges:
-      del self.particle_edges[(loc_1, loc_2, path_index)]
+      del self.particle_edges[(loc_1, loc_2, path_index, connection_index)]
     elif (loc_2, loc_1, path_index) in self.particle_edges:
-      del self.particle_edges[(loc_2, loc_1, path_index)]
+      del self.particle_edges[(loc_2, loc_1, path_index, connection_index)]
     else:
       print(f"Warning: Could not find edge particle {loc_1} -> {loc_2} ({path_index})")
       print()
@@ -854,7 +896,7 @@ class TTR_Particle_Graph:
     """
     self.analysis_graph = None
     locations_to_lengths = dict()
-    for (loc_1, loc_2, min_path_length), edge in self.particle_edges.items():
+    for (loc_1, loc_2, min_path_length, connection_index), edge in self.particle_edges.items():
       temp_key = (loc_1, loc_2, edge.color)
       if not temp_key in locations_to_lengths:
         locations_to_lengths[temp_key] = min_path_length
@@ -893,7 +935,7 @@ class TTR_Particle_Graph:
         node_positions = [],
         particle_parameters = particle_parameters,
       )
-    particle_list = []
+    particle_dict: dict[int, Graph_Particle] = dict()
     for particle_info in particle_dicts:
       connected_particles = particle_info.pop("connected_particles")
       particle_type = particle_info.pop("particle_type")
@@ -917,11 +959,11 @@ class TTR_Particle_Graph:
         particle_graph.add_particle(particle)
       # add connected particles back to particle info
       particle_info["connected_particles"] = connected_particles
-      particle_list.append(particle)
+      particle_dict[particle.get_id()] = particle
     # add connections to particles
-    for particle, particle_info in zip(particle_list, particle_dicts):
+    for particle, particle_info in zip(particle_dict.values(), particle_dicts):
       for connected_particle_id in particle_info["connected_particles"]:
-        particle.add_connected_particle(particle_list[connected_particle_id])
+        particle.add_connected_particle(particle_dict[connected_particle_id])
     # build list of paths in graph
     particle_graph.build_paths()
     particle_graph.update_tasks(graph_info["particle_graph"]["tasks"])

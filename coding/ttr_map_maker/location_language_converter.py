@@ -46,7 +46,9 @@ def split_language_file(filepath: str, languages: List[str], seperator: str = " 
     file.close()
 
 if __name__ == "__main__":
-  filename = "dq_9_locations_bilingual.txt"
-  filepath = os.path.join(os.getcwd(), "dq_9_ttr", filename)
+  # filename = "dq_9_locations_bilingual.txt"
+  # filepath = os.path.join(os.getcwd(), "dq_9_ttr", filename)
+  filename = "ttr_europe_cities.txt"
+  filepath = os.path.join(os.getcwd(), "europe_ttr", filename)
   languages = ["de", "en"]
   split_language_file(filepath, languages)

@@ -34,6 +34,7 @@ class Particle_Edge(Graph_Particle):
         angular_velocity_decay: float = 0.9999,
         repulsion_strength: float = 1,
         path_index: int = 0,
+        connection_index: int = 0,
         ):
     """
     initialize a particle edge as a part of a connection two nodes `location_1` and `location_2`.  `path_index` is the index of the edge along the path between the two given locations. Counting starts at index 0, up  to path length -1.
@@ -72,6 +73,7 @@ class Particle_Edge(Graph_Particle):
     self.location_1_name = location_1_name
     self.location_2_name = location_2_name
     self.path_index = path_index
+    self.connection_index = connection_index
     self.image_file_path = None
 
 
@@ -385,6 +387,7 @@ class Particle_Edge(Graph_Particle):
     particle_info["location_1_name"] = self.location_1_name
     particle_info["location_2_name"] = self.location_2_name
     particle_info["path_index"] = self.path_index
+    particle_info["connection_index"] = self.connection_index
     return particle_info
 
 def get_adjacent_nodes(particle_edge: Particle_Edge) -> Tuple[List[Particle_Node], int]:

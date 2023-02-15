@@ -215,6 +215,8 @@ class Graph_Editor_GUI:
         sticky="new",
         padx=(0, self.grid_pad_x),
         pady=(self.grid_pad_y, self.grid_pad_y))
+    # bind CTRL-E to add edge
+    self.master.bind("<Control-e>", lambda event: self.start_edge_adding_mode())
 
     column_index = 0
     move_particle_label: tk.Label = tk.Label(button_frame, text="Move:")
@@ -251,6 +253,9 @@ class Graph_Editor_GUI:
     2. When selecting the second node, the user is prompted to enter a length for the connection.
     3, (Automatic) Once the length is entered, the edge is added to the graph with the default color.
     """
+    # disable all movability toggles
+    for movability_var in [self.move_nodes_enabled, self.move_edges_enabled, self.move_labels_enabled]:
+      movability_var.set(False)
     self.clear_selection()
     self.add_edge_mode: bool = True
     self.add_edge_node_indices: List[int] = [0, 0] # indices of the nodes to connect
@@ -497,7 +502,7 @@ class Graph_Editor_GUI:
     edge_length = int(self.new_edge_length.get())
     edge_color = self.edge_color_list[self.new_edge_color_index.get()]
     # add the edge to the graph
-    self.particle_graph.add_connection(*node_names, edge_length, edge_color, ax=self.ax)
+    self.particle_graph.add_connection(*node_names, edge_length, edge_color, add_path=True, ax=self.ax)
     # abort the edge adding process
     self.abort_edge_adding() # this also redraws the canvas
   
@@ -1108,7 +1113,7 @@ class Graph_Editor_GUI:
         self.settings_frame,
         text="Delete Connection",
         cursor="hand2",
-        command=lambda: self.remove_connection(particle_edge))
+        command=lambda: self.delete_connection(particle_edge))
     self.add_button_style(delete_connection_button)
     delete_connection_button.config(
         bg=self.color_config["delete_button_bg_color"],
@@ -1171,7 +1176,7 @@ class Graph_Editor_GUI:
     self.clear_selection()
     # case 1: remove connection between the two nodes entirely
     if len(connected_particles) == 1:
-      self.remove_connection(edge_particles=connected_particles[1:-1])
+      self.delete_connection(edge_particles=connected_particles[1:-1])
       return
     particle_edge.erase()
     self.particle_graph.delete_edge(particle_edge)
@@ -1197,7 +1202,7 @@ class Graph_Editor_GUI:
         ax=self.ax,
         canvas=self.canvas)
 
-  def remove_connection(self, particle_edge: Particle_Edge, edge_particles: List[Particle_Edge] = None):
+  def delete_connection(self, particle_edge: Particle_Edge, edge_particles: List[Particle_Edge] = None):
     self.clear_selection()
     if edge_particles is None:
       edge_particles, *_ = get_edge_connected_particles(particle_edge)

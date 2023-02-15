@@ -660,17 +660,19 @@ class Board_Layout_GUI:
     """
     # load node file (locations)
     locations = ttr_reader.read_locations(self.node_file.get())
-    if self.particle_graph is None:
-      self.graph_data = {
-          "locations": locations,
-          "paths": [],
-          "tasks": []}
-      self.init_particle_graph()
-    else:
-      self.graph_data["locations"] = locations
-      self.particle_graph.update_nodes(locations)
-      # TODO: implement warning and create new particle graph
+    # if self.particle_graph is None:
+    print(f"Creating new particle graph with {len(locations)} nodes.")
+    self.graph_data = {
+        "locations": locations,
+        "paths": [],
+        "tasks": []}
+    self.init_particle_graph()
+    # else:
+    #   self.graph_data["locations"] = locations
+    #   self.particle_graph.update_nodes(locations)
+    #   # TODO: implement warning and create new particle graph
 
+    self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
     if self.show_nodes.get():
       self.particle_graph.draw_nodes(self.ax, movable=self.move_nodes_enabled.get())
 
@@ -689,6 +691,7 @@ class Board_Layout_GUI:
     else:
       self.graph_data["tasks"] = tasks
       self.particle_graph.update_tasks(tasks)
+      print(f"successfully loaded {len(tasks)} tasks.")
 
   def load_background_image(self) -> None:
     """
@@ -1210,7 +1213,7 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.move_edges_to_nodes(
+    self.particle_graph.straighten_connections(
         self.ax,
         # alpha=0.7,
         movable=self.move_edges_enabled.get(),

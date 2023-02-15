@@ -22,13 +22,15 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 
+from particle_edge import Particle_Edge
+
 class TTR_Graph_Analysis:
   """
   This class is used to analyze a given graph.
   """
   def __init__(self,
       locations: List[str],
-      paths: List[Tuple[str, str, int, str]],
+      edge_particles: dict[Tuple[str, str, int, int], Particle_Edge],
       tasks: List[Tuple[str, str]]
       ):
     """
@@ -36,14 +38,14 @@ class TTR_Graph_Analysis:
 
     Args:
         locations (List[str]): list of location names (nodes)
-        paths (List[Tuple[str, str, int, str]]): list of paths (start location, end location, length, color)
+        edge_particles (dict[Tuple[str, str, int, int], Particle_Edge]): dictionary of all edge particles with keys (start location, end location, path index, connection index)
         tasks (List[Tuple[str, str]]): list of tasks (start location, end location)
     """
     self.locations: List[str] = locations # list of location names (nodes)
-    self.paths: List[Tuple[str, str, int, str]] = paths # list of paths (start location, end location, length, color)
+    self.edge_particles: dict[Tuple[str, str, int, int], Particle_Edge] = edge_particles # dictionary of all edge particles
     self.tasks: List[Tuple[str, str]] = tasks # list of tasks (start location, end location)
 
-    self.networkx_graph: nx.Graph = create_graph(locations, paths) # networkx graph object containing location and path information
+    self.networkx_graph: nx.Graph = create_graph(self.locations, self.edge_particles) # networkx graph object containing location and path information
     self.task_lengths: dict[Tuple[str, str], int] = self.get_task_lengths() # shortest path lengths for all tasks
 
 # access methods for basic graph information
@@ -57,14 +59,14 @@ class TTR_Graph_Analysis:
     """
     return self.locations
 
-  def get_paths(self) -> List[Tuple[str, str, int, str]]:
-    """
-    Get the list of paths (edges)
+  # def get_paths(self) -> List[Tuple[str, str, int, str]]:
+  #   """
+  #   Get the list of paths (edges)
 
-    Returns:
-        List[Tuple[str, str, int, str]]: list of edges
-    """
-    return self.paths
+  #   Returns:
+  #       List[Tuple[str, str, int, str]]: list of edges
+  #   """
+  #   return self.paths
 
   def get_tasks_with_lengths(self) -> List[Tuple[str, str]]:
     """
@@ -85,14 +87,14 @@ class TTR_Graph_Analysis:
     """
     return len(self.locations)
 
-  def number_of_paths(self) -> int:
-    """
-    Get the number of paths (edges) in the graph.
+  # def number_of_paths(self) -> int:
+  #   """
+  #   Get the number of paths (edges) in the graph.
 
-    Returns:
-        int: number of paths
-    """
-    return len(self.paths)
+  #   Returns:
+  #       int: number of paths
+  #   """
+  #   return len(self.paths)
 
   def number_of_tasks(self) -> int:
     """
@@ -158,7 +160,7 @@ class TTR_Graph_Analysis:
       graph = self.networkx_graph
     try:
       path = nx.shortest_path(graph, loc1, loc2, weight="length")
-    except nx.exception.NetworkXNoPath:
+    except nx.exception.NetworkXNoPath: # no path exists
       return [], float("inf")
     return path, self.get_path_cost(path)
 
@@ -229,13 +231,14 @@ class TTR_Graph_Analysis:
     #     else:
     #       edge_counts[edge] = 1
     # return edge_counts
-    task_edge_counts: dict[Tuple[str, str], int] = {}
+    task_edge_counts: dict[Tuple[str, str, int], int] = {}
     for task in self.tasks:
       shortest_paths = self.get_all_shortest_paths(loc1=task[0], loc2=task[1])
       for _ in range(n_random_paths):
         path, length = random.choice(shortest_paths)
         for (loc1, loc2) in zip(path[:-1], path[1:]):
-          edge = (loc1, loc2)
+          connection_index = 0 # TODO: find connection index
+          edge = (loc1, loc2, connection_index)
           if edge in task_edge_counts:
             task_edge_counts[edge] += 1
           else:
@@ -260,20 +263,22 @@ class TTR_Graph_Analysis:
       node_importance[node] = self.get_average_task_length(new_graph) - average_task_length
     return node_importance
 
-  def get_edge_importance(self) -> dict[Tuple[str, str], float]:
+  def get_edge_importance(self) -> dict[Tuple[str, str, int], float]:
     """
     Calculate the importance of each edge in the graph: how much the average task length is increased if that edge is removed.
 
     Returns:
-        dict[Tuple[str, str], float]: dictionary of edges and the avergae increase in task length if that edge is removed
+        dict[Tuple[str, str, int], float]: dictionary of edges and the avergae increase in task length if that edge is removed
+            The edge is represented as a tuple of the two locations and the connection index.
     """
-    edge_importance = {}
+    edge_importance: dict[Tuple[str, str, int], float] = {}
     average_task_length = self.get_average_task_length()
     for edge in self.networkx_graph.edges:
       # copy graph and remove edge
       new_graph = self.networkx_graph.copy()
       new_graph.remove_edge(*edge)
-      edge_importance[edge] = self.get_average_task_length(new_graph) - average_task_length
+      connection_index = self.networkx_graph.edges[edge]['key']
+      edge_importance[(edge[0], edge[1], connection_index)] = self.get_average_task_length(new_graph) - average_task_length
     return edge_importance
 
   def get_average_task_length(self, graph: nx.Graph = None) -> float:
@@ -656,13 +661,13 @@ class TTR_Graph_Analysis:
       ax.grid(axis="y", color=grid_color)
 
 
-def create_graph(locations: List[str], paths: List[Tuple[str, str, int, str]]) -> nx.Graph:
+def create_graph(locations: List[str], edge_particles: dict[Tuple[str, str, int, int], Particle_Edge]) -> nx.Graph:
   """
   create a networkx graph from locations and paths
 
   Args:
       locations (List[str]): list of location names for the nodes
-      paths (List[Tuple[str, str, int, str]]): list of edges specified by the two locations, the length and the color
+      edge_particles (dict[Tuple[str, str, int, int], Particle_Edge]): dictionary of particles for each edge
 
   Returns:
       networkx.Graph: the graph
@@ -671,8 +676,19 @@ def create_graph(locations: List[str], paths: List[Tuple[str, str, int, str]]) -
   nx_graph = nx.Graph()
   # Add nodes and edges to the graph
   nx_graph.add_nodes_from(locations)
-  for (loc1, loc2, length, color) in paths:
-      nx_graph.add_edge(loc1, loc2, length=length, color=color)
+  # determine all connections in the graph from edge particle dict
+  for (loc1, loc2, path_index, connection_index) in edge_particles:
+    if path_index != 0:
+      continue
+    # get length of connection
+    length = 1
+    while True:
+      if (loc1, loc2, length+1, connection_index) not in edge_particles:
+        break
+      length += 1
+    # get color of connection
+    color = edge_particles[(loc1, loc2, path_index, connection_index)].color
+    nx_graph.add_edge(loc1, loc2, key=connection_index, length=length, color=color)
   return nx_graph
 
 def get_ticks(min_val: float, max_val: float, max_n_ticks: int = 10, int_ticks: bool = True):
