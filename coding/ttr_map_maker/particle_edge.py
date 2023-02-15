@@ -22,7 +22,7 @@ class Particle_Edge(Graph_Particle):
         location_1_name: str,
         location_2_name: str,
         id: int,
-        position: np.ndarray = np.array([0, 0]),
+        position: np.ndarray = np.array([0, 0], dtype=np.float16),
         rotation: float = 0,
         mass: float = 0.1,
         bounding_box_size: tuple = (4, 1),
@@ -44,7 +44,7 @@ class Particle_Edge(Graph_Particle):
         location_1_name (str): name of the first location
         location_2_name (str): name of the second location
         id (int): unique numeric id of the particle
-        position (np.ndarray, optional): position of the edge. Defaults to np.array([0, 0]).
+        position (np.ndarray, optional): position of the edge. Defaults to np.array([0, 0], dtype=np.float16).
         rotation (float, optional): rotation of the edge in radians. Defaults to 0.
         mass (float, optional): mass of the edge. Defaults to 0.1.
         node_attraction (float, optional): attraction force between the edge and connected nodes. Defaults to 0.1.
@@ -359,13 +359,13 @@ class Particle_Edge(Graph_Particle):
       print(f"WARNING: edge {self.location_1_name}-{self.location_2_name} has length zero. Using original rotation of edge particle.")
       return self.rotation
     node_1_to_node_2 = node_1_to_node_2 / norm
-    normal_vector = np.array([-node_1_to_node_2[1], node_1_to_node_2[0]]) # rotate by 90°
+    normal_vector = np.array([-node_1_to_node_2[1], node_1_to_node_2[0]], dtype=np.float16) # rotate by 90°
     # ensure that normal vector direction is always pointing upwards
     if normal_vector[1] < 0:
       normal_vector = -normal_vector
     # if normal vector is to the right of the current rotation vector, rotate by 180°
     # this aligns the image with the normal vector
-    if np.cross(normal_vector, np.array([np.cos(self.rotation), np.sin(self.rotation)])) > 0:
+    if np.cross(normal_vector, np.array([np.cos(self.rotation), np.sin(self.rotation)], dtype=np.float16)) > 0:
       return self.rotation + np.pi
     return self.rotation
 

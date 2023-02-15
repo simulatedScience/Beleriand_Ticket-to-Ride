@@ -15,7 +15,7 @@ from ttr_math import get_2d_rotation_matrix
 class Graph_Particle:
   def __init__(self,
         id: int,
-        position: np.ndarray = np.array([0, 0]),
+        position: np.ndarray = np.array([0, 0], dtype=np.float16),
         rotation: float = 0,
         target_position: np.ndarray = None,
         mass: float = 1,
@@ -30,7 +30,7 @@ class Graph_Particle:
 
     args:
       id (int): unique numeric id of the particle
-      position (np.ndarray): position of particle's center
+      position (np.ndarray): position of particle's center. Defaults to np.array([0, 0], dtype=np.float16)
       rotation (float): rotation of particle in radians, counter-clockwise from positive x-axis
       mass (float): mass of particle
       bounding_box_size (Tuple[float, float]): size of particle's bounding box (width, height)
@@ -336,7 +336,7 @@ class Graph_Particle:
       [width / 2, -height / 2],
       [-width / 2, -height / 2],
       [-width / 2, height / 2]
-    ])
+    ], dtype=np.float16)
 
     # rotate bounding box
     rotation_matrix = get_2d_rotation_matrix(-self.rotation)
@@ -371,7 +371,7 @@ class Graph_Particle:
       print("Warning: Particle not shown since no color was given")
       return
     polygon_patch = Rectangle(
-        self.position - np.array([self.bounding_box_size[0] / 2, self.bounding_box_size[1] / 2]),
+        self.position - np.array([self.bounding_box_size[0] / 2, self.bounding_box_size[1] / 2], dtype=np.float16),
         width=self.bounding_box_size[0],
         height=self.bounding_box_size[1],
         angle=np.rad2deg(self.rotation),
@@ -537,7 +537,7 @@ def get_box_overlap(box1_poly: Polygon, box2_poly: Polygon) -> Tuple[np.ndarray,
     overlap_area = overlap_poly.area
 
     # Calculate center of overlap
-    overlap_center = np.array([overlap_poly.centroid.x, overlap_poly.centroid.y])
+    overlap_center = np.array([overlap_poly.centroid.x, overlap_poly.centroid.y], dtype=np.float16)
 
     return overlap_center, overlap_area
 

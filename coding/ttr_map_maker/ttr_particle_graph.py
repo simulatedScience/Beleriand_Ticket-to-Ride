@@ -78,7 +78,7 @@ class TTR_Particle_Graph:
       if self.node_positions is not None:
         position = self.node_positions[label]
       else:
-        position = np.array([3*path_index, 0], dtype=np.float64)
+        position = np.array([3*path_index, 0], dtype=np.float16)
       self.particle_nodes[label] = Particle_Node(
           label,
           id=particle_id,
@@ -101,7 +101,7 @@ class TTR_Particle_Graph:
           height_scale_factor=self.label_height_scale,
           )
       self.particle_labels[label].position = \
-          self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0] / 2, 0]) + np.array([1, 0], dtype=np.float64)
+          self.particle_nodes[label].position + np.array([self.particle_labels[label].bounding_box_size[0] / 2, 0], dtype=np.float16) + np.array([1, 0], dtype=np.float16)
       self.particle_labels[label].add_connected_particle(self.particle_nodes[label])
       particle_id += 1
       # print(f"node position {label}: {self.particle_nodes[label].position}")
@@ -155,7 +155,7 @@ class TTR_Particle_Graph:
         y_offset (float, optional): y offset. Defaults to 2.
     """
     for particle_label in self.particle_labels.values():
-      particle_label.position = particle_label.connected_particles[0].position + np.array([x_offset, y_offset], dtype=np.float64)
+      particle_label.position = particle_label.connected_particles[0].position + np.array([x_offset, y_offset], dtype=np.float16)
       particle_label.erase()
       particle_label.draw(ax, movable=movable)
 
@@ -173,14 +173,25 @@ class TTR_Particle_Graph:
         ax (plt.Axes): axes to draw on
         draw_kwargs (dict): kwargs to pass to the draw method of the edge particles
     """
-    for path in self.paths:
-      location_1 = path[0]
-      location_2 = path[1]
-      length = path[2]
-      node_1 = self.particle_nodes[location_1]
-      node_2 = self.particle_nodes[location_2]
-      edge_particles = [self.particle_edges[(location_1, location_2, i)] for i in range(length)]
-  
+    updated_edges = set()
+    for edge_key in self.particle_edges.keys():
+      location_1 = edge_key[0]
+      location_2 = edge_key[1]
+      connection_index = edge_key[3]
+      connection_identifier = (location_1, location_2, connection_index)
+      if connection_identifier not in updated_edges:
+        self.straighten_connection(
+            location_1,
+            location_2,
+            connection_index,
+            ax,
+            movable=movable,
+            edge_border_color=edge_border_color,
+            alpha=alpha,
+            **draw_kwargs
+        )
+        updated_edges.add(connection_identifier)
+
   def straighten_connection(self,
       location_1: str,
       location_2: str,
@@ -342,7 +353,6 @@ class TTR_Particle_Graph:
     Args:
         move_nodes (bool, optional): new state of node movement. Defaults to None (toggle).
     """
-    print(f"toggle movability to {move_nodes} for {len(self.particle_nodes.values())} ndoes")
     for particle_node in self.particle_nodes.values():
       particle_node.set_particle_movable(move_nodes)
 
@@ -940,12 +950,12 @@ class TTR_Particle_Graph:
       connected_particles = particle_info.pop("connected_particles")
       particle_type = particle_info.pop("particle_type")
       
-      particle_info["position"] = np.array(particle_info["position"])
+      particle_info["position"] = np.array(particle_info["position"], dtype=np.float16)
       particle_info["bounding_box_size"] = tuple(particle_info["bounding_box_size"])
       if particle_type == "Particle_Node":
         particle_info.pop("rotation")
         particle_info.pop("angular_velocity_decay")
-        particle_info["target_position"] = np.array(particle_info["target_position"])
+        particle_info["target_position"] = np.array(particle_info["target_position"], dtype=np.float16)
         particle = Particle_Node(**particle_info)
         particle_graph.add_particle(particle)
       elif particle_type == "Particle_Edge":
@@ -1011,9 +1021,9 @@ if __name__ == "__main__":
       "Hithlum",
   ]
   location_positions = {
-    "Menegroth": np.array([0, 6], dtype=np.float64),
-    "Nargothrond": np.array([-6, -2], dtype=np.float64),
-    "Hithlum": np.array([4, -5], dtype=np.float64),
+    "Menegroth": np.array([0, 6], dtype=np.float16),
+    "Nargothrond": np.array([-6, -2], dtype=np.float16),
+    "Hithlum": np.array([4, -5], dtype=np.float16),
   }
 
   paths = [

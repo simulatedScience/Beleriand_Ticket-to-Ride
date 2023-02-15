@@ -1242,7 +1242,7 @@ class Board_Layout_GUI:
           x_offset,
           new_width + x_offset,
           y_offset,
-          new_height + y_offset])
+          new_height + y_offset], dtype=np.float16)
     # update plot limits
     self.ax.set_xlim(self.background_image_extent[0], self.background_image_extent[1])
     self.ax.set_ylim(self.background_image_extent[2], self.background_image_extent[3])
@@ -1512,7 +1512,7 @@ class Board_Layout_GUI:
     for i, location_name in enumerate(self.graph_data["locations"]):
       node_positions[location_name] = np.array([
           2,
-          image_height - node_spacing*(i+1)])
+          image_height - node_spacing*(i+1)], dtype=np.float16)
 
     # rescale background image to fit the node positions along the y axis
     if self.background_image_mpl is not None:
@@ -1521,7 +1521,7 @@ class Board_Layout_GUI:
           0,
           self.background_image_mpl.shape[1]*scale_factor,
           0,
-          image_height,])
+          image_height], dtype=np.float16)
       # update plot limits
       self.ax.set_xlim(0, self.background_image_mpl.shape[1]*scale_factor)
       self.ax.set_ylim(0, image_height)

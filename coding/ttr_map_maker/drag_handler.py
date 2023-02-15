@@ -86,7 +86,7 @@ class Drag_Handler:
     # get the center of the artist
     artist_center = get_artist_center(self.current_artist)
     # get mouse event coordinates in axees
-    self.click_offset = np.array([event.mouseevent.xdata - artist_center[0], event.mouseevent.ydata - artist_center[1]])
+    self.click_offset = np.array([event.mouseevent.xdata - artist_center[0], event.mouseevent.ydata - artist_center[1]], dtype=np.float16)
     # Bind the motion and button release events to the canvas
     self.cid_1 = self.canvas.mpl_connect("motion_notify_event", self.on_motion)
     self.cid_2 = self.canvas.mpl_connect("button_release_event", self.on_release)
@@ -116,7 +116,8 @@ class Drag_Handler:
     if event.inaxes:
       set_artist_position(
           self.current_artist,
-          np.array([event.xdata - self.click_offset[0], event.ydata - self.click_offset[1]]))
+          np.array([event.xdata - self.click_offset[0], event.ydata - self.click_offset[1]], dtype=np.float16)
+      )
 
       self.canvas.draw_idle()
 
@@ -239,8 +240,8 @@ def get_artist_center(artist) -> np.ndarray:
     elif isinstance(artist, AxesImage):
       artist_extent: Tuple[float] = artist.get_extent()
       artist_center: np.ndarray = \
-          np.array([artist_extent[0], artist_extent[2]]) + \
-          np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]]) / 2
+          np.array([artist_extent[0], artist_extent[2]], dtype=np.float16) + \
+          np.array([artist_extent[1] - artist_extent[0], artist_extent[3] - artist_extent[2]], dtype=np.float16) / 2
     else:
       print(f"Warning: unknown artist type: {type(artist)}")
       return
@@ -286,7 +287,6 @@ def set_artist_rotation(artist: plt.Artist, new_rotation_deg: float, trans_data:
       new_rotation_deg (float): the new rotation of the artist in degrees
       trans_data (transforms.Affine2D): the data transform of the artist (=ax.transData if the artist is in the axes `ax`)
   """
-
   # rotate artist
   artist_center = get_artist_center(artist)
   # artist_center += self.click_offset

@@ -976,7 +976,7 @@ class Graph_Editor_GUI:
         node_label_var (tk.StringVar): The label variable.
         node_image_path_var (tk.StringVar): The image path variable.
     """
-    new_position = np.array([posisition_x_var.get(), position_y_var.get()])
+    new_position = np.array([posisition_x_var.get(), position_y_var.get()], dtype=np.float16)
     new_rotation = np.deg2rad(rotation_var_deg.get())
     old_label = particle_node.label
     particle_node.set_adjustable_settings(
@@ -1144,7 +1144,7 @@ class Graph_Editor_GUI:
         rotation_var_deg (tk.DoubleVar): The rotation variable in degrees.
         edge_color_var (tk.IntVar): The color variable.
     """
-    new_position = np.array([posisition_x_var.get(), position_y_var.get()])
+    new_position = np.array([posisition_x_var.get(), position_y_var.get()], dtype=np.float16)
     new_rotation = np.deg2rad(rotation_var_deg.get())
     new_color = self.edge_color_list[edge_color_var.get()]
     particle_edge.set_adjustable_settings(
@@ -1650,8 +1650,8 @@ def get_circle_intersection(center_a: np.ndarray, radius_a: np.ndarray, center_b
   y0: float = center_a[1] + a * (center_b[1] - center_a[1]) / center_distance
   rx: float = -(center_b[1] - center_a[1]) * (h / center_distance)
   ry: float = (center_b[0] - center_a[0]) * (h / center_distance)
-  intersection_point_1: np.ndarray = np.array([x0 + rx, y0 + ry])
-  intersection_point_2: np.ndarray = np.array([x0 - rx, y0 - ry])
+  intersection_point_1: np.ndarray = np.array([x0 + rx, y0 + ry], dtype=np.float16)
+  intersection_point_2: np.ndarray = np.array([x0 - rx, y0 - ry], dtype=np.float16)
   # return the intersection point closest to the center_a plus radius_a
   if np.linalg.norm(intersection_point_1 - (center_a + radius_a)) < np.linalg.norm(intersection_point_2 - (center_a + radius_a)):
     return intersection_point_1

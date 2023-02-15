@@ -18,7 +18,7 @@ class Particle_Node(Graph_Particle):
         location_name: str,
         id: int,
         color: str = "#222222",
-        position: np.ndarray = np.array([0, 0]),
+        position: np.ndarray = np.array([0, 0], dtype=np.float16),
         mass: float = 0.1,
         bounding_box_size: tuple = (1, 1),
         target_attraction: float = 0.001,
@@ -33,7 +33,7 @@ class Particle_Node(Graph_Particle):
         location_name (str): name of the location
         id (int): unique numeric id of the particle
         color (str, optional): color of the node. Defaults to "#222222".
-        position (np.ndarray, optional): position of the particle. Defaults to np.array([0, 0]).
+        position (np.ndarray, optional): position of the particle. Defaults to np.array([0, 0], dtype=np.float16).
         mass (float, optional): mass of the particle. Defaults to 0.1.
         bounding_box_size (tuple, optional): size of the bounding box. Defaults to (1, 1).
         target_attraction (float, optional): attraction force to the target position. Defaults to 0.001.
