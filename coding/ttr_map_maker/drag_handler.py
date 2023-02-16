@@ -22,7 +22,7 @@ class Drag_Handler:
       particle_list: List[Graph_Particle],
       particle_cell_list: List[List[int]] = None,
       cell_size: float = None,
-      max_pick_range: float = 2.):
+      max_pick_range: float = 0.2):
     """
     Initialize the Drag_Handler object.
     if a cell list is provided, the cell size must also be provided. When both are provided, the handler will use the cell list to find the particle associated to the artist more efficiently.
@@ -57,6 +57,14 @@ class Drag_Handler:
     self.click_offset: np.ndarray = None # the offset between the mouse click and the artist's center
     print("Drag handler initialized.")
 
+  def update_particle_list(self, particle_list: List[Graph_Particle]):
+    """
+    Update the particle list.
+
+    Args:
+      particle_list (List[Graph_Particle]): The new particle list.
+    """
+    self.particle_list = particle_list
 
   def on_pick(self, event: PickEvent):
     """
@@ -81,6 +89,7 @@ class Drag_Handler:
     self.new_rotation_deg = 0
     # ignore clicks on artistts not without group id "movable"
     if self.current_artist.get_gid() != "movable":
+      print(f"Abort moving artist: {self.current_artist} with gid {self.current_artist.get_gid()}.")
       self.current_artist = None
       return
     # get the center of the artist
@@ -93,6 +102,10 @@ class Drag_Handler:
     # bind scrolling to rotate the artist
     self.cid_3 = self.canvas.mpl_connect("scroll_event", self.on_scroll)
 
+    print(f"moving particle with gid '{self.current_artist.get_gid()}'.")
+    # print(f"click position: {event.mouseevent.xdata}, {event.mouseevent.ydata}")
+    # print(f"artist center: {artist_center}")
+
     # find the particle associated to the artist
     if self.use_cell_list:
       potential_particles = self.find_cell_particles(artist_center)
@@ -102,7 +115,9 @@ class Drag_Handler:
     if self.current_particle is None:
       print(f"Warning: no particle found for {type(self.current_artist)} at {artist_center}")
       self.current_artist = None
-
+      return
+    print(f"picked particle at {self.current_particle.position}")
+    print(f"Picked particle for dragging: {self.current_particle.get_id()} ({self.current_particle.location_1_name}, {self.current_particle.location_2_name}, {self.current_particle.path_index}).")
     self.canvas.mpl_disconnect(self.pick_id)
 
   def on_motion(self, event: MouseEvent):
@@ -118,7 +133,7 @@ class Drag_Handler:
           self.current_artist,
           np.array([event.xdata - self.click_offset[0], event.ydata - self.click_offset[1]], dtype=np.float16)
       )
-
+      # print(f"Dragged particle {self.current_particle.get_id()}: ({self.current_particle.location_1_name}, {self.current_particle.location_2_name}, {self.current_particle.path_index})")
       self.canvas.draw_idle()
 
   def on_scroll(self, event: MouseEvent):
@@ -134,6 +149,7 @@ class Drag_Handler:
       self.new_rotation_deg += event.step
       self.new_rotation_deg %= 360
       set_artist_rotation(self.current_artist, self.new_rotation_deg, ax.transData)
+      # print(f"Rotated particle {self.current_particle.get_id()}: ({self.current_particle.location_1_name}, {self.current_particle.location_2_name}, {self.current_particle.path_index})")
       self.canvas.draw_idle()
 
   def on_release(self, event):
@@ -156,6 +172,7 @@ class Drag_Handler:
 
     # update the particle's position
     if self.current_particle is not None:
+      # print(f"Released particle {self.current_particle.get_id()}: ({self.current_particle.location_1_name}, {self.current_particle.location_2_name}, {self.current_particle.path_index})")
       new_rotation_rad = np.deg2rad(self.new_rotation_deg)
       old_rotation_rad = self.current_particle.get_rotation()
       self.current_particle.set_rotation(old_rotation_rad + new_rotation_rad)
@@ -164,9 +181,9 @@ class Drag_Handler:
       self.current_particle.erase()
       self.current_particle.draw(self.ax)
 
-    self.current_artist = None
-    self.current_particle = None
-    self.pick_id = self.canvas.mpl_connect('pick_event', self.on_pick)
+      self.current_artist = None
+      self.current_particle = None
+      self.pick_id = self.canvas.mpl_connect('pick_event', self.on_pick)
 
 
   def find_cell_particles(self, event_position: np.ndarray) -> List[Graph_Particle]:

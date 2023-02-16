@@ -44,7 +44,6 @@ from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
 from graph_particle import Graph_Particle
 import read_ttr_files as ttr_reader
-from drag_handler import Drag_Handler
 import pokemon_colors as pkmn_colors
 from graph_editor_gui import Graph_Editor_GUI
 
@@ -250,27 +249,7 @@ class Board_Layout_GUI:
     self.draw_control_widgets()
     # control_outer_frame.grid_propagate(False)
 
-    # create matplotlib figure
-    # self.master.update()
-    # self.animation_frame.update()
-    # px = 1 / plt.rcParams["figure.dpi"]
-    # total_width = self.master.winfo_width()
-    # total_height = self.master.winfo_height()
-    # navigation_bar_height: int = 150 # height of navigation bar in pixels # TODO: get height of navigation bar
-    # width = (total_width - (self.control_frame.winfo_width() + 2 * self.grid_pad_x))
-    # height = (total_height - (2 * self.grid_pad_y + navigation_bar_height))
-    # print(f"window size: {total_width}x{total_height}")
-    # print(f"px to inches factor: {px}")
-    # print(f"plot size: {width}x{height}")
-    self.fig = plt.figure(figsize=(15,10), dpi=100)
-    # self.fig = plt.figure(figsize=(width*px, height*px), dpi=100)
-    self.fig.patch.set_facecolor(self.color_config["plot_bg_color"])
-    self.ax = self.fig.add_subplot(111)
-    self.ax.set_facecolor(self.color_config["plot_bg_color"])
-    # hide frame, axis and ticks
-    self.ax.set_xlim(0, 20)
-    self.ax.set_ylim(0, 15)
-    self.ax.axis("scaled")
+    self.init_figure()
     
     # create canvas for matplotlib figure
     self.canvas = FigureCanvasTkAgg(self.fig, master=self.animation_frame)
@@ -291,6 +270,36 @@ class Board_Layout_GUI:
     self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=0.15, hspace=0.3)
     self.toggle_mpl_frame_visibility()
     self.canvas.draw_idle()
+
+  def init_figure(self):
+    """
+    Create matplotlib figure and Axes to draw main plot to.
+    These will be accessible as `self.fig` and `self.ax`.
+    """
+    # create matplotlib figure
+    # self.master.update()
+    # self.animation_frame.update()
+    # px = 1 / plt.rcParams["figure.dpi"]
+    # total_width = self.master.winfo_width()
+    # total_height = self.master.winfo_height()
+    # navigation_bar_height: int = 150 # height of navigation bar in pixels # TODO: get height of navigation bar
+    # width = (total_width - (self.control_frame.winfo_width() + 2 * self.grid_pad_x))
+    # height = (total_height - (2 * self.grid_pad_y + navigation_bar_height))
+    # print(f"window size: {total_width}x{total_height}")
+    # print(f"px to inches factor: {px}")
+    # print(f"plot size: {width}x{height}")
+    self.fig = plt.figure(figsize=(15,10), dpi=100)
+    # self.fig = plt.figure(figsize=(width*px, height*px), dpi=100)
+    self.fig.patch.set_facecolor(self.color_config["plot_bg_color"])
+    self.init_axes()
+
+  def init_axes(self):
+      self.ax = self.fig.add_subplot(111)
+      self.ax.set_facecolor(self.color_config["plot_bg_color"])
+    # hide frame, axis and ticks
+    # self.ax.set_xlim(0, 15)
+    # self.ax.set_ylim(0, 10)
+      self.ax.axis("scaled")
 
   def control_frame_size_update(self, event: tk.Event, control_outer_frame: tk.Frame):
     """
@@ -619,16 +628,8 @@ class Board_Layout_GUI:
     print("self.master.winfo_screenwidth():", self.master.winfo_screenwidth())
     print("self.master.winfo_screenheight():", self.master.winfo_screenheight())
     print("self.master.winfo_geometry():", self.master.winfo_geometry())
-    # clear figure
-    # self.fig.clear()
-    # reset variables
-    self.particle_graph = None
-    self.background_image = None
-    self.graph_data = None
-    if self.graph_analysis_enabled.get():
-      self.toggle_graph_analysis()
-    if self.graph_edit_mode_enabled.get():
-      self.toggle_graph_edit_mode()
+    # reset graph data and clear graph
+    self.reset_graph()
     # try loading particle graph
     try:
       self.particle_graph = TTR_Particle_Graph.load_json(self.particle_graph_file.get())
@@ -647,12 +648,9 @@ class Board_Layout_GUI:
       "locations": locations,
       "paths": paths,
       "tasks": tasks}
-    self.ax.clear()
     self.init_particle_graph()
 
     self.load_background_image()
-
-    self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
 
   def load_nodes(self) -> None: # TODO: test functionality
     """
@@ -672,7 +670,6 @@ class Board_Layout_GUI:
     #   self.particle_graph.update_nodes(locations)
     #   # TODO: implement warning and create new particle graph
 
-    self.drag_handler = Drag_Handler(self.canvas, self.ax, self.particle_graph.get_particle_list())
     if self.show_nodes.get():
       self.particle_graph.draw_nodes(self.ax, movable=self.move_nodes_enabled.get())
 
@@ -703,6 +700,28 @@ class Board_Layout_GUI:
     except FileNotFoundError:
       print("Background image file not found.")
     self.toggle_background_image_visibility()
+
+  def reset_graph(self) -> None:
+    """
+    Reset the particle graph and all related variables and clear the figure.
+    """
+    # clear figure and reset axes
+    if self.particle_graph is not None or self.plotted_background_images:
+      self.fig.clf()
+      self.init_axes()
+    if self.particle_graph is not None:
+      self.graph_data: dict[str, List] = None
+      del self.particle_graph
+      self.particle_graph: TTR_Particle_Graph = None
+    if self.plotted_background_images:
+      self.background_image_mpl: np.ndarray = None
+      self.plotted_background_images: list = list()
+      self.background_image_extent: np.ndarray = None
+
+    if self.graph_analysis_enabled.get():
+      self.toggle_graph_analysis() # disable graph analysis
+    if self.graph_edit_mode_enabled.get():
+      self.toggle_graph_edit_mode() # disable graph edit mode
 
   def draw_particle_widgets(self, particle_frame: tk.Frame) -> None:
     """
@@ -1021,9 +1040,10 @@ class Board_Layout_GUI:
       self.plotted_background_images = []
       if self.graph_analysis_enabled.get():
         self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
-        self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
+        if self.particle_graph.tasks:
+          self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
       else:
-        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background", zorder=0))#, picker=True))
+        self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background", zorder=0))
     elif len(self.plotted_background_images) > 0:
       for image in self.plotted_background_images:
         image.remove()
@@ -1380,7 +1400,10 @@ class Board_Layout_GUI:
       grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
       # clear figure and draw graph analysis
       self.fig.clf()
-      self.axs = self.fig.subplots(3, 3)
+      if self.particle_graph.tasks:
+        self.axs = self.fig.subplots(3, 3) # 3 rows if tasks exist
+      else:
+        self.axs = self.fig.subplots(2, 3) # 2 rows if no tasks exist
       for ax in self.axs.flat:
         ax.set_facecolor(self.color_config["plot_bg_color"])
       self.particle_graph.draw_graph_analysis(

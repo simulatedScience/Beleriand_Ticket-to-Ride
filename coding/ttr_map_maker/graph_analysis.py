@@ -681,11 +681,12 @@ def create_graph(locations: List[str], edge_particles: dict[Tuple[str, str, int,
     if path_index != 0:
       continue
     # get length of connection
-    length = 1
+    length = 0
     while True:
       if (loc1, loc2, length+1, connection_index) not in edge_particles:
         break
       length += 1
+    length += 1
     # get color of connection
     color = edge_particles[(loc1, loc2, path_index, connection_index)].color
     nx_graph.add_edge(loc1, loc2, key=connection_index, length=length, color=color)

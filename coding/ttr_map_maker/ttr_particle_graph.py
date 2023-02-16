@@ -250,6 +250,7 @@ class TTR_Particle_Graph:
         particle_node.position*scale_factor)
       particle_node.erase()
       particle_node.draw(ax)
+    # update cell list radius
 
 
   def get_locations(self) -> list:
@@ -616,19 +617,24 @@ class TTR_Particle_Graph:
     # plot edge color total length distribution
     self.analysis_graph.plot_edge_color_total_length_distribution(ax=axs[1, 1], grid_color=grid_color)
     # plot edge importance
-    axs[1, 2].set_title("Edge importance")
     self.draw_nodes(ax=axs[1, 2])
     self.draw_labels(ax=axs[1, 2])
-    self.draw_edge_importance(ax=axs[1, 2])
-    # plot task length distribution
-    self.analysis_graph.plot_task_length_distribution(ax=axs[2, 0], grid_color=grid_color)
-    # plot task color distribution
-    self.analysis_graph.plot_task_color_avg_distribution(ax=axs[2, 1], grid_color=grid_color)
-    # plot shortest task paths
-    axs[2, 2].set_title("Task visualisation")
-    self.draw_nodes(ax=axs[2, 2])
-    self.draw_labels(ax=axs[2, 2])
-    self.draw_tasks(ax=axs[2, 2], alpha=1, base_color=base_color)
+    if not self.tasks: # no graphs exist yet
+      axs[1, 2].set_title("graph")
+      print("No tasks found to analyse edges with.")
+      self.draw_edges(ax=axs[1, 2])
+    else: # tasks are already defined
+      axs[1, 2].set_title("Edge importance")
+      self.draw_edge_importance(ax=axs[1, 2])
+      # plot task length distribution
+      self.analysis_graph.plot_task_length_distribution(ax=axs[2, 0], grid_color=grid_color)
+      # plot task color distribution
+      self.analysis_graph.plot_task_color_avg_distribution(ax=axs[2, 1], grid_color=grid_color)
+      # plot shortest task paths
+      axs[2, 2].set_title("Task visualisation")
+      self.draw_nodes(ax=axs[2, 2])
+      self.draw_labels(ax=axs[2, 2])
+      self.draw_tasks(ax=axs[2, 2], alpha=1, base_color=base_color)
 
 
   def init_analysis_graph(self) -> None:
@@ -664,13 +670,13 @@ class TTR_Particle_Graph:
     """
     all_particles = self.get_particle_list()
     # add id's to all particles
-    particle_id = self.max_particle_id
-    for particle_node in all_particles:
-      try:
-        particle_node.set_id(particle_id)
-      except AttributeError:
-        particle_node.particle_id = particle_id
-      particle_id += 1
+    # particle_id = self.max_particle_id
+    # for particle_node in all_particles:
+    #   try:
+    #     particle_node.set_id(particle_id)
+    #   except AttributeError:
+    #     particle_node.particle_id = particle_id
+    #   particle_id += 1
     # get json string for all particles
     all_particles_json = []
     for particle in all_particles:
@@ -833,8 +839,9 @@ class TTR_Particle_Graph:
     path_index = particle_edge.path_index
     connection_index = particle_edge.connection_index
     path_length = 0
-    # update path in self.paths
+    # update path length in self.paths
     for i, path in enumerate(self.paths):
+      # TODO: this only works if there are no two connections with the same color but different lengths
       if path[0] == loc_1 and path[1] == loc_2 and path[3] == particle_edge.color:
         if path_length == 0:
           path_length = path[2]
@@ -843,6 +850,13 @@ class TTR_Particle_Graph:
           break
         self.paths[i] = (loc_1, loc_2, path[2] - 1, particle_edge.color)
         break
+    # remove edge particle
+    if (loc_1, loc_2, path_index, connection_index) in self.particle_edges:
+      del self.particle_edges[(loc_1, loc_2, path_index, connection_index)]
+    elif (loc_2, loc_1, path_index, connection_index) in self.particle_edges:
+      del self.particle_edges[(loc_2, loc_1, path_index, connection_index)]
+    else:
+      print(f"Warning: Could not find edge particle to remove: {loc_1} -> {loc_2} ({path_index})")
     # update path indices of all edge particles with higher path index
     changed_particle_edges: dict[tuple[str, str, int, int], Particle_Edge] = dict()
     for particle_key, particle_edge in self.particle_edges.items():
@@ -856,14 +870,6 @@ class TTR_Particle_Graph:
     for particle_key, particle_edge in changed_particle_edges.items():
       self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index, connection_index)] = particle_edge
       del self.particle_edges[particle_key]
-    # remove edge particle
-    if (loc_1, loc_2, path_index) in self.particle_edges:
-      del self.particle_edges[(loc_1, loc_2, path_index, connection_index)]
-    elif (loc_2, loc_1, path_index) in self.particle_edges:
-      del self.particle_edges[(loc_2, loc_1, path_index, connection_index)]
-    else:
-      print(f"Warning: Could not find edge particle {loc_1} -> {loc_2} ({path_index})")
-      print()
 
 
   def rename_label(self, old_name: str, new_name: str, ax: plt.Axes) -> None:
@@ -946,7 +952,10 @@ class TTR_Particle_Graph:
         particle_parameters = particle_parameters,
       )
     particle_dict: dict[int, Graph_Particle] = dict()
+    max_particle_id: int = 0
     for particle_info in particle_dicts:
+      if particle_info["id"] > max_particle_id:
+        max_particle_id = particle_info["id"]
       connected_particles = particle_info.pop("connected_particles")
       particle_type = particle_info.pop("particle_type")
       
@@ -974,6 +983,8 @@ class TTR_Particle_Graph:
     for particle, particle_info in zip(particle_dict.values(), particle_dicts):
       for connected_particle_id in particle_info["connected_particles"]:
         particle.add_connected_particle(particle_dict[connected_particle_id])
+    # set max id
+    particle_graph.max_particle_id = max_particle_id
     # build list of paths in graph
     particle_graph.build_paths()
     particle_graph.update_tasks(graph_info["particle_graph"]["tasks"])

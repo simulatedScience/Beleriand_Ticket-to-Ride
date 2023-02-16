@@ -341,10 +341,9 @@ class Particle_Edge(Graph_Particle):
         while True:
           if not new_node.get_id() in visited_particle_ids:
             break
-          # print(f"visited {type(new_node)}: id = {new_node.get_id()} at {new_node.position}")
           connected_index += 1
           if connected_index >= len(connected_nodes[i].connected_particles):
-            raise ValueError("Could not find connected particle that has not been visited yet. Ensure that the graph is connected properly.")
+            raise ValueError("Could not find a connected particle that has not been visited yet. Ensure that the graph is connected properly.")
           new_node = connected_nodes[i].connected_particles[connected_index]
         connected_nodes[i] = new_node
         visited_particle_ids.add(connected_nodes[i].get_id())
