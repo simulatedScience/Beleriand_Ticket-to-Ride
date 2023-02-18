@@ -62,6 +62,8 @@ class TTR_Particle_Graph:
     self.particle_labels: dict[str, Particle_Label] = dict()
     self.analysis_graph: TTR_Graph_Analysis = None
 
+    self.graph_extent: np.ndarray = np.array([0, 0, 0, 0], dtype=np.float16)
+
     self.edge_attractor_artists: List[plt.Artist] = list()
     
     self.create_particle_system()
@@ -140,6 +142,14 @@ class TTR_Particle_Graph:
       for particle in all_particles:
         particle.update(dt)
 
+  def set_graph_extent(self, graph_extent: np.ndarray) -> None:
+    """
+    set the extent of the graph. This is used to draw the graph in the correct position.
+
+    Args:
+        graph_extent (np.ndarray): extent of the graph (xmin, xmax, ymin, ymax)
+    """
+    self.graph_extent = graph_extent
 
   def move_labels_to_nodes(self,
       ax: plt.Axes,
@@ -162,6 +172,8 @@ class TTR_Particle_Graph:
 
   def straighten_connections(self,
       ax: plt.Axes,
+      x_periodic: bool = True,
+      y_periodic: bool = True,
       movable: bool = False,
       edge_border_color: str = None,
       alpha = 0.8,
@@ -185,6 +197,8 @@ class TTR_Particle_Graph:
             location_2,
             connection_index,
             ax,
+            x_periodic=x_periodic,
+            y_periodic=y_periodic,
             movable=movable,
             edge_border_color=edge_border_color,
             alpha=alpha,
@@ -197,9 +211,11 @@ class TTR_Particle_Graph:
       location_2: str,
       connection_index: int,
       ax: plt.Axes,
+      x_periodic: bool = True,
+      y_periodic: bool = True,
       movable: bool = False,
       edge_border_color: str = None,
-      alpha = 0.8,
+      alpha: float = 0.8,
       **draw_kwargs) -> None:
     """
     move an edge such that it forms a straight line between its connected nodes. Then erase and redraw the edge.
@@ -209,10 +225,22 @@ class TTR_Particle_Graph:
         location_2 (str): label of the second node
         connection_index (int): index of the connection
         ax (plt.Axes): axes to draw on
+        x_periodic (bool, optional): whether the graph is periodic in x direction. If so, the edge will be drawn in the shortest direction even if that means crossing the periodic boundary. Defaults to False.
+        y_periodic (bool, optional): whether the graph is periodic in y direction. If so, the edge will be drawn in the shortest direction even if that means crossing the periodic boundary. Defaults to False.
+        movable (bool, optional): whether the edge is movable. Defaults to False.
+        edge_border_color (str, optional): color of the edge border. Defaults to None.
+        alpha (float, optional): alpha value of the edge. Defaults to 0.8.
         draw_kwargs (dict): kwargs to pass to the draw method of the edge particle
     """
     node_1 = self.particle_nodes[location_1]
     node_2 = self.particle_nodes[location_2]
+    node_distance_vec: np.ndarray = node_2.position - node_1.position
+    if x_periodic and abs(node_distance_vec[0]) > (self.graph_extent[1] - self.graph_extent[0]) / 2:
+      # if the distance in x direction is larger than half the graph extent, the shortest distance is across the periodic boundary
+      node_distance_vec[0] = node_distance_vec[0] - np.sign(node_distance_vec[0]) * (self.graph_extent[1] - self.graph_extent[0])
+    if y_periodic and abs(node_distance_vec[1]) > (self.graph_extent[3] - self.graph_extent[2]) / 2:
+      # if the distance in y direction is larger than half the graph extent, the shortest distance is across the periodic boundary
+      node_distance_vec[1] = node_distance_vec[1] - np.sign(node_distance_vec[1]) * (self.graph_extent[3] - self.graph_extent[2])
     edge_particles: List[Particle_Edge] = []
     length = 0
     while True:
@@ -222,12 +250,15 @@ class TTR_Particle_Graph:
       else:
         break
     for i, edge_particle in enumerate(edge_particles):
-      edge_particle.set_position(
-        node_1.position + (node_2.position - node_1.position) * (i+1) / (length+1)
-      )
-      edge_particle.set_rotation(
-        np.arctan2(node_2.position[1] - node_1.position[1], node_2.position[0] - node_1.position[0])
-      )
+      new_position = node_1.position + node_distance_vec * (i+1) / (length+1)
+      new_position = (new_position - self.graph_extent[0:3:2]) \
+          % np.array([self.graph_extent[1] - self.graph_extent[0], self.graph_extent[3] - self.graph_extent[2]]) \
+          + self.graph_extent[0:3:2]
+      edge_particle.set_position(new_position)
+
+      new_rotation = np.arctan2(node_distance_vec[1], node_distance_vec[0])
+      edge_particle.set_rotation(new_rotation)
+
       edge_particle.erase()
       edge_particle.draw(
           ax,

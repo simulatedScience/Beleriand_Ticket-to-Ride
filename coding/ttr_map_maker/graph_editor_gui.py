@@ -1,7 +1,7 @@
 """
 This module implements a class to handle editing TTR particle graphs through a GUI.
 
-The class is called ParticleGraphEditor and can be seen as an extension of `Board_Layout_GUI`, which is the intended way to use it.
+The class is called Graph_Editor_GUI and can be seen as an extension of `Board_Layout_GUI`, which is the intended way to use it.
 
 This requires a tkinter frame where particle settings are displayed and edited as well as a matplotlib Axes object where the particle graph is displayed.
 """
@@ -33,16 +33,16 @@ class Graph_Editor_GUI:
       graph_edit_frame: tk.Frame,
       ax: plt.Axes,
       canvas: FigureCanvasTkAgg,
-      max_pick_range: float = 2.,
+      max_pick_range: float = 0.2,
       edge_color_list: List[str] = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white", "gray"]
       ):
     """
     Initialize the graph editor GUI. This class handles the editing of particle graphs through a GUI and shows all controls in the given frame `graph_edit_frame`. Changes are made to the given particle graph `particle_graph` and the graph is displayed in the given matplotlib Axes object `ax` and tkinter canvas `canvas`.
 
     Args:
-        master: The tkinter master widget.
-        color_config: Dictionary of colors for the UI (see `Board_Layout_GUI`)
-        tk_config_methods: Dictionary of methods to configure tkinter widgets (see `Board_Layout_GUI`). These should add styles to the widgets. Expect the following keys:
+        master (tk.Tk): The tkinter master widget.
+        color_config (dict[str, str]): Dictionary of colors for the UI (see `Board_Layout_GUI`)
+        tk_config_methods (dict[str, Callable]): Dictionary of methods to configure tkinter widgets (see `Board_Layout_GUI`). These should add styles to the widgets. Expect the following keys:
             - `add_frame_style(frame: tk.Frame)`
             - `add_label_style(label: tk.Label, headline_level: int, font_type: str)
             - `add_button_style(button: tk.Button)`
@@ -50,12 +50,12 @@ class Graph_Editor_GUI:
             - `add_checkbutton_style(checkbutton: tk.Checkbutton)
             - `add_radiobutton_style(radiobutton: tk.Radiobutton)
             - `add_browse_button(frame: tk.Frame, row_index: int, column_index: int, command: Callable) -> tk.Button`
-        movability_tk_variables: List of tkinter boolean variables that control the movability of the particles.
-        particle_graph: The particle graph to edit.
-        graph_edit_frame: The tkinter frame where the edit mode widgets are displayed.
-        ax: The matplotlib Axes object where the particle graph is displayed.
-        canvas: the tkinter canvas where the mpl figure is shown
-        max_pick_range: The maximum distance from a particle to the click event to still consider it as a click on the particle.
+        movability_tk_variables (List[tk.BooleanVar]): List of tkinter boolean variables that control the movability of the particles.
+        particle_graph (TTR_Particle_Graph): The particle graph to edit.
+        graph_edit_frame (tk.Frame): The tkinter frame where the edit mode widgets are displayed.
+        ax (plt.Axes):The matplotlib Axes object where the particle graph is displayed.
+        canvas (FigureCanvasTkAgg): The tkinter canvas where the mpl figure is shown
+        max_pick_range (float, optional): The maximum distance from a particle to the click event to still consider it as a click on the particle. Defaults to 0.2.
     """
     self.master: tk.Tk = master
     self.particle_graph: TTR_Particle_Graph = particle_graph

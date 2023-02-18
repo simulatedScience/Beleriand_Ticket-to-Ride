@@ -5,25 +5,29 @@ This project implements tools to create your very own, custom ticket to ride gam
 - Create your own graph from locations and "rail" connections.
 - All graph elements (nodes, edges and labels) can be moved in the UI to improve the layout.
 - edit colors of existing edges and text of nodes through the UI
+- add and remove edges and nodes through the UI
+- delete nodes through the UI
 - The background and graph elements can be rescaled such that everything fits well when printed.
 - Show the graph on top of the background map to export it as a large image, which can then be printed. 
 - visualize the tasks on the graph
-- automatic graph analysis tools ([inspired by](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
+- automatic graph analysis tools ([inspired by this article](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
+- select an image for each node in the UI
 
 ### planned features:
-- allow adding and removing nodes and edges to the graph through the UI
+- allow adding nodes through the UI
 - support for different monitor resolutions
 - automatically generate images for task cards
 - allow adding and removing tasks through the UI
-- select an image for each node in the UI
-- add overlay for points for each edge length (possibly implemented via mpl legend?)
+- add overlay for reward points for each edge length (possibly implemented via mpl legend?)
 - automatically optimze the graph layout from the UI
 - documentation and user manual
 
-Currently the project is in an early stage, but it is already possible to create a custom game, although some steps are still manual and rather tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. The program is only tested on Windows (Win11 22h2). While most of the code should be cross-platform compatible, some features may not work on other operating systems and require modifications (mostly UI related).
+Currently the project is still unfinished, but it is already possible to create a custom game, although some steps are still manual and rather tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. The program is only tested on Windows (Win11 22h2). While most of the code should be cross-platform compatible, some features may not work on other operating systems and require modifications (mostly UI related).
 
 ## How to make your physical game
-The program mostly helps just with creating the game board. However, it is still necessary to create the game cards and pieces yourself.  
+The program mostly helps just with creating the game board. However, it is still necessary to create the game cards and pieces yourself.
+If you already have the original Ticket to ride game, you can use the cards and pieces from that game. Otherwise, you will have to create your own cards and pieces. Here are some suggestions for that:
+
 For some easily accessible train cards and pieces, we suggest using Pokémon Energy cards and LEGO 1x4 bricks. Pokémon cards come in a variety of different colors and already include icons to make it easy to distinguish different colors, even in bad lighting conditions or for colorblind players. LEGO bricks are a convenient size, fun to play around with and convenient to store. Both Pokémon Energy cards and LEGO bricks are cheap and easy to obtain in sufficient quantities all around the world. You may even already have enough lying around.
 
 For 1x4 LEGO bricks to fit well onto the board, I recommend printing it onto 8 or 9 Din A4 sheets. The sheets can then be glued together to form a large sheet of paper. For a stronger board, glue the paper onto cardboard.

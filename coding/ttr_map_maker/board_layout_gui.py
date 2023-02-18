@@ -257,6 +257,7 @@ class Board_Layout_GUI:
         row=0,
         column=0,
         sticky="nsew")
+    self.toggle_mpl_frame_visibility()
     # add toolbar
     self.toolbar = NavigationToolbar2Tk(self.canvas, self.animation_frame, pack_toolbar=False)
     self.toolbar.update()
@@ -288,7 +289,7 @@ class Board_Layout_GUI:
     # print(f"window size: {total_width}x{total_height}")
     # print(f"px to inches factor: {px}")
     # print(f"plot size: {width}x{height}")
-    self.fig = plt.figure(figsize=(15,10), dpi=100)
+    self.fig = plt.figure(figsize=(15,9.5), dpi=100)
     # self.fig = plt.figure(figsize=(width*px, height*px), dpi=100)
     self.fig.patch.set_facecolor(self.color_config["plot_bg_color"])
     self.init_axes()
@@ -296,9 +297,7 @@ class Board_Layout_GUI:
   def init_axes(self):
       self.ax = self.fig.add_subplot(111)
       self.ax.set_facecolor(self.color_config["plot_bg_color"])
-    # hide frame, axis and ticks
-    # self.ax.set_xlim(0, 15)
-    # self.ax.set_ylim(0, 10)
+      # hide frame, axis and ticks
       self.ax.axis("scaled")
 
   def control_frame_size_update(self, event: tk.Event, control_outer_frame: tk.Frame):
@@ -707,6 +706,7 @@ class Board_Layout_GUI:
     """
     # clear figure and reset axes
     if self.particle_graph is not None or self.plotted_background_images:
+      self.axs: List[plt.Axes] = None
       self.fig.clf()
       self.init_axes()
     if self.particle_graph is not None:
@@ -719,8 +719,10 @@ class Board_Layout_GUI:
       self.background_image_extent: np.ndarray = None
 
     if self.graph_analysis_enabled.get():
+      self.graph_analysis_enabled.set(False)
       self.toggle_graph_analysis() # disable graph analysis
     if self.graph_edit_mode_enabled.get():
+      self.graph_edit_mode_enabled.set(False)
       self.toggle_graph_edit_mode() # disable graph edit mode
 
   def draw_particle_widgets(self, particle_frame: tk.Frame) -> None:
@@ -1038,12 +1040,21 @@ class Board_Layout_GUI:
           except ValueError: # ignore if image is not plotted
             pass
       self.plotted_background_images = []
+      if self.background_image_extent is None:
+        self.background_image_extent = (0, self.background_image_mpl.shape[1], 0, self.background_image_mpl.shape[0])
       if self.graph_analysis_enabled.get():
         self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
+        self.axs[1, 2].set_xlim(self.background_image_extent[0], self.background_image_extent[1])
+        self.axs[1, 2].set_ylim(self.background_image_extent[2], self.background_image_extent[3])
         if self.particle_graph.tasks:
           self.plotted_background_images.append(self.axs[2, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
+          self.axs[2, 2].set_xlim(self.background_image_extent[0], self.background_image_extent[1])
+          self.axs[2, 2].set_ylim(self.background_image_extent[2], self.background_image_extent[3])
       else:
         self.plotted_background_images.append(self.ax.imshow(self.background_image_mpl, extent=self.background_image_extent, gid="background", zorder=0))
+        # set axes to adjust to background image
+        self.ax.set_xlim(self.background_image_extent[0], self.background_image_extent[1])
+        self.ax.set_ylim(self.background_image_extent[2], self.background_image_extent[3])
     elif len(self.plotted_background_images) > 0:
       for image in self.plotted_background_images:
         image.remove()
@@ -1267,6 +1278,7 @@ class Board_Layout_GUI:
     self.ax.set_xlim(self.background_image_extent[0], self.background_image_extent[1])
     self.ax.set_ylim(self.background_image_extent[2], self.background_image_extent[3])
     self.toggle_background_image_visibility()
+    self.particle_graph.set_graph_extent(self.background_image_extent)
 
   def scale_graph_posistions(self):
     """
@@ -1377,7 +1389,7 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None: # cannot open graph analysis without a graph
       self.graph_analysis_enabled.set(False)
-      self.fig.clf()
+      # self.fig.clf()
       return
     if not self.graph_analysis_enabled.get(): # close graph analysis and show regular graph map 
       # clear figure and draw graph
@@ -1387,6 +1399,7 @@ class Board_Layout_GUI:
       self.fig.subplots_adjust(left=0.025, bottom=0.025, right=0.975, top=0.975, wspace=0.15, hspace=0.3)
       self.draw_graph()
       self.toggle_background_image_visibility()
+      self.toggle_mpl_frame_visibility()
       
       self.canvas.draw_idle()
     else: # open graph analysis
@@ -1401,9 +1414,9 @@ class Board_Layout_GUI:
       # clear figure and draw graph analysis
       self.fig.clf()
       if self.particle_graph.tasks:
-        self.axs = self.fig.subplots(3, 3) # 3 rows if tasks exist
+        self.axs: List[plt.Axes] = self.fig.subplots(3, 3) # 3 rows if tasks exist
       else:
-        self.axs = self.fig.subplots(2, 3) # 2 rows if no tasks exist
+        self.axs: List[plt.Axes] = self.fig.subplots(2, 3) # 2 rows if no tasks exist
       for ax in self.axs.flat:
         ax.set_facecolor(self.color_config["plot_bg_color"])
       self.particle_graph.draw_graph_analysis(
