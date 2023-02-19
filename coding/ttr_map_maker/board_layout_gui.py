@@ -42,10 +42,10 @@ from multi_monitor_fullscreen import toggle_full_screen
 from file_browsing import browse_image_file, browse_json_file, browse_txt_file
 from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
-from graph_particle import Graph_Particle
 import read_ttr_files as ttr_reader
 import pokemon_colors as pkmn_colors
 from graph_editor_gui import Graph_Editor_GUI
+from task_editor_gui import Task_Editor_GUI
 
 class Board_Layout_GUI:
   def __init__(self,
@@ -94,7 +94,6 @@ class Board_Layout_GUI:
     self.background_image_extent: np.ndarray = None
     self.graph_data: dict = None
     self.particle_graph: TTR_Particle_Graph = None
-    self.highlighted_particles: List[Graph_Particle] = list()
 
     self.init_tk_variables()
     self.init_frames()
@@ -216,13 +215,16 @@ class Board_Layout_GUI:
     self.animation_frame.grid_rowconfigure(1, weight=0)
 
     # create frame for controls
-    control_outer_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"], height=self.master.winfo_height()-2*self.grid_pad_y, )
-    self.master.bind("<Configure>", lambda event: self.control_frame_size_update(event, control_outer_frame))
+    control_outer_frame = tk.Frame(self.main_frame,
+        background=self.color_config["bg_color"],
+        height=self.master.winfo_height()-2*self.grid_pad_y, )
+    self.master.bind("<Configure>", lambda event, control_outer_frame=control_outer_frame: self.control_frame_size_update(event, control_outer_frame))
     control_outer_frame.grid(
         row=0,
         column=1,
         sticky="nse")
-    self.control_frame = Auto_Scroll_Frame(control_outer_frame, 
+    self.control_frame = Auto_Scroll_Frame(
+        control_outer_frame, 
         frame_kwargs=dict(background=self.color_config["bg_color"]),
         scrollbar_kwargs=dict(
             troughcolor=self.color_config["bg_color"],
@@ -235,14 +237,13 @@ class Board_Layout_GUI:
             highlightcolor=self.color_config["bg_color"],
             )
         )
-    self.control_frame.grid(
-        row=0,
-        column=0,
-        sticky="e",
-        padx=(2*self.grid_pad_x, 0),
-        pady=(0,0))
-        # ipadx=2*self.grid_pad_x,
-        # ipady=2*self.grid_pad_y)
+    # self.control_frame = tk.Frame(control_outer_frame, background=self.color_config["bg_color"])
+    # self.control_frame.grid(
+    #     row=0,
+    #     column=0,
+    #     sticky="e",
+    #     padx=(2*self.grid_pad_x, 0),
+    #     pady=(0,0))
     self.control_frame = self.control_frame.scrollframe
     self.master.update()
 
@@ -359,8 +360,9 @@ class Board_Layout_GUI:
     self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
 
     # variables for different modes of operation
-    self.graph_analysis_enabled = tk.BooleanVar(value=False, name="graph_analysis_enabled")
     self.graph_edit_mode_enabled = tk.BooleanVar(value=False, name="graph_edit_mode_enabled")
+    self.task_edit_mode_enabled = tk.BooleanVar(value=False, name="task_edit_mode_enabled")
+    self.graph_analysis_enabled = tk.BooleanVar(value=False, name="graph_analysis_enabled")
 
     self.move_nodes_enabled = tk.BooleanVar(value=False, name="move_nodes_enabled")
     self.move_labels_enabled = tk.BooleanVar(value=False, name="move_labels_enabled")
@@ -1118,7 +1120,7 @@ class Board_Layout_GUI:
         column_index: int,
         text: str,
         command: Callable = None,
-        columnspan: int = 2):
+        columnspan: int = 1):
       """
       Add a label and checkbutton widget to the given frame.
 
@@ -1157,47 +1159,69 @@ class Board_Layout_GUI:
     column_index = 0
     # add buttons
     add_control_button(row_index, column_index, "Save graph", self.save_graph)
-    column_index += 2
+    column_index += 1
     add_control_button(row_index, column_index, "Snap labels", self.move_labels_to_nodes)
-    column_index += 2
+    column_index += 1
     add_control_button(row_index, column_index, "Scale graph", self.scale_graph_posistions)
     row_index += 1
     column_index = 0
     add_control_button(row_index, column_index, "Save img", self.save_image)
-    column_index += 2
+    column_index += 1
     add_control_button(row_index, column_index, "Snap edges", self.move_edges_to_nodes)
-    column_index += 2
+    column_index += 1
     add_control_button(row_index, column_index, "Scale img", self.scale_background_image)
-    column_index += 2
     row_index += 1
+
+    # add checkbuttons in a separate frame
+    checkbutton_frame: tk.Frame = tk.Frame(button_frame)
+    self.add_frame_style(checkbutton_frame)
+    checkbutton_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=3,
+        sticky="new",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y))
     column_index = 0
+    graph_edit_mode_checkbutton = tk.Checkbutton(
+        checkbutton_frame,
+        text="Edit graph",
+        variable=self.graph_edit_mode_enabled,
+        command=self.toggle_graph_edit_mode)
+    self.add_checkbutton_style(graph_edit_mode_checkbutton)
+    graph_edit_mode_checkbutton.grid(
+        row=0,
+        column=column_index,
+        sticky="new",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=0)
+    column_index += 1
+    task_edit_mode_checkbutton = tk.Checkbutton(
+        checkbutton_frame,
+        text="Edit tasks",
+        variable=self.task_edit_mode_enabled,
+        command=self.toggle_task_edit_mode)
+    self.add_checkbutton_style(task_edit_mode_checkbutton)
+    task_edit_mode_checkbutton.grid(
+        row=0,
+        column=column_index,
+        sticky="new",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=0)
+    column_index += 1
     graph_analysis_checkbutton = tk.Checkbutton(
-        button_frame,
+        checkbutton_frame,
         text="Graph analysis",
         variable=self.graph_analysis_enabled,
         command=self.toggle_graph_analysis)
     self.add_checkbutton_style(graph_analysis_checkbutton)
     graph_analysis_checkbutton.grid(
-        row=row_index,
+        row=0,
         column=column_index,
-        sticky="nsew",
-        columnspan=3,
+        sticky="new",
         padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
-    column_index += 3
-    graph_edit_mode_checkbutton = tk.Checkbutton(
-        button_frame,
-        text="Graph edit mode",
-        variable=self.graph_edit_mode_enabled,
-        command=self.toggle_graph_edit_mode)
-    self.add_checkbutton_style(graph_edit_mode_checkbutton)
-    graph_edit_mode_checkbutton.grid(
-        row=row_index,
-        column=column_index,
-        sticky="nsew",
-        columnspan=3,
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
+        pady=0)
+    column_index += 1
 
   def play_pause_simulation(self):
     """
@@ -1402,55 +1426,59 @@ class Board_Layout_GUI:
       self.toggle_mpl_frame_visibility()
       
       self.canvas.draw_idle()
-    else: # open graph analysis
-      if self.edge_style.get() == "Edge images": # disable edge images
-        self.edge_style.set("Show tasks")
-        self.update_edge_style()
-        
-      if self.graph_edit_mode_enabled.get(): # disable graph edit mode
-        self.graph_edit_mode_enabled.set(False)
-        self.toggle_graph_edit_mode()
-      grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
-      # clear figure and draw graph analysis
-      self.fig.clf()
-      if self.particle_graph.tasks:
-        self.axs: List[plt.Axes] = self.fig.subplots(3, 3) # 3 rows if tasks exist
-      else:
-        self.axs: List[plt.Axes] = self.fig.subplots(2, 3) # 2 rows if no tasks exist
-      for ax in self.axs.flat:
-        ax.set_facecolor(self.color_config["plot_bg_color"])
-      self.particle_graph.draw_graph_analysis(
-          self.axs,
-          grid_color=grid_color,
-          base_color=self.color_config["task_base_color"])
-      if self.background_image_extent is not None:
-        self.scale_background_image(get_new_size=False)
-      self.fig.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.15, hspace=0.3)
-      self.canvas.draw_idle()
+      return
+    # open graph analysis
+    if self.graph_edit_mode_enabled.get(): # disable graph edit mode
+      self.graph_edit_mode_enabled.set(False)
+      self.toggle_graph_edit_mode()
+    if self.task_edit_mode_enabled.get(): # close task edit mode
+      self.task_edit_mode_enabled.set(False)
+      self.toggle_task_edit_mode()
+    if self.edge_style.get() == "Edge images": # disable edge images
+      self.edge_style.set("Show tasks")
+      self.update_edge_style()
+      
+    grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
+    # clear figure and draw graph analysis
+    self.fig.clf()
+    if self.particle_graph.tasks:
+      self.axs: List[plt.Axes] = self.fig.subplots(3, 3) # 3 rows if tasks exist
+    else:
+      self.axs: List[plt.Axes] = self.fig.subplots(2, 3) # 2 rows if no tasks exist
+    for ax in self.axs.flat:
+      ax.set_facecolor(self.color_config["plot_bg_color"])
+    self.particle_graph.draw_graph_analysis(
+        self.axs,
+        grid_color=grid_color,
+        base_color=self.color_config["task_base_color"])
+    if self.background_image_extent is not None:
+      self.scale_background_image(get_new_size=False)
+    self.fig.subplots_adjust(left=0.05, bottom=0.05, right=0.95, top=0.95, wspace=0.15, hspace=0.3)
+    self.canvas.draw_idle()
 
   def toggle_graph_edit_mode(self):
     """
     Toggle graph edit mode.
     """
-    if self.particle_graph is None:
+    if self.particle_graph is None: # cannot open graph edit mode without a graph
       self.graph_edit_mode_enabled.set(False)
     movability_tk_variables = [
         self.move_nodes_enabled,
         self.move_labels_enabled,
         self.move_edges_enabled]
     if not self.graph_edit_mode_enabled.get(): # disable graph edit mode
-      
       for tk_variable in movability_tk_variables:
         tk_variable.set(False)
-
       self.graph_edit_frame.grid_remove()
-      self.highlighted_particles = list()
       self.graph_editor_ui.unbind_mouse_events()
       return
     # enable graph edit mode
     if self.graph_analysis_enabled.get(): # close graph analysis
       self.graph_analysis_enabled.set(False)
       self.toggle_graph_analysis()
+    if self.task_edit_mode_enabled.get(): # close task edit mode
+      self.task_edit_mode_enabled.set(False)
+      self.toggle_task_edit_mode()
     # create frames for graph edit widgets
     self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame, bg=self.color_config["bg_color"])
     self.graph_edit_frame.grid(
@@ -1459,7 +1487,6 @@ class Board_Layout_GUI:
         sticky="nsew",
         pady=(0, self.grid_pad_y))
     self.graph_edit_frame.columnconfigure(0, weight=1)
-    # TODO: refactor: move all code for graph edit mode to `graph_editor_ui` class
     self.graph_editor_ui: Graph_Editor_GUI = Graph_Editor_GUI(
         self.master,
         self.color_config,
@@ -1476,6 +1503,47 @@ class Board_Layout_GUI:
         movability_tk_variables=movability_tk_variables,
         particle_graph=self.particle_graph,
         graph_edit_frame=self.graph_edit_frame,
+        ax=self.ax,
+        canvas=self.canvas)
+
+  def toggle_task_edit_mode(self):
+    if self.particle_graph is None: # cannot open task edit mode without a graph
+      self.task_edit_mode_enabled.set(False)
+    if not self.task_edit_mode_enabled.get(): # disable task edit mode
+      self.task_edit_frame.grid_remove()
+      self.task_editor_ui.unbind_mouse_events()
+      return
+    # enable graph edit mode
+    if self.graph_analysis_enabled.get(): # close graph analysis
+      self.graph_analysis_enabled.set(False)
+      self.toggle_graph_analysis()
+    if self.graph_edit_mode_enabled.get(): # close graph edit mode
+      self.graph_edit_mode_enabled.set(False)
+      self.toggle_task_edit_mode()
+    # create frames for graph edit widgets
+    self.task_edit_frame: tk.Frame = tk.Frame(self.control_frame)
+    self.add_frame_style(self.task_edit_frame)
+    self.task_edit_frame.grid(
+        row=self.control_frame.grid_size()[1],
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
+    self.task_edit_frame.columnconfigure(0, weight=1)
+    self.task_editor_ui: Task_Editor_GUI = Task_Editor_GUI(
+        self.master,
+        self.color_config,
+        grid_padding=(self.grid_pad_x, self.grid_pad_y),
+        tk_config_methods={
+          "add_frame_style": self.add_frame_style,
+          "add_label_style": self.add_label_style,
+          "add_button_style": self.add_button_style,
+          "add_entry_style": self.add_entry_style,
+          "add_checkbutton_style": self.add_checkbutton_style,
+          "add_radiobutton_style": self.add_radiobutton_style,
+          "add_browse_button": self.add_browse_button,
+        },
+        particle_graph=self.particle_graph,
+        task_edit_frame=self.task_edit_frame,
         ax=self.ax,
         canvas=self.canvas)
 

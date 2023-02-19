@@ -33,7 +33,7 @@ class TTR_Task:
     """
     self.node_names: List[str] = node_names
     self.length: int = length
-    self.points: int = points
+    self.points: int = points if points is not None else len(node_names)
     self.points_bonus: int = points_bonus
     self.points_penalty: int = points_penalty
     self.name: str = name if name is not None else f"{node_names[0]} - {node_names[-1]}"

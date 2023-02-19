@@ -16,7 +16,7 @@ from ttr_particle_graph import TTR_Particle_Graph
 from ttr_task import TTR_Task
 
 
-class Task_Editor_Gui:
+class Task_Editor_GUI:
   def __init__(self,
       master: tk.Tk,
       color_config: dict[str, str],
@@ -107,7 +107,7 @@ class Task_Editor_Gui:
     row_index: int = 0
     # create task edit headline
     headline_label = tk.Label(self.task_edit_frame, text="Task Overview")
-    self.add_label_style(headline_label, "bold")
+    self.add_label_style(headline_label, font_type="bold")
     headline_label.grid(
         row=row_index,
         column=0,
@@ -157,86 +157,143 @@ class Task_Editor_Gui:
     row_index += 1
     
     # add task list
-    task_list_frame = Auto_Scroll_Frame(self.task_edit_frame)
-    self.add_frame_style(task_list_frame)
-    task_list_frame.grid(
+    task_list_outer_frame = tk.Frame(
+        self.task_edit_frame,
+        background="#8844cc", #self.color_config["bg_color"],
+        height=250)
+    task_list_outer_frame.grid(
         row=row_index,
         column=0,
         columnspan=2,
-        sticky="new",
-        padx=self.grid_pad_x,
-        pady=(0, self.grid_pad_y))
+        sticky="nsew",
+        padx=0)
+    task_list_outer_frame.grid_rowconfigure(0, weight=1)
+    task_list_auto_frame = Auto_Scroll_Frame(
+        task_list_outer_frame, 
+        frame_kwargs=dict(background=self.color_config["bg_color"]),
+        scrollbar_kwargs=dict(
+            troughcolor=self.color_config["bg_color"],
+            activebackground=self.color_config["button_active_bg_color"],
+            bg=self.color_config["button_bg_color"],
+            border=0,
+            width=10,
+            highlightthickness=0,
+            highlightbackground=self.color_config["bg_color"],
+            highlightcolor=self.color_config["bg_color"],
+            )
+        )
+    task_list_frame: tk.Frame = task_list_auto_frame.scrollframe
+    task_list_frame.grid_columnconfigure(0, weight=1)
     row_index += 1
     # add tasks to subframe
     task_row_index: int = 0
     self.task_widget_frames: List[tk.Frame] = []
-    for task_var, task in zip(self.task_visibility_vars, self.particle_graph.tasks):
-      task_frame: tk.Frame = tk.Frame(task_list_frame)
-      self.add_frame_style(task_frame)
-      task_frame.grid(
-          row=task_row_index,
-          column=0,
-          sticky="new",
-          padx=0,
-          pady=self.grid_pad_y)
-      self.task_widget_frames.append(task_frame)
-      # add checkbutton to toggle visibility of task
-      task_name = task.name
-      if " - " in task_name:
-        task_name = "\n".join(task_name.split(" - ")[1])
-      task_visibility_button = tk.Checkbutton(
-          task_frame,
-          text=task_name,
-          variable=task_var,
-          command=lambda task_var=task_var, task=task: self.toggle_task_visibility(task_var, task))
-      self.add_checkbutton_style(task_visibility_button)
-      task_visibility_button.grid(
-          row=0,
-          column=0,
-          rowspan=2,
-          sticky="w",
-          padx=self.grid_pad_x,
-          pady=self.grid_pad_y)
-      # add label to show task length. If task has bonus points, show them as well
-      task_length_text = task.points
-      if task.bonus_points > 0: # add task bonus points
-        task_length_text += " + " + str(task.bonus_points)
-      task_length_label = tk.Label(
-          task_frame,
-          text=task_length_text)
-      self.add_label_style(task_length_label)
-      task_length_label.grid(
-          row=0,
-          column=1,
-          columnspan=2,
-          sticky="s",
-          padx=(0, self.grid_pad_x),
-          pady=0)
-      # add button to edit task
-      edit_task_button = tk.Button(
-          task_frame,
-          text="Edit",
-          command=lambda task=task: self.edit_task(task))
-      self.add_button_style(edit_task_button)
-      edit_task_button.grid(
-          row=1,
-          column=1,
-          sticky="ne",
-          padx=(0, self.grid_pad_x),
-          pady=self.grid_pad_y)
-      # add button to delete task
-      delete_task_button = tk.Button(
-          task_frame,
-          text="Delete",
-          command=lambda task=task: self.delete_task(task))
-      self.add_button_style(delete_task_button)
-      delete_task_button.grid(
-          row=1,
-          column=2,
-          sticky="nw",
-          padx=(0, self.grid_pad_x),
-          pady=self.grid_pad_y)
+    self.ttr_tasks: List[TTR_Task] = []
+    for loc_1, loc_2 in self.particle_graph.tasks:
+      self.add_task_view_widgets(task_list_frame, task_row_index, loc_1, loc_2)
       task_row_index += 1
+
+    task_list_auto_frame._on_configure()
+
+  def add_task_view_widgets(self,
+      task_list_frame: tk.Frame,
+      task_row_index: int,
+      loc_1: str,
+      loc_2: str):
+    """
+    Adds the widgets for a single task to the task list frame.
+
+    Args:
+        task_list_frame (tk.Frame): The frame to add the widgets to.
+        task_row_index (int): The row index to add the widgets to.
+        i (int): The index of the task.
+        loc_1 (str): The name of the first location.
+        loc_2 (str): The name of the second location.
+    """
+    ttr_task: TTR_Task = TTR_Task(node_names=[loc_1, loc_2])
+    task_var: tk.BooleanVar = tk.BooleanVar(value=False)
+    self.task_visibility_vars.append(task_var)
+    task_frame = tk.Frame(task_list_frame)
+    self.add_frame_style(task_frame)
+    task_frame.grid(
+        row=task_row_index,
+        column=0,
+        sticky="nsew",
+        padx=0,
+        pady=(self.grid_pad_y, 0))
+    self.task_widget_frames.append(task_frame)
+    task_frame.grid_columnconfigure(1, weight=1)
+    # add task number
+    task_number_label = tk.Label(task_frame, text=f"{task_row_index+1}.")
+    self.add_label_style(task_number_label, font_type="bold")
+    task_number_label.grid(
+        row=0,
+        column=0,
+        rowspan=2,
+        sticky="w",
+        padx=(self.grid_pad_x, 0),
+        pady=0)
+    # task_row_index += 1
+    # add checkbutton to toggle visibility of task
+    task_name = ttr_task.name
+    if " - " in task_name:
+      task_name = "\n".join(task_name.split(" - "))
+    task_visibility_button = tk.Checkbutton(
+        task_frame,
+        text=task_name,
+        justify="left",
+        variable=task_var,
+        command=lambda task_var=task_var, task=ttr_task: self.toggle_task_visibility(task_var, task))
+    self.add_checkbutton_style(task_visibility_button)
+    task_visibility_button.grid(
+        row=0,
+        column=1,
+        rowspan=2,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    # add label to show task length. If task has bonus points, show them as well
+    task_length_text = f"length: {ttr_task.points}"
+    if ttr_task.points_bonus is not None: # add task bonus points
+      task_length_text += " + " + str(ttr_task.points_bonus)
+    task_length_label = tk.Label(
+        task_frame,
+        text=task_length_text)
+    self.add_label_style(task_length_label)
+    task_length_label.grid(
+        row=0,
+        column=2,
+        columnspan=2,
+        sticky="nw",
+        padx=(0, self.grid_pad_x),
+        pady=(self.grid_pad_y,0))
+    # add button to edit task
+    edit_task_button = tk.Button(
+        task_frame,
+        text="Edit",
+        command=lambda task=ttr_task: self.edit_task(task))
+    self.add_button_style(edit_task_button)
+    edit_task_button.grid(
+        row=1,
+        column=2,
+        sticky="ne",
+        padx=0, # (0, self.grid_pad_x),
+        pady=0)
+    # add button to delete task
+    delete_task_button = tk.Button(
+        task_frame,
+        text="Delete",
+        command=lambda task=ttr_task: self.delete_task(task))
+    self.add_button_style(delete_task_button)
+    delete_task_button.config(
+        bg=self.color_config["delete_button_bg_color"],
+        fg=self.color_config["delete_button_fg_color"])
+    delete_task_button.grid(
+        row=1,
+        column=3,
+        sticky="nw",
+        padx=0,
+        pady=0)
 
 
   def calculate_all_task_lengths(self):
