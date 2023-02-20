@@ -19,7 +19,7 @@ class Auto_Scroll_Frame(tk.Frame):
     self.canvas.grid(column=0, row=0, sticky="new", **canvas_grid_kwargs)
     self.canvas.grid_columnconfigure(0, weight=1)
     self.vbar = tk.Scrollbar(parent, orient="vertical", command=self.canvas.yview, elementborderwidth=0, relief="flat", **scrollbar_kwargs)
-    self.vbar.grid(column=1, row=0, sticky="wns")
+    self.vbar.grid(column=2, row=0, sticky="ens")
     self.vbar.grid_remove()
     self.canvas.configure(yscrollcommand=self.vbar.set)
     # self.canvas.grid_propagate(False)

@@ -1469,16 +1469,21 @@ class Board_Layout_GUI:
     if not self.graph_edit_mode_enabled.get(): # disable graph edit mode
       for tk_variable in movability_tk_variables:
         tk_variable.set(False)
-      self.graph_edit_frame.grid_remove()
-      self.graph_editor_ui.unbind_mouse_events()
+      try:
+        print("destroying graph edit frame")
+        self.graph_edit_frame.destroy()
+        self.graph_editor_ui.unbind_mouse_events()
+      except AttributeError as e:
+        print(e)
+        pass
       return
-    # enable graph edit mode
     if self.graph_analysis_enabled.get(): # close graph analysis
       self.graph_analysis_enabled.set(False)
       self.toggle_graph_analysis()
     if self.task_edit_mode_enabled.get(): # close task edit mode
       self.task_edit_mode_enabled.set(False)
       self.toggle_task_edit_mode()
+    # enable graph edit mode
     # create frames for graph edit widgets
     self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame, bg=self.color_config["bg_color"])
     self.graph_edit_frame.grid(
@@ -1510,16 +1515,17 @@ class Board_Layout_GUI:
     if self.particle_graph is None: # cannot open task edit mode without a graph
       self.task_edit_mode_enabled.set(False)
     if not self.task_edit_mode_enabled.get(): # disable task edit mode
+      print("disable task edit mode")
       self.task_edit_frame.grid_remove()
-      self.task_editor_ui.unbind_mouse_events()
+      # self.task_editor_ui.unbind_mouse_events()
       return
-    # enable graph edit mode
     if self.graph_analysis_enabled.get(): # close graph analysis
       self.graph_analysis_enabled.set(False)
       self.toggle_graph_analysis()
     if self.graph_edit_mode_enabled.get(): # close graph edit mode
       self.graph_edit_mode_enabled.set(False)
       self.toggle_task_edit_mode()
+    # enable graph edit mode
     # create frames for graph edit widgets
     self.task_edit_frame: tk.Frame = tk.Frame(self.control_frame)
     self.add_frame_style(self.task_edit_frame)

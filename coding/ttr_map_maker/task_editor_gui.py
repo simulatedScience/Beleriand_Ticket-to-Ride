@@ -14,6 +14,7 @@ from matplotlib.backend_bases import PickEvent, MouseEvent
 from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
 from ttr_task import TTR_Task
+from particle_node import Particle_Node
 
 
 class Task_Editor_GUI:
@@ -69,6 +70,10 @@ class Task_Editor_GUI:
     self.add_checkbutton_style = tk_config_methods["add_checkbutton_style"]
     self.add_radiobutton_style = tk_config_methods["add_radiobutton_style"]
     self.add_browse_button = tk_config_methods["add_browse_button"]
+
+    # set up task edit variables
+    self.node_names: List[str] = ["None"] + sorted(self.particle_graph.get_locations())
+    self.highlighted_particles: List[Particle_Node] = []
 
     self.init_task_edit_gui()
 
@@ -190,12 +195,12 @@ class Task_Editor_GUI:
     self.task_widget_frames: List[tk.Frame] = []
     self.ttr_tasks: List[TTR_Task] = []
     for loc_1, loc_2 in self.particle_graph.tasks:
-      self.add_task_view_widgets(task_list_frame, task_row_index, loc_1, loc_2)
+      self.show_task_overview(task_list_frame, task_row_index, loc_1, loc_2)
       task_row_index += 1
 
     task_list_auto_frame._on_configure()
 
-  def add_task_view_widgets(self,
+  def show_task_overview(self,
       task_list_frame: tk.Frame,
       task_row_index: int,
       loc_1: str,
@@ -302,17 +307,20 @@ class Task_Editor_GUI:
     """
     raise NotImplementedError() # TODO: implement
 
+
   def add_task(self):
     """
     Adds a new task to the task edit frame.
     """
     raise NotImplementedError() # TODO: implement
 
+
   def toggle_all_tasks_visibility(self):
     """
     Toggles the visibility of all tasks.
     """
     raise NotImplementedError() # TODO: implement
+
 
   def toggle_task_visibility(self, task_visibility_var: tk.BooleanVar, task: TTR_Task):
     """
@@ -322,11 +330,510 @@ class Task_Editor_GUI:
     """
     raise NotImplementedError() # TODO: implement
 
+
   def edit_task(self, task: TTR_Task):
     """
     Open edit mode for the given task.
+
+    1. Clear the task edit frame
+    2. Create headline for edit mode
+    3. Show task location widgets
+    4. Show task length/ points widgets
+    5. Show buttons to save changes or abort editing
+
+    Args:
+        task (TTR_Task): The task to edit.
     """
-    raise NotImplementedError() # TODO: implement
+    self.task_node_indices: List[int] = [] # indices of the nodes in the task
+    self.task_location_widgets: List[Tuple[tk.Label, tk.Frame, tk.Button, tk.Label, tk.Button, tk.Button]] = []
+    task_points_vars: List[tk.IntVar] = [] # variables for task length and points
+    # 1. Clear the task edit frame
+    self.clear_task_edit_frame()
+    row_index: int = 0
+    # 2. Create headline for edit mode
+    edit_mode_headline = tk.Label(
+        self.task_edit_frame,
+        text="Edit Task")
+    self.add_label_style(edit_mode_headline, font_type="bold")
+    edit_mode_headline.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nw",
+        padx=self.grid_pad_x,
+        pady=(self.grid_pad_y, 0))
+    row_index += 1
+    # 3. Show task location widgets
+    # 3.1. Show task location headline
+    task_location_headline = tk.Label(
+        self.task_edit_frame,
+        text="Task Locations")
+    self.add_label_style(task_location_headline)
+    task_location_headline.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nw",
+        padx=self.grid_pad_x,
+        pady=(self.grid_pad_y, 0))
+    row_index += 1
+    # 3.2. Show task location widgets
+    self.task_locations_frame: tk.Frame = tk.Frame(self.task_edit_frame)
+    self.add_frame_style(self.task_locations_frame)
+    self.task_locations_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="nw",
+        padx=self.grid_pad_x,
+        pady=0)
+    row_index += 1
+    for location_index, location in enumerate(task.node_names):
+      self.add_task_location(location_index, location)
+
+    self.canvas.draw_idle()
+    # 3.3. Show button to add new task location
+    self.add_task_location_button = tk.Button(
+        self.task_edit_frame,
+        text="Add Location",
+        command=lambda task_index=location_index+1: self.add_task_location(
+            task_index,
+            location_name="None",
+            update_add_location_button=True))
+    self.add_button_style(self.add_task_location_button)
+    self.add_task_location_button.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    # 4. Show task length/ points widgets
+    # 4.1. Create task points headline
+    task_length_headline = tk.Label(
+        self.task_edit_frame,
+        text="Task points")
+    self.add_label_style(task_length_headline)
+    task_length_headline.grid(
+        row=row_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=(self.grid_pad_y, 0))
+    # 4.2. Create button to calculate task length
+    calculate_task_length_button = tk.Button(
+        self.task_edit_frame,
+        text="Calculate task length",
+        command=lambda task=task, task_points_vars=task_points_vars: self.calculate_task_length(task, task_points_vars))
+    self.add_button_style(calculate_task_length_button)
+    calculate_task_length_button.grid(
+        row=row_index,
+        column=1,
+        sticky="e",
+        padx=(0, self.grid_pad_x),
+        pady=(self.grid_pad_y, 0))
+    row_index += 1
+    # 4.3. Create task points 
+    task_points_frame: tk.Frame = tk.Frame(self.task_edit_frame)
+    self.add_frame_style(task_points_frame)
+    task_points_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=0)
+    # task_points_frame.grid_columnconfigure(1, weight=1)
+    # task_points_frame.grid_columnconfigure(3, weight=1)
+    row_index += 1
+    # 4.3.1. Create label for task length
+    task_length_var: tk.IntVar = tk.IntVar(value=task.length)
+    task_length_label = tk.Label(
+        task_points_frame,
+        text="length")
+    self.add_label_style(task_length_label)
+    task_length_label.grid(
+        row=0,
+        column=0,
+        sticky="nsew",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    task_length_indicator = tk.Label(
+        task_points_frame,
+        textvariable=task_length_var)
+    self.add_label_style(task_length_indicator, font_type="bold italic")
+    task_length_indicator.grid(
+        row=0,
+        column=1,
+        sticky="nsew",
+        padx=0,
+        pady=0)
+    task_points_vars.append(task_length_var)
+    # 4.3.2. Create label for task points
+    task_points_var: tk.IntVar = tk.IntVar(value=task.points)
+    self.add_int_input(
+        task_points_frame,
+        row_index=0,
+        column_index=2,
+        label_text="points",
+        int_var=task_points_var,
+        input_width=3,
+        input_justify="center",
+    )
+    task_points_vars.append(task_points_var)
+    # 4.3.3. Create label for task bonus points
+    task_bonus_points_var: tk.IntVar = tk.IntVar(value=task.points_bonus)
+    self.add_int_input(
+        task_points_frame,
+        row_index=1,
+        column_index=0,
+        label_text="bonus",
+        int_var=task_bonus_points_var,
+        input_width=3,
+        input_justify="center",
+    )
+    task_points_vars.append(task_bonus_points_var)
+    # 4.3.4. Create label for task penalty points
+    task_penalty_points_var: tk.IntVar = tk.IntVar(value=task.points_penalty)
+    self.add_int_input(
+        task_points_frame,
+        row_index=1,
+        column_index=2,
+        label_text="penalty",
+        int_var=task_penalty_points_var,
+        input_width=3,
+        input_justify="center",
+    )
+    task_points_vars.append(task_penalty_points_var)
+    # 5. Show task edit buttons
+    # 5.1 Create task edit buttons frame
+    task_edit_buttons_frame: tk.Frame = tk.Frame(self.task_edit_frame)
+    self.add_frame_style(task_edit_buttons_frame)
+    task_edit_buttons_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    task_edit_buttons_frame.grid_columnconfigure(0, weight=1)
+    task_edit_buttons_frame.grid_columnconfigure(1, weight=1)
+    row_index += 1
+    # 5.2. Create button to apply changes
+    apply_changes_button = tk.Button(
+        task_edit_buttons_frame,
+        text="Apply",
+        command=lambda task=task, task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.apply_task_changes(task, task_points_vars, task_node_indices))
+    self.add_button_style(apply_changes_button)
+    apply_changes_button.grid(
+        row=0,
+        column=0,
+        sticky="nsew",
+        padx=self.grid_pad_x,
+        pady=0)
+    # 5.3. Create button to cancel changes
+    cancel_changes_button = tk.Button(
+        task_edit_buttons_frame,
+        text="Abort",
+        command=lambda task=task, task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.cancel_task_changes(task, task_points_vars, task_node_indices))
+    self.add_button_style(cancel_changes_button)
+    cancel_changes_button.config(
+        background=self.color_config["delete_button_bg_color"],
+        foreground=self.color_config["delete_button_fg_color"]
+    )
+    cancel_changes_button.grid(
+        row=0,
+        column=1,
+        sticky="nsew",
+        padx=(0, self.grid_pad_x),
+        pady=0)
+    
+
+
+  def add_task_location(self,
+      location_index: int,
+      location_name: str = "None",
+      update_add_location_button: bool = False) -> None:
+    """
+    Add a location input field to the task edit frame. This consists of a
+    - label with the node number
+    - a label to show the selected node name (scrolling on the label or clicking it will change the selected node)
+    - two buttons to change the selected node
+    - a button to remove the location
+
+    Args:
+        location_index (int): The index of the location to be added (= current number of locations)
+        location_name (str, optional): The initial name displayed in the location label. Defaults to "None".
+        update_add_location_button (bool, optional): If True, the add location button will be updated such that it will add a new location in the correct position. Defaults to False.
+    """
+    node_number_label = tk.Label(self.task_locations_frame, text=f"{location_index + 1}.")
+    self.add_label_style(node_number_label, font_type="bold")
+    node_number_label.grid(
+        row=location_index,
+        column=0,
+        sticky="w",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y))
+    node_selector_frame = tk.Frame(self.task_locations_frame)
+    self.add_frame_style(node_selector_frame)
+    node_selector_frame.grid(
+        row=location_index,
+        column=1,
+        sticky="w",
+        padx=0,
+        pady=(0, self.grid_pad_y))
+    # display the name of the currently selected node
+    # add node to highlighted particles
+    self.task_node_indices.append(self.node_names.index(location_name))
+    if location_name != "None": # highlight selected node
+      self.highlighted_particles.append(self.particle_graph.particle_nodes[location_name])
+      self.highlighted_particles[-1].highlight(self.ax)
+    selected_node_indicator = tk.Label(node_selector_frame, text=location_name, width = max([len(name) for name in self.node_names]), cursor="hand2")
+    self.add_label_style(selected_node_indicator, font_type="italic")
+    selected_node_indicator.grid(
+        row=0,
+        column=1,
+        sticky="w",
+        padx=0,
+        pady=(0, self.grid_pad_y))
+    # add bindings to change text of the label (mousewheel and buttons)
+    selected_node_indicator.bind(
+        "<MouseWheel>",
+        func = lambda event, location_indicator_index=location_index: 
+            self.change_node_label(event.delta, location_indicator_index))
+    selected_node_indicator.bind(
+        "<Button-1>",
+        func = lambda event, location_indicator_index=location_index:
+            self.change_node_label(-1, location_indicator_index))
+    selected_node_indicator.bind(
+        "<Button-3>",
+        func = lambda event, location_indicator_index=location_index:
+            self.change_node_label(1, location_indicator_index))
+    # add arrow buttons to change the selected node
+    left_arrow_button = self.add_arrow_button("left", node_selector_frame, lambda location_indicator_index=location_index: self.change_node_label(1, location_indicator_index))
+    left_arrow_button.grid(
+        row=0,
+        column=0,
+        sticky="e",
+        padx=0,
+        pady=0)
+    right_arrow_button = self.add_arrow_button("right", node_selector_frame, lambda location_indicator_index=location_index: self.change_node_label(-1, location_indicator_index))
+    right_arrow_button.grid(
+        row=0,
+        column=2,
+        sticky="w",
+        padx=0,
+        pady=0)
+    # add button to remove the location
+    remove_location_button = tk.Button(
+        node_selector_frame,
+        text="Remove",
+        command=lambda task_index=location_index: self.remove_task_location(task_index))
+    self.add_button_style(remove_location_button)
+    remove_location_button.config(
+      background=self.color_config["delete_button_bg_color"],
+      foreground=self.color_config["delete_button_fg_color"]
+    )
+    remove_location_button.grid(
+        row=0,
+        column=3,
+        sticky="w",
+        padx=(self.grid_pad_x, 0),
+        pady=0)
+    self.task_location_widgets.append(
+      (node_number_label, node_selector_frame, left_arrow_button, selected_node_indicator, right_arrow_button, remove_location_button)
+    )
+    # update the add location button
+    if update_add_location_button:
+      self.add_task_location_button.config(
+        command=lambda task_index=location_index+1: self.add_task_location(
+            task_index,
+            location_name="None",
+            update_add_location_button=True)
+      )
+
+  def remove_task_location(self, task_index: int):
+    """
+    remove the task location at the given index.
+    - Remove highlight from the corresponding node,
+    - remove the associated widgets, and
+    - update the index of the following locations.
+
+    Args:
+        task_index (int): index of the task location to remove
+    """
+    # remove highlight from the current node
+    current_node_name = self.node_names[self.task_node_indices[task_index]]
+    if current_node_name != "None":
+      current_node = self.particle_graph.particle_nodes[current_node_name]
+      current_node.remove_highlight(self.ax)
+      self.canvas.draw_idle()
+      self.highlighted_particles.remove(current_node)
+    # remove the associated widgets
+    for widget in self.task_location_widgets[task_index]:
+      widget.destroy()
+    # move the widgets below the removed location up and change their task number
+    for row_index in range(task_index, len(self.task_node_indices)-1):
+      # repostion the task number label
+      task_number_label: tk.Label = self.task_location_widgets[row_index+1][0]
+      task_number_label.config(text=f"{row_index+1}.")
+      task_number_label.grid_remove()
+      task_number_label.grid(row=row_index)
+      # repostion the node selector frame
+      node_selector_frame: tk.Frame = self.task_location_widgets[row_index+1][1]
+      node_selector_frame.grid_remove()
+      node_selector_frame.grid(row=row_index)
+      # update the index of the location indicator
+      location_indicator: tk.Label = self.task_location_widgets[row_index+1][3]
+      location_indicator.bind(
+          "<MouseWheel>",
+          func = lambda event, location_indicator_index=row_index:
+              self.change_node_label(event.delta, location_indicator_index))
+      location_indicator.bind(
+          "<Button-1>",
+          func = lambda event, location_indicator_index=row_index:
+              self.change_node_label(-1, location_indicator_index))
+      location_indicator.bind(
+          "<Button-3>",
+          func = lambda event, location_indicator_index=row_index:
+              self.change_node_label(1, location_indicator_index))
+      # update the index of the left arrow button
+      left_arrow_button: tk.Button = self.task_location_widgets[row_index+1][2]
+      left_arrow_button.config(
+        command=lambda task_index=row_index: self.change_node_label(-1, task_index))
+      # update the index of the right arrow button
+      right_arrow_button: tk.Button = self.task_location_widgets[row_index+1][4]
+      right_arrow_button.config(
+        command=lambda task_index=row_index: self.change_node_label(1, task_index))
+      # update the index of the remove location button
+      remove_location_button: tk.Button = self.task_location_widgets[row_index+1][5]
+      remove_location_button.config(
+        command=lambda task_index=row_index: self.remove_task_location(task_index))
+    # delete task from variables
+    del self.task_node_indices[task_index]
+    del self.task_location_widgets[task_index]
+    # update the add location button
+    self.add_task_location_button.config(
+      command=lambda task_index=len(self.task_node_indices): self.add_task_location(
+          task_index,
+          location_name="None",
+          update_add_location_button=True)
+    )
+
+  def add_int_input(self,
+      partent: tk.Widget,
+      row_index: int,
+      column_index: int,
+      label_text: str,
+      int_var: tk.IntVar,
+      input_width: int = 3,
+      input_justify: str = "center") -> None:
+    """
+    Add an integer input to the given parent widget at the specified row and column (using the grid layout manager). The input consists of a label describing the input, a label showing the current value, and two buttons to increase and decrease the value. The user can also adjust the value by scrolling the mouse wheel over the value label or clicking on it (left click to decrease, right click to increase).
+    This method adds widgets to the given (row, column) as well as (row, column + 1) positions.
+
+    Args:
+        partent (tk.Widget): parent widget
+        row_index (int): row index
+        column_index (int): column index where the name label should be placed. The buttons and indicator will be placed in the next column.
+        label_text (str): text to display in the label
+        int_var (tk.IntVar): integer variable to store the value. This variable's value will be shown in the indicator label and will be updated when the user changes the value.
+        input_width (int, optional): width of the indicator label in text units. Defaults to 3.
+        input_justify (str, optional): justification of the indicator label. Defaults to "center".
+    """
+    input_name_label = tk.Label(partent, text=label_text)
+    self.add_label_style(input_name_label)
+    input_name_label.grid(
+        row=row_index,
+        column=column_index,
+        sticky="nw",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y))
+    number_input_frame = tk.Frame(partent)
+    self.add_frame_style(number_input_frame)
+    number_input_frame.grid(
+        row=row_index,
+        column=column_index + 1,
+        sticky="w",
+        padx=(0, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    number_input_label = tk.Label(number_input_frame, width=input_width, justify=input_justify, textvariable=int_var, cursor="hand2")
+    self.add_label_style(number_input_label, font_type="italic")
+    number_input_label.grid(
+        row=row_index,
+        column=1,
+        sticky="w",
+        padx=0,
+        pady=0)
+    # add bindings to change text of the label (mousewheel and buttons)
+    number_input_label.bind(
+        "<MouseWheel>",
+        func = lambda event, int_var=int_var: change_edge_length(event.delta, int_var))
+    number_input_label.bind(
+        "<Button-1>",
+        func = lambda event, int_var=int_var: change_edge_length(-1, int_var))
+    number_input_label.bind(
+        "<Button-3>",
+        func = lambda event, int_var=int_var: change_edge_length(1, int_var))
+    # add arrow buttons to change the edge length
+    left_arrow_button = self.add_arrow_button("left", number_input_frame, lambda: change_edge_length(-1))
+    left_arrow_button.grid(
+        row=row_index,
+        column=0,
+        sticky="e",
+        padx=0,
+        pady=0)
+    right_arrow_button = self.add_arrow_button("right", number_input_frame, lambda: change_edge_length(1))
+    right_arrow_button.grid(
+        row=row_index,
+        column=2,
+        sticky="w",
+        padx=0,
+        pady=0)
+
+  def change_node_label(self, change_direction: int, location_indicator_index: int) -> None:
+    """
+    change the label of the selected location
+    First change the index variable by `change_direction` (+-1), then update the label text to the corresponding location name.
+
+    Args:
+        change_direction (int): direction of the color change (+-1)
+        location_indicator_index (int): index of the location indicator to change
+    """
+    # remove highlight from the current node
+    if change_direction != 0:
+      current_node_name = self.node_names[self.task_node_indices[location_indicator_index]]
+      if current_node_name != "None":
+        old_node = self.particle_graph.particle_nodes[current_node_name]
+        old_node.remove_highlight(self.ax)
+        self.highlighted_particles.remove(old_node)
+
+    if change_direction < 0:
+      new_location_index = (self.task_node_indices[location_indicator_index] + 1) % len(self.node_names)
+      # skip a node if it is already selected (except None)
+      while new_location_index in self.task_node_indices and new_location_index != 0:
+        new_location_index = (new_location_index + 1) % len(self.node_names)
+      self.task_node_indices[location_indicator_index] = new_location_index
+    elif change_direction > 0:
+      new_location_index = (self.task_node_indices[location_indicator_index] - 1) % len(self.node_names)
+      # skip a node if it is already selected (except None)
+      while new_location_index in self.task_node_indices and new_location_index != 0:
+        new_location_index = (new_location_index - 1) % len(self.node_names)
+      self.task_node_indices[location_indicator_index] = new_location_index
+    else:
+      return
+    # update the label text
+    self.task_location_widgets[location_indicator_index][3].config(text=self.node_names[self.task_node_indices[location_indicator_index]])
+    # highlight the node corresponding to the new label
+    current_node_name = self.node_names[self.task_node_indices[location_indicator_index]]
+    if current_node_name != "None":
+      new_node = self.particle_graph.particle_nodes[current_node_name]
+      new_node.highlight(self.ax)
+      self.highlighted_particles.append(new_node)
+    self.canvas.draw_idle()
+
+
 
   def delete_task(self, task: TTR_Task):
     """
@@ -344,3 +851,55 @@ class Task_Editor_GUI:
     Clears the task edit frame and creates all widgets for editing the given task.
     """
     raise NotImplementedError() # TODO: implement
+
+
+  
+  def add_arrow_button(self, direction: str, parent_frame: tk.Frame, command: Callable) -> tk.Button:
+    """
+    add a button displaying an arrow in the given direction to the given parent frame and bind the command to it.
+    This automatically applies the button style to the button.
+
+    Args:
+        direction (str): direction of the arrow (left, right, up, down)
+        parent_frame (tk.Frame): frame to add the button to
+        command (Callable): function to bind to the button
+
+    Returns:
+        (tk.Button): the created button to be placed with a geometry manager
+
+    Raises:
+        ValueError: if the given direction is not one of 'left', 'right', 'up', 'down'
+    """
+    if direction == "left":
+      button_text = "❮"
+    elif direction == "right":
+      button_text = "❯"
+    elif direction == "up":
+      button_text = "︿"
+    elif direction == "down":
+      button_text = "﹀"
+    else:
+      raise ValueError(f"Invalid direction: {direction}. Must be one of 'left', 'right', 'up', 'down'.")
+    button = tk.Button(
+        parent_frame,
+        text=button_text,
+        command=command)
+    self.add_button_style(button)
+    return button
+
+
+
+def change_edge_length(change_direction: int, int_var: tk.IntVar) -> None:
+  """
+  Change the value of the given variable by `change_direction` (+-1).
+
+  Args:
+      change_direction (int): direction of the color change (+-1)
+  """
+  current_value = int(int_var.get())	
+  if change_direction > 0:
+    int_var.set(current_value + 1)
+  elif change_direction < 0:
+    int_var.set(current_value - 1)
+  else:
+    return # no change

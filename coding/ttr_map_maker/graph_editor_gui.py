@@ -221,7 +221,7 @@ class Graph_Editor_GUI:
     self.master.bind("<Control-e>", lambda event: self.start_edge_adding_mode())
 
     column_index = 0
-    move_particle_label: tk.Label = tk.Label(button_frame, text="Move:")
+    move_particle_label: tk.Label = tk.Label(button_frame, text="Move")
     self.add_label_style(move_particle_label)
     move_particle_label.grid(
         row=row_index,
@@ -263,14 +263,14 @@ class Graph_Editor_GUI:
     self.add_edge_mode: bool = True
     print(f"Edge adding mode started: {self.add_edge_mode}")
     self.add_edge_node_indices: List[int] = [0, 0] # indices of the nodes to connect
-    self.add_edge_node_widgets: List[tk.Widget] = []
+    self.add_edge_node_labels: List[tk.Widget] = [] # labels to show the selected nodes
     self.new_edge_length: tk.IntVar = tk.IntVar(value=3, name="new_edge_length")
     self.new_edge_color_index: tk.IntVar = None
     self.node_names: List[str] = ["None"] + sorted(self.particle_graph.get_locations())
 
     row_index: int = 0
     # display instructions in the settings frame
-    edge_adding_headline = tk.Label(self.settings_frame, text="Edge adding mode:")
+    edge_adding_headline = tk.Label(self.settings_frame, text="Edge adding mode")
     self.add_label_style(edge_adding_headline, font_type="bold")
     edge_adding_headline.grid(
         row=row_index,
@@ -292,7 +292,7 @@ class Graph_Editor_GUI:
     row_index += 1
     # prepare displaying selected nodes
     for i in range(2):
-      selected_node_label = tk.Label(self.settings_frame, text=f"Node {i + 1}:")
+      selected_node_label = tk.Label(self.settings_frame, text=f"Node {i + 1}")
       self.add_label_style(selected_node_label)
       selected_node_label.grid(
           row=row_index + i,
@@ -317,7 +317,7 @@ class Graph_Editor_GUI:
           sticky="w",
           padx=0,
           pady=(0, self.grid_pad_y))
-      self.add_edge_node_widgets.append(selected_node_indicator)
+      self.add_edge_node_labels.append(selected_node_indicator)
       # add bindings to change text of the label (mousewheel and buttons)
       selected_node_indicator.bind(
           "<MouseWheel>",
@@ -332,14 +332,14 @@ class Graph_Editor_GUI:
           func = lambda event, location_indicator_index=i:
               self.change_node_label(1, location_indicator_index))
       # add arrow buttons to change the selected node
-      left_arrow_button = self.add_arrow_button("left", node_selector_frame, lambda location_indicator_index=i: self.change_node_label(-1, location_indicator_index))
+      left_arrow_button = self.add_arrow_button("left", node_selector_frame, lambda location_indicator_index=i: self.change_node_label(1, location_indicator_index))
       left_arrow_button.grid(
           row=row_index + i,
           column=0,
           sticky="e",
           padx=0,
           pady=0)
-      right_arrow_button = self.add_arrow_button("right", node_selector_frame, lambda location_indicator_index=i: self.change_node_label(1, location_indicator_index))
+      right_arrow_button = self.add_arrow_button("right", node_selector_frame, lambda location_indicator_index=i: self.change_node_label(-1, location_indicator_index))
       right_arrow_button.grid(
           row=row_index + i,
           column=2,
@@ -349,7 +349,7 @@ class Graph_Editor_GUI:
     row_index += 2
 
     # add input for the edge length
-    edge_length_label = tk.Label(self.settings_frame, text="Edge length:")
+    edge_length_label = tk.Label(self.settings_frame, text="Edge length")
     self.add_label_style(edge_length_label)
     edge_length_label.grid(
         row=row_index,
@@ -473,7 +473,7 @@ class Graph_Editor_GUI:
     else:
       return
     # update the label text
-    self.add_edge_node_widgets[location_indicator_index].config(text=self.node_names[self.add_edge_node_indices[location_indicator_index]])
+    self.add_edge_node_labels[location_indicator_index].config(text=self.node_names[self.add_edge_node_indices[location_indicator_index]])
     # highlight the node corresponding to the new label
     current_node_name = self.node_names[self.add_edge_node_indices[location_indicator_index]]
     if current_node_name != "None":
@@ -530,7 +530,7 @@ class Graph_Editor_GUI:
       widget.destroy()
     # delete the edge adding variables
     del self.add_edge_node_indices
-    del self.add_edge_node_widgets
+    del self.add_edge_node_labels
     del self.new_edge_length
     del self.new_edge_color_index
     del self.node_names
@@ -597,7 +597,7 @@ class Graph_Editor_GUI:
         delete_index = self.add_edge_node_indices.index(particle.get_id() + 1)
         particle.remove_highlight(self.ax)
         self.highlighted_particles.remove(particle)
-        self.add_edge_node_widgets[delete_index].config(text="None")
+        self.add_edge_node_labels[delete_index].config(text="None")
         self.add_edge_node_indices[delete_index] = 0
       else:
       # if not self.add_edge_mode:
@@ -685,7 +685,7 @@ class Graph_Editor_GUI:
         old_node.remove_highlight(ax=self.ax)
       write_index = 1
     # set node indicator to node name
-    self.add_edge_node_widgets[write_index].config(text=particle_node.label)
+    self.add_edge_node_labels[write_index].config(text=particle_node.label)
     # add node to edge node list
     self.add_edge_node_indices[write_index] = self.node_names.index(particle_node.label)
 
@@ -712,8 +712,8 @@ class Graph_Editor_GUI:
       # self.selected_particle.remove_highlight(ax=self.ax)
       self.selected_particle: Graph_Particle = None
     # clear settings frame
-    for widget in self.settings_frame.winfo_children():
-      widget.grid_forget()
+    for widget in list(self.settings_frame.winfo_children()):
+      # widget.grid_forget()
       widget.destroy()
     self.settings_frame.update()
     self.canvas.draw_idle()
@@ -751,7 +751,7 @@ class Graph_Editor_GUI:
         padx=(0, self.grid_pad_x),
         pady=self.grid_pad_y)
     # x position input
-    position_x_label = tk.Label(position_inputs_frame, text="x:")
+    position_x_label = tk.Label(position_inputs_frame, text="x")
     self.add_label_style(position_x_label)
     position_x_label.grid(
         row=0,
@@ -768,7 +768,7 @@ class Graph_Editor_GUI:
         padx=(0, 2*self.grid_pad_x),
         pady=0)
     # y position input
-    position_y_label = tk.Label(position_inputs_frame, text="y:")
+    position_y_label = tk.Label(position_inputs_frame, text="y")
     self.add_label_style(position_y_label)
     position_y_label.grid(
         row=0,
@@ -1264,7 +1264,7 @@ class Graph_Editor_GUI:
         column=0,
         sticky="w",
         padx=self.grid_pad_x,
-        pady=self.grid_pad_y
+        pady=(0, self.grid_pad_y)
     )
     # color selector frame
     color_selector_frame = tk.Frame(self.settings_frame, cursor="hand2")
@@ -1274,7 +1274,7 @@ class Graph_Editor_GUI:
         column=1,
         sticky="w",
         padx=(0, self.grid_pad_x),
-        pady=self.grid_pad_y
+        pady=(0, self.grid_pad_y)
     )
     # color selector
     color_display_border = tk.Frame(color_selector_frame, bg=self.color_config["edge_border_color"])
