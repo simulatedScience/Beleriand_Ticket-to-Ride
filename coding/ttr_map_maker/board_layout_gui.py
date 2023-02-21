@@ -196,10 +196,12 @@ class Board_Layout_GUI:
     Create frames for the matplotlib animation and controls.
     """
     self.main_frame = tk.Frame(self.master, background=self.color_config["bg_color"])
-    self.main_frame.place(relx=0.5,rely=0.5,anchor="c")
+    # self.main_frame.place(relx=0.5,rely=0.5,anchor="c")
+    # self.main_frame.pack(fill="both", expand=True)
+    self.main_frame.grid(sticky="nsew")
     # configure grid
     self.main_frame.columnconfigure(0, weight=1)
-    self.main_frame.columnconfigure(1, weight=0)
+    self.main_frame.columnconfigure(1, weight=1)
     self.main_frame.rowconfigure(0, weight=1)
     # create frame for matplotlib animation
     self.animation_frame = tk.Frame(self.main_frame, background=self.color_config["bg_color"])
@@ -222,9 +224,12 @@ class Board_Layout_GUI:
     control_outer_frame.grid(
         row=0,
         column=1,
-        sticky="nse")
+        sticky="nsew",
+        padx=0,
+        pady=0)
     self.control_frame = Auto_Scroll_Frame(
-        control_outer_frame, 
+        control_outer_frame,
+        canvas_kwargs=dict(background=self.color_config["bg_color"]),
         frame_kwargs=dict(background=self.color_config["bg_color"]),
         scrollbar_kwargs=dict(
             troughcolor=self.color_config["bg_color"],
@@ -307,9 +312,9 @@ class Board_Layout_GUI:
     """
     if event.widget != self.master:
       return
-    height = self.master.winfo_height() - 2*self.grid_pad_y
-    control_outer_frame.config(height=height, width=control_outer_frame.winfo_width() - 2*self.grid_pad_x)
-    control_outer_frame.update()
+    # height = self.master.winfo_height() - 2*self.grid_pad_y
+    # control_outer_frame.config(height=height)#, width=control_outer_frame.winfo_width() - 2*self.grid_pad_x)
+    # control_outer_frame.update()
 
   def init_tk_variables(self):
     """
@@ -1533,6 +1538,7 @@ class Board_Layout_GUI:
         row=self.control_frame.grid_size()[1],
         column=0,
         sticky="nsew",
+        padx=0,
         pady=(0, self.grid_pad_y))
     self.task_edit_frame.columnconfigure(0, weight=1)
     self.task_editor_ui: Task_Editor_GUI = Task_Editor_GUI(

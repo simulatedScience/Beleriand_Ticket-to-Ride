@@ -19,16 +19,16 @@ class Auto_Scroll_Frame(tk.Frame):
     self.canvas.grid(column=0, row=0, sticky="new", **canvas_grid_kwargs)
     self.canvas.grid_columnconfigure(0, weight=1)
     self.vbar = tk.Scrollbar(parent, orient="vertical", command=self.canvas.yview, elementborderwidth=0, relief="flat", **scrollbar_kwargs)
-    self.vbar.grid(column=2, row=0, sticky="ens")
-    self.vbar.grid_remove()
     self.canvas.configure(yscrollcommand=self.vbar.set)
     # self.canvas.grid_propagate(False)
     self.master.update()
 
     # Create a frame and place it inside the canvas
     self.scrollframe = tk.Frame(self.canvas, **frame_kwargs)
-    self.window = self.canvas.create_window((0, 0), window=self.scrollframe, anchor="ne")
-    # self.scrollframe.grid(row=0, column=0, sticky="nsew")
+    self.window_id = self.canvas.create_window(
+        (0, 0),
+        window=self.scrollframe,
+        anchor="nw")
 
     self.scrollframe.bind("<Configure>", self._on_configure)
     self.master.bind("<Configure>", self._on_configure)
@@ -38,11 +38,15 @@ class Auto_Scroll_Frame(tk.Frame):
     """Update the scrollbar and canvas when the size of the frame changes"""
     # restrict height of scrollframe to height of parent
     height = min(self.scrollframe.winfo_height(), self.master.winfo_height())
+    width = self.scrollframe.winfo_width()
     self.canvas.configure(
         scrollregion=self.canvas.bbox("all"),
-        width=self.scrollframe.winfo_width(),
+        width=width,
         height=height)
-    self.canvas.update()
+    # self.canvas.itemconfig(self.window_id,
+    #     width=self.scrollframe.winfo_width(),# - self.vbar.winfo_width(),
+    # #     height=self.scrollframe.winfo_height(),
+    # )
     self._hide_or_show_scrollbar()
 
   def _on_mousewheel(self, event: tk.Event):
@@ -51,13 +55,18 @@ class Auto_Scroll_Frame(tk.Frame):
 
   def _hide_or_show_scrollbar(self):
     """Hide or show the scrollbar based on whether the contents of the frame exceed the height of the window"""
-    if self.master.winfo_height() < self.scrollframe.winfo_reqheight():
-      self.vbar.grid(column=1, row=0, sticky="wns")
+    if self.master.winfo_height() < self.scrollframe.winfo_height():
+      self.vbar.grid(
+          column=1,
+          row=0,
+          sticky="ens",
+          padx=0,
+          pady=0,)
       self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
     else:
-      self.vbar.grid_remove()
+      self.vbar.grid_forget()
       self.canvas.unbind_all("<MouseWheel>")
-      self.master.update()
+      # self.master.update()
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ Each edge has a length and a color. Each node has a label close to it.
 A particle graph's layout can be optimized using a simple particle method.
 """
 import json
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Any
 from math import isinf
 
 import numpy as np
@@ -18,13 +18,14 @@ from particle_node import Particle_Node
 from particle_label import Particle_Label
 from particle_edge import Particle_Edge
 from graph_analysis import TTR_Graph_Analysis
+from ttr_task import TTR_Task
 
 
 class TTR_Particle_Graph:
   def __init__(self,
         locations: List[str],
         paths: List[Tuple[str, str, int, str]],
-        tasks: List[Tuple[str, str]],
+        tasks: dict[str, TTR_Task],
         node_positions: Dict[str, np.ndarray] = None,
         particle_parameters: dict = {
           "velocity_decay": 0.99,
@@ -50,7 +51,12 @@ class TTR_Particle_Graph:
         location_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
     """
     self.paths: List[Tuple[str, str, int, str]] = paths
-    self.tasks: List[Tuple[str, str]] = tasks
+    if tasks and not isinstance(tasks[0], (tuple, list)):
+      self.tasks: dict[str, TTR_Task] = {}
+      for task in tasks:
+        self.tasks[task.name] = TTR_Task([task[0], task[-1]])
+      print(f"Converted tasks given as tuples to TTR_Task objects.")
+    self.tasks:  dict[str, TTR_Task] = tasks
     self.particle_parameters: dict = particle_parameters
     self.node_labels: List[str] = locations # deleted after graph creation
     self.node_positions: Dict[str, np.ndarray] = node_positions # deleted after graph creation
@@ -323,15 +329,27 @@ class TTR_Particle_Graph:
     for particle in self.get_particle_list():
       particle.set_parameters(particle_parameters)
 
-  def update_tasks(self, task_list: List[Tuple[str, str]]) -> None:
+  def update_tasks(self, new_tasks: dict[str, TTR_Task]) -> None:
     """
     update the list of tasks saved in the particle graph.
     The previous list of tasks is overwritten.
 
     Args:
-        task_list (List[str, str]): list of tasks. Each task is a tuple of the form (location_1, location_2)
+        task_list (dict[str, TTR_Task]) or (List[dict]) or (List[Tuple[str, str]]): list/ dict of tasks.
+            Each task is given as a tuple of the form (location_1, location_2), or a TTR_Task object. All list elements must be of the same type.
+            If the input is not of these types, it is assumed to be a dict of TTR_Task objects with the tasks' names as keys.
     """
-    self.tasks = task_list
+    if isinstance(new_tasks, list) and isinstance(new_tasks[0], (tuple, list)): # TODO: remove this case when it is no longer needed
+      self.tasks: dict[str, TTR_Task] = {}
+      for task in new_tasks:
+        task: TTR_Task = TTR_Task([task[0], task[1]])
+        self.tasks[task.name] = task
+    elif isinstance(new_tasks, list) and isinstance(new_tasks[0], dict): # for loading from json
+      self.tasks: dict[str, TTR_Task] = {}
+      for task in new_tasks.values():
+        self.tasks[task.name] = TTR_Task.from_dict(new_tasks)
+    else:
+      self.tasks: dict[str, TTR_Task] = new_tasks
 
   def get_edge_colors(self) -> List[str]:
     """
@@ -709,18 +727,20 @@ class TTR_Particle_Graph:
     #     particle_node.particle_id = particle_id
     #   particle_id += 1
     # get json string for all particles
-    all_particles_json = []
-    for particle in all_particles:
-      all_particles_json.append(particle.to_dict())
+    all_particles_dict: List[Dict[str, Any]] = [particle.to_dict() for particle in all_particles]
+    # get json string for all tasks
+    all_tasks_dict = [task.to_dict() for task in self.tasks.values()]
 
     particle_graph = {
         "particle_graph": {
             "n_nodes": len(self.particle_nodes),
+            "n_connections": len(self.paths),
+            "n_tasks": len(self.tasks),
             "n_edges": len(self.particle_edges),
             "n_labels": len(self.particle_labels),
-            "particles": all_particles_json,
+            "particles": all_particles_dict,
             "particle_parameters": self.particle_parameters,
-            "tasks": self.tasks
+            "tasks": all_tasks_dict
         }
     }
     return json.dumps(particle_graph, indent=2)
@@ -840,16 +860,16 @@ class TTR_Particle_Graph:
     self.particle_labels[particle_node.label].erase()
     del self.particle_labels[particle_node.label]
 
-    # delete tasks starting or ending in the node
-    to_be_deleted: List[Tuple[str, str]] = []
+    # delete tasks containing the node
+    to_be_deleted: List[str] = []
     # find tasks to delelte
-    for i, task in enumerate(self.tasks):
-      if particle_node.label in task:
-        to_be_deleted.insert(0, i) # delete in reverse order to avoid index errors
+    for task_key, task in self.tasks.items():
+      if particle_node.label in task.node_names: # TODO: consider just deleting tasks that start or end in the deleted node
+        to_be_deleted.insert(0, task_key) # delete in reverse order to avoid index errors
     print(f"Deleted {len(to_be_deleted)} tasks.")
-    for i in to_be_deleted:
-      print(f"Deleting task {i}: {self.tasks[i]}")
-      self.tasks.pop(i)
+    for task_key in to_be_deleted:
+      print(f"Deleting task: {task_key}")
+      del self.tasks[task_key]
 
     # delete node
     # self.node_labels.remove(particle_node.label)

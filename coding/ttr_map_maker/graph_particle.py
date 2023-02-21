@@ -454,10 +454,8 @@ class Graph_Particle:
     converts a particle to a JSON string representation containing all information required to recreate the particle.
     This requires particle ids to be set.
 
-    args:
-      file_path (str): path to json file
-
-    
+    Returns:
+        str: the particle as a json string
     """
     particle_info = self.to_dict()
     return json.dumps(particle_info, indent=2)

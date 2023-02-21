@@ -86,7 +86,7 @@ class Task_Editor_GUI:
     self.task_visibility_vars: List[tk.BooleanVar] = []
 
     # set up task edit frame
-    self.draw_task_overview()
+    self.open_task_overview()
 
 
   def clear_task_edit_frame(self):
@@ -97,7 +97,7 @@ class Task_Editor_GUI:
       widget.destroy()
 
 
-  def draw_task_overview(self):
+  def open_task_overview(self):
     """
     Draws an overview of all tasks in the task edit frame. This includes:
       - a headline
@@ -144,7 +144,7 @@ class Task_Editor_GUI:
     toggle_task_visibility_button.grid(
         row=row_index,
         column=0,
-        sticky="nw",
+        sticky="w",
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
     # add button to add new task
@@ -156,25 +156,28 @@ class Task_Editor_GUI:
     add_task_button.grid(
         row=row_index,
         column=1,
-        sticky="nw",
-        padx=(0, self.grid_pad_x),
+        sticky="e",
+        padx=self.grid_pad_x,
         pady=self.grid_pad_y)
     row_index += 1
     
     # add task list
     task_list_outer_frame = tk.Frame(
         self.task_edit_frame,
-        background="#8844cc", #self.color_config["bg_color"],
-        height=250)
+        background=self.color_config["frame_bg_color"],
+        height=250,
+        width=self.task_edit_frame.winfo_width())
     task_list_outer_frame.grid(
         row=row_index,
         column=0,
         columnspan=2,
         sticky="nsew",
-        padx=0)
+        padx=0,#self.grid_pad_x,
+        pady=0)
     task_list_outer_frame.grid_rowconfigure(0, weight=1)
     task_list_auto_frame = Auto_Scroll_Frame(
-        task_list_outer_frame, 
+        task_list_outer_frame,
+        canvas_kwargs=dict(background=self.color_config["bg_color"]),
         frame_kwargs=dict(background=self.color_config["bg_color"]),
         scrollbar_kwargs=dict(
             troughcolor=self.color_config["bg_color"],
@@ -187,35 +190,33 @@ class Task_Editor_GUI:
             highlightcolor=self.color_config["bg_color"],
             )
         )
+    task_list_auto_frame.scrollframe.grid_columnconfigure(0, weight=1)
     task_list_frame: tk.Frame = task_list_auto_frame.scrollframe
-    task_list_frame.grid_columnconfigure(0, weight=1)
     row_index += 1
     # add tasks to subframe
     task_row_index: int = 0
     self.task_widget_frames: List[tk.Frame] = []
-    self.ttr_tasks: List[TTR_Task] = []
-    for loc_1, loc_2 in self.particle_graph.tasks:
-      self.show_task_overview(task_list_frame, task_row_index, loc_1, loc_2)
+    for ttr_task in self.particle_graph.tasks.values():
+      task_widget_frame = self._show_single_task_summary(ttr_task, task_list_frame, task_row_index)
+      self.task_widget_frames.append(task_widget_frame)
       task_row_index += 1
-
     task_list_auto_frame._on_configure()
 
-  def show_task_overview(self,
+  def _show_single_task_summary(self,
+      ttr_task: TTR_Task,
       task_list_frame: tk.Frame,
-      task_row_index: int,
-      loc_1: str,
-      loc_2: str):
+      task_row_index: int) -> tk.Frame:
     """
     Adds the widgets for a single task to the task list frame.
 
     Args:
+        ttr_task (TTR_Task): The task to add the widgets for.
         task_list_frame (tk.Frame): The frame to add the widgets to.
         task_row_index (int): The row index to add the widgets to.
-        i (int): The index of the task.
-        loc_1 (str): The name of the first location.
-        loc_2 (str): The name of the second location.
+
+    Returns:
+        tk.Frame: The frame containing the widgets for the task.
     """
-    ttr_task: TTR_Task = TTR_Task(node_names=[loc_1, loc_2])
     task_var: tk.BooleanVar = tk.BooleanVar(value=False)
     self.task_visibility_vars.append(task_var)
     task_frame = tk.Frame(task_list_frame)
@@ -299,6 +300,7 @@ class Task_Editor_GUI:
         sticky="nw",
         padx=0,
         pady=0)
+    return task_frame
 
 
   def calculate_all_task_lengths(self):
@@ -312,7 +314,8 @@ class Task_Editor_GUI:
     """
     Adds a new task to the task edit frame.
     """
-    raise NotImplementedError() # TODO: implement
+    new_task: TTR_Task = TTR_Task(node_names=[]) # create new, empty task
+    self.edit_task(new_task) # open edit mode for new task
 
 
   def toggle_all_tasks_visibility(self):
@@ -388,6 +391,7 @@ class Task_Editor_GUI:
         padx=self.grid_pad_x,
         pady=0)
     row_index += 1
+    location_index: int = -1
     for location_index, location in enumerate(task.node_names):
       self.add_task_location(location_index, location)
 
@@ -521,9 +525,10 @@ class Task_Editor_GUI:
     task_edit_buttons_frame.grid_columnconfigure(1, weight=1)
     row_index += 1
     # 5.2. Create button to apply changes
+    apply_name = "Create" if task.is_empty() else "Apply"
     apply_changes_button = tk.Button(
         task_edit_buttons_frame,
-        text="Apply",
+        text=apply_name,
         command=lambda task=task, task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.apply_task_changes(task, task_points_vars, task_node_indices))
     self.add_button_style(apply_changes_button)
     apply_changes_button.grid(
@@ -536,7 +541,7 @@ class Task_Editor_GUI:
     cancel_changes_button = tk.Button(
         task_edit_buttons_frame,
         text="Abort",
-        command=lambda task=task, task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.cancel_task_changes(task, task_points_vars, task_node_indices))
+        command=lambda task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.cancel_task_changes(task_points_vars, task_node_indices))
     self.add_button_style(cancel_changes_button)
     cancel_changes_button.config(
         background=self.color_config["delete_button_bg_color"],
@@ -548,7 +553,8 @@ class Task_Editor_GUI:
         sticky="nsew",
         padx=(0, self.grid_pad_x),
         pady=0)
-    
+    # bind ESC to cancel changes
+    self.master.bind("<Escape>", lambda event, task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.cancel_task_changes(task_points_vars, task_node_indices))
 
 
   def add_task_location(self,
@@ -721,6 +727,52 @@ class Task_Editor_GUI:
           update_add_location_button=True)
     )
 
+  def apply_task_changes(self, task: TTR_Task, task_points_vars: List[tk.IntVar], task_node_indices: List[int]):
+    """
+    Apply changes to the currently selected task. If it did not exist before, add it to the task list. Then re-open the task overview.
+
+    Args:
+        task (TTR_Task): task to change
+        task_points_vars (List[tk.IntVar]): list of IntVars for the task points (these will be deleted)
+        task_node_indices (List[int]): list of node indices for the task locations
+    """
+    # get new node names
+    new_node_names: List[str] = [self.node_names[i] for i in task_node_indices if i != 0] # remove the placeholder "None" (index 0)
+    # update task nodes and name
+    if task.is_empty():
+      task.set_node_names(new_node_names, update_name=True)
+      self.particle_graph.tasks[task.name] = task
+    elif task.node_names != new_node_names:
+      task.set_node_names(new_node_names, update_name=True) # TODO: consider adding a name input
+      del self.particle_graph.tasks[task.name]
+      self.particle_graph.tasks[task.name] = task
+    # update task points
+    task.set_length(task_points_vars[0].get())
+    task.set_points([var.get() for var in task_points_vars[1:]])
+    # remove highlights from selected nodes
+    self.cancel_task_changes(task_points_vars, task_node_indices)
+    # clear the task frame and go back to the task overview
+    self.open_task_overview()
+
+  def cancel_task_changes(self, task_points_vars: List[tk.IntVar], task_node_indices: List[int]):
+    """
+    Abort changing the currently selected task. Then re-open the task overview.
+
+    Args:
+        task_points_vars (List[tk.IntVar]): list of IntVars for the task points (these will be deleted)
+        task_node_indices (List[int]): list of node indices for the task locations (remove highlight from these nodes)
+    """
+    # unbind the escape key
+    self.master.unbind("<Escape>")
+    # remove highlight from selected nodes
+    for node_index in task_node_indices:
+      self.particle_graph.particle_nodes[self.node_names[node_index]].remove_highlight(self.ax)
+    # delete task points variables
+    for task_points_var in task_points_vars:
+      del task_points_var
+    # clear the task frame and go back to the task overview
+    self.open_task_overview()
+
   def add_int_input(self,
       partent: tk.Widget,
       row_index: int,
@@ -777,14 +829,14 @@ class Task_Editor_GUI:
         "<Button-3>",
         func = lambda event, int_var=int_var: change_edge_length(1, int_var))
     # add arrow buttons to change the edge length
-    left_arrow_button = self.add_arrow_button("left", number_input_frame, lambda: change_edge_length(-1))
+    left_arrow_button = self.add_arrow_button("left", number_input_frame, lambda int_var=int_var: change_edge_length(-1, int_var))
     left_arrow_button.grid(
         row=row_index,
         column=0,
         sticky="e",
         padx=0,
         pady=0)
-    right_arrow_button = self.add_arrow_button("right", number_input_frame, lambda: change_edge_length(1))
+    right_arrow_button = self.add_arrow_button("right", number_input_frame, lambda int_var=int_var: change_edge_length(1, int_var))
     right_arrow_button.grid(
         row=row_index,
         column=2,
@@ -832,7 +884,6 @@ class Task_Editor_GUI:
       new_node.highlight(self.ax)
       self.highlighted_particles.append(new_node)
     self.canvas.draw_idle()
-
 
 
   def delete_task(self, task: TTR_Task):

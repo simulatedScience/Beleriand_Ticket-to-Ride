@@ -1,21 +1,22 @@
 """
 This module contains graph analysis class `TTR_Graph_Analysis`, which is used to analyze a given graph.
 Key features:
-- find the shortest path between two nodes - done
-- find the shortest paths for all tasks - done
-- visulization tool for tasks - done (untested)
-- analyze importance of nodes - done (untested)
-- analyze importance of edges - done (untested)
-- calculate statistics for the graph: - done
-  - distribution of node degrees - done
-  - distribution of edge lengths - done
-  - distribution of edge colors - done
-  - distribution of task lengths - done
-  - distribution of colors needed for tasks - done
-- tools for visualization of the analysis - done
+- find the shortest path between two nodes
+- find the shortest paths for all tasks
+- visulization tool for tasks
+- analyze importance of edges
+- calculate statistics for the graph:
+  - distribution of node degrees
+  - distribution of edge lengths
+  - distribution of edge colors
+  - distribution of task lengths
+  - distribution of colors needed for tasks
+- tools for visualization of the analysis
+
+# TODO: update doc strings
 """
 import random
-from math import sqrt, ceil
+from math import sqrt
 from typing import List, Tuple
 
 import networkx as nx
@@ -23,6 +24,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from particle_edge import Particle_Edge
+from ttr_task import TTR_Task
 
 class TTR_Graph_Analysis:
   """
@@ -31,7 +33,7 @@ class TTR_Graph_Analysis:
   def __init__(self,
       locations: List[str],
       edge_particles: dict[Tuple[str, str, int, int], Particle_Edge],
-      tasks: List[Tuple[str, str]]
+      tasks: dict[str, TTR_Task],
       ):
     """
     Initialize the class with a graph.
@@ -43,7 +45,7 @@ class TTR_Graph_Analysis:
     """
     self.locations: List[str] = locations # list of location names (nodes)
     self.edge_particles: dict[Tuple[str, str, int, int], Particle_Edge] = edge_particles # dictionary of all edge particles
-    self.tasks: List[Tuple[str, str]] = tasks # list of tasks (start location, end location)
+    self.tasks: dict[str, TTR_Task] = tasks # list of tasks (start location, end location)
 
     self.networkx_graph: nx.Graph = create_graph(self.locations, self.edge_particles) # networkx graph object containing location and path information
     self.task_lengths: dict[Tuple[str, str], int] = self.get_task_lengths() # shortest path lengths for all tasks
@@ -58,15 +60,6 @@ class TTR_Graph_Analysis:
         List[str]: list of locations
     """
     return self.locations
-
-  # def get_paths(self) -> List[Tuple[str, str, int, str]]:
-  #   """
-  #   Get the list of paths (edges)
-
-  #   Returns:
-  #       List[Tuple[str, str, int, str]]: list of edges
-  #   """
-  #   return self.paths
 
   def get_tasks_with_lengths(self) -> List[Tuple[str, str]]:
     """
@@ -86,15 +79,6 @@ class TTR_Graph_Analysis:
         int: number of locations
     """
     return len(self.locations)
-
-  # def number_of_paths(self) -> int:
-  #   """
-  #   Get the number of paths (edges) in the graph.
-
-  #   Returns:
-  #       int: number of paths
-  #   """
-  #   return len(self.paths)
 
   def number_of_tasks(self) -> int:
     """
@@ -135,10 +119,10 @@ class TTR_Graph_Analysis:
     """
     if graph is None:
       graph = self.networkx_graph
-    task_lengths = {}
-    for (loc1, loc2) in self.tasks:
-      path, length = self.get_shortest_path(loc1, loc2, graph)
-      task_lengths[(loc1, loc2)] = length
+    task_lengths: dict[str, int] = {}
+    for task_key, task in self.tasks.items():
+      path, length = self.get_shortest_path(task.node_names[0], task.node_names[-1], graph)
+      task_lengths[task_key] = length
     return task_lengths
 
 # pathfinding methods
@@ -188,11 +172,11 @@ class TTR_Graph_Analysis:
     Returns:
         List[Tuple[List[str], int]]: list of a shortest path and it's length for each task
     """
-    shortest_task_paths = []
-    for (loc1, loc2) in self.tasks:
-      shortest_path = self.get_shortest_path(loc1, loc2)
+    shortest_task_paths: dict[str, Tuple[List[str], int]] = {}
+    for task_key, task in self.tasks.items():
+      shortest_path = self.get_shortest_path(task.node_names[0], task.node_names[-1])
       length = self.get_path_cost(shortest_path)
-      shortest_task_paths.append((shortest_path, length))
+      shortest_task_paths[task_key] = (shortest_path, length)
     return shortest_task_paths
 
   def get_random_shortest_task_paths(self) -> List[Tuple[List[str], int]]:
@@ -202,11 +186,11 @@ class TTR_Graph_Analysis:
     Returns:
         List[Tuple[List[str], int]]: list of a random shortest path and it's length for each task
     """
-    shortest_task_paths = []
-    for (loc1, loc2) in self.tasks:
-      shortest_paths = self.get_all_shortest_paths(loc1, loc2)
+    shortest_task_paths: dict[str, Tuple[List[str], int]] = {}
+    for task_key, task in self.tasks.items():
+      shortest_paths = self.get_all_shortest_paths(task.node_names[0], task.node_names[-1])
       shortest_path, length = random.choice(shortest_paths)
-      shortest_task_paths.append((shortest_path, length))
+      shortest_task_paths[task_key] = (shortest_path, length)
     return shortest_task_paths
 
   def get_random_shortest_task_paths_edge_counts(self, n_random_paths: int = 10000) -> dict[Tuple[str, str], int]:
@@ -232,8 +216,8 @@ class TTR_Graph_Analysis:
     #       edge_counts[edge] = 1
     # return edge_counts
     task_edge_counts: dict[Tuple[str, str, int], int] = {}
-    for task in self.tasks:
-      shortest_paths = self.get_all_shortest_paths(loc1=task[0], loc2=task[1])
+    for task in self.tasks.values():
+      shortest_paths = self.get_all_shortest_paths(loc1=task.node_names[0], loc2=task.node_names[-1])
       for _ in range(n_random_paths):
         path, length = random.choice(shortest_paths)
         for (loc1, loc2) in zip(path[:-1], path[1:]):
@@ -604,8 +588,8 @@ class TTR_Graph_Analysis:
           value: tuple of average and standard deviation
     """
     task_color_length_counts: dict[str, dict[int, int]] = {}
-    for task in self.tasks:
-      shortest_paths = self.get_all_shortest_paths(loc1=task[0], loc2=task[1])
+    for task in self.tasks.values():
+      shortest_paths = self.get_all_shortest_paths(loc1=task.node_names[0], loc2=task.node_names[-1])
       for _ in range(n_random_paths):
         path, length = random.choice(shortest_paths)
         for (loc1, loc2) in zip(path[:-1], path[1:]):
