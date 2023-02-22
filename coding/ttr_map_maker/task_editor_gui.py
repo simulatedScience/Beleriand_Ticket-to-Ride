@@ -198,17 +198,19 @@ class Task_Editor_GUI:
     row_index += 1
     # add tasks to subframe
     task_row_index: int = 0
-    self.task_widget_frames: List[tk.Frame] = []
+    self.task_list_widgets: List[Tuple[tk.Frame, tk.Label, tk.Checkbutton, tk.Label, tk.Button, tk.Button]] = []
+    self.task_list: List[TTR_Task] = []
     for ttr_task in self.particle_graph.tasks.values():
-      task_widget_frame = self._show_single_task_summary(ttr_task, task_list_frame, task_row_index)
-      self.task_widget_frames.append(task_widget_frame)
+      task_widgets = self._show_single_task_summary(ttr_task, task_list_frame, task_row_index)
+      self.task_list_widgets.append(task_widgets)
+      self.task_list.append(ttr_task)
       task_row_index += 1
     task_list_auto_frame._on_configure()
 
   def _show_single_task_summary(self,
       ttr_task: TTR_Task,
       task_list_frame: tk.Frame,
-      task_row_index: int) -> tk.Frame:
+      task_row_index: int) -> Tuple[tk.Frame, tk.Label, tk.Checkbutton, tk.Label, tk.Button, tk.Button]:
     """
     Adds the widgets for a single task to the task list frame.
 
@@ -231,7 +233,6 @@ class Task_Editor_GUI:
         sticky="nsew",
         padx=0,
         pady=(self.grid_pad_y, 0))
-    self.task_widget_frames.append(task_frame)
     task_frame.grid_columnconfigure(1, weight=1)
     # add task number
     task_number_label = tk.Label(task_frame, text=f"{task_row_index+1}.")
@@ -303,7 +304,8 @@ class Task_Editor_GUI:
         sticky="nw",
         padx=0,
         pady=0)
-    return task_frame
+
+    return (task_frame, task_number_label, task_visibility_button, task_length_label, edit_task_button, delete_task_button)
 
 
   def calculate_all_task_lengths(self):
@@ -764,13 +766,14 @@ class Task_Editor_GUI:
     if task.is_empty():
       task.set_node_names(new_node_names, update_name=True)
       self.particle_graph.tasks[task.name] = task
+      self.task_list.append(task) # potentially unnecessary
     elif task.node_names != new_node_names:
       task.set_node_names(new_node_names, update_name=True) # TODO: consider adding a name input
       del self.particle_graph.tasks[task.name]
       self.particle_graph.tasks[task.name] = task
     # update task points
     task.set_length(task_points_vars[0].get())
-    task.set_points([var.get() for var in task_points_vars[1:]])
+    task.set_points(*[var.get() for var in task_points_vars[1:]])
     # remove highlights from selected nodes
     self.cancel_task_changes(task_points_vars, task_node_indices)
     # clear the task frame and go back to the task overview
@@ -911,36 +914,55 @@ class Task_Editor_GUI:
   def delete_task(self, task: TTR_Task, task_index: int):
     """
     Deletes the given task:
-    - remove it from the task edit frame
-    - remove it from the particle graph
-    - remove the corresponding task visibility variable
     - if it was shown, remove it from the canvas
+    - remove the corresponding task visibility variable
+    - remove it from the particle graph
+    - remove it from the task edit frame
     - update number labels of all other tasks in list
 
     Args:
         task (TTR_Task): task to delete
         task_index (int): index of the task in the task list
     """
-    task.erase()
-    deleted_task_widgets = self.task_location_widgets.pop(task_index)
+    print(f"deleting task {task.name}")
+    # remove the task from the canvas
+    if self.task_visibility_vars[task.name].get():
+      task.erase()
+      self.canvas.draw_idle()
+    else:
+      # check if all task toggle needs to be activated if a hidden task is deleted
+      for task_name, task_visibility_var in self.task_visibility_vars.items():
+        if task_name not in ("all", task.name) and not task_visibility_var.get():
+          break
+      else:
+        self.task_visibility_vars["all"].set(True)
+    # remove the task from the list of highlighted tasks
+    del self.task_visibility_vars[task.name]
+    del self.particle_graph.tasks[task.name]
+    self.task_list.pop(task_index)
+    # remove the task widgets from the frame
+    deleted_task_widgets = self.task_list_widgets.pop(task_index)
     for widget in deleted_task_widgets[:2]:
       widget.destroy()
-    
     # update the task number labels
-    for i, task_widgets in enumerate(self.task_location_widgets[task_index:]):
-      task_widgets[0].config(text=f"{i+1}.")
-      # TODO: finish this method
+    for row_index, task_widgets in enumerate(self.task_list_widgets[task_index:]):
+      # move frame one row up
+      task_widgets[0].grid_remove()
+      task_widgets[0].grid(row=row_index)
+      # change task number in label
+      task_widgets[1].config(text=f"{row_index+1}.")
+      # update task delete button command
+      task_widgets[5].config(command=lambda task=self.task_list[row_index], task_index=row_index: self.delete_task(task, task_index))
 
 
-
-
-
-  def draw_task_edit_mode(self, task: TTR_Task):
+  def export_task_images(self) -> None:
     """
-    Clears the task edit frame and creates all widgets for editing the given task.
-    """
-    raise NotImplementedError() # TODO: implement
+    Export the current task images to the directory given in `self.task_export_dir`.
 
+    Exporting is done using the following steps:
+    - hide all nodes, labels, edges and task indicators
+    - show background image
+    """
 
   
   def add_arrow_button(self, direction: str, parent_frame: tk.Frame, command: Callable) -> tk.Button:
