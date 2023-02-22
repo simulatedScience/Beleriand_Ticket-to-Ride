@@ -346,8 +346,9 @@ class TTR_Particle_Graph:
         self.tasks[task.name] = task
     elif isinstance(new_tasks, list) and isinstance(new_tasks[0], dict): # for loading from json
       self.tasks: dict[str, TTR_Task] = {}
-      for task in new_tasks.values():
-        self.tasks[task.name] = TTR_Task.from_dict(new_tasks)
+      for task in new_tasks:
+        task = TTR_Task.from_dict(task)
+        self.tasks[task.name] = task
     else:
       self.tasks: dict[str, TTR_Task] = new_tasks
 
@@ -489,15 +490,27 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.erase()
 
-  def draw_edges(self, ax: plt.Axes, alpha: float = 0.8, movable: bool = False, border_color: str = "#555555") -> None:
+  def draw_edges(self,
+      ax: plt.Axes,
+      alpha: float = 0.8,
+      movable: bool = False,
+      color: str = None,
+      border_color: str = "#555555") -> None:
     """draw edges of particle graph
 
     Args:
         ax (plt.Axes): matplotlib axes to draw on
         alpha (float, optional): transparency. Defaults to 0.8.
+        movable (bool, optional): whether the edges are movable. Defaults to False.
+        color (str, optional): color of the edges. Defaults to None (use color of edge).
+        border_color (str, optional): color of the edge border. Defaults to "#555555".
     """
     for particle_edge in self.particle_edges.values():
-      particle_edge.draw(ax, color=particle_edge.color, alpha=alpha, movable=movable, border_color=border_color)
+      if color is None:
+        edge_color = particle_edge.color
+      else:
+        edge_color = color
+      particle_edge.draw(ax, color=edge_color, alpha=alpha, movable=movable, border_color=border_color)
 
   def erase_edges(self) -> None:
     """
@@ -564,9 +577,10 @@ class TTR_Particle_Graph:
   def draw_tasks(self,
       ax: plt.Axes,
       alpha: float = 1.0,
-      base_color: str = "#cc00cc",
       movable: bool = None,
-      border_color: str = "#555555") -> None:
+      base_color: str = "#cc00cc",
+      border_color: str = "#555555",
+      neutral_color: str = "#aaaaaa") -> None:
     """
     draw tasks of particle graph.
     1. Calculate the shortest route(s) for each task.
@@ -578,6 +592,9 @@ class TTR_Particle_Graph:
         ax (plt.Axes): matplotlib axes to draw on
         alpha (float, optional): transparency. Defaults to 1.0.
         base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
+        movable (bool, optional): whether the tasks are movable. Defaults to None (use movable of particle graph).
+        border_color (str, optional): color of the task border. Defaults to "#555555".
+        neutral_color (str, optional): color of connections that are not part of any shortest route. Defaults to "#aaaaaa".
     """
     if self.analysis_graph is None:
       self.init_analysis_graph()
@@ -596,15 +613,16 @@ class TTR_Particle_Graph:
       else:
         locations_key = (edge_key[1], edge_key[0], edge_key[3])
         edge_weight = edge_weights.get(locations_key, 0) # if the edge is not in the dict, set the weight to 0
-      color = get_gradient_color(base_color, edge_weight, max_weight)
+      color = get_gradient_color(base_color, edge_weight, max_weight, weight_zero_color=neutral_color)
       particle_edge.draw(ax, color=color, alpha=alpha, movable=movable, border_color=border_color)
 
   def draw_edge_importance(self,
       ax: plt.Axes,
       alpha: float = 1.0,
-      base_color: str = "#cc00cc",
       movable: bool = None,
-      border_color: str = "#555555") -> None:
+      base_color: str = "#cc00cc",
+      border_color: str = "#555555",
+      neutral_color: str = "#aaaaaa") -> None:
     """
     draw edge importance of particle graph. Importance is measured by the increase in task lengths if the edge is removed.
 
@@ -631,7 +649,7 @@ class TTR_Particle_Graph:
       else:
         locations_key = (edge_key[1], edge_key[0], edge_key[3])
         edge_weight = edge_weights.get(locations_key, 0)
-      color = get_gradient_color(base_color, edge_weight, max_weight)
+      color = get_gradient_color(base_color, edge_weight, max_weight, weight_zero_color=neutral_color)
       particle_edge.draw(ax, color=color, alpha=alpha, movable=movable, border_color=border_color)
 
   def draw_graph_analysis(self, axs: "np.ndarray[plt.Axes]", grid_color: str = None, base_color="#cc00cc") -> None:
@@ -933,10 +951,10 @@ class TTR_Particle_Graph:
         ax (plt.Axes): axis to draw the new label on
     """
     for label, particle_label in self.particle_labels.items():
-      if label == old_name:
+      if label == old_name: # found the label to be renamed
         particle_label.set_text(new_name, ax)
-        self.particle_labels[new_name] = particle_label
         del self.particle_labels[label]
+        self.particle_labels[new_name] = particle_label
         break
 
   def update_path_color(self, particle_edge: Particle_Edge, old_color: str) -> None:

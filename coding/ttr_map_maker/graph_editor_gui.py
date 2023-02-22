@@ -1006,7 +1006,8 @@ class Graph_Editor_GUI:
         image_file_path=node_image_path_var.get()
     )
     # find Particle_Label corresponding to the node and change its text
-    self.particle_graph.rename_label(old_label, node_label_var.get(), self.ax)
+    if old_label != node_label_var.get():
+      self.particle_graph.rename_label(old_label, node_label_var.get(), self.ax)
 
     self.canvas.draw_idle()
 

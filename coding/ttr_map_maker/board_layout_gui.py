@@ -71,6 +71,7 @@ class Board_Layout_GUI:
           "plot_grid_color":        "#dddddd", # light grey
           "task_base_color":        "#cc00cc", # pink
           "edge_border_color":      "#888888", # grey
+          "edge_neutral_color":     "#aaaaaa", # grey
           }):
     self.color_config = color_config
     # create master window in fullscreen
@@ -355,13 +356,12 @@ class Board_Layout_GUI:
 
     # variables for toggles
     self.show_nodes = tk.BooleanVar(value=True, name="show_nodes")
-    # self.show_edges = tk.BooleanVar(value=True, name="show_edges") # unused # merged into edge_style
     self.show_labels = tk.BooleanVar(value=True, name="show_labels")
-    self.show_targets = tk.BooleanVar(value=False, name="show_targets") # unused # TODO: implement
+    # self.show_targets = tk.BooleanVar(value=False, name="show_targets") # unused # TODO: implement
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
     self.show_edge_attractors = tk.BooleanVar(value=False, name="show_edge_attractors")
-    self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
+    # self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
     self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
 
     # variables for different modes of operation
@@ -856,12 +856,10 @@ class Board_Layout_GUI:
     Draw widgets for toggling the display of different elements. Place them in the given frame using grid layout.
 
     Toggles for:
-    - edges
-    - nodes
+    - how to show edges
+    - how to show nodes
     - labels
-    - targets
     - background image
-    - play/pause simulation
     - show shortest paths for tasks
     - show plot frame
 
@@ -943,8 +941,8 @@ class Board_Layout_GUI:
     row_index += 1
     add_checkbutton(row_index, column_index, "Labels", self.show_labels, command=self.toggle_label_visibility)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Targets", self.show_targets)
-    row_index += 1
+    # add_checkbutton(row_index, column_index, "Targets", self.show_targets)
+    # row_index += 1
     add_checkbutton(row_index, column_index, "Background Image", self.show_background_image, command=self.toggle_background_image_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.toggle_mpl_frame_visibility)
@@ -964,6 +962,8 @@ class Board_Layout_GUI:
     checkbox_toggle_widgets.append(edge_style_label)
     row_index += 1
     add_radiobutton(row_index, column_index, "Hidden", var=self.edge_style, command=self.update_edge_style)
+    row_index += 1
+    add_radiobutton(row_index, column_index, "Neutral", var=self.edge_style, command=self.update_edge_style)
     row_index += 1
     add_radiobutton(row_index, column_index, "Flat colors", self.edge_style, command=self.update_edge_style)
     row_index += 1
@@ -1097,12 +1097,14 @@ class Board_Layout_GUI:
       edge_colors = self.particle_graph.get_edge_colors()
       color_map = {color: color for color in edge_colors}
       self.particle_graph.set_edge_colors(color_map)
-    if self.edge_style.get() == "Flat colors":
+    if self.edge_style.get() == "Neutral":
+      self.particle_graph.draw_edges(self.ax, color=self.color_config["edge_neutral_color"], movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
+    elif self.edge_style.get() == "Flat colors":
       self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
     elif self.edge_style.get() == "Show tasks":
-      self.particle_graph.draw_tasks(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
+      self.particle_graph.draw_tasks(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"], neutral_color=self.color_config["edge_neutral_color"])
     elif self.edge_style.get() == "Edge importance":
-      self.particle_graph.draw_edge_importance(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
+      self.particle_graph.draw_edge_importance(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"], neutral_color=self.color_config["edge_neutral_color"])
     self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:
@@ -1701,6 +1703,7 @@ if __name__ == "__main__":
       "plot_grid_color":        "#dddddd", # black
       "task_base_color":        "#cc00cc", # pink
       "edge_border_color":      "#888888", # grey
+      "edge_neutral_color":     "#aaaaaa", # grey
       }
   blender_colors = {
       "bg_color":               "#1d1d1d", # darkest grey
@@ -1724,6 +1727,7 @@ if __name__ == "__main__":
       "plot_grid_color":        "#dddddd", # black
       "task_base_color":        "#cc00cc", # pink
       "edge_border_color":      "#888888", # grey
+      "edge_neutral_color":     "#aaaaaa", # grey
       }
   gui = Board_Layout_GUI(color_config=blender_colors)
   tk.mainloop()

@@ -59,7 +59,7 @@ class Particle_Label(Graph_Particle):
       # font_name = font_path.split("\\")[-1].strip(".ttf")
       fontManager.addfont(font_path)
       width, height, pix_width, pix_height, *offset = self.get_label_size(label, fontsize, font_path)
-      self.font_name = None
+      self.font_name = font_path
     else:
       width, height, pix_width, pix_height, *offset = self.get_label_size(label, fontsize, font_name)
       self.font_name = font_name
@@ -111,7 +111,7 @@ class Particle_Label(Graph_Particle):
     self.repulsion_strength = label_parameters.get("repulsion_strength", self.repulsion_strength)
 
     # self.img_font = ImageFont.truetype(self.font_name, self.fontsize)
-  def set_text(self, text: str, ax: plt.Axes):
+  def set_text(self, new_label: str, ax: plt.Axes):
     """
     set the text of the label
 
@@ -119,8 +119,16 @@ class Particle_Label(Graph_Particle):
         text (str): text to set
         ax (plt.Axes): matplotlib axes to draw on
     """
-    if text != self.label:
-      self.label = text
+    if new_label != self.label:
+      self.label = new_label
+      # update bounding box size
+      width, height, pix_width, pix_height, *offset = self.get_label_size(new_label, self.fontsize, self.font_name)
+      self.bounding_box_size = (width, height)
+      self.width_pixels = pix_width
+      self.height_pixels = pix_height
+      self.text_x_offset = offset[0]
+      self.text_y_offset = offset[1]
+      # redraw label
       self.erase()
       self.draw(ax)
 

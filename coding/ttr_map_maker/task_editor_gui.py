@@ -83,7 +83,7 @@ class Task_Editor_GUI:
     This method initializes the task edit GUI with all its widgets.
     """
     # set up task edit variables
-    self.task_visibility_vars: List[tk.BooleanVar] = []
+    self.task_visibility_vars: dict[str, tk.BooleanVar] = {}
 
     # set up task edit frame
     self.open_task_overview()
@@ -136,9 +136,12 @@ class Task_Editor_GUI:
         pady=self.grid_pad_y)
     row_index += 1
     # add checkbutton to toggle visibility of all tasks
+    all_task_visibility_var: tk.BooleanVar = tk.BooleanVar()
+    self.task_visibility_vars["all"] = all_task_visibility_var
     toggle_task_visibility_button = tk.Checkbutton(
         self.task_edit_frame,
         text="Show/hide all",
+        variable=all_task_visibility_var,
         command=self.toggle_all_tasks_visibility)
     self.add_checkbutton_style(toggle_task_visibility_button)
     toggle_task_visibility_button.grid(
@@ -218,7 +221,8 @@ class Task_Editor_GUI:
         tk.Frame: The frame containing the widgets for the task.
     """
     task_var: tk.BooleanVar = tk.BooleanVar(value=False)
-    self.task_visibility_vars.append(task_var)
+    task_name = ttr_task.name
+    self.task_visibility_vars[task_name]: tk.BooleanVar = task_var
     task_frame = tk.Frame(task_list_frame)
     self.add_frame_style(task_frame)
     task_frame.grid(
@@ -241,7 +245,6 @@ class Task_Editor_GUI:
         pady=0)
     # task_row_index += 1
     # add checkbutton to toggle visibility of task
-    task_name = ttr_task.name
     if " - " in task_name:
       task_name = "\n".join(task_name.split(" - "))
     task_visibility_button = tk.Checkbutton(
@@ -289,7 +292,7 @@ class Task_Editor_GUI:
     delete_task_button = tk.Button(
         task_frame,
         text="Delete",
-        command=lambda task=ttr_task: self.delete_task(task))
+        command=lambda task=ttr_task, task_index=task_row_index: self.delete_task(task, task_index))
     self.add_button_style(delete_task_button)
     delete_task_button.config(
         bg=self.color_config["delete_button_bg_color"],
@@ -322,16 +325,35 @@ class Task_Editor_GUI:
     """
     Toggles the visibility of all tasks.
     """
-    raise NotImplementedError() # TODO: implement
+    for task_name, task_var in self.task_visibility_vars.items():
+      if task_name != "all":
+        task_var.set(self.task_visibility_vars["all"].get())
+        self.toggle_task_visibility(task_var, self.particle_graph.tasks[task_name], update_canvas=False, update_all_tasks=False)
+    self.canvas.draw_idle()
 
-
-  def toggle_task_visibility(self, task_visibility_var: tk.BooleanVar, task: TTR_Task):
+  def toggle_task_visibility(self, task_visibility_var: tk.BooleanVar, task: TTR_Task, update_canvas: bool = True, update_all_tasks: bool = True):
     """
     Toggles the visibility of the given task.
     If all task visibility variables were True and this one is now False, uncheck the "Show/hide all" checkbutton.
     If all task visibility variables are now True, check the "Show/hide all" checkbutton.
     """
-    raise NotImplementedError() # TODO: implement
+    if task_visibility_var.get():
+      task.erase()
+      task.draw(self.ax, self.particle_graph)
+    else:
+      task.erase()
+    # check if all tasks are now visible
+    if update_all_tasks:
+      all_tasks_visible = True
+      for task_name, task_var in self.task_visibility_vars.items():
+        if task_name != "all" and not task_var.get():
+          all_tasks_visible = False
+          self.task_visibility_vars["all"].set(False)
+          break
+      else:
+        self.task_visibility_vars["all"].set(True)
+    if update_canvas:
+      self.canvas.draw_idle()
 
 
   def edit_task(self, task: TTR_Task):
@@ -886,15 +908,31 @@ class Task_Editor_GUI:
     self.canvas.draw_idle()
 
 
-  def delete_task(self, task: TTR_Task):
+  def delete_task(self, task: TTR_Task, task_index: int):
     """
     Deletes the given task:
     - remove it from the task edit frame
     - remove it from the particle graph
     - remove the corresponding task visibility variable
     - if it was shown, remove it from the canvas
+    - update number labels of all other tasks in list
+
+    Args:
+        task (TTR_Task): task to delete
+        task_index (int): index of the task in the task list
     """
-    raise NotImplementedError() # TODO: implement
+    task.erase()
+    deleted_task_widgets = self.task_location_widgets.pop(task_index)
+    for widget in deleted_task_widgets[:2]:
+      widget.destroy()
+    
+    # update the task number labels
+    for i, task_widgets in enumerate(self.task_location_widgets[task_index:]):
+      task_widgets[0].config(text=f"{i+1}.")
+      # TODO: finish this method
+
+
+
 
 
   def draw_task_edit_mode(self, task: TTR_Task):

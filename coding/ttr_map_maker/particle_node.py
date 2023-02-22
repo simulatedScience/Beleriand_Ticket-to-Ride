@@ -25,7 +25,8 @@ class Particle_Node(Graph_Particle):
         target_position: np.ndarray = None,
         interaction_radius: float = 5,
         velocity_decay: float = 0.9999,
-        repulsion_strength: float = 1,):
+        repulsion_strength: float = 1,
+        image_file_path: str = None,):
     """
     Initialize a particle node
 
@@ -58,7 +59,7 @@ class Particle_Node(Graph_Particle):
     self.label = location_name
     self.target_attraction = target_attraction
     self.color = color
-    self.image_file_path = None
+    self.image_file_path = image_file_path
 
   def get_adjustable_settings(self) -> dict[str, object]:
     return {
@@ -202,4 +203,5 @@ class Particle_Node(Graph_Particle):
     particle_info["color"] = self.color
     particle_info["target_attraction"] = self.target_attraction
     particle_info["location_name"] = self.label
+    particle_info["image_file_path"] = self.image_file_path
     return particle_info
