@@ -18,7 +18,7 @@ This project implements tools to create your very own, custom ticket to ride gam
 - automatically generate images for task cards
 - allow adding nodes through the UI
 - support for different monitor resolutions
-- add overlay for reward points for each edge length (possibly implemented via mpl legend?)
+- add info overlay for reward points for each edge length (possibly implemented via mpl legend?)
 - automatically optimze the graph layout from the UI
 - documentation and user manual
 

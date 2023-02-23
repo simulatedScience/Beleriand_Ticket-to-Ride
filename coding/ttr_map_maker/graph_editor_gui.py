@@ -573,7 +573,6 @@ class Graph_Editor_GUI:
     """
     Handle mouse clicks on the matplotlib Axes object.
     """
-    print(f"mouse click at {event.mouseevent.xdata}, {event.mouseevent.ydata}")
     # ignore pick events from scrolling and mouse buttons other than left click
     if not event.mouseevent.button == 1:
       return

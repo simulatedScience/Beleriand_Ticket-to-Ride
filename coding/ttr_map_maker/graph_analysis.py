@@ -221,13 +221,33 @@ class TTR_Graph_Analysis:
       for _ in range(n_random_paths):
         path, length = random.choice(shortest_paths)
         for (loc1, loc2) in zip(path[:-1], path[1:]):
-          connection_index = 0 # TODO: find connection index
+          connection_index = self.get_shortest_connection_index(loc1, loc2)
           edge = (loc1, loc2, connection_index)
           if edge in task_edge_counts:
             task_edge_counts[edge] += 1
           else:
             task_edge_counts[edge] = 1
     return task_edge_counts
+
+  def get_shortest_connection_index(self, loc1: str, loc2: str):
+    # find all existing connection indices
+    max_connection_index: int = 0
+    connection_index_lengths: dict[int, int] = {}
+    for edge in self.edge_particles:
+      if edge[0] == loc1 and edge[1] == loc2:
+        connection_index: int = edge[3]
+        if connection_index in connection_index_lengths:
+          connection_index_lengths[connection_index] += 1
+        else:
+          connection_index_lengths[connection_index] = 1
+        max_connection_index = max(max_connection_index, edge[2])
+    # find the shortest connection index
+    if max_connection_index == 0:
+      return 0
+    # get dict key with minimum value
+    shortest_connection: int = min(connection_index_lengths.values())
+    shortest_connection_indeces: List[int] = [connection_index for connection_index, length in connection_index_lengths.items() if length == shortest_connection]
+    return random.choice(shortest_connection_indeces)
 
 # connectedness analysis methods
 

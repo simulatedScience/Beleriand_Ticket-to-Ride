@@ -15,6 +15,7 @@ from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
 from ttr_task import TTR_Task
 from particle_node import Particle_Node
+from drag_handler import find_particle_in_list, get_artist_center
 
 
 class Task_Editor_GUI:
@@ -147,7 +148,7 @@ class Task_Editor_GUI:
     toggle_task_visibility_button.grid(
         row=row_index,
         column=0,
-        sticky="w",
+        sticky="ew",
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
     # add button to add new task
@@ -206,6 +207,7 @@ class Task_Editor_GUI:
       self.task_list.append(ttr_task)
       task_row_index += 1
     task_list_auto_frame._on_configure()
+    self.bind_task_overview_mouse_events()
 
   def _show_single_task_summary(self,
       ttr_task: TTR_Task,
@@ -222,9 +224,12 @@ class Task_Editor_GUI:
     Returns:
         tk.Frame: The frame containing the widgets for the task.
     """
-    task_var: tk.BooleanVar = tk.BooleanVar(value=False)
     task_name = ttr_task.name
-    self.task_visibility_vars[task_name]: tk.BooleanVar = task_var
+    if not ttr_task.name in self.task_visibility_vars:
+      task_var: tk.BooleanVar = tk.BooleanVar(value=False)
+      self.task_visibility_vars[task_name]: tk.BooleanVar = task_var
+    else:
+      task_var = self.task_visibility_vars[task_name]
     task_frame = tk.Frame(task_list_frame)
     self.add_frame_style(task_frame)
     task_frame.grid(
@@ -265,7 +270,10 @@ class Task_Editor_GUI:
     # add label to show task length. If task has bonus points, show them as well
     task_length_text = f"length: {ttr_task.points}"
     if ttr_task.points_bonus is not None: # add task bonus points
-      task_length_text += " + " + str(ttr_task.points_bonus)
+      if ttr_task.points_bonus > 0:
+        task_length_text += " + " + str(ttr_task.points_bonus)
+      else: # points_bonus < 0
+        task_length_text += " - " + str(-ttr_task.points_bonus)
     task_length_label = tk.Label(
         task_frame,
         text=task_length_text)
@@ -306,6 +314,60 @@ class Task_Editor_GUI:
         pady=0)
 
     return (task_frame, task_number_label, task_visibility_button, task_length_label, edit_task_button, delete_task_button)
+
+  def bind_task_overview_mouse_events(self):
+    """
+    Bind pick event to the matplotlib Axes object.
+    """
+    self.task_overview_selected_node: Particle_Node = None
+    self.pick_event_cid: int = self.canvas.mpl_connect("pick_event", self.on_task_overview_mouse_click)
+
+  def unbind_task_overview_mouse_events(self):
+    """
+    Unbind pick event from the matplotlib Axes object.
+    """
+    if self.task_overview_selected_node is not None:
+      self.task_overview_selected_node.remove_highlight(self.ax)
+      self.highlighted_particles.remove(self.task_overview_selected_node)
+      del self.task_overview_selected_node
+    self.canvas.mpl_disconnect(self.pick_event_cid)
+  
+  def on_task_overview_mouse_click(self, event):
+    """
+    Handle mouse click event in task edit mode:
+        add/ remove task location to/from the task and highlight the clicked particle accordingly.
+
+    Args:
+        event (PickEvent): Pick event object.
+    """
+    if not event.mouseevent.button == 1:
+      return
+    artist_center = get_artist_center(event.artist)
+    # TODO: use cell list for faster search
+    particle = find_particle_in_list(artist_center, self.particle_graph.get_particle_list())
+    # if no particle was clicked or the selected one was clicked again, deselect all particles
+    if particle is None or not isinstance(particle, Particle_Node):
+      return
+    if self.task_overview_selected_node is not None:
+      self.task_overview_selected_node.remove_highlight(self.ax)
+      self.highlighted_particles.remove(self.task_overview_selected_node)
+      self.task_overview_selected_node: Particle_Node = None
+      self.canvas.draw_idle()
+    # highlight selected particle
+    particle.highlight(self.ax)
+    self.highlighted_particles.append(particle)
+    self.task_overview_selected_node = particle
+    # hide all tasks
+    self.task_visibility_vars["all"].set(False)
+    self.toggle_all_tasks_visibility()
+    # highlight all tasks that start or end at the selected particle
+    for task_name, task in self.particle_graph.tasks.items():
+      if task_name != "all" and particle.label in (task.node_names[0], task.node_names[-1]):
+        self.task_visibility_vars[task.name].set(True)
+        self.toggle_task_visibility(self.task_visibility_vars[task.name], task, update_canvas=False, update_all_tasks=True)
+
+    self.canvas.draw_idle()
+
 
 
   def calculate_all_task_lengths(self):
@@ -371,6 +433,13 @@ class Task_Editor_GUI:
     Args:
         task (TTR_Task): The task to edit.
     """
+    self.unbind_task_overview_mouse_events()
+    # hide all tasks
+    for task_name, task_var in self.task_visibility_vars.items():
+      if task_name != "all" and task_var.get():
+        self.particle_graph.tasks[task_name].erase()
+        task_var.set(False)
+    # task.draw(self.ax, self.particle_graph)
     self.task_node_indices: List[int] = [] # indices of the nodes in the task
     self.task_location_widgets: List[Tuple[tk.Label, tk.Frame, tk.Button, tk.Label, tk.Button, tk.Button]] = []
     task_points_vars: List[tk.IntVar] = [] # variables for task length and points
@@ -579,7 +648,60 @@ class Task_Editor_GUI:
         pady=0)
     # bind ESC to cancel changes
     self.master.bind("<Escape>", lambda event, task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.cancel_task_changes(task_points_vars, task_node_indices))
+    self.bind_task_edit_mouse_events()
 
+
+  def bind_task_edit_mouse_events(self):
+    """
+    Bind pick event to the matplotlib Axes object.
+    """
+    self.pick_event_cid: int = self.canvas.mpl_connect("pick_event", self.on_task_edit_mouse_click)
+
+  def unbind_task_edit_mouse_events(self):
+    """
+    Unbind pick event from the matplotlib Axes object.
+    """
+    self.canvas.mpl_disconnect(self.pick_event_cid)
+
+  def on_task_edit_mouse_click(self, event: PickEvent):
+    """
+    Handle mouse click event in task edit mode:
+        add/ remove task location to/from the task and highlight the clicked particle accordingly.
+
+    Args:
+        event (PickEvent): Pick event object.
+    """
+    if not event.mouseevent.button == 1:
+      return
+    artist_center = get_artist_center(event.artist)
+    # TODO: use cell list for faster search
+    particle = find_particle_in_list(artist_center, self.particle_graph.get_particle_list())
+    # if no particle was clicked or the selected one was clicked again, deselect all particles
+    if particle is None or not isinstance(particle, Particle_Node):
+      return
+    if particle in self.highlighted_particles:
+      # delete widgets corresponding to the selected node
+      # get row index where the selected node is shown
+      delete_index: int = self.task_node_indices.index(self.node_names.index(particle.label))
+      self.remove_task_location(delete_index)
+      self.canvas.draw_idle()
+      return
+    else:
+      # add widgets corresponding to the selected node
+      for i, node_index in enumerate(self.task_node_indices):
+        if node_index == 0: # empty node
+          # set label to selected node name and highlight node
+          self.task_location_widgets[i][3].config(text=particle.label)
+          particle.highlight(self.ax)
+          self.highlighted_particles.append(particle)
+          self.task_node_indices[i] = self.node_names.index(particle.label)
+          break
+      else: # no empty node
+        self.add_task_location(
+            location_index=len(self.task_location_widgets),
+            location_name=particle.label,
+            update_add_location_button=True)
+      self.canvas.draw_idle()
 
   def add_task_location(self,
       location_index: int,
@@ -683,7 +805,7 @@ class Task_Editor_GUI:
             update_add_location_button=True)
       )
 
-  def remove_task_location(self, task_index: int):
+  def remove_task_location(self, task_index: int) -> int:
     """
     remove the task location at the given index.
     - Remove highlight from the corresponding node,
@@ -692,6 +814,9 @@ class Task_Editor_GUI:
 
     Args:
         task_index (int): index of the task location to remove
+    
+    Returns:
+        int: the current number of task locations (= row where a new location can be added)
     """
     # remove highlight from the current node
     current_node_name = self.node_names[self.task_node_indices[task_index]]
@@ -750,6 +875,7 @@ class Task_Editor_GUI:
           location_name="None",
           update_add_location_button=True)
     )
+    return len(self.task_node_indices)
 
   def apply_task_changes(self, task: TTR_Task, task_points_vars: List[tk.IntVar], task_node_indices: List[int]):
     """
@@ -768,8 +894,8 @@ class Task_Editor_GUI:
       self.particle_graph.tasks[task.name] = task
       self.task_list.append(task) # potentially unnecessary
     elif task.node_names != new_node_names:
-      task.set_node_names(new_node_names, update_name=True) # TODO: consider adding a name input
       del self.particle_graph.tasks[task.name]
+      task.set_node_names(new_node_names, update_name=True) # TODO: consider adding a name input
       self.particle_graph.tasks[task.name] = task
     # update task points
     task.set_length(task_points_vars[0].get())
@@ -795,6 +921,7 @@ class Task_Editor_GUI:
     # delete task points variables
     for task_points_var in task_points_vars:
       del task_points_var
+    self.unbind_task_edit_mouse_events()
     # clear the task frame and go back to the task overview
     self.open_task_overview()
 
@@ -924,7 +1051,6 @@ class Task_Editor_GUI:
         task (TTR_Task): task to delete
         task_index (int): index of the task in the task list
     """
-    print(f"deleting task {task.name}")
     # remove the task from the canvas
     if self.task_visibility_vars[task.name].get():
       task.erase()
@@ -946,6 +1072,7 @@ class Task_Editor_GUI:
       widget.destroy()
     # update the task number labels
     for row_index, task_widgets in enumerate(self.task_list_widgets[task_index:]):
+      row_index += task_index
       # move frame one row up
       task_widgets[0].grid_remove()
       task_widgets[0].grid(row=row_index)

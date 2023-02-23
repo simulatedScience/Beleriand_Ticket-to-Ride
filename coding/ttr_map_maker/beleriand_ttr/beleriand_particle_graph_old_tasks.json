@@ -1,8 +1,6 @@
 {
   "particle_graph": {
     "n_nodes": 39,
-    "n_connections": 84,
-    "n_tasks": 33,
     "n_edges": 243,
     "n_labels": 39,
     "particles": [
@@ -10,8 +8,8 @@
         "particle_type": "Particle_Node",
         "id": 0,
         "position": [
-          73.1875,
-          23.875
+          73.2073015120904,
+          23.871595505383965
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -36,8 +34,8 @@
         "particle_type": "Particle_Node",
         "id": 1,
         "position": [
-          41.65625,
-          38.4375
+          41.65207449999998,
+          38.42437500000001
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -62,8 +60,8 @@
         "particle_type": "Particle_Node",
         "id": 2,
         "position": [
-          59.5625,
-          25.375
+          59.55534196202541,
+          25.370015506329118
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -88,8 +86,8 @@
         "particle_type": "Particle_Node",
         "id": 3,
         "position": [
-          31.46875,
-          21.625
+          31.47471482025315,
+          21.62858212658228
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -114,8 +112,8 @@
         "particle_type": "Particle_Node",
         "id": 4,
         "position": [
-          14.015625,
-          26.828125
+          14.012428812607594,
+          26.8220853483038
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -140,8 +138,8 @@
         "particle_type": "Particle_Node",
         "id": 5,
         "position": [
-          94.125,
-          35.0625
+          94.12944676441788,
+          35.064211671838876
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -166,8 +164,8 @@
         "particle_type": "Particle_Node",
         "id": 6,
         "position": [
-          15.0390625,
-          33.125
+          15.037728481822782,
+          33.11058998615697
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -192,8 +190,8 @@
         "particle_type": "Particle_Node",
         "id": 7,
         "position": [
-          29.671875,
-          12.3984375
+          29.665337095959487,
+          12.399536668010128
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -218,8 +216,8 @@
         "particle_type": "Particle_Node",
         "id": 8,
         "position": [
-          25.515625,
-          57.09375
+          25.510662685106052,
+          57.08367223460313
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -244,8 +242,8 @@
         "particle_type": "Particle_Node",
         "id": 9,
         "position": [
-          40.59375,
-          44.9375
+          40.58631699999999,
+          44.92549575000001
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -270,8 +268,8 @@
         "particle_type": "Particle_Node",
         "id": 10,
         "position": [
-          68.75,
-          10.4609375
+          68.76577387527544,
+          10.46310619284052
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -296,8 +294,8 @@
         "particle_type": "Particle_Node",
         "id": 11,
         "position": [
-          23.84375,
-          31.078125
+          23.843656012658233,
+          31.083110601265826
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -322,8 +320,8 @@
         "particle_type": "Particle_Node",
         "id": 12,
         "position": [
-          31.46875,
-          47.65625
+          31.46685887277615,
+          47.665739017727546
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -348,8 +346,8 @@
         "particle_type": "Particle_Node",
         "id": 13,
         "position": [
-          42.625,
-          60.09375
+          42.62878152791945,
+          60.08300074979692
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -374,8 +372,8 @@
         "particle_type": "Particle_Node",
         "id": 14,
         "position": [
-          36.5625,
-          50.0
+          36.562371932499985,
+          49.991396400000006
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -400,8 +398,8 @@
         "particle_type": "Particle_Node",
         "id": 15,
         "position": [
-          52.375,
-          43.03125
+          52.36352341655168,
+          43.02885528410572
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -426,8 +424,8 @@
         "particle_type": "Particle_Node",
         "id": 16,
         "position": [
-          53.96875,
-          35.84375
+          53.977811835443106,
+          35.85370639240509
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -452,8 +450,8 @@
         "particle_type": "Particle_Node",
         "id": 17,
         "position": [
-          42.875,
-          28.34375
+          42.88730632911393,
+          28.3395338607595
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -478,8 +476,8 @@
         "particle_type": "Particle_Node",
         "id": 18,
         "position": [
-          45.40625,
-          51.75
+          45.4086469810259,
+          51.74340439047758
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -504,8 +502,8 @@
         "particle_type": "Particle_Node",
         "id": 19,
         "position": [
-          41.0,
-          13.359375
+          41.01198676860759,
+          13.356483025944303
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -530,8 +528,8 @@
         "particle_type": "Particle_Node",
         "id": 20,
         "position": [
-          72.625,
-          50.5625
+          72.62206667985745,
+          50.5729347260117
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -556,8 +554,8 @@
         "particle_type": "Particle_Node",
         "id": 21,
         "position": [
-          29.9375,
-          3.650390625
+          29.938750341083544,
+          3.650312824040507
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -582,8 +580,8 @@
         "particle_type": "Particle_Node",
         "id": 22,
         "position": [
-          63.5625,
-          57.3125
+          63.56857949134176,
+          57.307662179635436
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -608,8 +606,8 @@
         "particle_type": "Particle_Node",
         "id": 23,
         "position": [
-          85.375,
-          47.5625
+          85.35092428092383,
+          47.5736062108179
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -634,8 +632,8 @@
         "particle_type": "Particle_Node",
         "id": 24,
         "position": [
-          35.03125,
-          59.75
+          35.03014083571698,
+          59.74148311686645
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -660,8 +658,8 @@
         "particle_type": "Particle_Node",
         "id": 25,
         "position": [
-          19.171875,
-          49.71875
+          19.173132627151872,
+          49.711446237680875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -686,8 +684,8 @@
         "particle_type": "Particle_Node",
         "id": 26,
         "position": [
-          56.90625,
-          40.40625
+          56.893880563597286,
+          40.404479515964425
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -712,8 +710,8 @@
         "particle_type": "Particle_Node",
         "id": 27,
         "position": [
-          67.75,
-          41.78125
+          67.73813147948353,
+          41.79146051884557
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -738,8 +736,8 @@
         "particle_type": "Particle_Node",
         "id": 28,
         "position": [
-          43.0625,
-          22.890625
+          43.048693196202535,
+          22.88465775316456
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -764,8 +762,8 @@
         "particle_type": "Particle_Node",
         "id": 29,
         "position": [
-          34.375,
-          31.625
+          34.36233952262922,
+          31.625957032470378
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -790,8 +788,8 @@
         "particle_type": "Particle_Node",
         "id": 30,
         "position": [
-          94.0,
-          29.9375
+          93.98313805635965,
+          29.94340688980068
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -816,8 +814,8 @@
         "particle_type": "Particle_Node",
         "id": 31,
         "position": [
-          66.8125,
-          50.40625
+          66.83644632084133,
+          50.407145431879655
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -842,8 +840,8 @@
         "particle_type": "Particle_Node",
         "id": 32,
         "position": [
-          23.9375,
-          37.375
+          23.940488132911394,
+          37.37719841772153
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -868,8 +866,8 @@
         "particle_type": "Particle_Node",
         "id": 33,
         "position": [
-          80.125,
-          29.703125
+          80.14455489429827,
+          29.69669360143942
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -894,8 +892,8 @@
         "particle_type": "Particle_Node",
         "id": 34,
         "position": [
-          53.96875,
-          54.90625
+          53.96316065197307,
+          54.894821045365845
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -920,8 +918,8 @@
         "particle_type": "Particle_Node",
         "id": 35,
         "position": [
-          79.875,
-          40.5
+          79.884802489115,
+          40.50888746719336
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -946,8 +944,8 @@
         "particle_type": "Particle_Node",
         "id": 36,
         "position": [
-          43.28125,
-          54.3125
+          43.28717071418151,
+          54.303806781496675
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -972,8 +970,8 @@
         "particle_type": "Particle_Node",
         "id": 37,
         "position": [
-          8.90625,
-          46.1875
+          8.904624320496474,
+          46.18367348426467
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -998,8 +996,8 @@
         "particle_type": "Particle_Node",
         "id": 38,
         "position": [
-          50.84375,
-          8.8828125
+          50.85747120988367,
+          8.88403213612928
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1024,8 +1022,8 @@
         "particle_type": "Particle_Label",
         "id": 39,
         "position": [
-          73.1875,
-          25.875
+          73.2073015120904,
+          25.871595505383965
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1052,8 +1050,8 @@
         "particle_type": "Particle_Label",
         "id": 40,
         "position": [
-          42.59375,
-          40.09375
+          42.59436233182072,
+          40.08215031446541
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1080,8 +1078,8 @@
         "particle_type": "Particle_Label",
         "id": 41,
         "position": [
-          59.96875,
-          27.578125
+          59.970885916726374,
+          27.576994025157234
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1108,8 +1106,8 @@
         "particle_type": "Particle_Label",
         "id": 42,
         "position": [
-          28.671875,
-          21.703125
+          28.669499999999996,
+          21.700500000000005
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1136,8 +1134,8 @@
         "particle_type": "Particle_Label",
         "id": 43,
         "position": [
-          10.3828125,
-          27.28125
+          10.383991297468354,
+          27.274380537974693
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1164,8 +1162,8 @@
         "particle_type": "Particle_Label",
         "id": 44,
         "position": [
-          94.125,
-          37.0625
+          94.12944676441788,
+          37.064211671838876
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1192,8 +1190,8 @@
         "particle_type": "Particle_Label",
         "id": 45,
         "position": [
-          14.8046875,
-          34.65625
+          14.805991455696194,
+          34.66589905063292
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1220,8 +1218,8 @@
         "particle_type": "Particle_Label",
         "id": 46,
         "position": [
-          27.65625,
-          13.65625
+          27.652386075949394,
+          13.65332895569619
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1248,8 +1246,8 @@
         "particle_type": "Particle_Label",
         "id": 47,
         "position": [
-          25.515625,
-          59.09375
+          25.510662685106052,
+          59.08367223460313
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1276,8 +1274,8 @@
         "particle_type": "Particle_Label",
         "id": 48,
         "position": [
-          40.78125,
-          46.28125
+          40.78825,
+          46.28425000000001
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1304,8 +1302,8 @@
         "particle_type": "Particle_Label",
         "id": 49,
         "position": [
-          68.375,
-          11.59375
+          68.35331128101267,
+          11.597050905488606
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1332,8 +1330,8 @@
         "particle_type": "Particle_Label",
         "id": 50,
         "position": [
-          20.875,
-          31.828125
+          20.87413765822785,
+          31.82549018987342
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1360,8 +1358,8 @@
         "particle_type": "Particle_Label",
         "id": 51,
         "position": [
-          31.15625,
-          49.0625
+          31.158530570814424,
+          49.052594968553464
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1388,8 +1386,8 @@
         "particle_type": "Particle_Label",
         "id": 52,
         "position": [
-          42.625,
-          62.09375
+          42.62878152791945,
+          62.08300074979692
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1416,8 +1414,8 @@
         "particle_type": "Particle_Label",
         "id": 53,
         "position": [
-          38.6875,
-          51.28125
+          38.67350572804713,
+          51.28035440251573
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1444,8 +1442,8 @@
         "particle_type": "Particle_Label",
         "id": 54,
         "position": [
-          53.40625,
-          44.3125
+          53.414031451753786,
+          44.31811514549012
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1472,8 +1470,8 @@
         "particle_type": "Particle_Label",
         "id": 55,
         "position": [
-          57.28125,
-          35.25
+          57.26787113685216,
+          35.24048647798742
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1500,8 +1498,8 @@
         "particle_type": "Particle_Label",
         "id": 56,
         "position": [
-          41.03125,
-          29.390625
+          41.02007899848738,
+          29.38890503144654
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1528,8 +1526,8 @@
         "particle_type": "Particle_Label",
         "id": 57,
         "position": [
-          45.6875,
-          53.0
+          45.69655149999999,
+          53.001777000000004
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1556,8 +1554,8 @@
         "particle_type": "Particle_Label",
         "id": 58,
         "position": [
-          37.375,
-          13.390625
+          37.36501880253164,
+          13.387560500000001
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1584,8 +1582,8 @@
         "particle_type": "Particle_Label",
         "id": 59,
         "position": [
-          72.625,
-          52.5625
+          72.62206667985745,
+          52.5729347260117
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1612,8 +1610,8 @@
         "particle_type": "Particle_Label",
         "id": 60,
         "position": [
-          26.78125,
-          3.119140625
+          26.785899999999998,
+          3.1194108333333355
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1640,8 +1638,8 @@
         "particle_type": "Particle_Label",
         "id": 61,
         "position": [
-          63.5625,
-          59.3125
+          63.56857949134176,
+          59.307662179635436
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1668,8 +1666,8 @@
         "particle_type": "Particle_Label",
         "id": 62,
         "position": [
-          85.375,
-          49.5625
+          85.35092428092383,
+          49.5736062108179
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1696,8 +1694,8 @@
         "particle_type": "Particle_Label",
         "id": 63,
         "position": [
-          35.0,
-          61.0
+          35.00626565309875,
+          61.006867795632616
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1724,8 +1722,8 @@
         "particle_type": "Particle_Label",
         "id": 64,
         "position": [
-          17.09375,
-          50.8125
+          17.097684968354432,
+          50.8045857594937
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1752,8 +1750,8 @@
         "particle_type": "Particle_Label",
         "id": 65,
         "position": [
-          57.03125,
-          42.25
+          57.019184027106455,
+          42.24097425770414
         ],
         "rotation": 5.98647933434055,
         "mass": 1.0,
@@ -1780,8 +1778,8 @@
         "particle_type": "Particle_Label",
         "id": 66,
         "position": [
-          67.75,
-          43.78125
+          67.73813147948353,
+          43.79146051884557
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1808,8 +1806,8 @@
         "particle_type": "Particle_Label",
         "id": 67,
         "position": [
-          46.53125,
-          23.8125
+          46.52471169240505,
+          23.817181312658228
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1836,8 +1834,8 @@
         "particle_type": "Particle_Label",
         "id": 68,
         "position": [
-          30.03125,
-          32.28125
+          30.029799124273545,
+          32.27014056603774
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1864,8 +1862,8 @@
         "particle_type": "Particle_Label",
         "id": 69,
         "position": [
-          94.6875,
-          28.515625
+          94.66474999999998,
+          28.521625000000007
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1892,8 +1890,8 @@
         "particle_type": "Particle_Label",
         "id": 70,
         "position": [
-          65.8125,
-          51.78125
+          65.82423876361517,
+          51.788797938724045
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1920,8 +1918,8 @@
         "particle_type": "Particle_Label",
         "id": 71,
         "position": [
-          23.6875,
-          38.9375
+          23.68226914556963,
+          38.92651234177217
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1948,8 +1946,8 @@
         "particle_type": "Particle_Label",
         "id": 72,
         "position": [
-          83.25,
-          28.359375
+          83.26158375649761,
+          28.36546252487512
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1976,8 +1974,8 @@
         "particle_type": "Particle_Label",
         "id": 73,
         "position": [
-          52.84375,
-          56.15625
+          52.837109620222776,
+          56.16340986070885
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2004,8 +2002,8 @@
         "particle_type": "Particle_Label",
         "id": 74,
         "position": [
-          80.25,
-          41.96875
+          80.27443109688991,
+          41.9699947463493
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -2032,8 +2030,8 @@
         "particle_type": "Particle_Label",
         "id": 75,
         "position": [
-          43.28125,
-          56.3125
+          43.28717071418151,
+          56.303806781496675
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2060,8 +2058,8 @@
         "particle_type": "Particle_Label",
         "id": 76,
         "position": [
-          8.90625,
-          48.1875
+          8.904624320496474,
+          48.18367348426467
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2088,8 +2086,8 @@
         "particle_type": "Particle_Label",
         "id": 77,
         "position": [
-          51.625,
-          7.06640625
+          51.6367284254335,
+          7.065765299846339
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -2116,8 +2114,8 @@
         "particle_type": "Particle_Edge",
         "id": 78,
         "position": [
-          70.5625,
-          23.953125
+          70.55547082278491,
+          23.94981107594937
         ],
         "rotation": -3.2497327944476466,
         "mass": 1.0,
@@ -2140,15 +2138,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Andram",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 79,
         "position": [
-          66.4375,
-          24.421875
+          66.44978892405074,
+          24.41460525316456
         ],
         "rotation": -3.2497327944476466,
         "mass": 1.0,
@@ -2171,15 +2168,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Andram",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 80,
         "position": [
-          62.40625,
-          24.859375
+          62.395750822784905,
+          24.85357753164557
         ],
         "rotation": -3.2497327944476466,
         "mass": 1.0,
@@ -2202,15 +2198,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Andram",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 81,
         "position": [
-          70.4375,
-          25.265625
+          70.46578006659136,
+          25.26480441059683
         ],
         "rotation": -3.246796408768035,
         "mass": 1.0,
@@ -2233,15 +2228,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Nan Elmoth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 82,
         "position": [
-          67.75,
-          26.875
+          67.73062999733048,
+          26.869075124297936
         ],
         "rotation": -4.730326272963215,
         "mass": 1.0,
@@ -2264,15 +2258,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Nan Elmoth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 83,
         "position": [
-          67.75,
-          30.921875
+          67.73062999733048,
+          30.919201188395796
         ],
         "rotation": -4.695419687923328,
         "mass": 1.0,
@@ -2295,15 +2288,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Nan Elmoth",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 84,
         "position": [
-          67.8125,
-          35.03125
+          67.83582807691744,
+          35.021926292287134
         ],
         "rotation": -4.765232858003102,
         "mass": 1.0,
@@ -2326,15 +2318,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Nan Elmoth",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 85,
         "position": [
-          68.0625,
-          39.09375
+          68.07252375598809,
+          39.09835187628174
         ],
         "rotation": -4.712872980443272,
         "mass": 1.0,
@@ -2357,15 +2348,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Nan Elmoth",
-        "path_index": 4,
-        "connection_index": 0
+        "path_index": 4
       },
       {
         "particle_type": "Particle_Edge",
         "id": 86,
         "position": [
-          74.9375,
-          25.328125
+          74.94161485764236,
+          25.32787002939783
         ],
         "rotation": -5.584711000858805,
         "mass": 1.0,
@@ -2388,15 +2378,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Sarn Athrud",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 87,
         "position": [
-          78.1875,
-          27.96875
+          78.17259582685791,
+          27.963615052002833
         ],
         "rotation": -5.514897830779032,
         "mass": 1.0,
@@ -2419,15 +2408,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Ereb",
         "location_2_name": "Sarn Athrud",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 88,
         "position": [
-          39.25,
-          39.71875
+          39.23635749999999,
+          39.70328400000001
         ],
         "rotation": 2.6202614365848618,
         "mass": 1.0,
@@ -2450,15 +2438,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 89,
         "position": [
-          39.4375,
-          42.53125
+          39.44950899999999,
+          42.54530400000001
         ],
         "rotation": 0.9447453546703048,
         "mass": 1.0,
@@ -2481,15 +2468,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 90,
         "position": [
-          44.34375,
-          38.78125
+          44.34146205682653,
+          38.77907277806085
         ],
         "rotation": -0.035315447545316125,
         "mass": 1.0,
@@ -2512,15 +2498,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Forest of Neldoreth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 91,
         "position": [
-          47.1875,
-          40.59375
+          47.182608788395854,
+          40.5935866570463
         ],
         "rotation": -5.044410400769042,
         "mass": 1.0,
@@ -2543,15 +2528,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Forest of Neldoreth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 92,
         "position": [
-          50.0,
-          42.6875
+          49.999880337346944,
+          42.6946027274505
         ],
         "rotation": -6.178874414565356,
         "mass": 1.0,
@@ -2574,15 +2558,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Forest of Neldoreth",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 93,
         "position": [
-          43.8125,
-          36.6875
+          43.813877145096825,
+          36.69081912101382
         ],
         "rotation": 5.442564865592544,
         "mass": 1.0,
@@ -2605,15 +2588,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Forest of Region",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 94,
         "position": [
-          47.28125,
-          34.8125
+          47.271784582547554,
+          34.80468779149524
         ],
         "rotation": 6.105789981350389,
         "mass": 1.0,
@@ -2636,15 +2618,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Forest of Region",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 95,
         "position": [
-          51.375,
-          35.28125
+          51.3698000632912,
+          35.28562462025319
         ],
         "rotation": -5.989341734970314,
         "mass": 1.0,
@@ -2667,15 +2648,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Forest of Region",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 96,
         "position": [
-          42.25,
-          35.21875
+          42.25466981012663,
+          35.20815892405065
         ],
         "rotation": -1.4631543360698132,
         "mass": 1.0,
@@ -2698,15 +2678,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Gates of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 97,
         "position": [
-          42.78125,
-          31.234375
+          42.77110778481017,
+          31.231586518987356
         ],
         "rotation": -1.4980609211096994,
         "mass": 1.0,
@@ -2729,15 +2708,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Gates of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 98,
         "position": [
-          39.84375,
-          36.5
+          39.85323322784814,
+          36.49925386075952
         ],
         "rotation": -2.3665034033385886,
         "mass": 1.0,
@@ -2760,15 +2738,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Nargothrond",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 99,
         "position": [
-          36.78125,
-          33.5
+          36.780427278481056,
+          33.50391360759495
         ],
         "rotation": -2.436316573418362,
         "mass": 1.0,
@@ -2791,15 +2768,14 @@
         "border_color": "#555555",
         "location_1_name": "Amon Rudh",
         "location_2_name": "Nargothrond",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 100,
         "position": [
-          61.375,
-          23.171875
+          61.38834244624249,
+          23.16470334573868
         ],
         "rotation": -0.682735501396992,
         "mass": 1.0,
@@ -2822,15 +2798,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "East Taur-im-Duinath",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 101,
         "position": [
-          64.9375,
-          21.015625
+          64.9457446563587,
+          21.015936910098013
         ],
         "rotation": -0.40348282107789846,
         "mass": 1.0,
@@ -2853,15 +2828,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "East Taur-im-Duinath",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 102,
         "position": [
-          67.625,
-          17.859375
+          67.59588992698218,
+          17.864412804491703
         ],
         "rotation": -1.3634139096747804,
         "mass": 1.0,
@@ -2884,15 +2858,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "East Taur-im-Duinath",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 103,
         "position": [
-          67.9375,
-          13.7109375
+          67.90626730101917,
+          13.710131028919749
         ],
         "rotation": -1.5379468348742131,
         "mass": 1.0,
@@ -2915,15 +2888,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "East Taur-im-Duinath",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 104,
         "position": [
-          56.28125,
-          26.953125
+          56.279053365941344,
+          26.96085738203719
         ],
         "rotation": -3.475293844095641,
         "mass": 1.0,
@@ -2946,15 +2918,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Forest of Region",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 105,
         "position": [
-          53.0625,
-          29.375
+          53.055903712480344,
+          29.372250826478382
         ],
         "rotation": -4.173425544893373,
         "mass": 1.0,
@@ -2977,15 +2948,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Forest of Region",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 106,
         "position": [
-          53.34375,
-          33.15625
+          53.33226436708867,
+          33.14240702531647
         ],
         "rotation": -5.16826321853014,
         "mass": 1.0,
@@ -3008,15 +2978,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Forest of Region",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 107,
         "position": [
-          56.9375,
-          24.78125
+          56.947330189873504,
+          24.77611183544304
         ],
         "rotation": -2.828337983306708,
         "mass": 1.0,
@@ -3039,15 +3008,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Gates of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 108,
         "position": [
-          52.59375,
-          24.265625
+          52.583429303797544,
+          24.259673860759495
         ],
         "rotation": -3.282123588825234,
         "mass": 1.0,
@@ -3070,15 +3038,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Gates of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 109,
         "position": [
-          48.46875,
-          24.71875
+          48.477747405063354,
+          24.724468037974685
         ],
         "rotation": -3.282123588825234,
         "mass": 1.0,
@@ -3101,15 +3068,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Gates of Sirion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 110,
         "position": [
-          44.96875,
-          26.421875
+          44.96596917721525,
+          26.428713354430386
         ],
         "rotation": -3.9278954120631355,
         "mass": 1.0,
@@ -3132,15 +3098,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Gates of Sirion",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 111,
         "position": [
-          58.59375,
-          28.109375
+          58.59993170886085,
+          28.107136772151907
         ],
         "rotation": -4.461483616127019,
         "mass": 1.0,
@@ -3163,15 +3128,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Menegroth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 112,
         "position": [
-          59.3125,
-          31.25
+          59.32294487341781,
+          31.257408417721532
         ],
         "rotation": -5.561041044883447,
         "mass": 1.0,
@@ -3194,15 +3158,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Menegroth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 113,
         "position": [
-          59.875,
-          34.59375
+          59.86520474683553,
+          34.58843335443039
         ],
         "rotation": -4.531296786206792,
         "mass": 1.0,
@@ -3225,15 +3188,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Menegroth",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 114,
         "position": [
-          58.4375,
-          38.21875
+          58.44500031645579,
+          38.229321075949386
         ],
         "rotation": -4.094964473208209,
         "mass": 1.0,
@@ -3256,15 +3218,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "Menegroth",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 115,
         "position": [
-          57.625,
-          23.109375
+          57.616063592562206,
+          23.11695298050222
         ],
         "rotation": -2.304494421884294,
         "mass": 1.0,
@@ -3287,15 +3248,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 116,
         "position": [
-          55.21875,
-          19.5625
+          55.20467014812102,
+          19.559550770386007
         ],
         "rotation": -2.0426950340851455,
         "mass": 1.0,
@@ -3318,15 +3278,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 117,
         "position": [
-          53.375,
-          15.5703125
+          53.36628108651733,
+          15.572395273141659
         ],
         "rotation": -1.9379752789654856,
         "mass": 1.0,
@@ -3349,15 +3308,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 118,
         "position": [
-          52.03125,
-          11.6328125
+          52.02927085989648,
+          11.632990141133773
         ],
         "rotation": -1.9205219864455423,
         "mass": 1.0,
@@ -3380,15 +3338,14 @@
         "border_color": "#555555",
         "location_1_name": "Andram",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 119,
         "position": [
-          30.96875,
-          18.953125
+          30.96133970253163,
+          18.953627565822785
         ],
         "rotation": -1.5354522577146321,
         "mass": 1.0,
@@ -3411,15 +3368,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Cape Balar",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 120,
         "position": [
-          30.75,
-          14.8984375
+          30.745181758227837,
+          14.900666110126583
         ],
         "rotation": -1.8670648155935545,
         "mass": 1.0,
@@ -3442,15 +3398,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Cape Balar",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 121,
         "position": [
-          30.71875,
-          24.046875
+          30.718736550632915,
+          24.046643196202535
         ],
         "rotation": -4.39760989801565,
         "mass": 1.0,
@@ -3473,15 +3428,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Eglarest",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 122,
         "position": [
-          27.84375,
-          24.625
+          27.8460503164557,
+          24.62763591772152
         ],
         "rotation": -2.634827353501377,
         "mass": 1.0,
@@ -3504,15 +3458,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Eglarest",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 123,
         "position": [
-          24.96875,
-          24.734375
+          24.962956748101252,
+          24.735852575949366
         ],
         "rotation": -4.031090755096841,
         "mass": 1.0,
@@ -3535,15 +3488,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Eglarest",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 124,
         "position": [
-          23.484375,
-          28.59375
+          23.488604905063294,
+          28.59775284810127
         ],
         "rotation": -4.589596115735026,
         "mass": 1.0,
@@ -3566,15 +3518,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Eglarest",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 125,
         "position": [
-          33.75,
-          20.09375
+          33.74437323544302,
+          20.08845677341772
         ],
         "rotation": -0.5084847279479165,
         "mass": 1.0,
@@ -3597,15 +3548,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Havens of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 126,
         "position": [
-          37.3125,
-          18.25
+          37.310979316455686,
+          18.251114246835442
         ],
         "rotation": -0.5259380204678599,
         "mass": 1.0,
@@ -3628,15 +3578,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Havens of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 127,
         "position": [
-          39.71875,
-          15.46875
+          39.71573644683543,
+          15.468080713924053
         ],
         "rotation": -1.3113361838653077,
         "mass": 1.0,
@@ -3659,15 +3608,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Havens of Sirion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 128,
         "position": [
-          34.34375,
-          21.203125
+          34.33880758227847,
+          21.196266237974683
         ],
         "rotation": -0.3149407966440849,
         "mass": 1.0,
@@ -3690,15 +3638,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Nan Tathren",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 129,
         "position": [
-          38.1875,
-          19.546875
+          38.175611093670874,
+          19.548061912658227
         ],
         "rotation": -0.4022072592438013,
         "mass": 1.0,
@@ -3721,15 +3668,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Nan Tathren",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 130,
         "position": [
-          41.3125,
-          20.953125
+          41.309901286075934,
+          20.953088550632913
         ],
         "rotation": -5.393848919947583,
         "mass": 1.0,
@@ -3752,15 +3698,14 @@
         "border_color": "#555555",
         "location_1_name": "Arvenien",
         "location_2_name": "Nan Tathren",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 131,
         "position": [
-          14.5234375,
-          29.96875
+          14.525078647215189,
+          29.966337667230384
         ],
         "rotation": -4.874010335567703,
         "mass": 1.0,
@@ -3783,15 +3728,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Brithombar",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 132,
         "position": [
-          12.3515625,
-          24.953125
+          12.35291107594937,
+          24.950409651898738
         ],
         "rotation": -2.175681857422653,
         "mass": 1.0,
@@ -3814,15 +3758,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Cape Balar",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 133,
         "position": [
-          11.3828125,
-          21.234375
+          11.384589873417722,
+          21.238511708860756
         ],
         "rotation": -1.3902836940252046,
         "mass": 1.0,
@@ -3845,15 +3788,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Cape Balar",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 134,
         "position": [
-          12.609375,
-          17.65625
+          12.611130063291142,
+          17.655723259493662
         ],
         "rotation": -1.0761244286662253,
         "mass": 1.0,
@@ -3876,15 +3818,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Cape Balar",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 135,
         "position": [
-          15.0,
-          14.8125
+          14.999655696202538,
+          14.815314398734166
         ],
         "rotation": -0.744511870787303,
         "mass": 1.0,
@@ -3907,15 +3848,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Cape Balar",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 136,
         "position": [
-          18.640625,
-          12.71875
+          18.646998892405076,
+          12.717285126582265
         ],
         "rotation": -0.34308614282860717,
         "mass": 1.0,
@@ -3938,15 +3878,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Cape Balar",
-        "path_index": 4,
-        "connection_index": 0
+        "path_index": 4
       },
       {
         "particle_type": "Particle_Edge",
         "id": 137,
         "position": [
-          22.65625,
-          12.0703125
+          22.649393196202553,
+          12.071737658227834
         ],
         "rotation": -0.02892687746962782,
         "mass": 1.0,
@@ -3969,15 +3908,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Cape Balar",
-        "path_index": 5,
-        "connection_index": 0
+        "path_index": 5
       },
       {
         "particle_type": "Particle_Edge",
         "id": 138,
         "position": [
-          26.8125,
-          12.296875
+          26.813174367088635,
+          12.297679272151885
         ],
         "rotation": -6.207392429529555,
         "mass": 1.0,
@@ -4000,15 +3938,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Cape Balar",
-        "path_index": 6,
-        "connection_index": 0
+        "path_index": 6
       },
       {
         "particle_type": "Particle_Edge",
         "id": 139,
         "position": [
-          16.8125,
-          28.140625
+          16.807188607594938,
+          28.145869620253166
         ],
         "rotation": -5.910487268724841,
         "mass": 1.0,
@@ -4031,15 +3968,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Eglarest",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 140,
         "position": [
-          20.71875,
-          29.796875
+          20.712750791139243,
+          29.792015664556963
         ],
         "rotation": -5.875580683684955,
         "mass": 1.0,
@@ -4062,15 +3998,14 @@
         "border_color": "#555555",
         "location_1_name": "Barad Nimras",
         "location_2_name": "Eglarest",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 141,
         "position": [
-          94.0625,
-          32.5
+          94.05629241038876,
+          32.50380928081978
         ],
         "rotation": 4.68382532254593,
         "mass": 1.0,
@@ -4093,15 +4028,14 @@
         "border_color": "#555555",
         "location_1_name": "Belegost",
         "location_2_name": "Nogrod",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 142,
         "position": [
-          91.5,
-          33.5
+          91.51882291044826,
+          33.502657419432104
         ],
         "rotation": -2.7402154727403025,
         "mass": 1.0,
@@ -4124,15 +4058,14 @@
         "border_color": "#555555",
         "location_1_name": "Belegost",
         "location_2_name": "Sarn Athrud",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 143,
         "position": [
-          87.9375,
-          31.921875
+          87.91367033509559,
+          31.926895366628948
         ],
         "rotation": -2.775122057780189,
         "mass": 1.0,
@@ -4155,15 +4088,14 @@
         "border_color": "#555555",
         "location_1_name": "Belegost",
         "location_2_name": "Sarn Athrud",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 144,
         "position": [
-          83.5625,
-          30.609375
+          83.59226228119603,
+          30.61376032262632
         ],
         "rotation": -2.9147483979397357,
         "mass": 1.0,
@@ -4186,15 +4118,14 @@
         "border_color": "#555555",
         "location_1_name": "Belegost",
         "location_2_name": "Sarn Athrud",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 145,
         "position": [
-          90.375,
-          35.09375
+          90.34893896215499,
+          35.07841947223526
         ],
         "rotation": -3.384510447412919,
         "mass": 1.0,
@@ -4217,15 +4148,14 @@
         "border_color": "#555555",
         "location_1_name": "Belegost",
         "location_2_name": "Thargelion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 146,
         "position": [
-          86.1875,
-          36.59375
+          86.19465718658304,
+          36.58255597718373
         ],
         "rotation": -3.576496665132295,
         "mass": 1.0,
@@ -4248,15 +4178,14 @@
         "border_color": "#555555",
         "location_1_name": "Belegost",
         "location_2_name": "Thargelion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 147,
         "position": [
-          82.375,
-          38.625
+          82.35075278504807,
+          38.63582168235148
         ],
         "rotation": -3.6986697127718977,
         "mass": 1.0,
@@ -4279,15 +4208,14 @@
         "border_color": "#555555",
         "location_1_name": "Belegost",
         "location_2_name": "Thargelion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 148,
         "position": [
-          12.125,
-          32.8125
+          12.126969462025306,
+          32.826088765822796
         ],
         "rotation": -3.17417543577202,
         "mass": 1.0,
@@ -4310,15 +4238,14 @@
         "border_color": "#555555",
         "location_1_name": "Brithombar",
         "location_2_name": "Vinyamar",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 149,
         "position": [
-          8.578125,
-          34.25
+          8.576458386075936,
+          34.246293196202544
         ],
         "rotation": -3.9072137216096388,
         "mass": 1.0,
@@ -4341,15 +4268,14 @@
         "border_color": "#555555",
         "location_1_name": "Brithombar",
         "location_2_name": "Vinyamar",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 150,
         "position": [
-          5.9609375,
-          37.53125
+          5.9619911392404905,
+          37.53858528481014
         ],
         "rotation": -4.238826279488561,
         "mass": 1.0,
@@ -4372,15 +4298,14 @@
         "border_color": "#555555",
         "location_1_name": "Brithombar",
         "location_2_name": "Vinyamar",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 151,
         "position": [
-          4.9296875,
-          41.59375
+          4.929115189873402,
+          41.60553433544305
         ],
         "rotation": -4.779878347606803,
         "mass": 1.0,
@@ -4403,15 +4328,14 @@
         "border_color": "#555555",
         "location_1_name": "Brithombar",
         "location_2_name": "Vinyamar",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 152,
         "position": [
-          6.99609375,
-          44.90625
+          6.994867088607581,
+          44.897826424050656
         ],
         "rotation": -5.757262728723628,
         "mass": 1.0,
@@ -4434,15 +4358,14 @@
         "border_color": "#555555",
         "location_1_name": "Brithombar",
         "location_2_name": "Vinyamar",
-        "path_index": 4,
-        "connection_index": 0
+        "path_index": 4
       },
       {
         "particle_type": "Particle_Edge",
         "id": 153,
         "position": [
-          31.734375,
-          10.625
+          31.72850333333333,
+          10.626572500000002
         ],
         "rotation": -0.6314467527865046,
         "mass": 1.0,
@@ -4465,15 +4388,14 @@
         "border_color": "#555555",
         "location_1_name": "Cape Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 154,
         "position": [
-          35.40625,
-          9.53125
+          35.41214166666666,
+          9.530806666666667
         ],
         "rotation": -6.16414048160853,
         "mass": 1.0,
@@ -4496,15 +4418,14 @@
         "border_color": "#555555",
         "location_1_name": "Cape Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 155,
         "position": [
-          39.03125,
-          11.1640625
+          39.025837499999994,
+          11.162798333333335
         ],
         "rotation": -5.448555488290854,
         "mass": 1.0,
@@ -4527,15 +4448,14 @@
         "border_color": "#555555",
         "location_1_name": "Cape Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 156,
         "position": [
-          24.078125,
-          54.6875
+          24.082829955039855,
+          54.699075269186125
         ],
         "rotation": 4.047312431045416,
         "mass": 1.0,
@@ -4558,15 +4478,14 @@
         "border_color": "#555555",
         "location_1_name": "Cirith Ninniach",
         "location_2_name": "Linaewen",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 157,
         "position": [
-          21.125,
-          51.78125
+          21.121425217583614,
+          51.776636383538516
         ],
         "rotation": 3.785513043246268,
         "mass": 1.0,
@@ -4589,15 +4508,14 @@
         "border_color": "#555555",
         "location_1_name": "Cirith Ninniach",
         "location_2_name": "Linaewen",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 158,
         "position": [
-          21.9375,
-          55.90625
+          21.939290981012668,
+          55.9044107594937
         ],
         "rotation": -2.82253946921289,
         "mass": 1.0,
@@ -4620,15 +4538,14 @@
         "border_color": "#555555",
         "location_1_name": "Cirith Ninniach",
         "location_2_name": "Vinyamar",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 159,
         "position": [
-          17.78125,
-          54.0
+          17.775509810126586,
+          54.00004572784813
         ],
         "rotation": -2.6654598365334,
         "mass": 1.0,
@@ -4651,15 +4568,14 @@
         "border_color": "#555555",
         "location_1_name": "Cirith Ninniach",
         "location_2_name": "Vinyamar",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 160,
         "position": [
-          13.8671875,
-          51.84375
+          13.869947626582277,
+          51.837461708860786
         ],
         "rotation": -2.5607400814137407,
         "mass": 1.0,
@@ -4682,15 +4598,14 @@
         "border_color": "#555555",
         "location_1_name": "Cirith Ninniach",
         "location_2_name": "Vinyamar",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 161,
         "position": [
-          10.7734375,
-          48.75
+          10.771319778481008,
+          48.73883386075952
         ],
         "rotation": -2.2291275235348174,
         "mass": 1.0,
@@ -4713,15 +4628,14 @@
         "border_color": "#555555",
         "location_1_name": "Cirith Ninniach",
         "location_2_name": "Vinyamar",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 162,
         "position": [
-          43.0,
-          43.5
+          43.00203399999999,
+          43.50448575000001
         ],
         "rotation": 5.779972367014415,
         "mass": 1.0,
@@ -4744,15 +4658,14 @@
         "border_color": "#555555",
         "location_1_name": "Crossing of Teiglin",
         "location_2_name": "Forest of Neldoreth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 163,
         "position": [
-          46.28125,
-          44.53125
+          46.27035699999999,
+          44.53471800000001
         ],
         "rotation": 0.701064243710916,
         "mass": 1.0,
@@ -4775,15 +4688,14 @@
         "border_color": "#555555",
         "location_1_name": "Crossing of Teiglin",
         "location_2_name": "Forest of Neldoreth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 164,
         "position": [
-          50.0,
-          44.6875
+          49.999880337346944,
+          44.67624288476357
         ],
         "rotation": -0.46830635512528485,
         "mass": 1.0,
@@ -4806,15 +4718,14 @@
         "border_color": "#555555",
         "location_1_name": "Crossing of Teiglin",
         "location_2_name": "Forest of Neldoreth",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 165,
         "position": [
-          69.3125,
-          13.9453125
+          69.33877825811295,
+          13.948882855102045
         ],
         "rotation": -4.830728483746136,
         "mass": 1.0,
@@ -4837,15 +4748,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Amon Ereb",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 166,
         "position": [
-          69.9375,
-          18.203125
+          69.95953300618692,
+          18.19866536114692
         ],
         "rotation": -4.813275191226193,
         "mass": 1.0,
@@ -4868,15 +4778,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Amon Ereb",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 167,
         "position": [
-          71.8125,
-          21.703125
+          71.79792206779061,
+          21.708317206026674
         ],
         "rotation": -5.441593721944152,
         "mass": 1.0,
@@ -4899,15 +4808,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Amon Ereb",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 168,
         "position": [
-          71.25,
-          11.703125
+          71.27266805018955,
+          11.704615688988461
         ],
         "rotation": -5.818885282764509,
         "mass": 1.0,
@@ -4930,15 +4838,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Sarn Athrud",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 169,
         "position": [
-          73.8125,
-          15.140625
+          73.82731259034011,
+          15.14264198601353
         ],
         "rotation": -4.928767364247401,
         "mass": 1.0,
@@ -4961,15 +4868,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Sarn Athrud",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 170,
         "position": [
-          75.375,
-          19.171875
+          75.40307464314327,
+          19.177547848494335
         ],
         "rotation": -5.24292662960638,
         "mass": 1.0,
@@ -4992,15 +4898,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Sarn Athrud",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 171,
         "position": [
-          78.0,
-          22.453125
+          77.98159436591207,
+          22.448447867191792
         ],
         "rotation": -5.4523661398457,
         "mass": 1.0,
@@ -5023,15 +4928,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Sarn Athrud",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 172,
         "position": [
-          79.5,
-          26.265625
+          79.50960605347876,
+          26.26847708610853
         ],
         "rotation": -4.946220656767344,
         "mass": 1.0,
@@ -5054,15 +4958,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "Sarn Athrud",
-        "path_index": 4,
-        "connection_index": 0
+        "path_index": 4
       },
       {
         "particle_type": "Particle_Edge",
         "id": 173,
         "position": [
-          66.1875,
-          9.6953125
+          66.16337896988841,
+          9.699100349057172
         ],
         "rotation": -2.9814221681608584,
         "mass": 1.0,
@@ -5085,15 +4988,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 174,
         "position": [
-          61.875,
-          9.21875
+          61.889721281225306,
+          9.22159669669258
         ],
         "rotation": -3.086141923280518,
         "mass": 1.0,
@@ -5116,15 +5018,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 175,
         "position": [
-          57.59375,
-          8.9453125
+          57.57856469400099,
+          8.948970237425103
         ],
         "rotation": -3.086141923280518,
         "mass": 1.0,
@@ -5147,15 +5048,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 176,
         "position": [
-          53.46875,
-          8.8203125
+          53.45499526171645,
+          8.819094034833464
         ],
         "rotation": -3.121048508320405,
         "mass": 1.0,
@@ -5178,15 +5078,14 @@
         "border_color": "#555555",
         "location_1_name": "East Taur-im-Duinath",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 177,
         "position": [
-          23.8125,
-          33.78125
+          23.816794303300185,
+          33.79103220838729
         ],
         "rotation": -4.702496967984924,
         "mass": 1.0,
@@ -5209,15 +5108,14 @@
         "border_color": "#555555",
         "location_1_name": "Eglarest",
         "location_2_name": "River Nenning",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 178,
         "position": [
-          40.3125,
-          61.875
+          40.306556194345724,
+          61.86637436988889
         ],
         "rotation": -3.7430325802993267,
         "mass": 1.0,
@@ -5240,15 +5138,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Sirion",
         "location_2_name": "Lake Mithrim",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 179,
         "position": [
-          36.75,
-          61.84375
+          36.74915398422951,
+          61.84249918727066
         ],
         "rotation": -2.27695600862409,
         "mass": 1.0,
@@ -5271,15 +5168,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Sirion",
         "location_2_name": "Lake Mithrim",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 180,
         "position": [
-          42.96875,
-          57.1875
+          42.95797612105048,
+          57.1934037656468
         ],
         "rotation": -1.45736133498768,
         "mass": 1.0,
@@ -5302,15 +5198,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Sirion",
         "location_2_name": "Tol Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 181,
         "position": [
-          38.59375,
-          47.65625
+          38.59690299999999,
+          47.66094000000001
         ],
         "rotation": 5.4377173010772895,
         "mass": 1.0,
@@ -5333,15 +5228,14 @@
         "border_color": "#555555",
         "location_1_name": "Ered Wethrin",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 182,
         "position": [
-          50.90625,
-          40.65625
+          50.90713727683967,
+          40.641337022282755
         ],
         "rotation": -2.149181245340616,
         "mass": 1.0,
@@ -5364,15 +5258,14 @@
         "border_color": "#555555",
         "location_1_name": "Forest of Neldoreth",
         "location_2_name": "Forest of Region",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 183,
         "position": [
-          52.09375,
-          37.71875
+          52.09281322784817,
+          37.712883101265845
         ],
         "rotation": -0.7005579661853228,
         "mass": 1.0,
@@ -5395,15 +5288,14 @@
         "border_color": "#555555",
         "location_1_name": "Forest of Neldoreth",
         "location_2_name": "Forest of Region",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 184,
         "position": [
-          52.5,
-          45.65625
+          52.50677451226106,
+          45.65512537211097
         ],
         "rotation": -4.676739044105134,
         "mass": 1.0,
@@ -5426,15 +5318,14 @@
         "border_color": "#555555",
         "location_1_name": "Forest of Neldoreth",
         "location_2_name": "Taur-Nu-Fuin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 185,
         "position": [
-          49.9375,
-          47.625
+          49.93395899999999,
+          47.624653
         ],
         "rotation": -3.350288812589443,
         "mass": 1.0,
@@ -5457,15 +5348,14 @@
         "border_color": "#555555",
         "location_1_name": "Forest of Neldoreth",
         "location_2_name": "Taur-Nu-Fuin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 186,
         "position": [
-          48.65625,
-          50.375
+          48.64812499999999,
+          50.371662
         ],
         "rotation": -5.270150989783206,
         "mass": 1.0,
@@ -5488,15 +5378,14 @@
         "border_color": "#555555",
         "location_1_name": "Forest of Neldoreth",
         "location_2_name": "Taur-Nu-Fuin",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 187,
         "position": [
-          51.71875,
-          53.21875
+          51.71659249999999,
+          53.2063415
         ],
         "rotation": -5.741389887821675,
         "mass": 1.0,
@@ -5519,15 +5408,14 @@
         "border_color": "#555555",
         "location_1_name": "Forest of Neldoreth",
         "location_2_name": "Taur-Nu-Fuin",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 188,
         "position": [
-          55.34375,
-          38.15625
+          55.346372468354495,
+          38.15185537974686
         ],
         "rotation": -5.292625950448388,
         "mass": 1.0,
@@ -5550,15 +5438,14 @@
         "border_color": "#555555",
         "location_1_name": "Forest of Region",
         "location_2_name": "Menegroth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 189,
         "position": [
-          45.125,
-          30.140625
+          45.12951179783773,
+          30.138363908609247
         ],
         "rotation": 0.833789734805908,
         "mass": 1.0,
@@ -5581,15 +5468,14 @@
         "border_color": "#555555",
         "location_1_name": "Gates of Sirion",
         "location_2_name": "Forest of Region",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 190,
         "position": [
-          48.59375,
-          31.9375
+          48.58481900349127,
+          31.930316306949763
         ],
         "rotation": 6.157043953388613,
         "mass": 1.0,
@@ -5612,15 +5498,14 @@
         "border_color": "#555555",
         "location_1_name": "Gates of Sirion",
         "location_2_name": "Forest of Region",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 191,
         "position": [
-          51.8125,
-          33.59375
+          51.81177385457418,
+          33.58906316512405
         ],
         "rotation": 0.833789734805908,
         "mass": 1.0,
@@ -5643,15 +5528,14 @@
         "border_color": "#555555",
         "location_1_name": "Gates of Sirion",
         "location_2_name": "Forest of Region",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 192,
         "position": [
-          44.15625,
-          49.875
+          44.15046059588069,
+          49.88103269553761
         ],
         "rotation": -2.3425465838408592,
         "mass": 1.0,
@@ -5674,15 +5558,14 @@
         "border_color": "#555555",
         "location_1_name": "Gondolin",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 193,
         "position": [
-          41.65625,
-          46.84375
+          41.65207449999998,
+          46.84385925000001
         ],
         "rotation": 4.080265063498273,
         "mass": 1.0,
@@ -5705,15 +5588,14 @@
         "border_color": "#555555",
         "location_1_name": "Gondolin",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 194,
         "position": [
-          72.6875,
-          53.90625
+          72.68130382466508,
+          53.915938558018425
         ],
         "rotation": -4.671284740963796,
         "mass": 1.0,
@@ -5736,15 +5618,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Ladros",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 195,
         "position": [
-          71.75,
-          57.78125
+          71.77404688517235,
+          57.78371814217162
         ],
         "rotation": -4.2873123055250435,
         "mass": 1.0,
@@ -5767,15 +5648,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Ladros",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 196,
         "position": [
-          68.875,
-          60.3125
+          68.86127460574835,
+          60.31448749970396
         ],
         "rotation": -3.3273812169281625,
         "mass": 1.0,
@@ -5798,15 +5678,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Ladros",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 197,
         "position": [
-          65.375,
-          59.03125
+          65.3516227608686,
+          59.02522763831956
         ],
         "rotation": -2.4372632984110547,
         "mass": 1.0,
@@ -5829,15 +5708,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Ladros",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 198,
         "position": [
-          76.0625,
-          51.46875
+          76.04770457383546,
+          51.45679474834077
         ],
         "rotation": -6.130623846420972,
         "mass": 1.0,
@@ -5860,15 +5738,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Lake Heleron",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 199,
         "position": [
-          79.8125,
-          50.90625
+          79.79610824489751,
+          50.907665548121486
         ],
         "rotation": -0.3186774372798551,
         "mass": 1.0,
@@ -5891,15 +5768,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Lake Heleron",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 200,
         "position": [
-          83.1875,
-          48.59375
+          83.16250899406788,
+          48.59177283415322
         ],
         "rotation": -0.8073696278382672,
         "mass": 1.0,
@@ -5922,15 +5798,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Lake Heleron",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 201,
         "position": [
-          72.125,
-          48.0625
+          72.09635030018921,
+          48.066488161069856
         ],
         "rotation": -1.6245736470982466,
         "mass": 1.0,
@@ -5953,15 +5828,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Nan Elmoth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 202,
         "position": [
-          70.125,
-          44.09375
+          70.09758678803702,
+          44.09526065666221
         ],
         "rotation": -2.3750652254558084,
         "mass": 1.0,
@@ -5984,15 +5858,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Nan Elmoth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 203,
         "position": [
-          69.5625,
-          50.46875
+          69.57159639010223,
+          50.45974447167313
         ],
         "rotation": -3.1314688988466566,
         "mass": 1.0,
@@ -6015,15 +5888,14 @@
         "border_color": "#555555",
         "location_1_name": "Himring",
         "location_2_name": "Pass of Aglon",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 204,
         "position": [
-          28.421875,
-          5.9296875
+          28.421357212178044,
+          5.929348527169495
         ],
         "rotation": -4.209910248915952,
         "mass": 1.0,
@@ -6046,15 +5918,14 @@
         "border_color": "#555555",
         "location_1_name": "Isle of Balar",
         "location_2_name": "Cape Balar",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 205,
         "position": [
-          28.453125,
-          9.984375
+          28.453826262825956,
+          9.987979858158212
         ],
         "rotation": -5.1349347524729465,
         "mass": 1.0,
@@ -6077,15 +5948,14 @@
         "border_color": "#555555",
         "location_1_name": "Isle of Balar",
         "location_2_name": "Cape Balar",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 206,
         "position": [
-          32.03125,
-          1.84375
+          32.04336,
+          1.844149000000002
         ],
         "rotation": 5.641531852468992,
         "mass": 1.0,
@@ -6108,15 +5978,14 @@
         "border_color": "#555555",
         "location_1_name": "Isle of Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 207,
         "position": [
-          35.96875,
-          0.8125
+          35.97953,
+          0.8126010000000017
         ],
         "rotation": 0.07393153860708157,
         "mass": 1.0,
@@ -6139,15 +6008,14 @@
         "border_color": "#555555",
         "location_1_name": "Isle of Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 208,
         "position": [
-          39.75,
-          2.537109375
+          39.752824,
+          2.536372000000002
         ],
         "rotation": 0.7546099468848704,
         "mass": 1.0,
@@ -6170,15 +6038,14 @@
         "border_color": "#555555",
         "location_1_name": "Isle of Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 209,
         "position": [
-          41.5625,
-          6.25390625
+          41.558032999999995,
+          6.255374000000003
         ],
         "rotation": 1.4701949402025454,
         "mass": 1.0,
@@ -6201,15 +6068,14 @@
         "border_color": "#555555",
         "location_1_name": "Isle of Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 210,
         "position": [
-          41.59375,
-          10.484375
+          41.59039583333333,
+          10.4866875
         ],
         "rotation": -4.638457441777608,
         "mass": 1.0,
@@ -6232,15 +6098,14 @@
         "border_color": "#555555",
         "location_1_name": "Isle of Balar",
         "location_2_name": "Havens of Sirion",
-        "path_index": 4,
-        "connection_index": 0
+        "path_index": 4
       },
       {
         "particle_type": "Particle_Edge",
         "id": 211,
         "position": [
-          61.25,
-          58.96875
+          61.2450913505331,
+          58.97747727308311
         ],
         "rotation": -3.6671733490891727,
         "mass": 1.0,
@@ -6263,15 +6128,14 @@
         "border_color": "#555555",
         "location_1_name": "Ladros",
         "location_2_name": "Taur-Nu-Fuin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 212,
         "position": [
-          57.375,
-          60.15625
+          57.38595149999999,
+          60.1615345
         ],
         "rotation": -2.951588355771497,
         "mass": 1.0,
@@ -6294,15 +6158,14 @@
         "border_color": "#555555",
         "location_1_name": "Ladros",
         "location_2_name": "Taur-Nu-Fuin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 213,
         "position": [
-          54.78125,
-          57.46875
+          54.78505999999999,
+          57.4729725
         ],
         "rotation": -1.8694842195350132,
         "mass": 1.0,
@@ -6325,15 +6188,14 @@
         "border_color": "#555555",
         "location_1_name": "Ladros",
         "location_2_name": "Taur-Nu-Fuin",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 214,
         "position": [
-          85.8125,
-          45.03125
+          85.8365294473096,
+          45.03437062403701
         ],
         "rotation": -1.6046657155981325,
         "mass": 1.0,
@@ -6356,15 +6218,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Heleron",
         "location_2_name": "Belegost",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 215,
         "position": [
-          86.0,
-          41.1875
+          86.02753090825543,
+          41.19046622250204
         ],
         "rotation": -1.2730531577192092,
         "mass": 1.0,
@@ -6387,15 +6248,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Heleron",
         "location_2_name": "Belegost",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 216,
         "position": [
-          88.25,
-          38.21875
+          88.27179807436902,
+          38.20606839522334
         ],
         "rotation": -0.5400148718815913,
         "mass": 1.0,
@@ -6418,15 +6278,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Heleron",
         "location_2_name": "Belegost",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 217,
         "position": [
-          91.875,
-          36.125
+          91.85307546710345,
+          36.12892750743737
         ],
         "rotation": -0.5574681644015346,
         "mass": 1.0,
@@ -6449,15 +6308,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Heleron",
         "location_2_name": "Belegost",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 218,
         "position": [
-          84.5,
-          44.90625
+          84.52787673176609,
+          44.89220930466118
         ],
         "rotation": -1.7406146946099457,
         "mass": 1.0,
@@ -6480,15 +6338,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Heleron",
         "location_2_name": "Thargelion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 219,
         "position": [
-          82.4375,
-          41.5
+          82.41738843965196,
+          41.51542803727857
         ],
         "rotation": -2.700545783206827,
         "mass": 1.0,
@@ -6511,15 +6368,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Heleron",
         "location_2_name": "Thargelion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 220,
         "position": [
-          32.96875,
-          61.375
+          32.97687513054923,
+          61.3888707175243
         ],
         "rotation": -3.8931464574682764,
         "mass": 1.0,
@@ -6542,15 +6398,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Mithrim",
         "location_2_name": "Cirith Ninniach",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 221,
         "position": [
-          29.25,
-          62.28125
+          29.252346642105408,
+          62.27225247439879
         ],
         "rotation": -2.9157620763514522,
         "mass": 1.0,
@@ -6573,15 +6428,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Mithrim",
         "location_2_name": "Cirith Ninniach",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 222,
         "position": [
-          26.125,
-          59.8125
+          26.12469771911733,
+          59.81310866472114
         ],
         "rotation": -1.9383776952346277,
         "mass": 1.0,
@@ -6604,15 +6458,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Mithrim",
         "location_2_name": "Cirith Ninniach",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 223,
         "position": [
-          32.40625,
-          58.21875
+          32.40485192499999,
+          58.22295207750002
         ],
         "rotation": 3.5928129615714113,
         "mass": 1.0,
@@ -6635,15 +6488,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Mithrim",
         "location_2_name": "Ered Wethrin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 224,
         "position": [
-          32.34375,
-          55.3125
+          32.33806445499999,
+          55.317697132500015
         ],
         "rotation": 5.268329043485967,
         "mass": 1.0,
@@ -6666,15 +6518,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Mithrim",
         "location_2_name": "Ered Wethrin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 225,
         "position": [
-          34.71875,
-          52.0625
+          34.72571650749999,
+          52.06180797000002
         ],
         "rotation": 5.390502091125571,
         "mass": 1.0,
@@ -6697,15 +6548,14 @@
         "border_color": "#555555",
         "location_1_name": "Lake Mithrim",
         "location_2_name": "Ered Wethrin",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 226,
         "position": [
-          21.765625,
-          50.03125
+          21.764361772426085,
+          50.04265597805427
         ],
         "rotation": 0.15419982931599563,
         "mass": 1.0,
@@ -6728,15 +6578,14 @@
         "border_color": "#555555",
         "location_1_name": "Linaewen",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 227,
         "position": [
-          25.765625,
-          50.75
+          25.758361582811155,
+          50.744041310609695
         ],
         "rotation": 0.15419982931599563,
         "mass": 1.0,
@@ -6759,15 +6608,14 @@
         "border_color": "#555555",
         "location_1_name": "Linaewen",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 228,
         "position": [
-          29.59375,
-          49.4375
+          29.599778184999987,
+          49.423702905000006
         ],
         "rotation": 5.564720510498417,
         "mass": 1.0,
@@ -6790,15 +6638,14 @@
         "border_color": "#555555",
         "location_1_name": "Linaewen",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 229,
         "position": [
-          54.6875,
-          41.65625
+          54.679416130519954,
+          41.66796987486663
         ],
         "rotation": -3.667866203207005,
         "mass": 1.0,
@@ -6821,15 +6668,14 @@
         "border_color": "#555555",
         "location_1_name": "Menegroth",
         "location_2_name": "Forest of Neldoreth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 230,
         "position": [
-          65.75,
-          39.96875
+          65.75259765822796,
+          39.95938829113926
         ],
         "rotation": -2.605810449001464,
         "mass": 1.0,
@@ -6852,15 +6698,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Andram",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 231,
         "position": [
-          64.25,
-          36.90625
+          64.28074943037984,
+          36.91240424050635
         ],
         "rotation": -1.4713464352051502,
         "mass": 1.0,
@@ -6883,15 +6728,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Andram",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 232,
         "position": [
-          64.625,
-          32.90625
+          64.61643411392416,
+          32.910009936708875
         ],
         "rotation": -1.453893142685207,
         "mass": 1.0,
@@ -6914,15 +6758,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Andram",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 233,
         "position": [
-          64.625,
-          29.03125
+          64.61643411392416,
+          29.036725126582287
         ],
         "rotation": -1.6284260678846398,
         "mass": 1.0,
@@ -6945,15 +6788,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Andram",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 234,
         "position": [
-          61.96875,
-          26.734375
+          61.95677854430389,
+          26.73857613924051
         ],
         "rotation": -2.815249959240784,
         "mass": 1.0,
@@ -6976,15 +6818,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Andram",
-        "path_index": 4,
-        "connection_index": 0
+        "path_index": 4
       },
       {
         "particle_type": "Particle_Edge",
         "id": 235,
         "position": [
-          65.125,
-          42.4375
+          65.10067800765654,
+          42.43839090316763
         ],
         "rotation": -3.4507154950430166,
         "mass": 1.0,
@@ -7007,15 +6848,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Menegroth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 236,
         "position": [
-          62.40625,
-          40.5
+          62.41812697818912,
+          40.49222643080892
         ],
         "rotation": -1.9322790458079504,
         "mass": 1.0,
@@ -7038,15 +6878,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Menegroth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 237,
         "position": [
-          59.4375,
-          39.8125
+          59.446281229857576,
+          39.808438913493696
         ],
         "rotation": -0.5185623516925433,
         "mass": 1.0,
@@ -7069,15 +6908,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Menegroth",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 238,
         "position": [
-          67.75,
-          44.3125
+          67.73062999733048,
+          44.30565681583613
         ],
         "rotation": -5.245435491854378,
         "mass": 1.0,
@@ -7100,15 +6938,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Pass of Aglon",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 239,
         "position": [
-          68.25,
-          47.9375
+          68.23032087536852,
+          47.93499056158616
         ],
         "rotation": -4.19823794065778,
         "mass": 1.0,
@@ -7131,15 +6968,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Pass of Aglon",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 240,
         "position": [
-          70.0,
-          39.625
+          69.99238870845005,
+          39.624342274216524
         ],
         "rotation": -1.0519314743242498,
         "mass": 1.0,
@@ -7162,15 +6998,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Sarn Athrud",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 241,
         "position": [
-          72.875,
-          36.71875
+          72.85903637719466,
+          36.705095565678455
         ],
         "rotation": -0.3712530660464619,
         "mass": 1.0,
@@ -7193,15 +7028,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Sarn Athrud",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 242,
         "position": [
-          76.75,
-          35.21875
+          76.72506580201534,
+          35.23232245146105
         ],
         "rotation": -0.371253066046462,
         "mass": 1.0,
@@ -7224,15 +7058,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Sarn Athrud",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 243,
         "position": [
-          78.9375,
-          32.1875
+          78.91272648802303,
+          32.189522375429476
         ],
         "rotation": -1.2788242770835128,
         "mass": 1.0,
@@ -7255,15 +7088,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Elmoth",
         "location_2_name": "Sarn Athrud",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 244,
         "position": [
-          42.8125,
-          25.65625
+          42.822751582278485,
+          25.660511867088612
         ],
         "rotation": -4.742025497102878,
         "mass": 1.0,
@@ -7286,15 +7118,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "Gates of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 245,
         "position": [
-          44.125,
-          20.625
+          44.1199545620253,
+          20.628851634177217
         ],
         "rotation": -1.0573018772466676,
         "mass": 1.0,
@@ -7317,15 +7148,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "Havens of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 246,
         "position": [
-          45.03125,
-          17.390625
+          45.038625825316444,
+          17.386482469620255
         ],
         "rotation": -1.7903401630842861,
         "mass": 1.0,
@@ -7348,15 +7178,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "Havens of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 247,
         "position": [
-          42.71875,
-          14.8203125
+          42.71492792405062,
+          14.81960688101266
         ],
         "rotation": -2.8549910068008266,
         "mass": 1.0,
@@ -7379,15 +7208,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "Havens of Sirion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 248,
         "position": [
-          40.5625,
-          23.234375
+          40.56333544303798,
+          23.239708860759496
         ],
         "rotation": -3.327433015956855,
         "mass": 1.0,
@@ -7410,15 +7238,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "Nargothrond",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 249,
         "position": [
-          37.59375,
-          25.234375
+          37.5938170886076,
+          25.24090601265823
         ],
         "rotation": -4.444443737233225,
         "mass": 1.0,
@@ -7441,15 +7268,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "Nargothrond",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 250,
         "position": [
-          35.875,
-          29.015625
+          35.883116297468355,
+          29.017358702531652
         ],
         "rotation": -4.14773776439419,
         "mass": 1.0,
@@ -7472,15 +7298,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "Nargothrond",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 251,
         "position": [
-          45.5,
-          22.46875
+          45.49796145696201,
+          22.466194160759493
         ],
         "rotation": -0.22205544039078084,
         "mass": 1.0,
@@ -7503,15 +7328,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 252,
         "position": [
-          48.0,
-          19.59375
+          47.98713132911393,
+          19.592365664556965
         ],
         "rotation": -1.3041595766272653,
         "mass": 1.0,
@@ -7534,15 +7358,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 253,
         "position": [
-          48.9375,
-          15.4609375
+          48.92317515822785,
+          15.460861867088608
         ],
         "rotation": -1.4088793317469248,
         "mass": 1.0,
@@ -7565,15 +7388,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 254,
         "position": [
-          49.90625,
-          11.390625
+          49.90437960687404,
+          11.394238314951476
         ],
         "rotation": -1.3041595766272644,
         "mass": 1.0,
@@ -7596,15 +7418,14 @@
         "border_color": "#555555",
         "location_1_name": "Nan Tathren",
         "location_2_name": "West Taur-im-Duinath",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 255,
         "position": [
-          34.625,
-          28.765625
+          34.624298734177216,
+          28.759139715189875
         ],
         "rotation": -1.2925564487453896,
         "mass": 1.0,
@@ -7627,15 +7448,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Arvenien",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 256,
         "position": [
-          36.0625,
-          25.015625
+          36.076780537974685,
+          25.01496439873418
         ],
         "rotation": -1.2925564487453893,
         "mass": 1.0,
@@ -7658,15 +7478,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Arvenien",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 257,
         "position": [
-          33.84375,
-          23.171875
+          33.849641772151905,
+          23.17515411392405
         ],
         "rotation": -2.8982593605801723,
         "mass": 1.0,
@@ -7689,15 +7508,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Arvenien",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 258,
         "position": [
-          35.25,
-          35.625
+          35.23756882911396,
+          35.63422025316457
         ],
         "rotation": -4.754532359812072,
         "mass": 1.0,
@@ -7720,15 +7538,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 259,
         "position": [
-          35.65625,
-          39.9375
+          35.65717468354434,
+          39.92711091772154
         ],
         "rotation": -4.841798822411788,
         "mass": 1.0,
@@ -7751,15 +7568,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 260,
         "position": [
-          37.9375,
-          43.28125
+          37.93151506749999,
+          43.29595253250001
         ],
         "rotation": 0.6036284438105204,
         "mass": 1.0,
@@ -7782,15 +7598,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 261,
         "position": [
-          32.0625,
-          30.703125
+          32.07438623417722,
+          30.69578212025317
         ],
         "rotation": -2.4200877159524303,
         "mass": 1.0,
@@ -7813,15 +7628,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Eglarest",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 262,
         "position": [
-          29.265625,
-          28.734375
+          29.266254746835447,
+          28.726862341772154
         ],
         "rotation": -2.9785930765906157,
         "mass": 1.0,
@@ -7844,15 +7658,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Eglarest",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 263,
         "position": [
-          26.5625,
-          29.140625
+          26.554955379746836,
+          29.146468196202534
         ],
         "rotation": -3.3974720970692545,
         "mass": 1.0,
@@ -7875,15 +7688,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Eglarest",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 264,
         "position": [
-          36.59375,
-          29.890625
+          36.59321851265823,
+          29.88884778481013
         ],
         "rotation": -0.9159899670676177,
         "mass": 1.0,
@@ -7906,15 +7718,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Gates of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 265,
         "position": [
-          40.4375,
-          28.40625
+          40.43422594936709,
+          28.404088607594943
         ],
         "rotation": -0.06077863359039648,
         "mass": 1.0,
@@ -7937,15 +7748,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Gates of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 266,
         "position": [
-          32.8125,
-          33.84375
+          32.81676582278482,
+          33.858964715189884
         ],
         "rotation": -4.342135588807178,
         "mass": 1.0,
@@ -7968,15 +7778,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "River Nenning",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 267,
         "position": [
-          30.421875,
-          36.3125
+          30.428240189873424,
+          36.31204509493672
         ],
         "rotation": -3.2076715750108638,
         "mass": 1.0,
@@ -7999,15 +7808,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "River Nenning",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 268,
         "position": [
-          26.234375,
-          36.53125
+          26.232181645569625,
+          36.53798670886077
         ],
         "rotation": -3.155311697451034,
         "mass": 1.0,
@@ -8030,15 +7838,14 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "River Nenning",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 269,
         "position": [
-          91.375,
-          29.609375
+          91.35169663212065,
+          29.611002652660677
         ],
         "rotation": -2.984140272107234,
         "mass": 1.0,
@@ -8061,15 +7868,14 @@
         "border_color": "#555555",
         "location_1_name": "Nogrod",
         "location_2_name": "Sarn Athrud",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 270,
         "position": [
-          87.375,
-          28.390625
+          87.3645411348763,
+          28.393368339130966
         ],
         "rotation": -2.6874342992681983,
         "mass": 1.0,
@@ -8092,15 +7898,14 @@
         "border_color": "#555555",
         "location_1_name": "Nogrod",
         "location_2_name": "Sarn Athrud",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 271,
         "position": [
-          83.125,
-          28.6875
+          83.11475862883144,
+          28.67987053054972
         ],
         "rotation": -3.49028575518559,
         "mass": 1.0,
@@ -8123,15 +7928,14 @@
         "border_color": "#555555",
         "location_1_name": "Nogrod",
         "location_2_name": "Sarn Athrud",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 272,
         "position": [
-          34.0,
-          49.0
+          34.00775120499999,
+          49.00628121750001
         ],
         "rotation": 0.31624822988642537,
         "mass": 1.0,
@@ -8154,15 +7958,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Ivrin",
         "location_2_name": "Ered Wethrin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 273,
         "position": [
-          33.125,
-          45.59375
+          33.122817227499986,
+          45.60012024750001
         ],
         "rotation": 5.68532868075467,
         "mass": 1.0,
@@ -8185,15 +7988,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Ivrin",
         "location_2_name": "Nargothrond",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 274,
         "position": [
-          33.28125,
-          42.3125
+          33.289785902499986,
+          42.31083735000001
         ],
         "rotation": 4.341425156719036,
         "mass": 1.0,
@@ -8216,15 +8018,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Ivrin",
         "location_2_name": "Nargothrond",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 275,
         "position": [
-          33.0625,
-          38.28125
+          33.05496399999999,
+          38.28227400000001
         ],
         "rotation": 4.795210762237562,
         "mass": 1.0,
@@ -8247,15 +8048,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Ivrin",
         "location_2_name": "Nargothrond",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 276,
         "position": [
-          33.9375,
-          34.40625
+          33.943095249999985,
+          34.41002175000001
         ],
         "rotation": 5.022103564996825,
         "mass": 1.0,
@@ -8278,15 +8078,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Ivrin",
         "location_2_name": "Nargothrond",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 277,
         "position": [
-          63.71875,
-          49.96875
+          63.73310297302609,
+          49.960053593635095
         ],
         "rotation": -2.8850424441518125,
         "mass": 1.0,
@@ -8309,15 +8108,14 @@
         "border_color": "#555555",
         "location_1_name": "Pass of Aglon",
         "location_2_name": "Ladros",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 278,
         "position": [
-          61.28125,
-          50.96875
+          61.292841715769555,
+          50.95541591335795
         ],
         "rotation": -4.752544743785745,
         "mass": 1.0,
@@ -8340,15 +8138,14 @@
         "border_color": "#555555",
         "location_1_name": "Pass of Aglon",
         "location_2_name": "Ladros",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 279,
         "position": [
-          62.5,
-          55.25
+          62.51047602929927,
+          55.25294878463929
         ],
         "rotation": -5.171423764264384,
         "mass": 1.0,
@@ -8371,15 +8168,14 @@
         "border_color": "#555555",
         "location_1_name": "Pass of Aglon",
         "location_2_name": "Ladros",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 280,
         "position": [
-          65.9375,
-          47.71875
+          65.91596312445546,
+          47.724594402412244
         ],
         "rotation": -1.6507344656013845,
         "mass": 1.0,
@@ -8402,15 +8198,14 @@
         "border_color": "#555555",
         "location_1_name": "Pass of Aglon",
         "location_2_name": "Menegroth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 281,
         "position": [
-          63.65625,
-          45.1875
+          63.654204413335876,
+          45.199840492325265
         ],
         "rotation": -3.046997867196848,
         "mass": 1.0,
@@ -8433,15 +8228,14 @@
         "border_color": "#555555",
         "location_1_name": "Pass of Aglon",
         "location_2_name": "Menegroth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 282,
         "position": [
-          59.46875,
-          45.53125
+          59.472580749754314,
+          45.54173425098288
         ],
         "rotation": -3.2215307923962806,
         "mass": 1.0,
@@ -8464,15 +8258,14 @@
         "border_color": "#555555",
         "location_1_name": "Pass of Aglon",
         "location_2_name": "Menegroth",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 283,
         "position": [
-          57.53125,
-          43.15625
+          57.5264162773956,
+          43.14847794037959
         ],
         "rotation": -1.685641050641271,
         "mass": 1.0,
@@ -8495,15 +8288,14 @@
         "border_color": "#555555",
         "location_1_name": "Pass of Aglon",
         "location_2_name": "Menegroth",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 284,
         "position": [
-          21.546875,
-          35.5
+          21.5519625,
+          35.50511075949368
         ],
         "rotation": -2.519892630888209,
         "mass": 1.0,
@@ -8526,15 +8318,14 @@
         "border_color": "#555555",
         "location_1_name": "River Nenning",
         "location_2_name": "Brithombar",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 285,
         "position": [
-          17.8125,
-          33.46875
+          17.8077871835443,
+          33.471636234177225
         ],
         "rotation": -2.9736782364067347,
         "mass": 1.0,
@@ -8557,15 +8348,14 @@
         "border_color": "#555555",
         "location_1_name": "River Nenning",
         "location_2_name": "Brithombar",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 286,
         "position": [
-          26.421875,
-          38.65625
+          26.42584588607596,
+          38.668293354430396
         ],
         "rotation": -5.853691339527593,
         "mass": 1.0,
@@ -8588,15 +8378,14 @@
         "border_color": "#555555",
         "location_1_name": "River Nenning",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 287,
         "position": [
-          28.90625,
-          41.40625
+          28.911203639240522,
+          41.41187009493673
         ],
         "rotation": -4.823947080850939,
         "mass": 1.0,
@@ -8619,15 +8408,14 @@
         "border_color": "#555555",
         "location_1_name": "River Nenning",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 288,
         "position": [
-          29.390625,
-          45.09375
+          29.39586324999999,
+          45.10312200000001
         ],
         "rotation": 0.9181861582104052,
         "mass": 1.0,
@@ -8650,15 +8438,14 @@
         "border_color": "#555555",
         "location_1_name": "River Nenning",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 289,
         "position": [
-          79.6875,
-          43.25
+          79.70060751442459,
+          43.243731927669785
         ],
         "rotation": -4.628331123070353,
         "mass": 1.0,
@@ -8681,15 +8468,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Himring",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 290,
         "position": [
-          78.625,
-          46.78125
+          78.65009947922249,
+          46.77725895516777
         ],
         "rotation": -3.633493449433586,
         "mass": 1.0,
@@ -8712,15 +8498,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Himring",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 291,
         "position": [
-          74.9375,
-          48.65625
+          74.9494461733969,
+          48.66339838200791
         ],
         "rotation": -3.5636802793538123,
         "mass": 1.0,
@@ -8743,15 +8528,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Himring",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 292,
         "position": [
-          77.0625,
-          40.40625
+          77.07433742641933,
+          40.40258519610046
         ],
         "rotation": -3.037353824724396,
         "mass": 1.0,
@@ -8774,15 +8558,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Nan Elmoth",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 293,
         "position": [
-          73.875,
-          41.21875
+          73.87506295557657,
+          41.21434140512027
         ],
         "rotation": -4.1369112534808234,
         "mass": 1.0,
@@ -8805,15 +8588,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Nan Elmoth",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 294,
         "position": [
-          70.6875,
-          42.25
+          70.69966366735203,
+          42.240974257704146
         ],
         "rotation": -3.037353824724396,
         "mass": 1.0,
@@ -8836,15 +8618,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Nan Elmoth",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 295,
         "position": [
-          78.6875,
-          38.3125
+          78.71591666579025,
+          38.30099202313551
         ],
         "rotation": -2.0005625285412423,
         "mass": 1.0,
@@ -8867,15 +8648,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Sarn Athrud",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 296,
         "position": [
-          79.4375,
-          35.5
+          79.43023578004426,
+          35.50865366741526
         ],
         "rotation": -0.4646727867862319,
         "mass": 1.0,
@@ -8898,15 +8678,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Sarn Athrud",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 297,
         "position": [
-          81.0,
-          32.21875
+          80.98875021114392,
+          32.229279551976376
         ],
         "rotation": -1.8783894809016388,
         "mass": 1.0,
@@ -8929,15 +8708,14 @@
         "border_color": "#555555",
         "location_1_name": "Thargelion",
         "location_2_name": "Sarn Athrud",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 298,
         "position": [
-          52.8125,
-          57.65625
+          52.797861999999995,
+          57.6483135
         ],
         "rotation": -4.4600906283984285,
         "mass": 1.0,
@@ -8960,15 +8738,14 @@
         "border_color": "#555555",
         "location_1_name": "Taur-Nu-Fuin",
         "location_2_name": "Eithel Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 299,
         "position": [
-          49.65625,
-          59.5625
+          49.641723999999996,
+          59.577064500000006
         ],
         "rotation": -3.2209068594824544,
         "mass": 1.0,
@@ -8991,15 +8768,14 @@
         "border_color": "#555555",
         "location_1_name": "Taur-Nu-Fuin",
         "location_2_name": "Eithel Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 300,
         "position": [
-          45.53125,
-          59.875
+          45.521210499999995,
+          59.8692995
         ],
         "rotation": -3.2383601520023975,
         "mass": 1.0,
@@ -9022,15 +8798,14 @@
         "border_color": "#555555",
         "location_1_name": "Taur-Nu-Fuin",
         "location_2_name": "Eithel Sirion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 301,
         "position": [
-          50.5625,
-          54.625
+          50.54765249999999,
+          54.638293000000004
         ],
         "rotation": -3.092316948267258,
         "mass": 1.0,
@@ -9053,15 +8828,14 @@
         "border_color": "#555555",
         "location_1_name": "Taur-Nu-Fuin",
         "location_2_name": "Tol Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 302,
         "position": [
-          46.15625,
-          54.46875
+          46.16412749999999,
+          54.462952
         ],
         "rotation": -3.0574103632273713,
         "mass": 1.0,
@@ -9084,15 +8858,14 @@
         "border_color": "#555555",
         "location_1_name": "Taur-Nu-Fuin",
         "location_2_name": "Tol Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 303,
         "position": [
-          41.84375,
-          51.875
+          41.83456788191242,
+          51.86267285285068
         ],
         "rotation": -2.0221595504838477,
         "mass": 1.0,
@@ -9115,15 +8888,14 @@
         "border_color": "#555555",
         "location_1_name": "Tol Sirion",
         "location_2_name": "Ered Wethrin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 304,
         "position": [
-          39.15625,
-          49.78125
+          39.16708326249999,
+          49.79103399000001
         ],
         "rotation": 2.8996689401401614,
         "mass": 1.0,
@@ -9146,15 +8918,14 @@
         "border_color": "#555555",
         "location_1_name": "Tol Sirion",
         "location_2_name": "Ered Wethrin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 305,
         "position": [
-          12.609375,
-          47.6875
+          12.611130063291135,
+          47.673680537974704
         ],
         "rotation": -5.984686375593407,
         "mass": 1.0,
@@ -9177,15 +8948,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "Linaewen",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 306,
         "position": [
-          16.578125,
-          48.875
+          16.58190348187766,
+          48.87368042379523
         ],
         "rotation": 0.29849893158617924,
         "mass": 1.0,
@@ -9208,15 +8978,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "Linaewen",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 307,
         "position": [
-          12.6796875,
-          46.46875
+          12.68232945458461,
+          46.466288230932044
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
@@ -9239,15 +9008,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 308,
         "position": [
-          16.453125,
-          46.75
+          16.460034588672745,
+          46.74890297759941
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
@@ -9270,15 +9038,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 309,
         "position": [
-          20.234375,
-          47.03125
+          20.237739722760878,
+          47.03151772426678
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
@@ -9301,15 +9068,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 310,
         "position": [
-          24.015625,
-          47.3125
+          24.015444856849015,
+          47.31413247093415
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
@@ -9332,15 +9098,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 311,
         "position": [
-          28.171875,
-          47.5
+          28.168824050632924,
+          47.512293670886095
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
@@ -9363,15 +9128,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "Eithel Ivrin",
-        "path_index": 4,
-        "connection_index": 0
+        "path_index": 4
       },
       {
         "particle_type": "Particle_Edge",
         "id": 312,
         "position": [
-          11.0,
-          44.09375
+          10.997261392405058,
+          44.09089208860762
         ],
         "rotation": -0.7460571582285551,
         "mass": 1.0,
@@ -9394,15 +9158,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "River Nenning",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 313,
         "position": [
-          14.03125,
-          41.25
+          14.031334493670887,
+          41.25048322784812
         ],
         "rotation": -0.7809637432684413,
         "mass": 1.0,
@@ -9425,15 +9188,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "River Nenning",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 314,
         "position": [
-          18.03125,
-          39.6875
+          18.03372879746836,
+          39.701169303797485
         ],
         "rotation": -0.013018872390936687,
         "mass": 1.0,
@@ -9456,15 +9218,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "River Nenning",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 315,
         "position": [
-          21.546875,
-          38.1875
+          21.55196250000001,
+          38.18413275316457
         ],
         "rotation": -0.5191643554692923,
         "mass": 1.0,
@@ -9487,15 +9248,14 @@
         "border_color": "#555555",
         "location_1_name": "Vinyamar",
         "location_2_name": "River Nenning",
-        "path_index": 3,
-        "connection_index": 0
+        "path_index": 3
       },
       {
         "particle_type": "Particle_Edge",
         "id": 316,
         "position": [
-          48.5,
-          8.3984375
+          48.487230512586265,
+          8.396996376410634
         ],
         "rotation": -2.9984154776894507,
         "mass": 1.0,
@@ -9518,15 +9278,14 @@
         "border_color": "#555555",
         "location_1_name": "West Taur-im-Duinath",
         "location_2_name": "Havens of Sirion",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 317,
         "position": [
-          46.28125,
-          10.765625
+          46.2793350685284,
+          10.767237073708047
         ],
         "rotation": -4.359772294245028,
         "mass": 1.0,
@@ -9549,15 +9308,14 @@
         "border_color": "#555555",
         "location_1_name": "West Taur-im-Duinath",
         "location_2_name": "Havens of Sirion",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       },
       {
         "particle_type": "Particle_Edge",
         "id": 318,
         "position": [
-          43.5,
-          13.3984375
+          43.486996712808164,
+          13.397230176188737
         ],
         "rotation": -3.172948402888884,
         "mass": 1.0,
@@ -9580,15 +9338,14 @@
         "border_color": "#555555",
         "location_1_name": "West Taur-im-Duinath",
         "location_2_name": "Havens of Sirion",
-        "path_index": 2,
-        "connection_index": 0
+        "path_index": 2
       },
       {
         "particle_type": "Particle_Edge",
         "id": 319,
         "position": [
-          33.875,
-          46.5
+          33.87417626499999,
+          46.50175109250001
         ],
         "rotation": 5.686910960871751,
         "mass": 1.0,
@@ -9611,15 +9368,14 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Ivrin",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 0,
-        "connection_index": 0
+        "path_index": 0
       },
       {
         "particle_type": "Particle_Edge",
         "id": 320,
         "position": [
-          37.90625,
-          45.34375
+          37.89812133249998,
+          45.33297036750001
         ],
         "rotation": 6.262869614029879,
         "mass": 1.0,
@@ -9642,8 +9398,7 @@
         "border_color": "#555555",
         "location_1_name": "Eithel Ivrin",
         "location_2_name": "Crossing of Teiglin",
-        "path_index": 1,
-        "connection_index": 0
+        "path_index": 1
       }
     ],
     "particle_parameters": {
@@ -9659,369 +9414,118 @@
       "repulsion_strength": 2.0
     },
     "tasks": [
-      {
-        "name": "Isle of Balar - West Taur-im-Duinath",
-        "node_names": [
-          "Isle of Balar",
-          "West Taur-im-Duinath"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Linaewen - Forest of Neldoreth",
-        "node_names": [
-          "Linaewen",
-          "Forest of Neldoreth"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Eithel Ivrin - Pass of Aglon",
-        "node_names": [
-          "Eithel Ivrin",
-          "Pass of Aglon"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Nan Elmoth - East Taur-im-Duinath",
-        "node_names": [
-          "Nan Elmoth",
-          "East Taur-im-Duinath"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Himring - Amon Ereb",
-        "node_names": [
-          "Himring",
-          "Amon Ereb"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Thargelion - Forest of Region",
-        "node_names": [
-          "Thargelion",
-          "Forest of Region"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Ered Wethrin - Himring",
-        "node_names": [
-          "Ered Wethrin",
-          "Himring"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Barad Nimras - Gates of Sirion",
-        "node_names": [
-          "Barad Nimras",
-          "Gates of Sirion"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "River Nenning - Cape Balar",
-        "node_names": [
-          "River Nenning",
-          "Cape Balar"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Nogrod - West Taur-im-Duinath",
-        "node_names": [
-          "Nogrod",
-          "West Taur-im-Duinath"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Sarn Athrud - Gates of Sirion",
-        "node_names": [
-          "Sarn Athrud",
-          "Gates of Sirion"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Eglarest - Amon Ereb",
-        "node_names": [
-          "Eglarest",
-          "Amon Ereb"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Gates of Sirion - Isle of Balar",
-        "node_names": [
-          "Gates of Sirion",
-          "Isle of Balar"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Menegroth - Arvenien",
-        "node_names": [
-          "Menegroth",
-          "Arvenien"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Taur-Nu-Fuin - Forest of Region",
-        "node_names": [
-          "Taur-Nu-Fuin",
-          "Forest of Region"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Gondolin - Havens of Sirion",
-        "node_names": [
-          "Gondolin",
-          "Havens of Sirion"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Tol Sirion - Nan Elmoth",
-        "node_names": [
-          "Tol Sirion",
-          "Nan Elmoth"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Ladros - Andram",
-        "node_names": [
-          "Ladros",
-          "Andram"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Cirith Ninniach - Ladros",
-        "node_names": [
-          "Cirith Ninniach",
-          "Ladros"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Crossing of Teiglin - Nan Tathren",
-        "node_names": [
-          "Crossing of Teiglin",
-          "Nan Tathren"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Brithombar - Nargothrond",
-        "node_names": [
-          "Brithombar",
-          "Nargothrond"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Eithel Sirion - Amon Rudh",
-        "node_names": [
-          "Eithel Sirion",
-          "Amon Rudh"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Forest of Neldoreth - West Taur-im-Duinath",
-        "node_names": [
-          "Forest of Neldoreth",
-          "West Taur-im-Duinath"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Nogrod - Menegroth",
-        "node_names": [
-          "Nogrod",
-          "Menegroth"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Pass of Aglon - East Taur-im-Duinath",
-        "node_names": [
-          "Pass of Aglon",
-          "East Taur-im-Duinath"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Himring - Belegost",
-        "node_names": [
-          "Himring",
-          "Belegost"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Vinyamar - Amon Rudh",
-        "node_names": [
-          "Vinyamar",
-          "Amon Rudh"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Cirith Ninniach - Nargothrond",
-        "node_names": [
-          "Cirith Ninniach",
-          "Nargothrond"
-        ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Amon Rudh - East Taur-im-Duinath",
-        "node_names": [
-          "Amon Rudh",
-          "East Taur-im-Duinath"
-        ],
-        "length": 0,
-        "points": 10,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Arvenien - Lake Mithrim",
-        "node_names": [
-          "Arvenien",
-          "Lake Mithrim"
-        ],
-        "length": 0,
-        "points": 11,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Vinyamar - Havens of Sirion",
-        "node_names": [
-          "Vinyamar",
-          "Havens of Sirion"
-        ],
-        "length": 0,
-        "points": 12,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Vinyamar - Gondolin",
-        "node_names": [
-          "Vinyamar",
-          "Gondolin"
-        ],
-        "length": 0,
-        "points": 9,
-        "points_bonus": null,
-        "points_penalty": null
-      },
-      {
-        "name": "Cirith Ninniach - Barad Nimras",
-        "node_names": [
-          "Cirith Ninniach",
-          "Barad Nimras"
-        ],
-        "length": 0,
-        "points": 10,
-        "points_bonus": null,
-        "points_penalty": null
-      }
+      [
+        "Isle of Balar",
+        "West Taur-im-Duinath"
+      ],
+      [
+        "Linaewen",
+        "Forest of Neldoreth"
+      ],
+      [
+        "Eithel Ivrin",
+        "Pass of Aglon"
+      ],
+      [
+        "Nan Elmoth",
+        "East Taur-im-Duinath"
+      ],
+      [
+        "Himring",
+        "Amon Ereb"
+      ],
+      [
+        "Thargelion",
+        "Forest of Region"
+      ],
+      [
+        "Ered Wethrin",
+        "Himring"
+      ],
+      [
+        "Barad Nimras",
+        "Gates of Sirion"
+      ],
+      [
+        "River Nenning",
+        "Cape Balar"
+      ],
+      [
+        "Nogrod",
+        "West Taur-im-Duinath"
+      ],
+      [
+        "Sarn Athrud",
+        "Gates of Sirion"
+      ],
+      [
+        "Eglarest",
+        "Amon Ereb"
+      ],
+      [
+        "Gates of Sirion",
+        "Isle of Balar"
+      ],
+      [
+        "Menegroth",
+        "Arvenien"
+      ],
+      [
+        "Taur-Nu-Fuin",
+        "Forest of Region"
+      ],
+      [
+        "Gondolin",
+        "Havens of Sirion"
+      ],
+      [
+        "Tol Sirion",
+        "Nan Elmoth"
+      ],
+      [
+        "Ladros",
+        "Andram"
+      ],
+      [
+        "Cirith Ninniach",
+        "Ladros"
+      ],
+      [
+        "Crossing of Teiglin",
+        "Nan Tathren"
+      ],
+      [
+        "Brithombar",
+        "Nargothrond"
+      ],
+      [
+        "Eithel Sirion",
+        "Amon Rudh"
+      ],
+      [
+        "Forest of Neldoreth",
+        "West Taur-im-Duinath"
+      ],
+      [
+        "Nogrod",
+        "Menegroth"
+      ],
+      [
+        "Pass of Aglon",
+        "East Taur-im-Duinath"
+      ],
+      [
+        "Himring",
+        "Belegost"
+      ],
+      [
+        "Vinyamar",
+        "Amon Rudh"
+      ],
+      [
+        "Cirith Ninniach",
+        "Nargothrond"
+      ]
     ]
   }
 }
