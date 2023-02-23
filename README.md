@@ -48,6 +48,8 @@ At the current stage, I highly recommend being familiar with Python and some ima
 ### How to run the program
 The code is currently not packaged as a standalone application, so you will have to run it from the source code (written in python). You can find the code in `coding/ttr_map_maker`. There, execute `board_layout_gui.py` to start the program, which will open a new window. Try out the many buttons!
 
+### Ideas
+- Negative Bonus points: The program allows the user to create tasks with more than two locations, just like in Ticket to Ride: Rails and Sails. For those, the user can specify Bonus points and penalty points seperately. Instead of awarding Bonus points for completing the task in a way that also passes through the extra locations, one could set the bonus points to a negative value. This would then penalize the player for not passing through the extra locations, which could simulate some routes being dangerous for travellers.
 
 ## how the program was created
 Most of the code was written with some level of support or inspiration from GitHub Copilot and/or OpenAI's ChatGPT. Other than that, if files contain code that is not my own, I tried to mention it in the file header and/or function docstring. Most of the code is my own though.

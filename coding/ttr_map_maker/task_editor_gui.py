@@ -148,7 +148,7 @@ class Task_Editor_GUI:
     toggle_task_visibility_button.grid(
         row=row_index,
         column=0,
-        sticky="ew",
+        sticky="w",
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
     # add button to add new task
@@ -257,6 +257,7 @@ class Task_Editor_GUI:
         task_frame,
         text=task_name,
         justify="left",
+        anchor="w",
         variable=task_var,
         command=lambda task_var=task_var, task=ttr_task: self.toggle_task_visibility(task_var, task))
     self.add_checkbutton_style(task_visibility_button)
@@ -264,21 +265,21 @@ class Task_Editor_GUI:
         row=0,
         column=1,
         rowspan=2,
-        sticky="w",
+        sticky="we",
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
-    # add label to show task length. If task has bonus points, show them as well
-    task_length_text = f"length: {ttr_task.points}"
+    # add label to show task points. If task has bonus points, show them as well
+    task_points_text = f"points: {ttr_task.points}"
     if ttr_task.points_bonus is not None: # add task bonus points
       if ttr_task.points_bonus > 0:
-        task_length_text += " + " + str(ttr_task.points_bonus)
-      else: # points_bonus < 0
-        task_length_text += " - " + str(-ttr_task.points_bonus)
-    task_length_label = tk.Label(
+        task_points_text += " + " + str(ttr_task.points_bonus)
+      elif ttr_task.points_bonus < 0:
+        task_points_text += " - " + str(-ttr_task.points_bonus)
+    task_points_label = tk.Label(
         task_frame,
-        text=task_length_text)
-    self.add_label_style(task_length_label)
-    task_length_label.grid(
+        text=task_points_text)
+    self.add_label_style(task_points_label)
+    task_points_label.grid(
         row=0,
         column=2,
         columnspan=2,
@@ -313,23 +314,21 @@ class Task_Editor_GUI:
         padx=0,
         pady=0)
 
-    return (task_frame, task_number_label, task_visibility_button, task_length_label, edit_task_button, delete_task_button)
+    return (task_frame, task_number_label, task_visibility_button, task_points_label, edit_task_button, delete_task_button)
 
   def bind_task_overview_mouse_events(self):
     """
     Bind pick event to the matplotlib Axes object.
     """
-    self.task_overview_selected_node: Particle_Node = None
     self.pick_event_cid: int = self.canvas.mpl_connect("pick_event", self.on_task_overview_mouse_click)
 
   def unbind_task_overview_mouse_events(self):
     """
     Unbind pick event from the matplotlib Axes object.
     """
-    if self.task_overview_selected_node is not None:
-      self.task_overview_selected_node.remove_highlight(self.ax)
-      self.highlighted_particles.remove(self.task_overview_selected_node)
-      del self.task_overview_selected_node
+    for particle in self.highlighted_particles:
+      particle.remove_highlight(self.ax)
+    self.highlighted_particles: List[Particle_Node] = []
     self.canvas.mpl_disconnect(self.pick_event_cid)
   
   def on_task_overview_mouse_click(self, event):
@@ -348,23 +347,24 @@ class Task_Editor_GUI:
     # if no particle was clicked or the selected one was clicked again, deselect all particles
     if particle is None or not isinstance(particle, Particle_Node):
       return
-    if self.task_overview_selected_node is not None:
-      self.task_overview_selected_node.remove_highlight(self.ax)
-      self.highlighted_particles.remove(self.task_overview_selected_node)
-      self.task_overview_selected_node: Particle_Node = None
-      self.canvas.draw_idle()
-    # highlight selected particle
-    particle.highlight(self.ax)
-    self.highlighted_particles.append(particle)
-    self.task_overview_selected_node = particle
+    if particle in self.highlighted_particles:
+      particle.remove_highlight(self.ax)
+      self.highlighted_particles.remove(particle)
+    else:
+      # highlight selected particle
+      particle.highlight(self.ax)
+      self.highlighted_particles.append(particle)
     # hide all tasks
     self.task_visibility_vars["all"].set(False)
-    self.toggle_all_tasks_visibility()
+    self.toggle_all_tasks_visibility(clear_highlighted_particles=False)
     # highlight all tasks that start or end at the selected particle
     for task_name, task in self.particle_graph.tasks.items():
-      if task_name != "all" and particle.label in (task.node_names[0], task.node_names[-1]):
-        self.task_visibility_vars[task.name].set(True)
-        self.toggle_task_visibility(self.task_visibility_vars[task.name], task, update_canvas=False, update_all_tasks=True)
+      if task_name == "all":
+        continue
+      for particle in self.highlighted_particles:
+        if particle.label in (task.node_names[0], task.node_names[-1]):
+          self.task_visibility_vars[task.name].set(True)
+          self.toggle_task_visibility(self.task_visibility_vars[task.name], task, update_canvas=False, update_all_tasks=True)
 
     self.canvas.draw_idle()
 
@@ -385,7 +385,7 @@ class Task_Editor_GUI:
     self.edit_task(new_task) # open edit mode for new task
 
 
-  def toggle_all_tasks_visibility(self):
+  def toggle_all_tasks_visibility(self, clear_highlighted_particles: bool = True):
     """
     Toggles the visibility of all tasks.
     """
@@ -393,6 +393,11 @@ class Task_Editor_GUI:
       if task_name != "all":
         task_var.set(self.task_visibility_vars["all"].get())
         self.toggle_task_visibility(task_var, self.particle_graph.tasks[task_name], update_canvas=False, update_all_tasks=False)
+    if clear_highlighted_particles:
+      # clear highlighted particles if all tasks are 
+      for particle in self.highlighted_particles:
+        particle.remove_highlight(self.ax)
+      self.highlighted_particles: List[Particle_Node] = []
     self.canvas.draw_idle()
 
   def toggle_task_visibility(self, task_visibility_var: tk.BooleanVar, task: TTR_Task, update_canvas: bool = True, update_all_tasks: bool = True):

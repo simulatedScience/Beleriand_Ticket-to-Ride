@@ -2,7 +2,7 @@
   "particle_graph": {
     "n_nodes": 39,
     "n_connections": 84,
-    "n_tasks": 40,
+    "n_tasks": 44,
     "n_edges": 243,
     "n_labels": 39,
     "particles": [
@@ -10132,6 +10132,50 @@
         "node_names": [
           "Andram",
           "Thargelion"
+        ],
+        "length": 0,
+        "points": 0,
+        "points_bonus": 0,
+        "points_penalty": 0
+      },
+      {
+        "name": "Forest of Region - Eglarest",
+        "node_names": [
+          "Forest of Region",
+          "Eglarest"
+        ],
+        "length": 0,
+        "points": 0,
+        "points_bonus": 0,
+        "points_penalty": 0
+      },
+      {
+        "name": "Eglarest - Tol Sirion",
+        "node_names": [
+          "Eglarest",
+          "Tol Sirion"
+        ],
+        "length": 0,
+        "points": 0,
+        "points_bonus": 0,
+        "points_penalty": 0
+      },
+      {
+        "name": "West Taur-im-Duinath - Nargothrond",
+        "node_names": [
+          "West Taur-im-Duinath",
+          "Nargothrond"
+        ],
+        "length": 0,
+        "points": 0,
+        "points_bonus": 0,
+        "points_penalty": 0
+      },
+      {
+        "name": "Amon Ereb - Forest of Region",
+        "node_names": [
+          "Amon Ereb",
+          "Forest of Region"
         ],
         "length": 0,
         "points": 0,
