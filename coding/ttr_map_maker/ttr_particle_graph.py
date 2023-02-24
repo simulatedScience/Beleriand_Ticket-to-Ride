@@ -339,6 +339,9 @@ class TTR_Particle_Graph:
             Each task is given as a tuple of the form (location_1, location_2), or a TTR_Task object. All list elements must be of the same type.
             If the input is not of these types, it is assumed to be a dict of TTR_Task objects with the tasks' names as keys.
     """
+    if not new_tasks:
+      self.tasks: dict[str, TTR_Task] = {}
+      return
     if isinstance(new_tasks, list) and isinstance(new_tasks[0], (tuple, list)): # TODO: remove this case when it is no longer needed
       self.tasks: dict[str, TTR_Task] = {}
       for task in new_tasks:

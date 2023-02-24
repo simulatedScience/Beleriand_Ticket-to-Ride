@@ -898,10 +898,16 @@ class Task_Editor_GUI:
       task.set_node_names(new_node_names, update_name=True)
       self.particle_graph.tasks[task.name] = task
       self.task_list.append(task) # potentially unnecessary
-    elif task.node_names != new_node_names:
-      del self.particle_graph.tasks[task.name]
+    elif task.node_names != new_node_names: # not working properly
+      old_name = task.name
+      # print(f"delete task {task.name} with nodes {task.node_names}")
       task.set_node_names(new_node_names, update_name=True) # TODO: consider adding a name input
-      self.particle_graph.tasks[task.name] = task
+      # print(f"adding task {task.name} with nodes {task.node_names}")
+      if task.name != old_name:
+        self.particle_graph.tasks[task.name] = task # update task key in task list
+        self.task_visibility_vars[task.name] = self.task_visibility_vars[old_name] # update task key in task visibility list
+        del self.particle_graph.tasks[old_name]
+        del self.task_visibility_vars[old_name]
     # update task points
     task.set_length(task_points_vars[0].get())
     task.set_points(*[var.get() for var in task_points_vars[1:]])
