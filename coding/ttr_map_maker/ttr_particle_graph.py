@@ -291,12 +291,12 @@ class TTR_Particle_Graph:
     # update cell list radius
 
 
-  def get_locations(self) -> list:
+  def get_locations(self) -> List[str]:
     """
     get all location labels in particle graph
 
     Returns:
-        list: list of location labels
+        List[str]: list of location labels
     """
     return list(self.particle_nodes.keys())
 

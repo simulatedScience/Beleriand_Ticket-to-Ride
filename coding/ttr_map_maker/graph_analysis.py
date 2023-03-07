@@ -47,7 +47,7 @@ class TTR_Graph_Analysis:
     self.edge_particles: dict[Tuple[str, str, int, int], Particle_Edge] = edge_particles # dictionary of all edge particles
     self.tasks: dict[str, TTR_Task] = tasks # list of tasks (start location, end location)
 
-    self.networkx_graph: nx.Graph = create_graph(self.locations, self.edge_particles) # networkx graph object containing location and path information
+    self.networkx_graph: nx.Graph = create_nx_graph(self.locations, self.edge_particles) # networkx graph object containing location and path information
     self.task_lengths: dict[Tuple[str, str], int] = self.get_task_lengths() # shortest path lengths for all tasks
 
 # access methods for basic graph information
@@ -665,7 +665,7 @@ class TTR_Graph_Analysis:
       ax.grid(axis="y", color=grid_color)
 
 
-def create_graph(locations: List[str], edge_particles: dict[Tuple[str, str, int, int], Particle_Edge]) -> nx.Graph:
+def create_nx_graph(locations: List[str], edge_particles: dict[Tuple[str, str, int, int], Particle_Edge]) -> nx.Graph:
   """
   create a networkx graph from locations and paths
 

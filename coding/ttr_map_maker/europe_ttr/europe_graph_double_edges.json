@@ -1,15 +1,23 @@
 {
   "particle_graph": {
     "n_nodes": 47,
+    "n_connections": 92,
+    "n_tasks": 46,
     "n_edges": 276,
     "n_labels": 47,
+    "graph_extent": [
+      0.0,
+      103.875,
+      0.0,
+      67.5
+    ],
     "particles": [
       {
         "particle_type": "Particle_Node",
         "id": 4,
         "position": [
-          32.98930289068418,
-          46.79840758346776
+          33.0,
+          46.8125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -28,14 +36,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Amsterdam"
+        "location_name": "Amsterdam",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 5,
         "position": [
-          88.85674626458547,
-          6.959466953867521
+          88.875,
+          6.9609375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -54,14 +63,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Angora"
+        "location_name": "Angora",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 6,
         "position": [
-          68.61602235828475,
-          6.924628947405514
+          68.625,
+          6.92578125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -80,14 +90,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Athina"
+        "location_name": "Athina",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 7,
         "position": [
-          22.497999999999998,
-          10.322999999999995
+          22.5,
+          10.3203125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -106,14 +117,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Barcelona"
+        "location_name": "Barcelona",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 8,
         "position": [
-          50.890499999999996,
-          44.34825000000001
+          50.875,
+          44.34375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -132,14 +144,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Berlin"
+        "location_name": "Berlin",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 9,
         "position": [
-          14.049499999999998,
-          35.78475
+          14.046875,
+          35.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -158,14 +171,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Brest"
+        "location_name": "Brest",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 10,
         "position": [
-          56.430499999999995,
-          14.340749999999998
+          56.4375,
+          14.34375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -184,14 +198,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Brindisi"
+        "location_name": "Brindisi",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 11,
         "position": [
-          31.154249999999998,
-          42.34125
+          31.15625,
+          42.34375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -210,14 +225,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Bruxelles"
+        "location_name": "Bruxelles",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 12,
         "position": [
-          76.51299999999999,
-          23.80575
+          76.5,
+          23.8125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -236,14 +252,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Bucuresti"
+        "location_name": "Bucuresti",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 13,
         "position": [
-          61.208749999999995,
-          30.892750000000003
+          61.21875,
+          30.890625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -262,14 +279,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Budapest"
+        "location_name": "Budapest",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 14,
         "position": [
-          11.071749999999998,
-          4.462750000000001
+          11.0703125,
+          4.4609375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -288,14 +306,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Cadiz"
+        "location_name": "Cadiz",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 15,
         "position": [
-          81.222,
-          11.96525
+          81.25,
+          11.96875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -314,14 +333,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Constantinople"
+        "location_name": "Constantinople",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 16,
         "position": [
-          62.05492578599102,
-          52.023373604873086
+          62.0625,
+          52.03125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -340,14 +360,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Danzig"
+        "location_name": "Danzig",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 17,
         "position": [
-          22.592315517241115,
-          38.09754666839529
+          22.59375,
+          38.09375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -366,14 +387,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Dieppe"
+        "location_name": "Dieppe",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 18,
         "position": [
-          16.96727859737946,
-          61.365251945072835
+          16.96875,
+          61.375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -392,14 +414,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Edinburgh"
+        "location_name": "Edinburgh",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 19,
         "position": [
-          96.66475,
-          9.15075
+          96.6875,
+          9.1484375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -418,14 +441,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Erzurum"
+        "location_name": "Erzurum",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 20,
         "position": [
-          41.195499999999996,
-          45.59975
+          41.1875,
+          45.59375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -444,14 +468,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Essen"
+        "location_name": "Essen",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 21,
         "position": [
-          39.922275824448484,
-          38.951048028002084
+          39.9375,
+          38.9375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -470,14 +495,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Frankfurt"
+        "location_name": "Frankfurt",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 22,
         "position": [
-          95.2105,
-          35.39775
+          95.1875,
+          35.40625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -496,14 +522,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Kharkov"
+        "location_name": "Kharkov",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 23,
         "position": [
-          48.46675,
-          55.78075
+          48.46875,
+          55.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -522,14 +549,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Kobenhavn"
+        "location_name": "Kobenhavn",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 24,
         "position": [
-          81.84525,
-          40.153749999999995
+          81.875,
+          40.15625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -548,14 +576,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Kyiv"
+        "location_name": "Kyiv",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 25,
         "position": [
-          4.374051413015266,
-          9.479186777288431
+          4.375,
+          9.4765625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -574,14 +603,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Lisboa"
+        "location_name": "Lisboa",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 26,
         "position": [
-          23.830951037075167,
-          46.78976639875539
+          23.828125,
+          46.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -600,14 +630,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "London"
+        "location_name": "London",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 27,
         "position": [
-          11.715752372309986,
-          11.382971256806146
+          11.71875,
+          11.3828125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -626,14 +657,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Madrid"
+        "location_name": "Madrid",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 28,
         "position": [
-          36.20949999999999,
-          19.74975
+          36.21875,
+          19.75
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -652,14 +684,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Marseille"
+        "location_name": "Marseille",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 29,
         "position": [
-          96.87249999999999,
-          49.41225
+          96.875,
+          49.40625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -678,14 +711,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Moskva"
+        "location_name": "Moskva",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 30,
         "position": [
-          45.211999999999996,
-          35.03174999999999
+          45.21875,
+          35.03125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -704,14 +738,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Munchen"
+        "location_name": "Munchen",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 31,
         "position": [
-          51.44220116670924,
-          4.2983129634434185
+          51.4375,
+          4.296875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -730,14 +765,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Palermo"
+        "location_name": "Palermo",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 32,
         "position": [
-          21.198850557427807,
-          19.365063041223866
+          21.203125,
+          19.359375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -756,14 +792,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Pamplona"
+        "location_name": "Pamplona",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 33,
         "position": [
-          27.55325,
-          33.994249999999994
+          27.546875,
+          34.0
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -782,14 +819,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Paris"
+        "location_name": "Paris",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 34,
         "position": [
-          86.83949833259048,
-          61.31506911953659
+          86.8125,
+          61.3125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -808,14 +846,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Petrograd"
+        "location_name": "Petrograd",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 35,
         "position": [
-          70.36184295820293,
-          60.63214293975415
+          70.375,
+          60.625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -834,14 +873,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Riga"
+        "location_name": "Riga",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 36,
         "position": [
-          47.984343673839184,
-          17.029359787399603
+          47.96875,
+          17.03125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -860,14 +900,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Roma"
+        "location_name": "Roma",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 37,
         "position": [
-          99.43475,
-          30.21025
+          99.4375,
+          30.203125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -886,14 +927,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Rostov"
+        "location_name": "Rostov",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 38,
         "position": [
-          63.51889748509125,
-          18.829072426756557
+          63.53125,
+          18.828125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -912,14 +954,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Sarajevo"
+        "location_name": "Sarajevo",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 39,
         "position": [
-          89.80899999999998,
-          22.77825
+          89.8125,
+          22.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -938,14 +981,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Sevastopol"
+        "location_name": "Sevastopol",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 40,
         "position": [
-          88.49324999999999,
-          47.247
+          88.5,
+          47.25
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -964,14 +1008,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Smolensk"
+        "location_name": "Smolensk",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 41,
         "position": [
-          76.9285,
-          4.681749999999998
+          76.9375,
+          4.68359375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -990,14 +1035,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Smyrna"
+        "location_name": "Smyrna",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 42,
         "position": [
-          99.01924999999999,
-          21.463749999999997
+          99.0,
+          21.46875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1016,14 +1062,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Sochi"
+        "location_name": "Sochi",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 43,
         "position": [
-          70.4862222841578,
-          17.88351871921175
+          70.5,
+          17.890625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1042,14 +1089,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Sofia"
+        "location_name": "Sofia",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 44,
         "position": [
-          58.378093595011975,
-          63.473619344105444
+          58.375,
+          63.46875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1068,14 +1116,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Stockholm"
+        "location_name": "Stockholm",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 45,
         "position": [
-          47.30308092329693,
-          25.843449614355535
+          47.3125,
+          25.84375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1094,14 +1143,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Venezia"
+        "location_name": "Venezia",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 46,
         "position": [
-          67.09354767733267,
-          45.425843155098626
+          67.0625,
+          45.4375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1120,14 +1170,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Warszawa"
+        "location_name": "Warszawa",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 47,
         "position": [
-          56.430499999999995,
-          33.353750000000005
+          56.4375,
+          33.34375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1146,14 +1197,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Wien"
+        "location_name": "Wien",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 48,
         "position": [
-          78.19213373528792,
-          47.7368229865128
+          78.1875,
+          47.75
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1172,14 +1224,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Wilno"
+        "location_name": "Wilno",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 49,
         "position": [
-          55.31406676919611,
-          24.17582984063855
+          55.3125,
+          24.171875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1198,14 +1251,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Zagrab"
+        "location_name": "Zagrab",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
         "id": 50,
         "position": [
-          38.91025,
-          28.507500000000004
+          38.90625,
+          28.5
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1224,14 +1278,15 @@
         ],
         "color": "#222222",
         "target_attraction": 0.1,
-        "location_name": "Zurich"
+        "location_name": "Zurich",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Label",
         "id": 51,
         "position": [
-          33.48557052091223,
-          48.45929344462366
+          33.5,
+          48.46875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1250,7 +1305,7 @@
         "label": "Amsterdam",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1258,8 +1313,8 @@
         "particle_type": "Particle_Label",
         "id": 52,
         "position": [
-          88.85674626458547,
-          8.959466953867521
+          88.875,
+          8.9609375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1278,7 +1333,7 @@
         "label": "Angora",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1286,8 +1341,8 @@
         "particle_type": "Particle_Label",
         "id": 53,
         "position": [
-          68.61602235828475,
-          8.855378947405514
+          68.625,
+          8.8515625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1306,7 +1361,7 @@
         "label": "Athina",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1314,8 +1369,8 @@
         "particle_type": "Particle_Label",
         "id": 54,
         "position": [
-          22.497999999999998,
-          12.322999999999995
+          22.5,
+          12.3203125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1334,7 +1389,7 @@
         "label": "Barcelona",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1342,8 +1397,8 @@
         "particle_type": "Particle_Label",
         "id": 55,
         "position": [
-          49.3363915,
-          47.077729500000004
+          49.34375,
+          47.0625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1362,7 +1417,7 @@
         "label": "Berlin",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1370,8 +1425,8 @@
         "particle_type": "Particle_Label",
         "id": 56,
         "position": [
-          14.049499999999998,
-          37.78475
+          14.046875,
+          37.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1390,7 +1445,7 @@
         "label": "Brest",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1398,8 +1453,8 @@
         "particle_type": "Particle_Label",
         "id": 57,
         "position": [
-          56.430499999999995,
-          16.34075
+          56.4375,
+          16.34375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1418,7 +1473,7 @@
         "label": "Brindisi",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1426,8 +1481,8 @@
         "particle_type": "Particle_Label",
         "id": 58,
         "position": [
-          31.154249999999998,
-          44.34125
+          31.15625,
+          44.34375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1446,7 +1501,7 @@
         "label": "Bruxelles",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1454,8 +1509,8 @@
         "particle_type": "Particle_Label",
         "id": 59,
         "position": [
-          76.51299999999999,
-          25.80575
+          76.5,
+          25.8125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1474,7 +1529,7 @@
         "label": "Bucuresti",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1482,8 +1537,8 @@
         "particle_type": "Particle_Label",
         "id": 60,
         "position": [
-          61.208749999999995,
-          32.89275000000001
+          61.21875,
+          32.90625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1502,7 +1557,7 @@
         "label": "Budapest",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1510,8 +1565,8 @@
         "particle_type": "Particle_Label",
         "id": 61,
         "position": [
-          11.232750593077494,
-          6.192805314201538
+          11.234375,
+          6.19140625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1530,7 +1585,7 @@
         "label": "Cadiz",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1538,8 +1593,8 @@
         "particle_type": "Particle_Label",
         "id": 62,
         "position": [
-          81.222,
-          13.96525
+          81.25,
+          13.96875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1558,7 +1613,7 @@
         "label": "Constantinople",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1566,8 +1621,8 @@
         "particle_type": "Particle_Label",
         "id": 63,
         "position": [
-          62.05492578599102,
-          54.023373604873086
+          62.0625,
+          54.03125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1586,7 +1641,7 @@
         "label": "Danzig",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1594,8 +1649,8 @@
         "particle_type": "Particle_Label",
         "id": 64,
         "position": [
-          22.592315517241115,
-          40.09754666839529
+          22.59375,
+          40.09375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1614,7 +1669,7 @@
         "label": "Dieppe",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1622,8 +1677,8 @@
         "particle_type": "Particle_Label",
         "id": 65,
         "position": [
-          16.96727859737946,
-          63.365251945072835
+          16.96875,
+          63.375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1642,7 +1697,7 @@
         "label": "Edinburgh",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1650,8 +1705,8 @@
         "particle_type": "Particle_Label",
         "id": 66,
         "position": [
-          96.66475,
-          11.15075
+          96.6875,
+          11.1484375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1670,7 +1725,7 @@
         "label": "Erzurum",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1678,8 +1733,8 @@
         "particle_type": "Particle_Label",
         "id": 67,
         "position": [
-          41.195499999999996,
-          47.59975
+          41.1875,
+          47.59375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1698,7 +1753,7 @@
         "label": "Essen",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1706,8 +1761,8 @@
         "particle_type": "Particle_Label",
         "id": 68,
         "position": [
-          40.34668388296566,
-          41.167282018668054
+          40.34375,
+          41.15625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1726,7 +1781,7 @@
         "label": "Frankfurt",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1734,8 +1789,8 @@
         "particle_type": "Particle_Label",
         "id": 69,
         "position": [
-          95.27974999999999,
-          36.70525
+          95.25,
+          36.71875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1754,7 +1809,7 @@
         "label": "Kharkov",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1762,8 +1817,8 @@
         "particle_type": "Particle_Label",
         "id": 70,
         "position": [
-          48.46675,
-          57.78075
+          48.46875,
+          57.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1782,7 +1837,7 @@
         "label": "Kobenhavn",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1790,8 +1845,8 @@
         "particle_type": "Particle_Label",
         "id": 71,
         "position": [
-          81.84525,
-          42.153749999999995
+          81.875,
+          42.15625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1810,7 +1865,7 @@
         "label": "Kyiv",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1818,8 +1873,8 @@
         "particle_type": "Particle_Label",
         "id": 72,
         "position": [
-          4.374051413015266,
-          11.479186777288431
+          4.375,
+          11.4765625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1838,7 +1893,7 @@
         "label": "Lisboa",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1846,8 +1901,8 @@
         "particle_type": "Particle_Label",
         "id": 73,
         "position": [
-          23.830951037075167,
-          48.78976639875539
+          23.828125,
+          48.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1866,7 +1921,7 @@
         "label": "London",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1874,8 +1929,8 @@
         "particle_type": "Particle_Label",
         "id": 74,
         "position": [
-          11.392986025408227,
-          13.278899416645384
+          11.390625,
+          13.28125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1894,7 +1949,7 @@
         "label": "Madrid",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1902,8 +1957,8 @@
         "particle_type": "Particle_Label",
         "id": 75,
         "position": [
-          36.20949999999999,
-          21.74975
+          36.21875,
+          21.75
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1922,7 +1977,7 @@
         "label": "Marseille",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1930,8 +1985,8 @@
         "particle_type": "Particle_Label",
         "id": 76,
         "position": [
-          96.87249999999999,
-          51.41225
+          96.875,
+          51.40625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1950,7 +2005,7 @@
         "label": "Moskva",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1958,8 +2013,8 @@
         "particle_type": "Particle_Label",
         "id": 77,
         "position": [
-          45.211999999999996,
-          37.03174999999999
+          45.21875,
+          37.03125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1978,7 +2033,7 @@
         "label": "Munchen",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -1986,8 +2041,8 @@
         "particle_type": "Particle_Label",
         "id": 78,
         "position": [
-          51.44220116670924,
-          6.2983129634434185
+          51.4375,
+          6.296875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2006,7 +2061,7 @@
         "label": "Palermo",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2014,8 +2069,8 @@
         "particle_type": "Particle_Label",
         "id": 79,
         "position": [
-          21.198850557427807,
-          21.365063041223866
+          21.203125,
+          21.359375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2034,7 +2089,7 @@
         "label": "Pamplona",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2042,8 +2097,8 @@
         "particle_type": "Particle_Label",
         "id": 80,
         "position": [
-          27.55325,
-          35.994249999999994
+          27.546875,
+          36.0
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2062,7 +2117,7 @@
         "label": "Paris",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2070,8 +2125,8 @@
         "particle_type": "Particle_Label",
         "id": 81,
         "position": [
-          86.83949833259048,
-          63.31506911953659
+          86.8125,
+          63.3125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2090,7 +2145,7 @@
         "label": "Petrograd",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2098,8 +2153,8 @@
         "particle_type": "Particle_Label",
         "id": 82,
         "position": [
-          70.36184295820293,
-          62.63214293975415
+          70.375,
+          62.625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2118,7 +2173,7 @@
         "label": "Riga",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2126,8 +2181,8 @@
         "particle_type": "Particle_Label",
         "id": 83,
         "position": [
-          47.984343673839184,
-          19.029359787399603
+          47.96875,
+          19.03125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2146,7 +2201,7 @@
         "label": "Roma",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2154,8 +2209,8 @@
         "particle_type": "Particle_Label",
         "id": 84,
         "position": [
-          99.43475,
-          32.21025
+          99.4375,
+          32.21875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2174,7 +2229,7 @@
         "label": "Rostov",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2182,8 +2237,8 @@
         "particle_type": "Particle_Label",
         "id": 85,
         "position": [
-          63.51889748509125,
-          20.829072426756557
+          63.53125,
+          20.828125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2202,7 +2257,7 @@
         "label": "Sarajevo",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2210,8 +2265,8 @@
         "particle_type": "Particle_Label",
         "id": 86,
         "position": [
-          89.80899999999998,
-          24.77825
+          89.8125,
+          24.78125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2230,7 +2285,7 @@
         "label": "Sevastopol",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2238,8 +2293,8 @@
         "particle_type": "Particle_Label",
         "id": 87,
         "position": [
-          88.49324999999999,
-          49.247
+          88.5,
+          49.25
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2258,7 +2313,7 @@
         "label": "Smolensk",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2266,8 +2321,8 @@
         "particle_type": "Particle_Label",
         "id": 88,
         "position": [
-          76.99775,
-          6.681749999999998
+          77.0,
+          6.68359375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2286,7 +2341,7 @@
         "label": "Smyrna",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2294,8 +2349,8 @@
         "particle_type": "Particle_Label",
         "id": 89,
         "position": [
-          99.01924999999999,
-          23.463749999999997
+          99.0,
+          23.46875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2314,7 +2369,7 @@
         "label": "Sochi",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2322,8 +2377,8 @@
         "particle_type": "Particle_Label",
         "id": 90,
         "position": [
-          70.4862222841578,
-          19.88351871921175
+          70.5,
+          19.890625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2342,7 +2397,7 @@
         "label": "Sofia",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2350,8 +2405,8 @@
         "particle_type": "Particle_Label",
         "id": 91,
         "position": [
-          58.378093595011975,
-          65.47361934410544
+          58.375,
+          65.5
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2370,7 +2425,7 @@
         "label": "Stockholm",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2378,8 +2433,8 @@
         "particle_type": "Particle_Label",
         "id": 92,
         "position": [
-          47.30308092329693,
-          27.843449614355535
+          47.3125,
+          27.84375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2398,7 +2453,7 @@
         "label": "Venezia",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2406,8 +2461,8 @@
         "particle_type": "Particle_Label",
         "id": 93,
         "position": [
-          67.09354767733267,
-          47.425843155098626
+          67.0625,
+          47.4375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2426,7 +2481,7 @@
         "label": "Warszawa",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2434,8 +2489,8 @@
         "particle_type": "Particle_Label",
         "id": 94,
         "position": [
-          56.430499999999995,
-          35.353750000000005
+          56.4375,
+          35.34375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2454,7 +2509,7 @@
         "label": "Wien",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2462,8 +2517,8 @@
         "particle_type": "Particle_Label",
         "id": 95,
         "position": [
-          78.19213373528792,
-          49.7368229865128
+          78.1875,
+          49.75
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2482,7 +2537,7 @@
         "label": "Wilno",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2490,8 +2545,8 @@
         "particle_type": "Particle_Label",
         "id": 96,
         "position": [
-          55.31406676919611,
-          26.17582984063855
+          55.3125,
+          26.171875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2510,7 +2565,7 @@
         "label": "Zagrab",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2518,8 +2573,8 @@
         "particle_type": "Particle_Label",
         "id": 97,
         "position": [
-          38.91025,
-          30.507500000000004
+          38.90625,
+          30.5
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2538,7 +2593,7 @@
         "label": "Zurich",
         "color": "#222222",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.1,
         "height_scale_factor": 0.003816793893129771
       },
@@ -2546,8 +2601,8 @@
         "particle_type": "Particle_Edge",
         "id": 98,
         "position": [
-          64.15682142857142,
-          32.21575
+          64.1875,
+          32.21875
         ],
         "rotation": 0.4218288881411975,
         "mass": 1.0,
@@ -2577,8 +2632,8 @@
         "particle_type": "Particle_Edge",
         "id": 99,
         "position": [
-          67.10489285714286,
-          33.53875
+          67.125,
+          33.53125
         ],
         "rotation": 0.4218288881411975,
         "mass": 1.0,
@@ -2608,8 +2663,8 @@
         "particle_type": "Particle_Edge",
         "id": 100,
         "position": [
-          70.05296428571428,
-          34.86175
+          70.0625,
+          34.875
         ],
         "rotation": 0.4218288881411975,
         "mass": 1.0,
@@ -2639,8 +2694,8 @@
         "particle_type": "Particle_Edge",
         "id": 101,
         "position": [
-          73.0010357142857,
-          36.18475
+          73.0,
+          36.1875
         ],
         "rotation": 0.4218288881411975,
         "mass": 1.0,
@@ -2670,8 +2725,8 @@
         "particle_type": "Particle_Edge",
         "id": 102,
         "position": [
-          75.94910714285713,
-          37.50775
+          75.9375,
+          37.5
         ],
         "rotation": 0.4218288881411975,
         "mass": 1.0,
@@ -2701,8 +2756,8 @@
         "particle_type": "Particle_Edge",
         "id": 103,
         "position": [
-          78.89717857142857,
-          38.830749999999995
+          78.875,
+          38.84375
         ],
         "rotation": 0.4218288881411975,
         "mass": 1.0,
@@ -2732,8 +2787,8 @@
         "particle_type": "Particle_Edge",
         "id": 104,
         "position": [
-          80.77879999999999,
-          36.88415
+          80.75,
+          36.875
         ],
         "rotation": -1.8860873494176515,
         "mass": 1.0,
@@ -2763,8 +2818,8 @@
         "particle_type": "Particle_Edge",
         "id": 105,
         "position": [
-          79.71234999999999,
-          33.614549999999994
+          79.6875,
+          33.625
         ],
         "rotation": -1.8860873494176515,
         "mass": 1.0,
@@ -2794,8 +2849,8 @@
         "particle_type": "Particle_Edge",
         "id": 106,
         "position": [
-          78.6459,
-          30.344949999999997
+          78.625,
+          30.34375
         ],
         "rotation": -1.8860873494176515,
         "mass": 1.0,
@@ -2825,8 +2880,8 @@
         "particle_type": "Particle_Edge",
         "id": 107,
         "position": [
-          77.57945,
-          27.07535
+          77.5625,
+          27.078125
         ],
         "rotation": -1.8860873494176515,
         "mass": 1.0,
@@ -2856,8 +2911,8 @@
         "particle_type": "Particle_Edge",
         "id": 108,
         "position": [
-          64.2696,
-          29.475350000000002
+          64.25,
+          29.46875
         ],
         "rotation": -0.43367290442640566,
         "mass": 1.0,
@@ -2887,8 +2942,8 @@
         "particle_type": "Particle_Edge",
         "id": 109,
         "position": [
-          67.33045,
-          28.05795
+          67.3125,
+          28.0625
         ],
         "rotation": -0.43367290442640566,
         "mass": 1.0,
@@ -2918,8 +2973,8 @@
         "particle_type": "Particle_Edge",
         "id": 110,
         "position": [
-          70.39129999999999,
-          26.64055
+          70.375,
+          26.640625
         ],
         "rotation": -0.43367290442640566,
         "mass": 1.0,
@@ -2949,8 +3004,8 @@
         "particle_type": "Particle_Edge",
         "id": 111,
         "position": [
-          73.45214999999999,
-          25.22315
+          73.4375,
+          25.21875
         ],
         "rotation": -0.43367290442640566,
         "mass": 1.0,
@@ -2980,8 +3035,8 @@
         "particle_type": "Particle_Edge",
         "id": 112,
         "position": [
-          74.50407409471926,
-          21.831672906403917
+          74.5,
+          21.828125
         ],
         "rotation": -2.3649436481744956,
         "mass": 1.0,
@@ -3011,8 +3066,8 @@
         "particle_type": "Particle_Edge",
         "id": 113,
         "position": [
-          72.49514818943854,
-          19.857595812807833
+          72.5,
+          19.859375
         ],
         "rotation": -2.3649436481744956,
         "mass": 1.0,
@@ -3042,8 +3097,8 @@
         "particle_type": "Particle_Edge",
         "id": 114,
         "position": [
-          79.17219999999999,
-          23.60025
+          79.1875,
+          23.59375
         ],
         "rotation": -0.07712559261030826,
         "mass": 1.0,
@@ -3073,8 +3128,8 @@
         "particle_type": "Particle_Edge",
         "id": 115,
         "position": [
-          81.83139999999999,
-          23.39475
+          81.8125,
+          23.390625
         ],
         "rotation": -0.07712559261030826,
         "mass": 1.0,
@@ -3104,8 +3159,8 @@
         "particle_type": "Particle_Edge",
         "id": 116,
         "position": [
-          84.49059999999999,
-          23.18925
+          84.5,
+          23.1875
         ],
         "rotation": -0.07712559261030826,
         "mass": 1.0,
@@ -3135,8 +3190,8 @@
         "particle_type": "Particle_Edge",
         "id": 117,
         "position": [
-          87.14979999999998,
-          22.98375
+          87.125,
+          22.984375
         ],
         "rotation": -0.07712559261030826,
         "mass": 1.0,
@@ -3166,8 +3221,8 @@
         "particle_type": "Particle_Edge",
         "id": 118,
         "position": [
-          77.69024999999999,
-          20.845625
+          77.6875,
+          20.84375
         ],
         "rotation": -1.192271862112952,
         "mass": 1.0,
@@ -3197,8 +3252,8 @@
         "particle_type": "Particle_Edge",
         "id": 119,
         "position": [
-          78.86749999999999,
-          17.8855
+          78.875,
+          17.890625
         ],
         "rotation": -1.192271862112952,
         "mass": 1.0,
@@ -3228,8 +3283,8 @@
         "particle_type": "Particle_Edge",
         "id": 120,
         "position": [
-          80.04475,
-          14.925374999999999
+          80.0625,
+          14.921875
         ],
         "rotation": -1.192271862112952,
         "mass": 1.0,
@@ -3259,8 +3314,8 @@
         "particle_type": "Particle_Edge",
         "id": 121,
         "position": [
-          73.17016671311835,
-          16.403951539408812
+          73.1875,
+          16.40625
         ],
         "rotation": -0.503814631178395,
         "mass": 1.0,
@@ -3290,8 +3345,8 @@
         "particle_type": "Particle_Edge",
         "id": 122,
         "position": [
-          75.85411114207889,
-          14.924384359605874
+          75.875,
+          14.921875
         ],
         "rotation": -0.503814631178395,
         "mass": 1.0,
@@ -3321,8 +3376,8 @@
         "particle_type": "Particle_Edge",
         "id": 123,
         "position": [
-          78.53805557103945,
-          13.444817179802937
+          78.5625,
+          13.4453125
         ],
         "rotation": -0.503814631178395,
         "mass": 1.0,
@@ -3352,8 +3407,8 @@
         "particle_type": "Particle_Edge",
         "id": 124,
         "position": [
-          70.01867230268954,
-          15.12648377626019
+          70.0,
+          15.125
         ],
         "rotation": -1.7387824820663678,
         "mass": 1.0,
@@ -3383,8 +3438,8 @@
         "particle_type": "Particle_Edge",
         "id": 125,
         "position": [
-          69.55112232122127,
-          12.369448833308631
+          69.5625,
+          12.3671875
         ],
         "rotation": -1.7387824820663678,
         "mass": 1.0,
@@ -3414,8 +3469,8 @@
         "particle_type": "Particle_Edge",
         "id": 126,
         "position": [
-          69.08357233975302,
-          9.612413890357073
+          69.0625,
+          9.609375
         ],
         "rotation": -1.7387824820663678,
         "mass": 1.0,
@@ -3445,8 +3500,8 @@
         "particle_type": "Particle_Edge",
         "id": 127,
         "position": [
-          64.53832245972995,
-          16.434333730886348
+          64.5625,
+          16.4375
         ],
         "rotation": -1.1683383271462249,
         "mass": 1.0,
@@ -3476,8 +3531,8 @@
         "particle_type": "Particle_Edge",
         "id": 128,
         "position": [
-          65.55774743436865,
-          14.03959503501614
+          65.5625,
+          14.0390625
         ],
         "rotation": -1.1683383271462249,
         "mass": 1.0,
@@ -3507,8 +3562,8 @@
         "particle_type": "Particle_Edge",
         "id": 129,
         "position": [
-          66.57717240900735,
-          11.644856339145932
+          66.5625,
+          11.6484375
         ],
         "rotation": -1.1683383271462249,
         "mass": 1.0,
@@ -3538,8 +3593,8 @@
         "particle_type": "Particle_Edge",
         "id": 130,
         "position": [
-          67.59659738364606,
-          9.250117643275722
+          67.625,
+          9.25
         ],
         "rotation": -1.1683383271462249,
         "mass": 1.0,
@@ -3569,8 +3624,8 @@
         "particle_type": "Particle_Edge",
         "id": 131,
         "position": [
-          58.867604471656946,
-          12.843675789481102
+          58.875,
+          12.84375
         ],
         "rotation": -0.5508562682295436,
         "mass": 1.0,
@@ -3600,8 +3655,8 @@
         "particle_type": "Particle_Edge",
         "id": 132,
         "position": [
-          61.3047089433139,
-          11.346601578962204
+          61.3125,
+          11.34375
         ],
         "rotation": -0.5508562682295436,
         "mass": 1.0,
@@ -3631,8 +3686,8 @@
         "particle_type": "Particle_Edge",
         "id": 133,
         "position": [
-          63.74181341497085,
-          9.849527368443308
+          63.75,
+          9.8515625
         ],
         "rotation": -0.5508562682295436,
         "mass": 1.0,
@@ -3662,8 +3717,8 @@
         "particle_type": "Particle_Edge",
         "id": 134,
         "position": [
-          66.1789178866278,
-          8.352453157924412
+          66.1875,
+          8.3515625
         ],
         "rotation": -0.5508562682295436,
         "mass": 1.0,
@@ -3693,8 +3748,8 @@
         "particle_type": "Particle_Edge",
         "id": 135,
         "position": [
-          55.18342529167731,
-          11.830140740860854
+          55.1875,
+          11.828125
         ],
         "rotation": -2.031818052789423,
         "mass": 1.0,
@@ -3724,8 +3779,8 @@
         "particle_type": "Particle_Edge",
         "id": 136,
         "position": [
-          53.93635058335462,
-          9.319531481721707
+          53.9375,
+          9.3203125
         ],
         "rotation": -2.031818052789423,
         "mass": 1.0,
@@ -3755,8 +3810,8 @@
         "particle_type": "Particle_Edge",
         "id": 137,
         "position": [
-          52.689275875031925,
-          6.808922222582563
+          52.6875,
+          6.80859375
         ],
         "rotation": -2.031818052789423,
         "mass": 1.0,
@@ -3786,8 +3841,8 @@
         "particle_type": "Particle_Edge",
         "id": 138,
         "position": [
-          50.750629668135225,
-          6.844522328234655
+          50.75,
+          6.84375
         ],
         "rotation": 1.8360065390120381,
         "mass": 1.0,
@@ -3817,8 +3872,8 @@
         "particle_type": "Particle_Edge",
         "id": 139,
         "position": [
-          50.05905816956122,
-          9.390731693025892
+          50.0625,
+          9.390625
         ],
         "rotation": 1.8360065390120381,
         "mass": 1.0,
@@ -3848,8 +3903,8 @@
         "particle_type": "Particle_Edge",
         "id": 140,
         "position": [
-          49.367486670987205,
-          11.93694105781713
+          49.375,
+          11.9375
         ],
         "rotation": 1.8360065390120381,
         "mass": 1.0,
@@ -3879,8 +3934,8 @@
         "particle_type": "Particle_Edge",
         "id": 141,
         "position": [
-          48.6759151724132,
-          14.483150422608366
+          48.6875,
+          14.484375
         ],
         "rotation": 1.8360065390120381,
         "mass": 1.0,
@@ -3910,8 +3965,8 @@
         "particle_type": "Particle_Edge",
         "id": 142,
         "position": [
-          55.092993857179344,
-          4.353089682951501
+          55.09375,
+          4.3515625
         ],
         "rotation": 0.01500293613684114,
         "mass": 1.0,
@@ -3941,8 +3996,8 @@
         "particle_type": "Particle_Edge",
         "id": 143,
         "position": [
-          58.74378654764946,
-          4.407866402459584
+          58.75,
+          4.40625
         ],
         "rotation": 0.01500293613684114,
         "mass": 1.0,
@@ -3972,8 +4027,8 @@
         "particle_type": "Particle_Edge",
         "id": 144,
         "position": [
-          62.39457923811956,
-          4.462643121967667
+          62.40625,
+          4.4609375
         ],
         "rotation": 0.01500293613684114,
         "mass": 1.0,
@@ -4003,8 +4058,8 @@
         "particle_type": "Particle_Edge",
         "id": 145,
         "position": [
-          66.04537192858967,
-          4.51741984147575
+          66.0625,
+          4.515625
         ],
         "rotation": 0.01500293613684114,
         "mass": 1.0,
@@ -4034,8 +4089,8 @@
         "particle_type": "Particle_Edge",
         "id": 146,
         "position": [
-          69.69616461905977,
-          4.572196560983833
+          69.6875,
+          4.5703125
         ],
         "rotation": 0.01500293613684114,
         "mass": 1.0,
@@ -4065,8 +4120,8 @@
         "particle_type": "Particle_Edge",
         "id": 147,
         "position": [
-          73.34695730952988,
-          4.6269732804919155
+          73.375,
+          4.62890625
         ],
         "rotation": 0.01500293613684114,
         "mass": 1.0,
@@ -4096,8 +4151,8 @@
         "particle_type": "Particle_Edge",
         "id": 148,
         "position": [
-          74.15767411942825,
-          5.429376315801837
+          74.1875,
+          5.4296875
         ],
         "rotation": 2.87804789769464,
         "mass": 1.0,
@@ -4127,8 +4182,8 @@
         "particle_type": "Particle_Edge",
         "id": 149,
         "position": [
-          71.3868482388565,
-          6.177002631603676
+          71.375,
+          6.17578125
         ],
         "rotation": 2.87804789769464,
         "mass": 1.0,
@@ -4158,8 +4213,8 @@
         "particle_type": "Particle_Edge",
         "id": 150,
         "position": [
-          78.35966666666667,
-          7.109583333333331
+          78.375,
+          7.109375
         ],
         "rotation": 1.0381457480728857,
         "mass": 1.0,
@@ -4189,8 +4244,8 @@
         "particle_type": "Particle_Edge",
         "id": 151,
         "position": [
-          79.79083333333332,
-          9.537416666666665
+          79.8125,
+          9.5390625
         ],
         "rotation": 1.0381457480728857,
         "mass": 1.0,
@@ -4220,8 +4275,8 @@
         "particle_type": "Particle_Edge",
         "id": 152,
         "position": [
-          79.91056156614637,
-          5.251179238466879
+          79.9375,
+          5.25
         ],
         "rotation": 0.1886801690636803,
         "mass": 1.0,
@@ -4251,8 +4306,8 @@
         "particle_type": "Particle_Edge",
         "id": 153,
         "position": [
-          82.89262313229273,
-          5.82060847693376
+          82.875,
+          5.8203125
         ],
         "rotation": 0.1886801690636803,
         "mass": 1.0,
@@ -4282,8 +4337,8 @@
         "particle_type": "Particle_Edge",
         "id": 154,
         "position": [
-          85.8746846984391,
-          6.3900377154006405
+          85.875,
+          6.390625
         ],
         "rotation": 0.1886801690636803,
         "mass": 1.0,
@@ -4313,8 +4368,8 @@
         "particle_type": "Particle_Edge",
         "id": 155,
         "position": [
-          90.80874719843911,
-          7.507287715400641
+          90.8125,
+          7.5078125
         ],
         "rotation": 0.2736074042566684,
         "mass": 1.0,
@@ -4344,8 +4399,8 @@
         "particle_type": "Particle_Edge",
         "id": 156,
         "position": [
-          92.76074813229273,
-          8.05510847693376
+          92.75,
+          8.0546875
         ],
         "rotation": 0.2736074042566684,
         "mass": 1.0,
@@ -4375,8 +4430,8 @@
         "particle_type": "Particle_Edge",
         "id": 157,
         "position": [
-          94.71274906614636,
-          8.602929238466881
+          94.6875,
+          8.6015625
         ],
         "rotation": 0.2736074042566684,
         "mass": 1.0,
@@ -4406,8 +4461,8 @@
         "particle_type": "Particle_Edge",
         "id": 158,
         "position": [
-          86.31183084305698,
-          8.628061302578347
+          86.3125,
+          8.625
         ],
         "rotation": 2.5612501531428378,
         "mass": 1.0,
@@ -4437,8 +4492,8 @@
         "particle_type": "Particle_Edge",
         "id": 159,
         "position": [
-          83.76691542152848,
-          10.296655651289173
+          83.75,
+          10.296875
         ],
         "rotation": 2.5612501531428378,
         "mass": 1.0,
@@ -4468,8 +4523,8 @@
         "particle_type": "Particle_Edge",
         "id": 160,
         "position": [
-          97.25337499999999,
-          12.229
+          97.25,
+          12.2265625
         ],
         "rotation": 1.3818565139093044,
         "mass": 1.0,
@@ -4499,8 +4554,8 @@
         "particle_type": "Particle_Edge",
         "id": 161,
         "position": [
-          97.84199999999998,
-          15.30725
+          97.8125,
+          15.3046875
         ],
         "rotation": 1.3818565139093044,
         "mass": 1.0,
@@ -4530,8 +4585,8 @@
         "particle_type": "Particle_Edge",
         "id": 162,
         "position": [
-          98.43062499999999,
-          18.3855
+          98.4375,
+          18.390625
         ],
         "rotation": 1.3818565139093044,
         "mass": 1.0,
@@ -4561,8 +4616,8 @@
         "particle_type": "Particle_Edge",
         "id": 163,
         "position": [
-          95.2936,
-          11.87625
+          95.3125,
+          11.875
         ],
         "rotation": 2.036906497603991,
         "mass": 1.0,
@@ -4592,8 +4647,8 @@
         "particle_type": "Particle_Edge",
         "id": 164,
         "position": [
-          93.92245,
-          14.60175
+          93.9375,
+          14.6015625
         ],
         "rotation": 2.036906497603991,
         "mass": 1.0,
@@ -4623,8 +4678,8 @@
         "particle_type": "Particle_Edge",
         "id": 165,
         "position": [
-          92.55129999999998,
-          17.32725
+          92.5625,
+          17.328125
         ],
         "rotation": 2.036906497603991,
         "mass": 1.0,
@@ -4654,8 +4709,8 @@
         "particle_type": "Particle_Edge",
         "id": 166,
         "position": [
-          91.18014999999998,
-          20.05275
+          91.1875,
+          20.046875
         ],
         "rotation": 2.036906497603991,
         "mass": 1.0,
@@ -4685,8 +4740,8 @@
         "particle_type": "Particle_Edge",
         "id": 167,
         "position": [
-          82.93939999999999,
-          14.127849999999999
+          82.9375,
+          14.125
         ],
         "rotation": 0.8996408147865969,
         "mass": 1.0,
@@ -4716,8 +4771,8 @@
         "particle_type": "Particle_Edge",
         "id": 168,
         "position": [
-          84.65679999999999,
-          16.29045
+          84.6875,
+          16.296875
         ],
         "rotation": 0.8996408147865969,
         "mass": 1.0,
@@ -4747,8 +4802,8 @@
         "particle_type": "Particle_Edge",
         "id": 169,
         "position": [
-          86.37419999999999,
-          18.453049999999998
+          86.375,
+          18.453125
         ],
         "rotation": 0.8996408147865969,
         "mass": 1.0,
@@ -4778,8 +4833,8 @@
         "particle_type": "Particle_Edge",
         "id": 170,
         "position": [
-          88.09159999999999,
-          20.615650000000002
+          88.0625,
+          20.609375
         ],
         "rotation": 0.8996408147865969,
         "mass": 1.0,
@@ -4809,8 +4864,8 @@
         "particle_type": "Particle_Edge",
         "id": 171,
         "position": [
-          95.94916666666666,
-          21.901916666666665
+          95.9375,
+          21.90625
         ],
         "rotation": 2.999828605502164,
         "mass": 1.0,
@@ -4840,8 +4895,8 @@
         "particle_type": "Particle_Edge",
         "id": 172,
         "position": [
-          92.87908333333331,
-          22.340083333333332
+          92.875,
+          22.34375
         ],
         "rotation": 2.999828605502164,
         "mass": 1.0,
@@ -4871,8 +4926,8 @@
         "particle_type": "Particle_Edge",
         "id": 173,
         "position": [
-          99.15775,
-          24.37925
+          99.1875,
+          24.375
         ],
         "rotation": 1.523327296915501,
         "mass": 1.0,
@@ -4902,8 +4957,8 @@
         "particle_type": "Particle_Edge",
         "id": 174,
         "position": [
-          99.29624999999999,
-          27.294749999999997
+          99.3125,
+          27.296875
         ],
         "rotation": 1.523327296915501,
         "mass": 1.0,
@@ -4933,8 +4988,8 @@
         "particle_type": "Particle_Edge",
         "id": 175,
         "position": [
-          91.73414999999999,
-          24.26465
+          91.75,
+          24.265625
         ],
         "rotation": 0.6574930244681428,
         "mass": 1.0,
@@ -4964,8 +5019,8 @@
         "particle_type": "Particle_Edge",
         "id": 176,
         "position": [
-          93.65929999999999,
-          25.75105
+          93.6875,
+          25.75
         ],
         "rotation": 0.6574930244681428,
         "mass": 1.0,
@@ -4995,8 +5050,8 @@
         "particle_type": "Particle_Edge",
         "id": 177,
         "position": [
-          95.58444999999999,
-          27.23745
+          95.5625,
+          27.234375
         ],
         "rotation": 0.6574930244681428,
         "mass": 1.0,
@@ -5026,8 +5081,8 @@
         "particle_type": "Particle_Edge",
         "id": 178,
         "position": [
-          97.50959999999999,
-          28.72385
+          97.5,
+          28.71875
         ],
         "rotation": 0.6574930244681428,
         "mass": 1.0,
@@ -5057,8 +5112,8 @@
         "particle_type": "Particle_Edge",
         "id": 179,
         "position": [
-          98.04974999999999,
-          31.708583333333333
+          98.0625,
+          31.703125
         ],
         "rotation": 2.3169083557077665,
         "mass": 1.0,
@@ -5088,8 +5143,8 @@
         "particle_type": "Particle_Edge",
         "id": 180,
         "position": [
-          96.66475,
-          33.206916666666665
+          96.6875,
+          33.21875
         ],
         "rotation": 2.3169083557077665,
         "mass": 1.0,
@@ -5119,8 +5174,8 @@
         "particle_type": "Particle_Edge",
         "id": 181,
         "position": [
-          95.5983,
-          37.64665
+          95.625,
+          37.65625
         ],
         "rotation": 1.4629180012025322,
         "mass": 1.0,
@@ -5150,8 +5205,8 @@
         "particle_type": "Particle_Edge",
         "id": 182,
         "position": [
-          95.91685,
-          40.58805
+          95.9375,
+          40.59375
         ],
         "rotation": 1.4629180012025322,
         "mass": 1.0,
@@ -5181,8 +5236,8 @@
         "particle_type": "Particle_Edge",
         "id": 183,
         "position": [
-          96.23539999999998,
-          43.52945
+          96.25,
+          43.53125
         ],
         "rotation": 1.4629180012025322,
         "mass": 1.0,
@@ -5212,8 +5267,8 @@
         "particle_type": "Particle_Edge",
         "id": 184,
         "position": [
-          96.55394999999999,
-          46.47085
+          96.5625,
+          46.46875
         ],
         "rotation": 1.4629180012025322,
         "mass": 1.0,
@@ -5243,8 +5298,8 @@
         "particle_type": "Particle_Edge",
         "id": 185,
         "position": [
-          94.07941666666666,
-          48.6905
+          94.0625,
+          48.6875
         ],
         "rotation": -2.8887180717725123,
         "mass": 1.0,
@@ -5274,7 +5329,7 @@
         "particle_type": "Particle_Edge",
         "id": 186,
         "position": [
-          91.28633333333332,
+          91.3125,
           47.96875
         ],
         "rotation": -2.8887180717725123,
@@ -5305,8 +5360,8 @@
         "particle_type": "Particle_Edge",
         "id": 187,
         "position": [
-          83.50725,
-          41.9270625
+          83.5,
+          41.9375
         ],
         "rotation": 0.817789268483336,
         "mass": 1.0,
@@ -5336,8 +5391,8 @@
         "particle_type": "Particle_Edge",
         "id": 188,
         "position": [
-          85.16924999999999,
-          43.700374999999994
+          85.1875,
+          43.6875
         ],
         "rotation": 0.817789268483336,
         "mass": 1.0,
@@ -5367,8 +5422,8 @@
         "particle_type": "Particle_Edge",
         "id": 189,
         "position": [
-          86.83124999999998,
-          45.4736875
+          86.8125,
+          45.46875
         ],
         "rotation": 0.817789268483336,
         "mass": 1.0,
@@ -5398,8 +5453,8 @@
         "particle_type": "Particle_Edge",
         "id": 190,
         "position": [
-          92.53744999999999,
-          36.34895
+          92.5625,
+          36.34375
         ],
         "rotation": 2.7997173967152995,
         "mass": 1.0,
@@ -5429,8 +5484,8 @@
         "particle_type": "Particle_Edge",
         "id": 191,
         "position": [
-          89.86439999999999,
-          37.30015
+          89.875,
+          37.3125
         ],
         "rotation": 2.7997173967152995,
         "mass": 1.0,
@@ -5460,8 +5515,8 @@
         "particle_type": "Particle_Edge",
         "id": 192,
         "position": [
-          87.19135,
-          38.251349999999995
+          87.1875,
+          38.25
         ],
         "rotation": 2.7997173967152995,
         "mass": 1.0,
@@ -5491,8 +5546,8 @@
         "particle_type": "Particle_Edge",
         "id": 193,
         "position": [
-          84.5183,
-          39.202549999999995
+          84.5,
+          39.1875
         ],
         "rotation": 2.7997173967152995,
         "mass": 1.0,
@@ -5522,8 +5577,8 @@
         "particle_type": "Particle_Edge",
         "id": 194,
         "position": [
-          94.86589966651809,
-          51.792813823907316
+          94.875,
+          51.78125
         ],
         "rotation": 2.271159675997779,
         "mass": 1.0,
@@ -5553,8 +5608,8 @@
         "particle_type": "Particle_Edge",
         "id": 195,
         "position": [
-          92.85929933303619,
-          54.17337764781463
+          92.875,
+          54.1875
         ],
         "rotation": 2.271159675997779,
         "mass": 1.0,
@@ -5584,8 +5639,8 @@
         "particle_type": "Particle_Edge",
         "id": 196,
         "position": [
-          90.85269899955428,
-          56.553941471721956
+          90.875,
+          56.5625
         ],
         "rotation": 2.271159675997779,
         "mass": 1.0,
@@ -5615,8 +5670,8 @@
         "particle_type": "Particle_Edge",
         "id": 197,
         "position": [
-          88.84609866607238,
-          58.93450529562927
+          88.875,
+          58.9375
         ],
         "rotation": 2.271159675997779,
         "mass": 1.0,
@@ -5646,8 +5701,8 @@
         "particle_type": "Particle_Edge",
         "id": 198,
         "position": [
-          79.92160665474843,
-          50.45247221311756
+          79.9375,
+          50.4375
         ],
         "rotation": 1.0037179413873178,
         "mass": 1.0,
@@ -5677,8 +5732,8 @@
         "particle_type": "Particle_Edge",
         "id": 199,
         "position": [
-          81.65107957420895,
-          53.16812143972231
+          81.625,
+          53.15625
         ],
         "rotation": 1.0037179413873178,
         "mass": 1.0,
@@ -5708,8 +5763,8 @@
         "particle_type": "Particle_Edge",
         "id": 200,
         "position": [
-          83.38055249366946,
-          55.883770666327074
+          83.375,
+          55.875
         ],
         "rotation": 1.0037179413873178,
         "mass": 1.0,
@@ -5739,8 +5794,8 @@
         "particle_type": "Particle_Edge",
         "id": 201,
         "position": [
-          85.11002541312997,
-          58.599419892931834
+          85.125,
+          58.59375
         ],
         "rotation": 1.0037179413873178,
         "mass": 1.0,
@@ -5770,8 +5825,8 @@
         "particle_type": "Particle_Edge",
         "id": 202,
         "position": [
-          85.91797093382198,
-          47.3694557466282
+          85.9375,
+          47.375
         ],
         "rotation": 3.0940779665508624,
         "mass": 1.0,
@@ -5801,8 +5856,8 @@
         "particle_type": "Particle_Edge",
         "id": 203,
         "position": [
-          83.34269186764396,
-          47.491911493256396
+          83.3125,
+          47.5
         ],
         "rotation": 3.0940779665508624,
         "mass": 1.0,
@@ -5832,8 +5887,8 @@
         "particle_type": "Particle_Edge",
         "id": 204,
         "position": [
-          80.76741280146594,
-          47.6143672398846
+          80.75,
+          47.625
         ],
         "rotation": 3.0940779665508624,
         "mass": 1.0,
@@ -5863,8 +5918,8 @@
         "particle_type": "Particle_Edge",
         "id": 205,
         "position": [
-          79.40983915685861,
-          45.20913199100853
+          79.4375,
+          45.21875
         ],
         "rotation": -1.1218581408794475,
         "mass": 1.0,
@@ -5894,8 +5949,8 @@
         "particle_type": "Particle_Edge",
         "id": 206,
         "position": [
-          80.62754457842931,
-          42.68144099550426
+          80.625,
+          42.6875
         ],
         "rotation": -1.1218581408794475,
         "mass": 1.0,
@@ -5925,8 +5980,8 @@
         "particle_type": "Particle_Edge",
         "id": 207,
         "position": [
-          75.4174872207991,
-          47.15907802865925
+          75.4375,
+          47.15625
         ],
         "rotation": -2.936303101452564,
         "mass": 1.0,
@@ -5956,8 +6011,8 @@
         "particle_type": "Particle_Edge",
         "id": 208,
         "position": [
-          72.6428407063103,
-          46.58133307080571
+          72.625,
+          46.59375
         ],
         "rotation": -2.936303101452564,
         "mass": 1.0,
@@ -5987,8 +6042,8 @@
         "particle_type": "Particle_Edge",
         "id": 209,
         "position": [
-          69.86819419182149,
-          46.00358811295217
+          69.875,
+          46.0
         ],
         "rotation": -2.936303101452564,
         "mass": 1.0,
@@ -6018,8 +6073,8 @@
         "particle_type": "Particle_Edge",
         "id": 210,
         "position": [
-          76.62607557987093,
-          50.31588697716107
+          76.625,
+          50.3125
         ],
         "rotation": 2.116507438496437,
         "mass": 1.0,
@@ -6049,8 +6104,8 @@
         "particle_type": "Particle_Edge",
         "id": 211,
         "position": [
-          75.06001742445393,
-          52.894950967809336
+          75.0625,
+          52.90625
         ],
         "rotation": 2.116507438496437,
         "mass": 1.0,
@@ -6080,8 +6135,8 @@
         "particle_type": "Particle_Edge",
         "id": 212,
         "position": [
-          73.49395926903692,
-          55.47401495845761
+          73.5,
+          55.46875
         ],
         "rotation": 2.116507438496437,
         "mass": 1.0,
@@ -6111,8 +6166,8 @@
         "particle_type": "Particle_Edge",
         "id": 213,
         "position": [
-          71.92790111361992,
-          58.05307894910588
+          71.9375,
+          58.0625
         ],
         "rotation": 2.116507438496437,
         "mass": 1.0,
@@ -6142,8 +6197,8 @@
         "particle_type": "Particle_Edge",
         "id": 214,
         "position": [
-          68.28511366514995,
-          58.47995060603388
+          68.3125,
+          58.46875
         ],
         "rotation": -2.3383518723706707,
         "mass": 1.0,
@@ -6173,8 +6228,8 @@
         "particle_type": "Particle_Edge",
         "id": 215,
         "position": [
-          66.20838437209697,
-          56.327758272313616
+          66.1875,
+          56.3125
         ],
         "rotation": -2.3383518723706707,
         "mass": 1.0,
@@ -6204,8 +6259,8 @@
         "particle_type": "Particle_Edge",
         "id": 216,
         "position": [
-          64.131655079044,
-          54.17556593859335
+          64.125,
+          54.1875
         ],
         "rotation": -2.3383518723706707,
         "mass": 1.0,
@@ -6235,8 +6290,8 @@
         "particle_type": "Particle_Edge",
         "id": 217,
         "position": [
-          65.41400704688544,
-          47.625019971690115
+          65.4375,
+          47.625
         ],
         "rotation": 2.223016347428322,
         "mass": 1.0,
@@ -6266,8 +6321,8 @@
         "particle_type": "Particle_Edge",
         "id": 218,
         "position": [
-          63.73446641643823,
-          49.8241967882816
+          63.75,
+          49.8125
         ],
         "rotation": 2.223016347428322,
         "mass": 1.0,
@@ -6297,8 +6352,8 @@
         "particle_type": "Particle_Edge",
         "id": 219,
         "position": [
-          59.88547362879282,
-          52.83536988389847
+          59.875,
+          52.84375
         ],
         "rotation": 2.853736588772398,
         "mass": 1.0,
@@ -6328,8 +6383,8 @@
         "particle_type": "Particle_Edge",
         "id": 220,
         "position": [
-          56.06676347159462,
-          52.88617016292387
+          56.0625,
+          52.875
         ],
         "rotation": 3.3947886568906402,
         "mass": 1.0,
@@ -6359,8 +6414,8 @@
         "particle_type": "Particle_Edge",
         "id": 221,
         "position": [
-          53.0092493143964,
-          50.97054744194924
+          53.0,
+          50.96875
         ],
         "rotation": 4.040560480128542,
         "mass": 1.0,
@@ -6390,8 +6445,8 @@
         "particle_type": "Particle_Edge",
         "id": 222,
         "position": [
-          51.442410657198195,
-          47.08850172097464
+          51.4375,
+          47.09375
         ],
         "rotation": 4.599065840766727,
         "mass": 1.0,
@@ -6421,8 +6476,8 @@
         "particle_type": "Particle_Edge",
         "id": 223,
         "position": [
-          65.88071664186613,
-          42.66254302407892
+          65.875,
+          42.65625
         ],
         "rotation": 4.163421116977986,
         "mass": 1.0,
@@ -6452,8 +6507,8 @@
         "particle_type": "Particle_Edge",
         "id": 224,
         "position": [
-          63.84325660639959,
-          39.645510893059175
+          63.84375,
+          39.65625
         ],
         "rotation": 4.093607946898214,
         "mass": 1.0,
@@ -6483,8 +6538,8 @@
         "particle_type": "Particle_Edge",
         "id": 225,
         "position": [
-          61.425198570933055,
-          36.94564376203945
+          61.4375,
+          36.9375
         ],
         "rotation": 3.8841684366588938,
         "mass": 1.0,
@@ -6514,8 +6569,8 @@
         "particle_type": "Particle_Edge",
         "id": 226,
         "position": [
-          58.658259035466536,
-          34.81667363101973
+          58.65625,
+          34.8125
         ],
         "rotation": 3.727088803979404,
         "mass": 1.0,
@@ -6545,8 +6600,8 @@
         "particle_type": "Particle_Edge",
         "id": 227,
         "position": [
-          70.04388814186613,
-          44.3714245240789
+          70.0625,
+          44.375
         ],
         "rotation": -0.3432420425324007,
         "mass": 1.0,
@@ -6576,8 +6631,8 @@
         "particle_type": "Particle_Edge",
         "id": 228,
         "position": [
-          72.9942286063996,
-          43.317005893059175
+          73.0,
+          43.3125
         ],
         "rotation": -0.3432420425324007,
         "mass": 1.0,
@@ -6607,8 +6662,8 @@
         "particle_type": "Particle_Edge",
         "id": 229,
         "position": [
-          75.94456907093306,
-          42.262587262039446
+          75.9375,
+          42.25
         ],
         "rotation": -0.3432420425324007,
         "mass": 1.0,
@@ -6638,8 +6693,8 @@
         "particle_type": "Particle_Edge",
         "id": 230,
         "position": [
-          78.89490953546652,
-          41.208168631019724
+          78.875,
+          41.21875
         ],
         "rotation": -0.3432420425324007,
         "mass": 1.0,
@@ -6669,8 +6724,8 @@
         "particle_type": "Particle_Edge",
         "id": 231,
         "position": [
-          58.819624999999995,
-          32.123250000000006
+          58.8125,
+          32.125
         ],
         "rotation": 2.6659838925575774,
         "mass": 1.0,
@@ -6700,8 +6755,8 @@
         "particle_type": "Particle_Edge",
         "id": 232,
         "position": [
-          55.0455,
-          36.10237500000001
+          55.03125,
+          36.09375
         ],
         "rotation": 2.037549741494711,
         "mass": 1.0,
@@ -6731,8 +6786,8 @@
         "particle_type": "Particle_Edge",
         "id": 233,
         "position": [
-          53.6605,
-          38.851000000000006
+          53.65625,
+          38.84375
         ],
         "rotation": 2.037549741494711,
         "mass": 1.0,
@@ -6762,8 +6817,8 @@
         "particle_type": "Particle_Edge",
         "id": 234,
         "position": [
-          52.275499999999994,
-          41.599625
+          52.28125,
+          41.59375
         ],
         "rotation": 2.037549741494711,
         "mass": 1.0,
@@ -6793,8 +6848,8 @@
         "particle_type": "Particle_Edge",
         "id": 235,
         "position": [
-          53.62587499999999,
-          33.773250000000004
+          53.625,
+          33.78125
         ],
         "rotation": 2.993119002097554,
         "mass": 1.0,
@@ -6824,8 +6879,8 @@
         "particle_type": "Particle_Edge",
         "id": 236,
         "position": [
-          50.82124999999999,
-          34.19275
+          50.8125,
+          34.1875
         ],
         "rotation": 2.993119002097554,
         "mass": 1.0,
@@ -6855,8 +6910,8 @@
         "particle_type": "Particle_Edge",
         "id": 237,
         "position": [
-          48.016625,
-          34.61224999999999
+          48.03125,
+          34.625
         ],
         "rotation": 2.993119002097554,
         "mass": 1.0,
@@ -6886,8 +6941,8 @@
         "particle_type": "Particle_Edge",
         "id": 238,
         "position": [
-          43.44875860814949,
-          36.338182676000685
+          43.4375,
+          36.34375
         ],
         "rotation": 2.5039237730704436,
         "mass": 1.0,
@@ -6917,8 +6972,8 @@
         "particle_type": "Particle_Edge",
         "id": 239,
         "position": [
-          41.68551721629899,
-          37.64461535200139
+          41.6875,
+          37.65625
         ],
         "rotation": 2.5039237730704436,
         "mass": 1.0,
@@ -6948,8 +7003,8 @@
         "particle_type": "Particle_Edge",
         "id": 240,
         "position": [
-          41.01083333333333,
-          30.68225
+          41.0,
+          30.6875
         ],
         "rotation": 0.8027439987657384,
         "mass": 1.0,
@@ -6979,8 +7034,8 @@
         "particle_type": "Particle_Edge",
         "id": 241,
         "position": [
-          43.11141666666666,
-          32.85699999999999
+          43.125,
+          32.84375
         ],
         "rotation": 0.8027439987657384,
         "mass": 1.0,
@@ -7010,8 +7065,8 @@
         "particle_type": "Particle_Edge",
         "id": 242,
         "position": [
-          46.60605394886462,
-          28.90621640957035
+          46.59375,
+          28.90625
         ],
         "rotation": 1.7945658675619192,
         "mass": 1.0,
@@ -7041,8 +7096,8 @@
         "particle_type": "Particle_Edge",
         "id": 243,
         "position": [
-          45.90902697443231,
-          31.96898320478517
+          45.90625,
+          31.96875
         ],
         "rotation": 1.7945658675619192,
         "mass": 1.0,
@@ -7072,8 +7127,8 @@
         "particle_type": "Particle_Edge",
         "id": 244,
         "position": [
-          44.50547061553129,
-          26.73146640957036
+          44.5,
+          26.734375
         ],
         "rotation": 2.834232024262067,
         "mass": 1.0,
@@ -7103,8 +7158,8 @@
         "particle_type": "Particle_Edge",
         "id": 245,
         "position": [
-          41.70786030776564,
-          27.61948320478518
+          41.71875,
+          27.625
         ],
         "rotation": 2.834232024262067,
         "mass": 1.0,
@@ -7134,8 +7189,8 @@
         "particle_type": "Particle_Edge",
         "id": 246,
         "position": [
-          38.01,
-          25.588250000000002
+          38.0,
+          25.59375
         ],
         "rotation": -1.869927008244385,
         "mass": 1.0,
@@ -7165,8 +7220,8 @@
         "particle_type": "Particle_Edge",
         "id": 247,
         "position": [
-          37.10974999999999,
-          22.669
+          37.125,
+          22.671875
         ],
         "rotation": -1.869927008244385,
         "mass": 1.0,
@@ -7196,8 +7251,8 @@
         "particle_type": "Particle_Edge",
         "id": 248,
         "position": [
-          38.56446873476783,
-          19.205671957479918
+          38.5625,
+          19.203125
         ],
         "rotation": -0.22705029444009192,
         "mass": 1.0,
@@ -7227,8 +7282,8 @@
         "particle_type": "Particle_Edge",
         "id": 249,
         "position": [
-          40.919437469535666,
-          18.66159391495984
+          40.90625,
+          18.65625
         ],
         "rotation": -0.22705029444009192,
         "mass": 1.0,
@@ -7258,8 +7313,8 @@
         "particle_type": "Particle_Edge",
         "id": 250,
         "position": [
-          43.27440620430351,
-          18.11751587243976
+          43.28125,
+          18.125
         ],
         "rotation": -0.22705029444009192,
         "mass": 1.0,
@@ -7289,8 +7344,8 @@
         "particle_type": "Particle_Edge",
         "id": 251,
         "position": [
-          45.62937493907135,
-          17.573437829919683
+          45.625,
+          17.578125
         ],
         "rotation": -0.22705029444009192,
         "mass": 1.0,
@@ -7320,8 +7375,8 @@
         "particle_type": "Particle_Edge",
         "id": 252,
         "position": [
-          50.79972911589279,
-          16.133156524933067
+          50.8125,
+          16.140625
         ],
         "rotation": -0.30818140490774043,
         "mass": 1.0,
@@ -7351,8 +7406,8 @@
         "particle_type": "Particle_Edge",
         "id": 253,
         "position": [
-          53.61511455794639,
-          15.236953262466534
+          53.625,
+          15.234375
         ],
         "rotation": -0.30818140490774043,
         "mass": 1.0,
@@ -7382,8 +7437,8 @@
         "particle_type": "Particle_Edge",
         "id": 254,
         "position": [
-          47.7572560903251,
-          19.967389729718246
+          47.75,
+          19.96875
         ],
         "rotation": 1.6479354252595306,
         "mass": 1.0,
@@ -7413,8 +7468,8 @@
         "particle_type": "Particle_Edge",
         "id": 255,
         "position": [
-          47.530168506811016,
-          22.905419672036892
+          47.53125,
+          22.90625
         ],
         "rotation": 1.6479354252595306,
         "mass": 1.0,
@@ -7444,8 +7499,8 @@
         "particle_type": "Particle_Edge",
         "id": 256,
         "position": [
-          61.46768980611746,
-          20.165761780227054
+          61.46875,
+          20.171875
         ],
         "rotation": 2.564051578345,
         "mass": 1.0,
@@ -7475,8 +7530,8 @@
         "particle_type": "Particle_Edge",
         "id": 257,
         "position": [
-          59.41648212714368,
-          21.502451133697555
+          59.40625,
+          21.5
         ],
         "rotation": 2.564051578345,
         "mass": 1.0,
@@ -7506,8 +7561,8 @@
         "particle_type": "Particle_Edge",
         "id": 258,
         "position": [
-          57.3652744481699,
-          22.839140487168052
+          57.375,
+          22.84375
         ],
         "rotation": 2.564051578345,
         "mass": 1.0,
@@ -7537,8 +7592,8 @@
         "particle_type": "Particle_Edge",
         "id": 259,
         "position": [
-          61.78628687127281,
-          27.87683060668914
+          61.78125,
+          27.875
         ],
         "rotation": -1.3815907825048592,
         "mass": 1.0,
@@ -7568,8 +7623,8 @@
         "particle_type": "Particle_Edge",
         "id": 260,
         "position": [
-          62.36382374254562,
-          24.86091121337828
+          62.375,
+          24.859375
         ],
         "rotation": -1.3815907825048592,
         "mass": 1.0,
@@ -7599,8 +7654,8 @@
         "particle_type": "Particle_Edge",
         "id": 261,
         "position": [
-          62.94136061381844,
-          21.84499182006742
+          62.9375,
+          21.84375
         ],
         "rotation": -1.3815907825048592,
         "mass": 1.0,
@@ -7630,8 +7685,8 @@
         "particle_type": "Particle_Edge",
         "id": 262,
         "position": [
-          59.243855589732036,
-          28.653776613546185
+          59.25,
+          28.65625
         ],
         "rotation": -2.2910897721846046,
         "mass": 1.0,
@@ -7661,8 +7716,8 @@
         "particle_type": "Particle_Edge",
         "id": 263,
         "position": [
-          57.27896117946407,
-          26.414803227092367
+          57.28125,
+          26.421875
         ],
         "rotation": -2.2910897721846046,
         "mass": 1.0,
@@ -7692,8 +7747,8 @@
         "particle_type": "Particle_Edge",
         "id": 264,
         "position": [
-          52.643738153896386,
-          24.731703098544212
+          52.65625,
+          24.734375
         ],
         "rotation": 2.9363570569170405,
         "mass": 1.0,
@@ -7723,8 +7778,8 @@
         "particle_type": "Particle_Edge",
         "id": 265,
         "position": [
-          49.973409538596655,
-          25.287576356449872
+          49.96875,
+          25.28125
         ],
         "rotation": 2.9363570569170405,
         "mass": 1.0,
@@ -7754,8 +7809,8 @@
         "particle_type": "Particle_Edge",
         "id": 266,
         "position": [
-          55.686211179464074,
-          27.2351365604257
+          55.6875,
+          27.234375
         ],
         "rotation": 1.4497476656838204,
         "mass": 1.0,
@@ -7785,8 +7840,8 @@
         "particle_type": "Particle_Edge",
         "id": 267,
         "position": [
-          56.05835558973203,
-          30.294443280212853
+          56.0625,
+          30.296875
         ],
         "rotation": 1.4497476656838204,
         "mass": 1.0,
@@ -7816,8 +7871,8 @@
         "particle_type": "Particle_Edge",
         "id": 268,
         "position": [
-          44.39545016666667,
-          45.848629833333334
+          44.40625,
+          45.84375
         ],
         "rotation": 6.224621248768515,
         "mass": 1.0,
@@ -7847,8 +7902,8 @@
         "particle_type": "Particle_Edge",
         "id": 269,
         "position": [
-          48.48346233333334,
-          45.62176216666667
+          48.46875,
+          45.625
         ],
         "rotation": 6.207167956248572,
         "mass": 1.0,
@@ -7878,8 +7933,8 @@
         "particle_type": "Particle_Edge",
         "id": 270,
         "position": [
-          39.26801763022806,
-          45.814635861155914
+          39.28125,
+          45.8125
         ],
         "rotation": 3.0305658676525034,
         "mass": 1.0,
@@ -7909,8 +7964,8 @@
         "particle_type": "Particle_Edge",
         "id": 271,
         "position": [
-          37.340535260456114,
-          46.02952172231183
+          37.34375,
+          46.03125
         ],
         "rotation": 3.0305658676525034,
         "mass": 1.0,
@@ -7940,8 +7995,8 @@
         "particle_type": "Particle_Edge",
         "id": 272,
         "position": [
-          35.41305289068417,
-          46.24440758346775
+          35.40625,
+          46.25
         ],
         "rotation": 3.0305658676525034,
         "mass": 1.0,
@@ -7972,7 +8027,7 @@
         "id": 273,
         "position": [
           32.0,
-          44.29282879173388
+          44.28125
         ],
         "rotation": 1.0471975511965976,
         "mass": 1.0,
@@ -8002,8 +8057,8 @@
         "particle_type": "Particle_Edge",
         "id": 274,
         "position": [
-          29.936518939481175,
-          46.79552718856363
+          29.9375,
+          46.78125
         ],
         "rotation": -3.140649123325154,
         "mass": 1.0,
@@ -8033,8 +8088,8 @@
         "particle_type": "Particle_Edge",
         "id": 275,
         "position": [
-          26.88373498827817,
-          46.792646793659515
+          26.890625,
+          46.78125
         ],
         "rotation": -3.140649123325154,
         "mass": 1.0,
@@ -8064,8 +8119,8 @@
         "particle_type": "Particle_Edge",
         "id": 276,
         "position": [
-          23.005194023852464,
-          40.99495324518199
+          23.0,
+          41.0
         ],
         "rotation": 1.4292499427297056,
         "mass": 1.0,
@@ -8095,8 +8150,8 @@
         "particle_type": "Particle_Edge",
         "id": 277,
         "position": [
-          23.418072530463817,
-          43.89235982196869
+          23.421875,
+          43.90625
         ],
         "rotation": 1.4292499427297056,
         "mass": 1.0,
@@ -8126,8 +8181,8 @@
         "particle_type": "Particle_Edge",
         "id": 278,
         "position": [
-          23.012216549136028,
-          49.91261350801889
+          23.015625,
+          49.90625
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -8157,8 +8212,8 @@
         "particle_type": "Particle_Edge",
         "id": 279,
         "position": [
-          21.777982061196894,
-          52.89696061728237
+          21.78125,
+          52.90625
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -8188,8 +8243,8 @@
         "particle_type": "Particle_Edge",
         "id": 280,
         "position": [
-          20.335997573257742,
-          55.673557726545866
+          20.34375,
+          55.6875
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -8219,8 +8274,8 @@
         "particle_type": "Particle_Edge",
         "id": 281,
         "position": [
-          18.74789558531861,
-          59.201517335809335
+          18.75,
+          59.1875
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -8250,8 +8305,8 @@
         "particle_type": "Particle_Edge",
         "id": 282,
         "position": [
-          19.74471034482741,
-          37.32661444559686
+          19.75,
+          37.3125
         ],
         "rotation": -2.8772005209190237,
         "mass": 1.0,
@@ -8281,8 +8336,8 @@
         "particle_type": "Particle_Edge",
         "id": 283,
         "position": [
-          16.897105172413703,
-          36.55568222279843
+          16.890625,
+          36.5625
         ],
         "rotation": -2.8772005209190237,
         "mass": 1.0,
@@ -8312,8 +8367,8 @@
         "particle_type": "Particle_Edge",
         "id": 284,
         "position": [
-          17.425437499999997,
-          35.337125
+          17.421875,
+          35.34375
         ],
         "rotation": -0.13182386190461892,
         "mass": 1.0,
@@ -8343,8 +8398,8 @@
         "particle_type": "Particle_Edge",
         "id": 285,
         "position": [
-          20.801375,
-          34.8895
+          20.796875,
+          34.875
         ],
         "rotation": -0.13182386190461892,
         "mass": 1.0,
@@ -8374,8 +8429,8 @@
         "particle_type": "Particle_Edge",
         "id": 286,
         "position": [
-          24.1773125,
-          34.441874999999996
+          24.171875,
+          34.4375
         ],
         "rotation": -0.13182386190461892,
         "mass": 1.0,
@@ -8405,8 +8460,8 @@
         "particle_type": "Particle_Edge",
         "id": 287,
         "position": [
-          25.072782758620555,
-          36.045898334197645
+          25.078125,
+          36.03125
         ],
         "rotation": 2.4505314633940323,
         "mass": 1.0,
@@ -8436,8 +8491,8 @@
         "particle_type": "Particle_Edge",
         "id": 288,
         "position": [
-          28.75358333333333,
-          36.77658333333333
+          28.75,
+          36.78125
         ],
         "rotation": 1.1635068099533894,
         "mass": 1.0,
@@ -8467,8 +8522,8 @@
         "particle_type": "Particle_Edge",
         "id": 289,
         "position": [
-          29.953916666666665,
-          39.55891666666667
+          29.953125,
+          39.5625
         ],
         "rotation": 1.1635068099533894,
         "mass": 1.0,
@@ -8498,8 +8553,8 @@
         "particle_type": "Particle_Edge",
         "id": 290,
         "position": [
-          28.30027183908037,
-          40.92668222279843
+          28.296875,
+          40.9375
         ],
         "rotation": -2.6814329240867156,
         "mass": 1.0,
@@ -8529,8 +8584,8 @@
         "particle_type": "Particle_Edge",
         "id": 291,
         "position": [
-          25.446293678160743,
-          39.51211444559686
+          25.453125,
+          39.5
         ],
         "rotation": -2.6814329240867156,
         "mass": 1.0,
@@ -8560,8 +8615,8 @@
         "particle_type": "Particle_Edge",
         "id": 292,
         "position": [
-          37.61128484652705,
-          41.56683454649064
+          37.625,
+          41.5625
         ],
         "rotation": 2.294408143160364,
         "mass": 1.0,
@@ -8591,8 +8646,8 @@
         "particle_type": "Particle_Edge",
         "id": 293,
         "position": [
-          35.300293868605614,
-          44.1826210649792
+          35.3125,
+          44.1875
         ],
         "rotation": 2.294408143160364,
         "mass": 1.0,
@@ -8622,8 +8677,8 @@
         "particle_type": "Particle_Edge",
         "id": 294,
         "position": [
-          36.99960054963232,
-          40.08111535200139
+          37.0,
+          40.09375
         ],
         "rotation": 2.7726431627222583,
         "mass": 1.0,
@@ -8653,8 +8708,8 @@
         "particle_type": "Particle_Edge",
         "id": 295,
         "position": [
-          34.07692527481616,
-          41.211182676000696
+          34.0625,
+          41.21875
         ],
         "rotation": 2.7726431627222583,
         "mass": 1.0,
@@ -8684,8 +8739,8 @@
         "particle_type": "Particle_Edge",
         "id": 296,
         "position": [
-          36.830019368336366,
-          37.71184852100156
+          36.84375,
+          37.71875
         ],
         "rotation": -2.7604460966982627,
         "mass": 1.0,
@@ -8715,8 +8770,8 @@
         "particle_type": "Particle_Edge",
         "id": 297,
         "position": [
-          33.73776291222424,
-          36.472649014001036
+          33.75,
+          36.46875
         ],
         "rotation": -2.7604460966982627,
         "mass": 1.0,
@@ -8746,8 +8801,8 @@
         "particle_type": "Particle_Edge",
         "id": 298,
         "position": [
-          30.64550645611212,
-          35.233449507000515
+          30.640625,
+          35.21875
         ],
         "rotation": -2.7604460966982627,
         "mass": 1.0,
@@ -8777,8 +8832,8 @@
         "particle_type": "Particle_Edge",
         "id": 299,
         "position": [
-          34.478249999999996,
-          22.59865
+          34.46875,
+          22.59375
         ],
         "rotation": 2.1168515628016094,
         "mass": 1.0,
@@ -8808,8 +8863,8 @@
         "particle_type": "Particle_Edge",
         "id": 300,
         "position": [
-          32.74699999999999,
-          25.447549999999996
+          32.75,
+          25.453125
         ],
         "rotation": 2.1168515628016094,
         "mass": 1.0,
@@ -8839,8 +8894,8 @@
         "particle_type": "Particle_Edge",
         "id": 301,
         "position": [
-          31.015749999999997,
-          28.296449999999997
+          31.015625,
+          28.296875
         ],
         "rotation": 2.1168515628016094,
         "mass": 1.0,
@@ -8870,8 +8925,8 @@
         "particle_type": "Particle_Edge",
         "id": 302,
         "position": [
-          29.284499999999998,
-          31.145349999999993
+          29.28125,
+          31.140625
         ],
         "rotation": 2.1168515628016094,
         "mass": 1.0,
@@ -8901,8 +8956,8 @@
         "particle_type": "Particle_Edge",
         "id": 303,
         "position": [
-          15.47937011148556,
-          32.50081260824477
+          15.4765625,
+          32.5
         ],
         "rotation": -1.1601386619297622,
         "mass": 1.0,
@@ -8932,8 +8987,8 @@
         "particle_type": "Particle_Edge",
         "id": 304,
         "position": [
-          16.90924022297112,
-          29.216875216489548
+          16.90625,
+          29.21875
         ],
         "rotation": -1.1601386619297622,
         "mass": 1.0,
@@ -8963,8 +9018,8 @@
         "particle_type": "Particle_Edge",
         "id": 305,
         "position": [
-          18.339110334456684,
-          25.93293782473432
+          18.34375,
+          25.9375
         ],
         "rotation": -1.1601386619297622,
         "mass": 1.0,
@@ -8994,8 +9049,8 @@
         "particle_type": "Particle_Edge",
         "id": 306,
         "position": [
-          19.768980445942248,
-          22.649000432979093
+          19.765625,
+          22.65625
         ],
         "rotation": -1.1601386619297622,
         "mass": 1.0,
@@ -9025,8 +9080,8 @@
         "particle_type": "Particle_Edge",
         "id": 307,
         "position": [
-          26.28237011148556,
-          31.068412608244767
+          26.28125,
+          31.0625
         ],
         "rotation": -1.980571974776771,
         "mass": 1.0,
@@ -9056,8 +9111,8 @@
         "particle_type": "Particle_Edge",
         "id": 308,
         "position": [
-          25.011490222971123,
-          28.142575216489544
+          25.015625,
+          28.140625
         ],
         "rotation": -1.980571974776771,
         "mass": 1.0,
@@ -9087,8 +9142,8 @@
         "particle_type": "Particle_Edge",
         "id": 309,
         "position": [
-          23.740610334456683,
-          25.216737824734317
+          23.734375,
+          25.21875
         ],
         "rotation": -1.980571974776771,
         "mass": 1.0,
@@ -9118,8 +9173,8 @@
         "particle_type": "Particle_Edge",
         "id": 310,
         "position": [
-          22.469730445942247,
-          22.290900432979093
+          22.46875,
+          22.296875
         ],
         "rotation": -1.980571974776771,
         "mass": 1.0,
@@ -9149,8 +9204,8 @@
         "particle_type": "Particle_Edge",
         "id": 311,
         "position": [
-          33.20737011148555,
-          19.672812608244772
+          33.21875,
+          19.671875
         ],
         "rotation": -3.115970659288154,
         "mass": 1.0,
@@ -9180,8 +9235,8 @@
         "particle_type": "Particle_Edge",
         "id": 312,
         "position": [
-          30.205240222971117,
-          19.595875216489546
+          30.203125,
+          19.59375
         ],
         "rotation": -3.115970659288154,
         "mass": 1.0,
@@ -9211,8 +9266,8 @@
         "particle_type": "Particle_Edge",
         "id": 313,
         "position": [
-          27.20311033445668,
-          19.51893782473432
+          27.203125,
+          19.515625
         ],
         "rotation": -3.115970659288154,
         "mass": 1.0,
@@ -9242,8 +9297,8 @@
         "particle_type": "Particle_Edge",
         "id": 314,
         "position": [
-          24.200980445942243,
-          19.442000432979093
+          24.203125,
+          19.4375
         ],
         "rotation": -3.115970659288154,
         "mass": 1.0,
@@ -9273,8 +9328,8 @@
         "particle_type": "Particle_Edge",
         "id": 315,
         "position": [
-          21.63190037161854,
-          16.351042027482578
+          21.625,
+          16.34375
         ],
         "rotation": -1.4280945012379078,
         "mass": 1.0,
@@ -9304,8 +9359,8 @@
         "particle_type": "Particle_Edge",
         "id": 316,
         "position": [
-          22.064950185809266,
-          13.337021013741285
+          22.0625,
+          13.3359375
         ],
         "rotation": -1.4280945012379078,
         "mass": 1.0,
@@ -9335,8 +9390,8 @@
         "particle_type": "Particle_Edge",
         "id": 317,
         "position": [
-          18.796328675136074,
-          10.641633138881792
+          18.796875,
+          10.640625
         ],
         "rotation": 3.0557261286164796,
         "mass": 1.0,
@@ -9366,8 +9421,8 @@
         "particle_type": "Particle_Edge",
         "id": 318,
         "position": [
-          15.09465735027215,
-          10.960266277763587
+          15.09375,
+          10.9609375
         ],
         "rotation": 3.0557261286164796,
         "mass": 1.0,
@@ -9397,8 +9452,8 @@
         "particle_type": "Particle_Edge",
         "id": 319,
         "position": [
-          13.844452158413123,
-          13.300440322790005
+          13.84375,
+          13.296875
         ],
         "rotation": 0.689577029285768,
         "mass": 1.0,
@@ -9428,8 +9483,8 @@
         "particle_type": "Particle_Edge",
         "id": 320,
         "position": [
-          16.29591829141802,
-          15.321981228934625
+          16.296875,
+          15.3203125
         ],
         "rotation": 0.689577029285768,
         "mass": 1.0,
@@ -9459,8 +9514,8 @@
         "particle_type": "Particle_Edge",
         "id": 321,
         "position": [
-          18.74738442442291,
-          17.343522135079247
+          18.75,
+          17.34375
         ],
         "rotation": 0.689577029285768,
         "mass": 1.0,
@@ -9490,8 +9545,8 @@
         "particle_type": "Particle_Edge",
         "id": 322,
         "position": [
-          9.638252372309987,
-          10.828971256806145
+          9.640625,
+          10.828125
         ],
         "rotation": -2.8905918631467884,
         "mass": 1.0,
@@ -9521,8 +9576,8 @@
         "particle_type": "Particle_Edge",
         "id": 323,
         "position": [
-          7.883518719211747,
-          10.379043096966907
+          7.8828125,
+          10.3828125
         ],
         "rotation": -2.8905918631467884,
         "mass": 1.0,
@@ -9552,8 +9607,8 @@
         "particle_type": "Particle_Edge",
         "id": 324,
         "position": [
-          6.128785066113506,
-          9.92911493712767
+          6.12890625,
+          9.9296875
         ],
         "rotation": -2.8905918631467884,
         "mass": 1.0,
@@ -9583,8 +9638,8 @@
         "particle_type": "Particle_Edge",
         "id": 325,
         "position": [
-          11.232750593077494,
-          6.192805314201537
+          11.234375,
+          6.19140625
         ],
         "rotation": 1.4780026347946809,
         "mass": 1.0,
@@ -9614,8 +9669,8 @@
         "particle_type": "Particle_Edge",
         "id": 326,
         "position": [
-          11.393751186154992,
-          7.922860628403074
+          11.390625,
+          7.921875
         ],
         "rotation": 1.4780026347946809,
         "mass": 1.0,
@@ -9645,8 +9700,8 @@
         "particle_type": "Particle_Edge",
         "id": 327,
         "position": [
-          11.55475177923249,
-          9.65291594260461
+          11.5546875,
+          9.65625
         ],
         "rotation": 1.4780026347946809,
         "mass": 1.0,
@@ -9676,8 +9731,8 @@
         "particle_type": "Particle_Edge",
         "id": 328,
         "position": [
-          6.606617608676844,
-          7.807041184858955
+          6.60546875,
+          7.80859375
         ],
         "rotation": -0.6428474620561448,
         "mass": 1.0,
@@ -9707,8 +9762,8 @@
         "particle_type": "Particle_Edge",
         "id": 329,
         "position": [
-          8.839183804338422,
-          6.134895592429478
+          8.8359375,
+          6.13671875
         ],
         "rotation": -0.6428474620561448,
         "mass": 1.0,
@@ -9738,8 +9793,8 @@
         "particle_type": "Particle_Edge",
         "id": 330,
         "position": [
-          25.240299999999998,
-          12.208349999999996
+          25.234375,
+          12.2109375
         ],
         "rotation": 0.6022919889730386,
         "mass": 1.0,
@@ -9769,8 +9824,8 @@
         "particle_type": "Particle_Edge",
         "id": 331,
         "position": [
-          27.982599999999994,
-          14.093699999999997
+          27.984375,
+          14.09375
         ],
         "rotation": 0.6022919889730386,
         "mass": 1.0,
@@ -9800,8 +9855,8 @@
         "particle_type": "Particle_Edge",
         "id": 332,
         "position": [
-          30.724899999999995,
-          15.979049999999997
+          30.71875,
+          15.9765625
         ],
         "rotation": 0.6022919889730386,
         "mass": 1.0,
@@ -9831,8 +9886,8 @@
         "particle_type": "Particle_Edge",
         "id": 333,
         "position": [
-          33.46719999999999,
-          17.864399999999996
+          33.46875,
+          17.859375
         ],
         "rotation": 0.6022919889730386,
         "mass": 1.0,
@@ -9862,8 +9917,8 @@
         "particle_type": "Particle_Edge",
         "id": 334,
         "position": [
-          55.90025769625898,
-          61.55040200807908
+          55.90625,
+          61.5625
         ],
         "rotation": -2.481553181587098,
         "mass": 1.0,
@@ -9893,8 +9948,8 @@
         "particle_type": "Particle_Edge",
         "id": 335,
         "position": [
-          53.42242179750599,
-          59.62718467205272
+          53.4375,
+          59.625
         ],
         "rotation": -2.481553181587098,
         "mass": 1.0,
@@ -9924,8 +9979,8 @@
         "particle_type": "Particle_Edge",
         "id": 336,
         "position": [
-          50.94458589875299,
-          57.70396733602636
+          50.9375,
+          57.71875
         ],
         "rotation": -2.481553181587098,
         "mass": 1.0,
@@ -9955,8 +10010,8 @@
         "particle_type": "Particle_Edge",
         "id": 337,
         "position": [
-          61.54047189918737,
-          63.23378043026446
+          61.53125,
+          63.21875
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -9986,8 +10041,8 @@
         "particle_type": "Particle_Edge",
         "id": 338,
         "position": [
-          64.70285020336276,
-          62.993941516423476
+          64.6875,
+          63.0
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -10017,8 +10072,8 @@
         "particle_type": "Particle_Edge",
         "id": 339,
         "position": [
-          67.86522850753815,
-          62.75410260258249
+          67.875,
+          62.75
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -10048,8 +10103,8 @@
         "particle_type": "Particle_Edge",
         "id": 340,
         "position": [
-          71.02760681171353,
-          62.51426368874151
+          71.0,
+          62.5
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -10079,8 +10134,8 @@
         "particle_type": "Particle_Edge",
         "id": 341,
         "position": [
-          74.18998511588893,
-          62.274424774900524
+          74.1875,
+          62.28125
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -10110,8 +10165,8 @@
         "particle_type": "Particle_Edge",
         "id": 342,
         "position": [
-          77.35236342006431,
-          62.03458586105954
+          77.375,
+          62.03125
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -10141,8 +10196,8 @@
         "particle_type": "Particle_Edge",
         "id": 343,
         "position": [
-          80.5147417242397,
-          61.794746947218556
+          80.5,
+          61.78125
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -10172,8 +10227,8 @@
         "particle_type": "Particle_Edge",
         "id": 344,
         "position": [
-          83.67712002841509,
-          61.55490803337757
+          83.6875,
+          61.5625
         ],
         "rotation": -0.07569639929661781,
         "mass": 1.0,
@@ -10203,8 +10258,8 @@
         "particle_type": "Particle_Edge",
         "id": 345,
         "position": [
-          73.65737403308044,
-          60.768728175710635
+          73.6875,
+          60.78125
         ],
         "rotation": 0.041421885431105296,
         "mass": 1.0,
@@ -10234,8 +10289,8 @@
         "particle_type": "Particle_Edge",
         "id": 346,
         "position": [
-          76.95290510795795,
-          60.90531341166712
+          76.9375,
+          60.90625
         ],
         "rotation": 0.041421885431105296,
         "mass": 1.0,
@@ -10265,8 +10320,8 @@
         "particle_type": "Particle_Edge",
         "id": 347,
         "position": [
-          80.24843618283546,
-          61.04189864762361
+          80.25,
+          61.03125
         ],
         "rotation": 0.041421885431105296,
         "mass": 1.0,
@@ -10296,8 +10351,8 @@
         "particle_type": "Particle_Edge",
         "id": 348,
         "position": [
-          83.54396725771296,
-          61.1784838835801
+          83.5625,
+          61.1875
         ],
         "rotation": 0.041421885431105296,
         "mass": 1.0,
@@ -10327,8 +10382,8 @@
         "particle_type": "Particle_Edge",
         "id": 349,
         "position": [
-          64.49253114186614,
-          45.036437774078905
+          64.5,
+          45.03125
         ],
         "rotation": 3.0160142284355285,
         "mass": 1.0,
@@ -10358,8 +10413,8 @@
         "particle_type": "Particle_Edge",
         "id": 350,
         "position": [
-          60.927069856399584,
-          45.12049464305918
+          60.9375,
+          45.125
         ],
         "rotation": 3.138187276075131,
         "mass": 1.0,
@@ -10389,8 +10444,8 @@
         "particle_type": "Particle_Edge",
         "id": 351,
         "position": [
-          56.98031807093309,
-          44.927551512039486
+          56.96875,
+          44.9375
         ],
         "rotation": 3.208000446154904,
         "mass": 1.0,
@@ -10420,8 +10475,8 @@
         "particle_type": "Particle_Edge",
         "id": 352,
         "position": [
-          53.75099628546654,
-          44.29417838101974
+          53.75,
+          44.28125
         ],
         "rotation": 3.4697998339540534,
         "mass": 1.0,
@@ -10451,8 +10506,8 @@
         "particle_type": "Particle_Edge",
         "id": 353,
         "position": [
-          36.071,
-          29.8791875
+          36.0625,
+          29.875
         ],
         "rotation": 2.6915431355012096,
         "mass": 1.0,
@@ -10482,8 +10537,8 @@
         "particle_type": "Particle_Edge",
         "id": 354,
         "position": [
-          33.23175,
-          31.250875
+          33.21875,
+          31.25
         ],
         "rotation": 2.6915431355012096,
         "mass": 1.0,
@@ -10513,8 +10568,8 @@
         "particle_type": "Particle_Edge",
         "id": 355,
         "position": [
-          30.3925,
-          32.622562499999994
+          30.390625,
+          32.625
         ],
         "rotation": 2.6915431355012096,
         "mass": 1.0,
@@ -10544,8 +10599,8 @@
         "particle_type": "Particle_Edge",
         "id": 356,
         "position": [
-          40.77109194148282,
-          43.38351600933403
+          40.78125,
+          43.375
         ],
         "rotation": -1.7600052841401441,
         "mass": 1.0,
@@ -10575,8 +10630,8 @@
         "particle_type": "Particle_Edge",
         "id": 357,
         "position": [
-          40.34668388296566,
-          41.167282018668054
+          40.34375,
+          41.15625
         ],
         "rotation": -1.7600052841401441,
         "mass": 1.0,
@@ -10606,8 +10661,8 @@
         "particle_type": "Particle_Edge",
         "id": 358,
         "position": [
-          48.14844395611212,
-          42.998949507000525
+          48.15625,
+          43.0
         ],
         "rotation": -2.684304161885516,
         "mass": 1.0,
@@ -10637,8 +10692,8 @@
         "particle_type": "Particle_Edge",
         "id": 359,
         "position": [
-          45.40638791222424,
-          41.64964901400104
+          45.40625,
+          41.65625
         ],
         "rotation": -2.684304161885516,
         "mass": 1.0,
@@ -10668,8 +10723,8 @@
         "particle_type": "Particle_Edge",
         "id": 360,
         "position": [
-          42.66433186833636,
-          40.30034852100157
+          42.65625,
+          40.3125
         ],
         "rotation": -2.684304161885516,
         "mass": 1.0,
@@ -10699,8 +10754,8 @@
         "particle_type": "Particle_Edge",
         "id": 361,
         "position": [
-          46.648937499999995,
-          53.2355
+          46.65625,
+          53.25
         ],
         "rotation": -2.1909877398242164,
         "mass": 1.0,
@@ -10730,8 +10785,8 @@
         "particle_type": "Particle_Edge",
         "id": 362,
         "position": [
-          44.831125,
-          50.69025
+          44.84375,
+          50.6875
         ],
         "rotation": -2.1909877398242164,
         "mass": 1.0,
@@ -10761,8 +10816,8 @@
         "particle_type": "Particle_Edge",
         "id": 363,
         "position": [
-          43.0133125,
-          48.144999999999996
+          43.0,
+          48.15625
         ],
         "rotation": -2.1909877398242164,
         "mass": 1.0,
@@ -10792,8 +10847,8 @@
         "particle_type": "Particle_Edge",
         "id": 364,
         "position": [
-          68.16378068446895,
-          18.198703288393354
+          68.1875,
+          18.203125
         ],
         "rotation": 3.0067041544365423,
         "mass": 1.0,
@@ -10823,8 +10878,8 @@
         "particle_type": "Particle_Edge",
         "id": 365,
         "position": [
-          65.8413390847801,
-          18.513887857574954
+          65.8125,
+          18.515625
         ],
         "rotation": 3.0067041544365423,
         "mass": 1.0,
@@ -10854,8 +10909,8 @@
         "particle_type": "Particle_Edge",
         "id": 366,
         "position": [
-          53.53195853546652,
-          45.590884631019726
+          53.53125,
+          45.59375
         ],
         "rotation": 0.34566047288420354,
         "mass": 1.0,
@@ -10885,8 +10940,8 @@
         "particle_type": "Particle_Edge",
         "id": 367,
         "position": [
-          57.07719882093306,
-          46.35181626203945
+          57.0625,
+          46.34375
         ],
         "rotation": 0.08386108508505409,
         "mass": 1.0,
@@ -10916,8 +10971,8 @@
         "particle_type": "Particle_Edge",
         "id": 368,
         "position": [
-          60.9119041063996,
-          46.42848864305918
+          60.90625,
+          46.4375
         ],
         "rotation": 6.262326637144981,
         "mass": 1.0,
@@ -10947,8 +11002,8 @@
         "particle_type": "Particle_Edge",
         "id": 369,
         "position": [
-          64.60187689186614,
-          46.130449274078906
+          64.625,
+          46.125
         ],
         "rotation": 6.140153589505378,
         "mass": 1.0,
@@ -10978,8 +11033,8 @@
         "particle_type": "Particle_Edge",
         "id": 370,
         "position": [
-          22.458216549136026,
-          49.70486350801888
+          22.453125,
+          49.71875
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -11009,8 +11064,8 @@
         "particle_type": "Particle_Edge",
         "id": 371,
         "position": [
-          21.085482061196885,
-          52.619960617282366
+          21.078125,
+          52.625
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -11040,8 +11095,8 @@
         "particle_type": "Particle_Edge",
         "id": 372,
         "position": [
-          19.712747573257744,
-          55.53505772654586
+          19.71875,
+          55.53125
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -11071,8 +11126,8 @@
         "particle_type": "Particle_Edge",
         "id": 373,
         "position": [
-          18.340013085318603,
-          58.45015483580934
+          18.34375,
+          58.4375
         ],
         "rotation": 2.010898404205982,
         "mass": 1.0,
@@ -11112,190 +11167,512 @@
       "repulsion_strength": 2.0
     },
     "tasks": [
-      [
-        "Athina",
-        "Angora"
-      ],
-      [
-        "Budapest",
-        "Sofia"
-      ],
-      [
-        "Frankfurt",
-        "Kobenhavn"
-      ],
-      [
-        "Rostov",
-        "Erzurum"
-      ],
-      [
-        "Sofia",
-        "Smyrna"
-      ],
-      [
-        "Kyiv",
-        "Petrograd"
-      ],
-      [
-        "Zurich",
-        "Brindisi"
-      ],
-      [
-        "Zurich",
-        "Budapest"
-      ],
-      [
-        "Warszawa",
-        "Smolensk"
-      ],
-      [
-        "Zagrab",
-        "Brindisi"
-      ],
-      [
-        "Paris",
-        "Zagrab"
-      ],
-      [
-        "Brest",
-        "Marseille"
-      ],
-      [
-        "London",
-        "Berlin"
-      ],
-      [
-        "Edinburgh",
-        "Paris"
-      ],
-      [
-        "Amsterdam",
-        "Pamplona"
-      ],
-      [
-        "Roma",
-        "Smyrna"
-      ],
-      [
-        "Palermo",
-        "Constantinople"
-      ],
-      [
-        "Sarajevo",
-        "Sevastopol"
-      ],
-      [
-        "Madrid",
-        "Dieppe"
-      ],
-      [
-        "Barcelona",
-        "Bruxelles"
-      ],
-      [
-        "Paris",
-        "Wien"
-      ],
-      [
-        "Barcelona",
-        "Munchen"
-      ],
-      [
-        "Brest",
-        "Venezia"
-      ],
-      [
-        "Smolensk",
-        "Rostov"
-      ],
-      [
-        "Marseille",
-        "Essen"
-      ],
-      [
-        "Kyiv",
-        "Sochi"
-      ],
-      [
-        "Madrid",
-        "Zurich"
-      ],
-      [
-        "Berlin",
-        "Bucuresti"
-      ],
-      [
-        "Bruxelles",
-        "Danzig"
-      ],
-      [
-        "Berlin",
-        "Roma"
-      ],
-      [
-        "Angora",
-        "Kharkov"
-      ],
-      [
-        "Riga",
-        "Bucuresti"
-      ],
-      [
-        "Essen",
-        "Kyiv"
-      ],
-      [
-        "Venezia",
-        "Constantinople"
-      ],
-      [
-        "London",
-        "Wien"
-      ],
-      [
-        "Athina",
-        "Wilno"
-      ],
-      [
-        "Stockholm",
-        "Wien"
-      ],
-      [
-        "Berlin",
-        "Moskva"
-      ],
-      [
-        "Amsterdam",
-        "Wilno"
-      ],
-      [
-        "Frankfurt",
-        "Smolensk"
-      ],
-      [
-        "Lisboa",
-        "Danzig"
-      ],
-      [
-        "Brest",
-        "Petrograd"
-      ],
-      [
-        "Palermo",
-        "Moskva"
-      ],
-      [
-        "Kobenhavn",
-        "Erzurum"
-      ],
-      [
-        "Edinburgh",
-        "Athina"
-      ],
-      [
-        "Cadiz",
-        "Stockholm"
-      ]
+      {
+        "name": "Athina - Angora",
+        "node_names": [
+          "Athina",
+          "Angora"
+        ],
+        "length": 5,
+        "points": 5,
+        "points_bonus": 0,
+        "points_penalty": -5
+      },
+      {
+        "name": "Budapest - Sofia",
+        "node_names": [
+          "Budapest",
+          "Sofia"
+        ],
+        "length": 5,
+        "points": 5,
+        "points_bonus": 0,
+        "points_penalty": -5
+      },
+      {
+        "name": "Frankfurt - Kobenhavn",
+        "node_names": [
+          "Frankfurt",
+          "Kobenhavn"
+        ],
+        "length": 5,
+        "points": 5,
+        "points_bonus": 0,
+        "points_penalty": -5
+      },
+      {
+        "name": "Rostov - Erzurum",
+        "node_names": [
+          "Rostov",
+          "Erzurum"
+        ],
+        "length": 5,
+        "points": 5,
+        "points_bonus": 0,
+        "points_penalty": -5
+      },
+      {
+        "name": "Sofia - Smyrna",
+        "node_names": [
+          "Sofia",
+          "Smyrna"
+        ],
+        "length": 5,
+        "points": 5,
+        "points_bonus": 0,
+        "points_penalty": -5
+      },
+      {
+        "name": "Kyiv - Petrograd",
+        "node_names": [
+          "Kyiv",
+          "Petrograd"
+        ],
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
+      },
+      {
+        "name": "Zurich - Brindisi",
+        "node_names": [
+          "Zurich",
+          "Brindisi"
+        ],
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
+      },
+      {
+        "name": "Zurich - Budapest",
+        "node_names": [
+          "Zurich",
+          "Budapest"
+        ],
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
+      },
+      {
+        "name": "Warszawa - Smolensk",
+        "node_names": [
+          "Warszawa",
+          "Smolensk"
+        ],
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
+      },
+      {
+        "name": "Zagrab - Brindisi",
+        "node_names": [
+          "Zagrab",
+          "Brindisi"
+        ],
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
+      },
+      {
+        "name": "Paris - Zagrab",
+        "node_names": [
+          "Paris",
+          "Zagrab"
+        ],
+        "length": 7,
+        "points": 7,
+        "points_bonus": 0,
+        "points_penalty": -7
+      },
+      {
+        "name": "Brest - Marseille",
+        "node_names": [
+          "Brest",
+          "Marseille"
+        ],
+        "length": 7,
+        "points": 7,
+        "points_bonus": 0,
+        "points_penalty": -7
+      },
+      {
+        "name": "London - Berlin",
+        "node_names": [
+          "London",
+          "Berlin"
+        ],
+        "length": 7,
+        "points": 7,
+        "points_bonus": 0,
+        "points_penalty": -7
+      },
+      {
+        "name": "Edinburgh - Paris",
+        "node_names": [
+          "Edinburgh",
+          "Paris"
+        ],
+        "length": 7,
+        "points": 7,
+        "points_bonus": 0,
+        "points_penalty": -7
+      },
+      {
+        "name": "Amsterdam - Pamplona",
+        "node_names": [
+          "Amsterdam",
+          "Pamplona"
+        ],
+        "length": 7,
+        "points": 7,
+        "points_bonus": 0,
+        "points_penalty": -7
+      },
+      {
+        "name": "Roma - Smyrna",
+        "node_names": [
+          "Roma",
+          "Smyrna"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Palermo - Constantinople",
+        "node_names": [
+          "Palermo",
+          "Constantinople"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Sarajevo - Sevastopol",
+        "node_names": [
+          "Sarajevo",
+          "Sevastopol"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Madrid - Dieppe",
+        "node_names": [
+          "Madrid",
+          "Dieppe"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Barcelona - Bruxelles",
+        "node_names": [
+          "Barcelona",
+          "Bruxelles"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Paris - Wien",
+        "node_names": [
+          "Paris",
+          "Wien"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Barcelona - Munchen",
+        "node_names": [
+          "Barcelona",
+          "Munchen"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Brest - Venezia",
+        "node_names": [
+          "Brest",
+          "Venezia"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Smolensk - Rostov",
+        "node_names": [
+          "Smolensk",
+          "Rostov"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Marseille - Essen",
+        "node_names": [
+          "Marseille",
+          "Essen"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Kyiv - Sochi",
+        "node_names": [
+          "Kyiv",
+          "Sochi"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Madrid - Zurich",
+        "node_names": [
+          "Madrid",
+          "Zurich"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Berlin - Bucuresti",
+        "node_names": [
+          "Berlin",
+          "Bucuresti"
+        ],
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
+      },
+      {
+        "name": "Bruxelles - Danzig",
+        "node_names": [
+          "Bruxelles",
+          "Danzig"
+        ],
+        "length": 9,
+        "points": 9,
+        "points_bonus": 0,
+        "points_penalty": -9
+      },
+      {
+        "name": "Berlin - Roma",
+        "node_names": [
+          "Berlin",
+          "Roma"
+        ],
+        "length": 9,
+        "points": 9,
+        "points_bonus": 0,
+        "points_penalty": -9
+      },
+      {
+        "name": "Angora - Kharkov",
+        "node_names": [
+          "Angora",
+          "Kharkov"
+        ],
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
+      },
+      {
+        "name": "Riga - Bucuresti",
+        "node_names": [
+          "Riga",
+          "Bucuresti"
+        ],
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
+      },
+      {
+        "name": "Essen - Kyiv",
+        "node_names": [
+          "Essen",
+          "Kyiv"
+        ],
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
+      },
+      {
+        "name": "Venezia - Constantinople",
+        "node_names": [
+          "Venezia",
+          "Constantinople"
+        ],
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
+      },
+      {
+        "name": "London - Wien",
+        "node_names": [
+          "London",
+          "Wien"
+        ],
+        "length": 9,
+        "points": 9,
+        "points_bonus": 0,
+        "points_penalty": -9
+      },
+      {
+        "name": "Athina - Wilno",
+        "node_names": [
+          "Athina",
+          "Wilno"
+        ],
+        "length": 11,
+        "points": 11,
+        "points_bonus": 0,
+        "points_penalty": -11
+      },
+      {
+        "name": "Stockholm - Wien",
+        "node_names": [
+          "Stockholm",
+          "Wien"
+        ],
+        "length": 11,
+        "points": 11,
+        "points_bonus": 0,
+        "points_penalty": -11
+      },
+      {
+        "name": "Berlin - Moskva",
+        "node_names": [
+          "Berlin",
+          "Moskva"
+        ],
+        "length": 12,
+        "points": 12,
+        "points_bonus": 0,
+        "points_penalty": -12
+      },
+      {
+        "name": "Amsterdam - Wilno",
+        "node_names": [
+          "Amsterdam",
+          "Wilno"
+        ],
+        "length": 12,
+        "points": 12,
+        "points_bonus": 0,
+        "points_penalty": -12
+      },
+      {
+        "name": "Frankfurt - Smolensk",
+        "node_names": [
+          "Frankfurt",
+          "Smolensk"
+        ],
+        "length": 13,
+        "points": 13,
+        "points_bonus": 0,
+        "points_penalty": -13
+      },
+      {
+        "name": "Lisboa - Danzig",
+        "node_names": [
+          "Lisboa",
+          "Danzig"
+        ],
+        "length": 20,
+        "points": 20,
+        "points_bonus": 0,
+        "points_penalty": -20
+      },
+      {
+        "name": "Brest - Petrograd",
+        "node_names": [
+          "Brest",
+          "Petrograd"
+        ],
+        "length": 20,
+        "points": 20,
+        "points_bonus": 0,
+        "points_penalty": -20
+      },
+      {
+        "name": "Palermo - Moskva",
+        "node_names": [
+          "Palermo",
+          "Moskva"
+        ],
+        "length": 20,
+        "points": 20,
+        "points_bonus": 0,
+        "points_penalty": -20
+      },
+      {
+        "name": "Kobenhavn - Erzurum",
+        "node_names": [
+          "Kobenhavn",
+          "Erzurum"
+        ],
+        "length": 21,
+        "points": 21,
+        "points_bonus": 0,
+        "points_penalty": -21
+      },
+      {
+        "name": "Edinburgh - Athina",
+        "node_names": [
+          "Edinburgh",
+          "Athina"
+        ],
+        "length": 20,
+        "points": 20,
+        "points_bonus": 0,
+        "points_penalty": -20
+      },
+      {
+        "name": "Cadiz - Stockholm",
+        "node_names": [
+          "Cadiz",
+          "Stockholm"
+        ],
+        "length": 21,
+        "points": 21,
+        "points_bonus": 0,
+        "points_penalty": -21
+      }
     ]
   }
 }

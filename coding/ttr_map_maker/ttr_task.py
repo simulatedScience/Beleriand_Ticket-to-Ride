@@ -47,15 +47,21 @@ class TTR_Task:
     self.plotted_objects: List[plt.Line2D] = []
 
 
-  def set_node_names(self, node_names: List[str], update_name: bool = True):
+  def set_node_names(self, node_names: List[str], update_name: bool = True) -> None:
     self.node_names = node_names
     if update_name:
       self.name = f"{node_names[0]} - {node_names[-1]}"
 
-  def set_length(self, length: int):
+  def set_length(self, length: int) -> None:
+    """
+    Set the length of the task.
+
+    Args:
+        length (int): 
+    """
     self.length = length
 
-  def set_points(self, points: int, points_bonus: int = None, points_penalty: int = None):
+  def set_points(self, points: int, points_bonus: int = None, points_penalty: int = None) -> None:
     """
     Set the points for completing the task (`points`)),
       the points for completing the task with bonus nodes (`points_bonus`) and

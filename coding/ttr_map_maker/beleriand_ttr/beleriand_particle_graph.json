@@ -5,6 +5,12 @@
     "n_tasks": 44,
     "n_edges": 243,
     "n_labels": 39,
+    "graph_extent": [
+      0.0,
+      103.875,
+      0.0,
+      67.5
+    ],
     "particles": [
       {
         "particle_type": "Particle_Node",
@@ -9704,10 +9710,10 @@
           "Isle of Balar",
           "West Taur-im-Duinath"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
       },
       {
         "name": "Linaewen - Forest of Neldoreth",
@@ -9715,10 +9721,10 @@
           "Linaewen",
           "Forest of Neldoreth"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
       },
       {
         "name": "Eithel Ivrin - Pass of Aglon",
@@ -9726,10 +9732,10 @@
           "Eithel Ivrin",
           "Pass of Aglon"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "Nan Elmoth - East Taur-im-Duinath",
@@ -9737,10 +9743,10 @@
           "Nan Elmoth",
           "East Taur-im-Duinath"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
       },
       {
         "name": "Himring - Amon Ereb",
@@ -9748,10 +9754,10 @@
           "Himring",
           "Amon Ereb"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 7,
+        "points": 7,
+        "points_bonus": 0,
+        "points_penalty": -7
       },
       {
         "name": "Ered Wethrin - Himring",
@@ -9759,10 +9765,10 @@
           "Ered Wethrin",
           "Himring"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "River Nenning - Cape Balar",
@@ -9770,10 +9776,10 @@
           "River Nenning",
           "Cape Balar"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 7,
+        "points": 7,
+        "points_bonus": 0,
+        "points_penalty": -7
       },
       {
         "name": "Nogrod - West Taur-im-Duinath",
@@ -9781,10 +9787,10 @@
           "Nogrod",
           "West Taur-im-Duinath"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 12,
+        "points": 12,
+        "points_bonus": 0,
+        "points_penalty": -12
       },
       {
         "name": "Sarn Athrud - Gates of Sirion",
@@ -9792,10 +9798,10 @@
           "Sarn Athrud",
           "Gates of Sirion"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 9,
+        "points": 9,
+        "points_bonus": 0,
+        "points_penalty": -9
       },
       {
         "name": "Gates of Sirion - Isle of Balar",
@@ -9803,10 +9809,10 @@
           "Gates of Sirion",
           "Isle of Balar"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
       },
       {
         "name": "Menegroth - Arvenien",
@@ -9814,10 +9820,10 @@
           "Menegroth",
           "Arvenien"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 8,
+        "points": 8,
+        "points_bonus": 0,
+        "points_penalty": -8
       },
       {
         "name": "Taur-Nu-Fuin - Forest of Region",
@@ -9825,10 +9831,10 @@
           "Taur-Nu-Fuin",
           "Forest of Region"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
       },
       {
         "name": "Gondolin - Havens of Sirion",
@@ -9836,10 +9842,10 @@
           "Gondolin",
           "Havens of Sirion"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "Tol Sirion - Nan Elmoth",
@@ -9847,10 +9853,10 @@
           "Tol Sirion",
           "Nan Elmoth"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "Ladros - Andram",
@@ -9858,10 +9864,10 @@
           "Ladros",
           "Andram"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "Cirith Ninniach - Ladros",
@@ -9869,10 +9875,10 @@
           "Cirith Ninniach",
           "Ladros"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 11,
+        "points": 11,
+        "points_bonus": 0,
+        "points_penalty": -11
       },
       {
         "name": "Crossing of Teiglin - Nan Tathren",
@@ -9880,10 +9886,10 @@
           "Crossing of Teiglin",
           "Nan Tathren"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 5,
+        "points": 5,
+        "points_bonus": 0,
+        "points_penalty": -5
       },
       {
         "name": "Brithombar - Nargothrond",
@@ -9891,10 +9897,10 @@
           "Brithombar",
           "Nargothrond"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 5,
+        "points": 5,
+        "points_bonus": 0,
+        "points_penalty": -5
       },
       {
         "name": "Eithel Sirion - Amon Rudh",
@@ -9902,10 +9908,10 @@
           "Eithel Sirion",
           "Amon Rudh"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
       },
       {
         "name": "Forest of Neldoreth - West Taur-im-Duinath",
@@ -9913,10 +9919,10 @@
           "Forest of Neldoreth",
           "West Taur-im-Duinath"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 9,
+        "points": 9,
+        "points_bonus": 0,
+        "points_penalty": -9
       },
       {
         "name": "Nogrod - Menegroth",
@@ -9924,10 +9930,10 @@
           "Nogrod",
           "Menegroth"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "Himring - Belegost",
@@ -9935,10 +9941,10 @@
           "Himring",
           "Belegost"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 6,
+        "points": 6,
+        "points_bonus": 0,
+        "points_penalty": -6
       },
       {
         "name": "Cirith Ninniach - Nargothrond",
@@ -9946,10 +9952,10 @@
           "Cirith Ninniach",
           "Nargothrond"
         ],
-        "length": null,
-        "points": 2,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 9,
+        "points": 9,
+        "points_bonus": 0,
+        "points_penalty": -9
       },
       {
         "name": "Amon Rudh - East Taur-im-Duinath",
@@ -9957,10 +9963,10 @@
           "Amon Rudh",
           "East Taur-im-Duinath"
         ],
-        "length": 0,
+        "length": 10,
         "points": 10,
-        "points_bonus": null,
-        "points_penalty": null
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "Arvenien - Lake Mithrim",
@@ -9968,10 +9974,10 @@
           "Arvenien",
           "Lake Mithrim"
         ],
-        "length": 0,
-        "points": 11,
-        "points_bonus": null,
-        "points_penalty": null
+        "length": 10,
+        "points": 10,
+        "points_bonus": 0,
+        "points_penalty": -10
       },
       {
         "name": "Vinyamar - Havens of Sirion",
@@ -9979,10 +9985,10 @@
           "Vinyamar",
           "Havens of Sirion"
         ],
-        "length": 0,
+        "length": 12,
         "points": 12,
-        "points_bonus": null,
-        "points_penalty": null
+        "points_bonus": 0,
+        "points_penalty": -12
       },
       {
         "name": "Vinyamar - Gondolin",
@@ -9990,10 +9996,10 @@
           "Vinyamar",
           "Gondolin"
         ],
-        "length": 0,
+        "length": 9,
         "points": 9,
-        "points_bonus": null,
-        "points_penalty": null
+        "points_bonus": 0,
+        "points_penalty": -9
       },
       {
         "name": "Belegost - Amon Ereb",
@@ -10001,10 +10007,10 @@
           "Belegost",
           "Amon Ereb"
         ],
-        "length": 0,
+        "length": 5,
         "points": 5,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -5
       },
       {
         "name": "Eithel Ivrin - Barad Nimras",
@@ -10012,10 +10018,10 @@
           "Eithel Ivrin",
           "Barad Nimras"
         ],
-        "length": 0,
+        "length": 6,
         "points": 6,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -6
       },
       {
         "name": "Cirith Ninniach - Brithombar",
@@ -10023,10 +10029,10 @@
           "Cirith Ninniach",
           "Brithombar"
         ],
-        "length": 0,
-        "points": 10,
+        "length": 9,
+        "points": 9,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -9
       },
       {
         "name": "Lake Heleron - East Taur-im-Duinath",
@@ -10034,10 +10040,10 @@
           "Lake Heleron",
           "East Taur-im-Duinath"
         ],
-        "length": 0,
+        "length": 10,
         "points": 10,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -10
       },
       {
         "name": "Andram - Cape Balar",
@@ -10045,10 +10051,10 @@
           "Andram",
           "Cape Balar"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 10,
+        "points": 10,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -10
       },
       {
         "name": "Nan Tathren - Barad Nimras",
@@ -10056,10 +10062,10 @@
           "Nan Tathren",
           "Barad Nimras"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 8,
+        "points": 8,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -8
       },
       {
         "name": "Vinyamar - Barad Nimras",
@@ -10067,10 +10073,10 @@
           "Vinyamar",
           "Barad Nimras"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 6,
+        "points": 6,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -6
       },
       {
         "name": "River Nenning - Taur-Nu-Fuin",
@@ -10078,10 +10084,10 @@
           "River Nenning",
           "Taur-Nu-Fuin"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 8,
+        "points": 8,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -8
       },
       {
         "name": "Pass of Aglon - Gates of Sirion",
@@ -10089,10 +10095,10 @@
           "Pass of Aglon",
           "Gates of Sirion"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 8,
+        "points": 8,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -8
       },
       {
         "name": "Lake Heleron - Ladros",
@@ -10100,10 +10106,10 @@
           "Lake Heleron",
           "Ladros"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 7,
+        "points": 7,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -7
       },
       {
         "name": "Amon Ereb - Havens of Sirion",
@@ -10111,10 +10117,10 @@
           "Amon Ereb",
           "Havens of Sirion"
         ],
-        "length": 0,
-        "points": 11,
+        "length": 10,
+        "points": 10,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -10
       },
       {
         "name": "Thargelion - Forest of Neldoreth",
@@ -10122,10 +10128,10 @@
           "Thargelion",
           "Forest of Neldoreth"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 7,
+        "points": 7,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -7
       },
       {
         "name": "Andram - Thargelion",
@@ -10133,10 +10139,10 @@
           "Andram",
           "Thargelion"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 8,
+        "points": 8,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -8
       },
       {
         "name": "Forest of Region - Eglarest",
@@ -10144,10 +10150,10 @@
           "Forest of Region",
           "Eglarest"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 8,
+        "points": 8,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -8
       },
       {
         "name": "Eglarest - Tol Sirion",
@@ -10155,10 +10161,10 @@
           "Eglarest",
           "Tol Sirion"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 7,
+        "points": 7,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -7
       },
       {
         "name": "West Taur-im-Duinath - Nargothrond",
@@ -10166,10 +10172,10 @@
           "West Taur-im-Duinath",
           "Nargothrond"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 7,
+        "points": 7,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -7
       },
       {
         "name": "Amon Ereb - Forest of Region",
@@ -10177,10 +10183,10 @@
           "Amon Ereb",
           "Forest of Region"
         ],
-        "length": 0,
-        "points": 0,
+        "length": 6,
+        "points": 6,
         "points_bonus": 0,
-        "points_penalty": 0
+        "points_penalty": -6
       }
     ]
   }

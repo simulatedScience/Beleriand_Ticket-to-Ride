@@ -9,12 +9,14 @@ from typing import Tuple, List, Callable
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backend_bases import PickEvent, MouseEvent
+import networkx as nx
 
 from auto_scroll_frame import Auto_Scroll_Frame
 from ttr_particle_graph import TTR_Particle_Graph
 from ttr_task import TTR_Task
 from particle_node import Particle_Node
 from drag_handler import find_particle_in_list, get_artist_center
+from graph_analysis import create_nx_graph
 
 
 class Task_Editor_GUI:
@@ -57,6 +59,8 @@ class Task_Editor_GUI:
     self.ax: plt.Axes = ax
     self.canvas: FigureCanvasTkAgg = canvas
     self.max_pick_range: float = max_pick_range
+
+    self.networkx_graph: nx.Graph = create_nx_graph(self.particle_graph.get_locations(), self.particle_graph.particle_edges)
 
     # save grid padding for later use
     self.grid_pad_x: int = grid_padding[0]
@@ -281,16 +285,10 @@ class Task_Editor_GUI:
         sticky="we",
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
-    # add label to show task points. If task has bonus points, show them as well
-    task_points_text = f"points: {ttr_task.points}"
-    if ttr_task.points_bonus is not None: # add task bonus points
-      if ttr_task.points_bonus > 0:
-        task_points_text += " + " + str(ttr_task.points_bonus)
-      elif ttr_task.points_bonus < 0:
-        task_points_text += " - " + str(-ttr_task.points_bonus)
+    # add label to show task points. If task has bonus points, show them as well (handled in get_task_points_label)
     task_points_label = tk.Label(
         task_frame,
-        text=task_points_text)
+        text=self.get_task_points_label(ttr_task))
     self.add_label_style(task_points_label)
     task_points_label.grid(
         row=0,
@@ -328,6 +326,15 @@ class Task_Editor_GUI:
         pady=0)
 
     return (task_frame, task_number_label, task_visibility_button, task_points_label, edit_task_button, delete_task_button)
+
+  def get_task_points_label(self, ttr_task):
+      task_points_text = f"points: {ttr_task.points}"
+      if ttr_task.points_bonus is not None: # add task bonus points
+        if ttr_task.points_bonus > 0:
+          task_points_text += " + " + str(ttr_task.points_bonus)
+        elif ttr_task.points_bonus < 0:
+          task_points_text += " - " + str(-ttr_task.points_bonus)
+      return task_points_text
 
   def bind_task_overview_mouse_events(self):
     """
@@ -387,7 +394,71 @@ class Task_Editor_GUI:
     """
     Calculates the length of all tasks in the task edit frame.
     """
-    raise NotImplementedError() # TODO: implement
+    for task_list_widgets, (task_name, task) in zip(self.task_list_widgets, self.particle_graph.tasks.items()):
+      if task_name == "all":
+        continue
+      self.calculate_update_task_length(task, task_points_vars=None)
+      task_list_widgets[3].config(text=self.get_task_points_label(task))
+
+  def calculate_task_length(self, task: TTR_Task, include_bonus_points: bool = True) -> int:
+    """
+    Calculates the length of the given task based on the current networkx graph based on the current particle graph.
+    If a task has less than 2 nodes, the length is None.
+    If a task has exactly 2 nodes, the length is the shortest path length between the two nodes.
+    If a task has more than 2 nodes, the length is the sum of all shortest path lengths between the nodes assuming them to be ordered such that the sum of path lengths of consecutive nodes is minimized.
+
+    Args:
+        task (TTR_Task): Task to calculate the length for.
+        include_bonus_points (bool, optional): If False, only consider first and last node of the task. Otherwise calculate length as described above. Defaults to True.
+
+    Returns:
+        int: Length of the task.
+    """
+    if len(task.node_names) < 2:
+      return 0
+    elif len(task.node_names) == 2 or not include_bonus_points:
+      return nx.shortest_path_length(self.networkx_graph, task.node_names[0], task.node_names[-1], weight="length")
+    else: # return sum of all path lengths between all nodes assuming them to be ordered to achieve the shortest path
+      length: int = 0
+      for node_1, node_2 in zip(task.node_names[:-1], task.node_names[1:]):
+        length += nx.shortest_path_length(self.networkx_graph, node_1, node_2, weight="length")
+      return length
+
+  def calculate_update_task_length(self, task: TTR_Task, task_points_vars: List[tk.IntVar]):
+    """
+    Calculates the length of the given task and updates the task length label accordingly.
+
+    Args:
+        task (TTR_Task): Task to calculate the length for.
+        task_points_vars (List[tk.IntVar]): List of IntVars that store the task's node names or None.
+            If None, no variables are updated with the new points and length values.
+    """
+    # calculate and update task length
+    bonus_task_length = self.calculate_task_length(task, include_bonus_points=True)
+    task.set_length(bonus_task_length)
+    # use length to calculate task points
+    if len(task.node_names) < 2:
+      task.set_points(points=0, points_bonus=0, points_penalty=0)
+      for points_var in task_points_vars[1:]:
+        points_var.set(0)
+    elif len(task.node_names) == 2:
+      task.set_points(
+          points=bonus_task_length,
+          points_bonus=0,
+          points_penalty=-bonus_task_length)
+    else:
+      no_bonus_task_length = self.calculate_task_length(task, include_bonus_points=False)
+      task.set_points(
+          points=no_bonus_task_length,
+          points_bonus=int((bonus_task_length - no_bonus_task_length) * 1.3),
+          points_penalty=-int(bonus_task_length * 1.2))
+
+    if task_points_vars is not None:
+      assert len(task_points_vars) == 4
+      task_points_vars[0].set(task.length)
+      task_points_vars[1].set(task.points)
+      task_points_vars[2].set(task.points_bonus)
+      task_points_vars[3].set(task.points_penalty)
 
 
   def add_task(self):
@@ -540,7 +611,7 @@ class Task_Editor_GUI:
     calculate_task_length_button = tk.Button(
         self.task_edit_frame,
         text="Calculate task length",
-        command=lambda task=task, task_points_vars=task_points_vars: self.calculate_task_length(task, task_points_vars))
+        command=lambda task=task, task_points_vars=task_points_vars: self.calculate_update_task_length(task, task_points_vars))
     self.add_button_style(calculate_task_length_button)
     calculate_task_length_button.grid(
         row=row_index,
