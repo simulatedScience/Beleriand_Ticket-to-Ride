@@ -193,7 +193,7 @@ class TTR_Graph_Analysis:
       shortest_task_paths[task_key] = (shortest_path, length)
     return shortest_task_paths
 
-  def get_random_shortest_task_paths_edge_counts(self, n_random_paths: int = 10000) -> dict[Tuple[str, str], int]:
+  def get_random_shortest_task_paths_edge_counts(self, n_random_paths: int = 1000) -> dict[Tuple[str, str], int]:
     """
     For each edge, count how many of the shortest paths for all tasks go through that edge.
     Returns a dictionary with edges as keys (pairs of location names) and the number of shortest paths that go through that edge as values.

@@ -150,12 +150,13 @@ class TTR_Particle_Graph:
 
   def set_graph_extent(self, graph_extent: np.ndarray) -> None:
     """
-    set the extent of the graph. This is used to draw the graph in the correct position.
+    set the extent of the graph. This is used to automatically position edges when periodic boundary conditions are used. It's recommended to set this to the extent of the background image used for the graph.
 
     Args:
         graph_extent (np.ndarray): extent of the graph (xmin, xmax, ymin, ymax)
     """
     self.graph_extent = graph_extent
+
 
   def move_labels_to_nodes(self,
       ax: plt.Axes,
@@ -759,6 +760,7 @@ class TTR_Particle_Graph:
             "n_tasks": len(self.tasks),
             "n_edges": len(self.particle_edges),
             "n_labels": len(self.particle_labels),
+            "graph_extent": [float(e) for e in self.graph_extent],
             "particles": all_particles_dict,
             "particle_parameters": self.particle_parameters,
             "tasks": all_tasks_dict
@@ -1057,6 +1059,8 @@ class TTR_Particle_Graph:
         particle.add_connected_particle(particle_dict[connected_particle_id])
     # set max id
     particle_graph.max_particle_id = max_particle_id
+    if "graph_extent" in graph_info["particle_graph"]:
+      particle_graph.set_graph_extent(np.array(graph_info["particle_graph"]["graph_extent"]))
     # build list of paths in graph
     particle_graph.build_paths()
     particle_graph.update_tasks(graph_info["particle_graph"]["tasks"])

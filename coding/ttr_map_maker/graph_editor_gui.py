@@ -713,7 +713,10 @@ class Graph_Editor_GUI:
     # clear settings frame
     for widget in list(self.settings_frame.winfo_children()):
       # widget.grid_forget()
-      widget.destroy()
+      try:
+        widget.destroy()
+      except tk.TclError as e:
+        print(f"Warning: An error occured while deleting widget {widget}:\n{e}")
     self.settings_frame.update()
     self.canvas.draw_idle()
 

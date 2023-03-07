@@ -178,6 +178,12 @@ class Board_Layout_GUI:
       command: Callable):
     """
     Add a button to browse for a file of the given type.
+
+    Args:
+        frame (tk.Frame): The frame to add the button to.
+        row_index (int): The row index of the button (using grid geometry manager).
+        column_index (int): The column index of the button (using grid geometry manager).
+        command (Callable): The command to execute when the button is pressed.
     """
     button = tk.Button(
         frame,
@@ -365,9 +371,11 @@ class Board_Layout_GUI:
     self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
 
     # variables for different modes of operation
-    self.graph_edit_mode_enabled = tk.BooleanVar(value=False, name="graph_edit_mode_enabled")
-    self.task_edit_mode_enabled = tk.BooleanVar(value=False, name="task_edit_mode_enabled")
-    self.graph_analysis_enabled = tk.BooleanVar(value=False, name="graph_analysis_enabled")
+    self.gui_mode = tk.StringVar(value="Graph view", name="gui_mode")
+    self.last_gui_mode = tk.StringVar(value="Graph view", name="last_gui_mode")
+    # self.graph_edit_mode_enabled = tk.BooleanVar(value=False, name="graph_edit_mode_enabled")
+    # self.task_edit_mode_enabled = tk.BooleanVar(value=False, name="task_edit_mode_enabled")
+    # self.graph_analysis_enabled = tk.BooleanVar(value=False, name="graph_analysis_enabled")
 
     self.move_nodes_enabled = tk.BooleanVar(value=False, name="move_nodes_enabled")
     self.move_labels_enabled = tk.BooleanVar(value=False, name="move_labels_enabled")
@@ -379,13 +387,24 @@ class Board_Layout_GUI:
     self.background_image_offset_x = tk.DoubleVar(value=0.0, name="background_image_offset_x")
     self.background_image_offset_y = tk.DoubleVar(value=0.0, name="background_image_offset_y")
     self.board_scale_factor = tk.DoubleVar(value=1.25, name="board_scale_factor")
-    self.node_scale_factor = tk.DoubleVar(value=0.8, name="node_scale_factor")
+    self.graph_positions_scale_factor = tk.DoubleVar(value=1.0, name="node_scale_factor")
 
   def draw_control_widgets(self):
     """
     Draw widgets for user inputs. Place them in the control frame using grid layout.
     """
-    row_index = 0
+    row_index: int = 0
+    # frame for mode selection
+    mode_frame = tk.Frame(self.control_frame)
+    self.add_frame_style(mode_frame)
+    mode_frame.grid(
+        row=row_index,
+        column=0,
+        sticky="nsew",
+        pady=(0, self.grid_pad_y))
+    row_index += 1
+    self.draw_mode_widgets(mode_frame)
+
     # frame for file inputs
     file_frame = tk.Frame(self.control_frame)
     self.add_frame_style(file_frame)
@@ -488,6 +507,67 @@ class Board_Layout_GUI:
 
     return button, toggle_function
 
+
+  def draw_mode_widgets(self, mode_frame: tk.Frame):
+    """
+    Draw widgets for selecting the mode of the application.
+
+    Args:
+        mode_frame (tk.Frame): Frame to place the widgets in
+    """
+    row_index: int = 0
+    # add radiobuttons in a separate frame
+    mode_selector_frame: tk.Frame = tk.Frame(mode_frame)
+    self.add_frame_style(mode_selector_frame)
+    mode_selector_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=3,
+        sticky="new",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(3*self.grid_pad_y, self.grid_pad_y))
+    for column_index in range(3):
+      mode_selector_frame.columnconfigure(column_index, weight=1)
+    def add_radiobutton(row_index: int, column_index: int, text: str, var: tk.StringVar, command: Callable = None):
+      radiobutton = tk.Radiobutton(mode_selector_frame,
+          background=self.color_config["button_bg_color"],
+          foreground=self.color_config["button_fg_color"],
+          activebackground=self.color_config["button_active_bg_color"],
+          activeforeground=self.color_config["button_active_fg_color"],
+          selectcolor=self.color_config["button_active_bg_color"],
+          cursor="hand2",
+          text=text,
+          variable=var,
+          value=text,
+          command=command,
+          indicatoron=False,
+          relief="flat",
+          font=(self.font, self.font_size, "bold"),
+          border=0)
+      # self.add_radiobutton_style(radiobutton)
+      radiobutton.grid(
+          row=row_index,
+          column=column_index,
+          sticky="new",
+          padx=0 if column_index == 0 else (self.grid_pad_x, 0),
+          pady=(0, self.grid_pad_y))
+    column_index: int = 0
+    mode_row_index: int = 0
+    graph_edit_mode_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Graph view", self.gui_mode, self.update_gui_mode)
+    column_index += 1
+    graph_edit_mode_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Graph Editor", self.gui_mode, self.update_gui_mode)
+    column_index += 1
+    particle_sim_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Particle simulation", self.gui_mode, self.update_gui_mode)
+    column_index: int = 0
+    mode_row_index += 1
+    task_edit_mode_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Task Editor", self.gui_mode, self.update_gui_mode)
+    column_index += 1
+    task_edit_mode_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Task Export", self.gui_mode, self.update_gui_mode)
+    column_index += 1
+    graph_analysis_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Graph analysis", self.gui_mode, self.update_gui_mode)
+    column_index += 1
+
+
   def draw_file_widgets(self, file_frame: tk.Frame):
     """
     Draw widgets for file inputs. Place them in the given frame using grid layout.
@@ -531,7 +611,7 @@ class Board_Layout_GUI:
           command=command)
       file_widgets.append(browse_button)
 
-    row_index = 0
+    row_index: int = 0
     # add submenu button for file inputs
     file_input_toggle_button, toggle_file_input_submenu = self.create_submenu_button(
       master=file_frame,
@@ -725,12 +805,15 @@ class Board_Layout_GUI:
       self.plotted_background_images: list = list()
       self.background_image_extent: np.ndarray = None
 
-    if self.graph_analysis_enabled.get():
-      self.graph_analysis_enabled.set(False)
-      self.toggle_graph_analysis() # disable graph analysis
-    if self.graph_edit_mode_enabled.get():
-      self.graph_edit_mode_enabled.set(False)
-      self.toggle_graph_edit_mode() # disable graph edit mode
+    self.gui_mode.set("Graph view")
+    self.last_gui_mode.set(self.gui_mode.get())
+    self.update_gui_mode()
+    # if self.gui_mode.get() == "Graph analysis":
+    #   self.graph_analysis_enabled.set(False)
+    #   self.toggle_graph_analysis() # disable graph analysis
+    # if self.gui_mode.get() == "Graph editor":
+    #   self.graph_edit_mode_enabled.set(False)
+    #   self.toggle_graph_edit_mode() # disable graph edit mode
 
   def draw_particle_widgets(self, particle_frame: tk.Frame) -> None:
     """
@@ -783,7 +866,7 @@ class Board_Layout_GUI:
     # configure grid layout
     particle_frame.columnconfigure(0, weight=1)
     particle_frame.columnconfigure(1, weight=1)
-    row_index = 0
+    row_index: int = 0
     # add submenu button for particle simulation parameters
     particle_parameter_toggle_button, toggle_particle_parameter_submenu = self.create_submenu_button(
         master=particle_frame,
@@ -926,8 +1009,8 @@ class Board_Layout_GUI:
     # configure grid layout
     toggle_frame.columnconfigure(0, weight=1)
     toggle_frame.columnconfigure(1, weight=1)
-    row_index = 0
-    column_index = 0
+    row_index: int = 0
+    column_index: int = 0
     # add submenu button for toggles
     toggles_button, toggle_toggles_submenu = self.create_submenu_button(
         master=toggle_frame,
@@ -1002,7 +1085,7 @@ class Board_Layout_GUI:
     """
     Update the frame with the current settings.
     """
-    if self.graph_analysis_enabled.get():
+    if self.gui_mode.get() == "Graph analysis":
       grid_color = self.color_config["plot_grid_color"] if self.show_plot_frame.get() else None
       no_grid = [(1,2), (2,2)]
       for i, ax in enumerate(self.axs.flat):
@@ -1049,7 +1132,7 @@ class Board_Layout_GUI:
       self.plotted_background_images = []
       if self.background_image_extent is None:
         self.background_image_extent = (0, self.background_image_mpl.shape[1], 0, self.background_image_mpl.shape[0])
-      if self.graph_analysis_enabled.get():
+      if self.gui_mode.get() == "Graph analysis":
         self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
         self.axs[1, 2].set_xlim(self.background_image_extent[0], self.background_image_extent[1])
         self.axs[1, 2].set_ylim(self.background_image_extent[2], self.background_image_extent[3])
@@ -1162,8 +1245,8 @@ class Board_Layout_GUI:
       for config_index in range(column_index, column_index + columnspan):
         button_frame.columnconfigure(config_index, weight=1)
 
-    row_index = 0
-    column_index = 0
+    row_index: int = 0
+    column_index: int = 0
     # add buttons
     add_control_button(row_index, column_index, "Save graph", self.save_graph)
     column_index += 1
@@ -1171,64 +1254,13 @@ class Board_Layout_GUI:
     column_index += 1
     add_control_button(row_index, column_index, "Scale graph", self.scale_graph_posistions)
     row_index += 1
-    column_index = 0
+    column_index: int = 0
     add_control_button(row_index, column_index, "Save img", self.save_image)
     column_index += 1
     add_control_button(row_index, column_index, "Snap edges", self.move_edges_to_nodes)
     column_index += 1
     add_control_button(row_index, column_index, "Scale img", self.scale_background_image)
     row_index += 1
-
-    # add checkbuttons in a separate frame
-    checkbutton_frame: tk.Frame = tk.Frame(button_frame)
-    self.add_frame_style(checkbutton_frame)
-    checkbutton_frame.grid(
-        row=row_index,
-        column=0,
-        columnspan=3,
-        sticky="new",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
-    column_index = 0
-    graph_edit_mode_checkbutton = tk.Checkbutton(
-        checkbutton_frame,
-        text="Edit graph",
-        variable=self.graph_edit_mode_enabled,
-        command=self.toggle_graph_edit_mode)
-    self.add_checkbutton_style(graph_edit_mode_checkbutton)
-    graph_edit_mode_checkbutton.grid(
-        row=0,
-        column=column_index,
-        sticky="new",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=0)
-    column_index += 1
-    task_edit_mode_checkbutton = tk.Checkbutton(
-        checkbutton_frame,
-        text="Edit tasks",
-        variable=self.task_edit_mode_enabled,
-        command=self.toggle_task_edit_mode)
-    self.add_checkbutton_style(task_edit_mode_checkbutton)
-    task_edit_mode_checkbutton.grid(
-        row=0,
-        column=column_index,
-        sticky="new",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=0)
-    column_index += 1
-    graph_analysis_checkbutton = tk.Checkbutton(
-        checkbutton_frame,
-        text="Graph analysis",
-        variable=self.graph_analysis_enabled,
-        command=self.toggle_graph_analysis)
-    self.add_checkbutton_style(graph_analysis_checkbutton)
-    graph_analysis_checkbutton.grid(
-        row=0,
-        column=column_index,
-        sticky="new",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=0)
-    column_index += 1
 
   def play_pause_simulation(self):
     """
@@ -1317,8 +1349,9 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
-    self.particle_graph.scale_graph_positions(self.ax, self.node_scale_factor.get())
+    self.particle_graph.scale_graph_positions(self.ax, self.graph_positions_scale_factor.get())
     self.canvas.draw_idle()
+
 
   def draw_board_scaling_widgets(self, plot_param_frame: tk.Frame):
     """
@@ -1327,39 +1360,41 @@ class Board_Layout_GUI:
     wdith and height of physical board
     """
     board_size_widgets: list = list()
-    def add_label_and_entry(row_index: int, column_index: int, text: str, var: tk.StringVar):
+    def add_label_and_entry(parent: tk.Widget, row_index: int, column_index: int, text: str, var: tk.StringVar):
       """
       Add a label and entry widget to the given frame.
 
       Args:
+          parent (tk.Widget): parent widget to add the widgets to
           row_index (int): row index to place the widgets in
+          column_index (int): column index to place the widgets in
           text (str): text to display in the label
           var (tk.StringVar): variable to store the entry value in
       """
-      label = tk.Label(plot_param_frame, text=text)
+      label = tk.Label(parent, text=text)
       self.add_label_style(label)
       label.grid(
           row=row_index,
           column=column_index,
-          sticky="ne",
+          sticky="w",
           padx=(self.grid_pad_x, self.grid_pad_x),
           pady=(0, self.grid_pad_y))
       board_size_widgets.append(label)
-      entry = tk.Entry(plot_param_frame, textvariable=var, width=4)
+      entry = tk.Entry(parent, textvariable=var, width=4)
       self.add_entry_style(entry)
       entry.grid(
           row=row_index,
           column=column_index+1,
-          sticky="nw",
+          sticky="w",
           padx=(0, self.grid_pad_x),
           pady=(0, self.grid_pad_y))
       # configure used columns to stretch
-      plot_param_frame.columnconfigure(column_index, weight=1)
-      plot_param_frame.columnconfigure(column_index+1, weight=1)
+      # parent.grid_columnconfigure(column_index, weight=1)
+      parent.grid_columnconfigure(column_index+1, weight=1)
       board_size_widgets.append(entry)
     
-    row_index = 0
-    column_index = 0
+    row_index: int = 0
+    column_index: int = 0
     # add submenu button for physical board size
     board_scaling_button, toggle_board_scaling_submenu = self.create_submenu_button(
         master=plot_param_frame,
@@ -1369,30 +1404,28 @@ class Board_Layout_GUI:
         column_index=0,
         columnspan=4)
 
-    row_index += 1
-    # add Entries for width and height of physical board
-    add_label_and_entry(row_index, column_index, "width", self.board_width)
-    column_index += 2
-    add_label_and_entry(row_index, column_index, "height", self.board_height)
-    column_index += 2
-    row_index += 1
     # add label for background image offset
-    label = tk.Label(plot_param_frame, text="Background image offset", justify="center")
+    label = tk.Label(plot_param_frame, text="Background image position", justify="center")
     self.add_label_style(label)
     label.grid(
         row=row_index,
         column=0,
-        columnspan=4,
+        columnspan=8,
         sticky="nsew",
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
     board_size_widgets.append(label)
     row_index += 1
-    column_index = 0
-    # add Entries for width and height of physical board
-    add_label_and_entry(row_index, column_index, "x", self.background_image_offset_x)
+    column_index: int = 0
+    # add Entries for offset of background image
+    add_label_and_entry(plot_param_frame, row_index, column_index, "x", self.background_image_offset_x)
     column_index += 2
-    add_label_and_entry(row_index, column_index, "y", self.background_image_offset_y)
+    add_label_and_entry(plot_param_frame, row_index, column_index, "y", self.background_image_offset_y)
+    column_index += 2
+    # add Entries for width and height of physical board
+    add_label_and_entry(plot_param_frame, row_index, column_index, "width", self.board_width)
+    column_index += 2
+    add_label_and_entry(plot_param_frame, row_index, column_index, "height", self.board_height)
     column_index += 2
     row_index += 1
     # add label for node and background scale factor
@@ -1407,22 +1440,56 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     board_size_widgets.append(label)
     row_index += 1
-    column_index = 0
+    column_index: int = 0
+    scale_factors_frame = tk.Frame(plot_param_frame)
+    self.add_frame_style(scale_factors_frame)
+    scale_factors_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=8,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
     # add Entry for board scale factor
-    add_label_and_entry(row_index, column_index, "board", self.board_scale_factor)
+    add_label_and_entry(scale_factors_frame, row_index, column_index, "board size", self.board_scale_factor)
     column_index += 2
-    # add Entry for node scale factor
-    add_label_and_entry(row_index, column_index, "nodes", self.node_scale_factor)
+    # add Entry for graph positions scale factor
+    add_label_and_entry(scale_factors_frame, row_index, column_index, "graph positions", self.graph_positions_scale_factor)
+    column_index += 2
+
+  def update_gui_mode(self):
+    """
+    updates the gui mode:
+    Change which settings are currently shown and what is visible in the plot by calling the corresponding methods.
+    Disable previous mode before enabling the new mode.
+    """
+    print(f"last gui mode: {self.last_gui_mode.get()}")
+    print(f"new gui mode: {self.gui_mode.get()}")
+    if self.last_gui_mode.get().lower() == self.gui_mode.get().lower():
+      # set gui mode to graph view
+      self.gui_mode.set("Graph view")
+    for var in (self.last_gui_mode, self.gui_mode):
+      if var.get().lower() == "graph analysis":
+        self.toggle_graph_analysis()
+      elif var.get().lower() == "graph editor":
+        self.toggle_graph_edit_mode()
+      elif var.get().lower() == "task editor":
+        self.toggle_task_edit_mode()
+    self.last_gui_mode.set(self.gui_mode.get())
+    print(f"uodated last gui mode: {self.last_gui_mode.get()}")
+    print(f"uodated new gui mode: {self.gui_mode.get()}")
+    print("=" * 35)
 
   def toggle_graph_analysis(self):
     """
     Analyze the graph and display the results.
     """
     if self.particle_graph is None: # cannot open graph analysis without a graph
-      self.graph_analysis_enabled.set(False)
+      # self.graph_analysis_enabled.set(False)
       # self.fig.clf()
       return
-    if not self.graph_analysis_enabled.get(): # close graph analysis and show regular graph map 
+    # close graph analysis and show regular graph map
+    if not self.gui_mode.get().lower() == "graph analysis":
       # clear figure and draw graph
       self.fig.clf()
       self.ax = self.fig.add_subplot(111)
@@ -1435,12 +1502,6 @@ class Board_Layout_GUI:
       self.canvas.draw_idle()
       return
     # open graph analysis
-    if self.graph_edit_mode_enabled.get(): # disable graph edit mode
-      self.graph_edit_mode_enabled.set(False)
-      self.toggle_graph_edit_mode()
-    if self.task_edit_mode_enabled.get(): # close task edit mode
-      self.task_edit_mode_enabled.set(False)
-      self.toggle_task_edit_mode()
     if self.edge_style.get() == "Edge images": # disable edge images
       self.edge_style.set("Show tasks")
       self.update_edge_style()
@@ -1473,23 +1534,18 @@ class Board_Layout_GUI:
         self.move_nodes_enabled,
         self.move_labels_enabled,
         self.move_edges_enabled]
-    if not self.graph_edit_mode_enabled.get(): # disable graph edit mode
+    # disable graph edit mode
+    if not self.gui_mode.get().lower() == "graph editor":
       for tk_variable in movability_tk_variables:
         tk_variable.set(False)
       try:
         print("destroying graph edit frame")
-        self.graph_edit_frame.destroy()
         self.graph_editor_ui.unbind_mouse_events()
+        self.graph_edit_frame.destroy()
       except AttributeError as e:
         print(e)
         pass
       return
-    if self.graph_analysis_enabled.get(): # close graph analysis
-      self.graph_analysis_enabled.set(False)
-      self.toggle_graph_analysis()
-    if self.task_edit_mode_enabled.get(): # close task edit mode
-      self.task_edit_mode_enabled.set(False)
-      self.toggle_task_edit_mode()
     # enable graph edit mode
     # create frames for graph edit widgets
     self.graph_edit_frame: tk.Frame = tk.Frame(self.control_frame, bg=self.color_config["bg_color"])
@@ -1521,17 +1577,12 @@ class Board_Layout_GUI:
   def toggle_task_edit_mode(self):
     if self.particle_graph is None: # cannot open task edit mode without a graph
       self.task_edit_mode_enabled.set(False)
-    if not self.task_edit_mode_enabled.get(): # disable task edit mode
+    # disable task edit mode
+    if not self.gui_mode.get().lower() == "task editor":
       print("disable task edit mode")
-      self.task_edit_frame.grid_remove()
-      # self.task_editor_ui.unbind_mouse_events()
+      self.task_editor_ui.unbind_all_mouse_events()
+      self.task_edit_frame.destroy()
       return
-    if self.graph_analysis_enabled.get(): # close graph analysis
-      self.graph_analysis_enabled.set(False)
-      self.toggle_graph_analysis()
-    if self.graph_edit_mode_enabled.get(): # close graph edit mode
-      self.graph_edit_mode_enabled.set(False)
-      self.toggle_task_edit_mode()
     # enable graph edit mode
     # create frames for graph edit widgets
     self.task_edit_frame: tk.Frame = tk.Frame(self.control_frame)
@@ -1574,7 +1625,7 @@ class Board_Layout_GUI:
     #     blit=False)
 
 
-  def init_particle_graph(self) -> None: # TODO: this method or `draw_graph()` is likely the cause of the background image not being scaled correctly
+  def init_particle_graph(self) -> None:
     """
     Initialize the particle graph.
     arange nodes along left edge and corresponding labels to their right

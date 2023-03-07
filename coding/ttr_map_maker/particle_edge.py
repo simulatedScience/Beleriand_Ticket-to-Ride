@@ -47,12 +47,15 @@ class Particle_Edge(Graph_Particle):
         position (np.ndarray, optional): position of the edge. Defaults to np.array([0, 0], dtype=np.float16).
         rotation (float, optional): rotation of the edge in radians. Defaults to 0.
         mass (float, optional): mass of the edge. Defaults to 0.1.
+        bounding_box_size (tuple, optional): size of the bounding box of the edge. Defaults to (4, 1).
+        border_color (str, optional): color of the border of the edge. Defaults to "#555555".
         node_attraction (float, optional): attraction force between the edge and connected nodes. Defaults to 0.1.
         edge_attraction (float, optional): attraction force between the edge and the other edges. Defaults to 0.1.
         interaction_radius (float, optional): interaction radius of the edge for repulsion. Defaults to 5.
         velocity_decay (float, optional): velocity decay factor of the edge. Defaults to 0.9999.
         repulsion_strength (float, optional): repulsion strength of the edge. Defaults to 1.
         path_index (int, optional): index of the edge along the path between the two given locations. Defaults to 1.
+        connection_index (int, optional): index of the edge along the connection between the two given locations. Defaults to 0.
     """
     super().__init__(
         id,

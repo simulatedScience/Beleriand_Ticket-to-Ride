@@ -1,8 +1,7 @@
 """
 This module implements task edit functionality for the TTR board layout GUI.
 
-This is done via a class Task_Editor_Gui which can be seen as an extension of `Board_Layout_GUI`, which is the intended way to use it.
-
+This is done via a class Task_Editor_GUI which can be seen as an extension of `Board_Layout_GUI`, which is the intended way to use it.
 """
 import tkinter as tk
 from typing import Tuple, List, Callable
@@ -60,17 +59,17 @@ class Task_Editor_GUI:
     self.max_pick_range: float = max_pick_range
 
     # save grid padding for later use
-    self.grid_pad_x = grid_padding[0]
-    self.grid_pad_y = grid_padding[1]
+    self.grid_pad_x: int = grid_padding[0]
+    self.grid_pad_y: int = grid_padding[1]
 
     # extract tkinter style methods
-    self.add_frame_style = tk_config_methods["add_frame_style"]
-    self.add_label_style = tk_config_methods["add_label_style"]
-    self.add_button_style = tk_config_methods["add_button_style"]
-    self.add_entry_style = tk_config_methods["add_entry_style"]
-    self.add_checkbutton_style = tk_config_methods["add_checkbutton_style"]
-    self.add_radiobutton_style = tk_config_methods["add_radiobutton_style"]
-    self.add_browse_button = tk_config_methods["add_browse_button"]
+    self.add_frame_style: Callable = tk_config_methods["add_frame_style"]
+    self.add_label_style: Callable = tk_config_methods["add_label_style"]
+    self.add_button_style: Callable = tk_config_methods["add_button_style"]
+    self.add_entry_style: Callable = tk_config_methods["add_entry_style"]
+    self.add_checkbutton_style: Callable = tk_config_methods["add_checkbutton_style"]
+    self.add_radiobutton_style: Callable = tk_config_methods["add_radiobutton_style"]
+    self.add_browse_button: Callable = tk_config_methods["add_browse_button"]
 
     # set up task edit variables
     self.node_names: List[str] = ["None"] + sorted(self.particle_graph.get_locations())
@@ -96,6 +95,20 @@ class Task_Editor_GUI:
     """
     for widget in self.task_edit_frame.winfo_children():
       widget.destroy()
+
+  def unbind_all_mouse_events(self):
+    """
+    Unbinds all mouse events from the canvas.
+    """
+    # unbind mouse events
+    self.unbind_task_overview_mouse_events()
+    self.unbind_task_edit_mouse_events()
+    # hide all highlighted tasks
+    for task_name, task_var in self.task_visibility_vars.items():
+      if task_name != "all" and task_var.get():
+        self.particle_graph.tasks[task_name].erase()
+        task_var.set(False)
+    self.canvas.draw_idle()
 
 
   def open_task_overview(self):
@@ -1101,8 +1114,9 @@ class Task_Editor_GUI:
     - hide all nodes, labels, edges and task indicators
     - show background image
     """
+    raise NotImplementedError("Exporting task images is not implemented yet.")
 
-  
+
   def add_arrow_button(self, direction: str, parent_frame: tk.Frame, command: Callable) -> tk.Button:
     """
     add a button displaying an arrow in the given direction to the given parent frame and bind the command to it.
