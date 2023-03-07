@@ -112,6 +112,8 @@ class Task_Editor_GUI:
       if task_name != "all" and task_var.get():
         self.particle_graph.tasks[task_name].erase()
         task_var.set(False)
+    for widget in self.task_edit_frame.winfo_children():
+      widget.destroy()
     self.canvas.draw_idle()
 
 
