@@ -111,6 +111,8 @@ class Particle_Node(Graph_Particle):
       color: str = "#222222",
       alpha: float = 1,
       zorder: int = 4,
+      scale: float = 1,
+      override_image_path: str = None,
       movable: bool = True):
     """draw node as circle on given axes
 
@@ -120,12 +122,12 @@ class Particle_Node(Graph_Particle):
         alpha (float, optional): alpha value of the node. Defaults to 1.
         zorder (int, optional): zorder of the node. Defaults to 4.
     """
-    if self.image_file_path is None: # draw mpl Circle
+    if self.image_file_path is None and override_image_path is None: # draw mpl Circle
       self.plotted_objects.append(
           ax.add_patch(
               Circle(
                   self.position,
-                  0.5,
+                  radius=0.5 * scale,
                   color=color,
                   alpha=alpha,
                   zorder=zorder,
@@ -134,13 +136,11 @@ class Particle_Node(Graph_Particle):
           )
       )
     else:
-      mpl_image = mpimg.imread(self.image_file_path)
-      edge_extent = (
-        self.position[0] - self.bounding_box_size[0] / 2,
-        self.position[0] + self.bounding_box_size[0] / 2,
-        self.position[1] - self.bounding_box_size[1] / 2,
-        self.position[1] + self.bounding_box_size[1] / 2)
-      plotted_image = ax.imshow(mpl_image, extent=edge_extent, zorder=zorder, picker=True)
+      if override_image_path is None: # draw image saved in self.image_file_path
+        override_image_path = self.image_file_path
+      mpl_image = mpimg.imread(override_image_path)
+      img_extent = self.get_extent(scale)
+      plotted_image = ax.imshow(mpl_image, extent=img_extent, zorder=zorder, picker=True)
       # rotate image using transformation
       # keep image upright
       image_rotation = self.rotation
@@ -151,6 +151,22 @@ class Particle_Node(Graph_Particle):
       self.plotted_objects.append(plotted_image)
     # set movability of particle
     super().set_particle_movable(movable)
+
+  def get_extent(self, scale):
+    """
+    Get the extent of the node with the given scale applied.
+
+    Args:
+        scale (float): scaling factor
+
+    Returns:
+        Tuple[float, float, float, float]: extent of the node as (left, right, bottom, top)
+    """
+    return (
+        self.position[0] - self.bounding_box_size[0] / 2 * scale,
+        self.position[0] + self.bounding_box_size[0] / 2 * scale,
+        self.position[1] - self.bounding_box_size[1] / 2 * scale,
+        self.position[1] + self.bounding_box_size[1] / 2 * scale)
 
 
   def set_image_file_path(self, image_file_path: str = None):

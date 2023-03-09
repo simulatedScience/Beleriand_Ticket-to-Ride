@@ -7,12 +7,16 @@ from typing import List, Tuple, Callable
 import os
 import tkinter as tk
 
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 from file_browsing import browse_image_file, browse_directory
 from ttr_particle_graph import TTR_Particle_Graph
+from particle_node import Particle_Node
+from particle_label import Particle_Label
 from ttr_task import TTR_Task
+from task_label_layout import calculate_label_layout
 
 class Task_Export_GUI:
   def __init__(self,
@@ -68,10 +72,12 @@ class Task_Export_GUI:
     self.card_frame_filepath: tk.StringVar = tk.StringVar(value="")
     self.card_frame_width: tk.DoubleVar = tk.DoubleVar(value=8.9)
     self.card_frame_height: tk.DoubleVar = tk.DoubleVar(value=6.4)
-    self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=8.5)
-    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=6.2)
-    self.background_image_offset_x: tk.DoubleVar = tk.StringVar(value=0.0)
-    self.background_image_offset_y: tk.DoubleVar = tk.StringVar(value=0.0)
+    # self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=8.5)
+    # self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=6.2)
+    self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=83.1)
+    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=54.0)
+    self.background_image_offset_x: tk.DoubleVar = tk.DoubleVar(value=0.0)
+    self.background_image_offset_y: tk.DoubleVar = tk.DoubleVar(value=0.0)
 
     self.label_scale: tk.DoubleVar = tk.DoubleVar(value=4.0)
     self.node_scale: tk.DoubleVar = tk.DoubleVar(value=2.0)
@@ -585,7 +591,7 @@ class Task_Export_GUI:
     """
     Toggle whether nodes use the image specified in the node image override field or their own image.
     """
-    raise NotImplementedError
+    self.show_current_task()
 
   def update_node_connector_lines(self) -> None:
     """
@@ -668,23 +674,67 @@ class Task_Export_GUI:
       task.erase()
     ttr_task = self.task_list[self.selected_task.get()]
     self.particle_graph.erase()
-    for location in ttr_task.node_names:
+    if self.node_image_override.get():
+      override_image: str = self.node_image_filepath.get() if self.node_image_override.get() else None
+    else:
+      override_image: str = None
+    for location, new_label_position in (ttr_task.node_names, self.calculate_label_positions()):
       self.particle_graph.particle_nodes[location].draw(
           self.ax,
-          # scale=self.node_scale.get(),
+          scale=self.node_scale.get(),
+          override_image_path=override_image,
           )
       self.particle_graph.particle_labels[location].draw(
           self.ax,
-          # scale=self.label_scale.get(),
+          scale=self.label_scale.get(),
+          override_position=new_label_position
           )
     if self.node_connector_lines.get():
       ttr_task.draw(
           ax=self.ax,
           particle_graph=self.particle_graph,
           # color=self.task_connector_color,
-          # linewidth=self.task_connector_linewidth,
+          linewidth=self.node_scale.get() * 6,
+          zorder=0,
           )
     self.canvas.draw_idle()
+
+
+  def calculate_label_positions(self) -> List[np.ndarray]:
+    """
+    Calculate the positions of all labels in the current task such that they are
+      - on the canvas,
+      - not overlapping with any other label,
+      - not overlapping with any node,
+
+    Returns:
+        (List[np.ndarray]): a list of center positions for each label in the current task.
+    """
+    task_nodes: List[Particle_Node] = [self.particle_graph.particle_nodes[location] for location in self.task_list[self.selected_task.get()].node_names]
+    task_labels: List[Particle_Label] = [self.particle_graph.particle_labels[location] for location in self.task_list[self.selected_task.get()].node_names]
+    
+    node_extents: List[Tuple[float, float, float, float]] = [node.get_extent(self.node_scale.get()) for node in task_nodes]
+    node_centers: List[np.ndarray] = [node.position for node in task_nodes]
+    label_extents: List[Tuple[float, float, float, float]] = [label.get_extent(self.label_scale.get()) for label in task_labels]
+
+    label_centers: List[np.ndarray] = [label.position for label in task_labels]
+    background_extent: Tuple[float, float, float, float] = (
+        self.background_image_offset_x.get(),
+        self.background_image_width.get() + self.background_image_offset_x.get(),
+        self.background_image_offset_y.get(),
+        self.background_image_height.get() + self.background_image_offset_y.get(),
+    )
+
+    new_label_centers: List[np.ndarray] = calculate_label_layout(
+        node_extents=node_extents,
+        label_extents=label_extents,
+        label_centers=label_centers,
+        node_centers=node_centers,
+        bounding_rectangle=background_extent,
+    )
+    return new_label_centers
+
+
 
 
   def add_arrow_button(self, direction: str, parent: tk.Frame, command: Callable) -> tk.Button:

@@ -58,10 +58,10 @@ class Particle_Label(Graph_Particle):
     if font_name is None:
       # font_name = font_path.split("\\")[-1].strip(".ttf")
       fontManager.addfont(font_path)
-      width, height, pix_width, pix_height, *offset = self.get_label_size(label, fontsize, font_path)
+      width, height, pix_width, pix_height, *offset = self._get_label_size(label, fontsize, font_path)
       self.font_name = font_path
     else:
-      width, height, pix_width, pix_height, *offset = self.get_label_size(label, fontsize, font_name)
+      width, height, pix_width, pix_height, *offset = self._get_label_size(label, fontsize, font_name)
       self.font_name = font_name
     super().__init__(
         id,
@@ -122,7 +122,7 @@ class Particle_Label(Graph_Particle):
     if new_label != self.label:
       self.label = new_label
       # update bounding box size
-      width, height, pix_width, pix_height, *offset = self.get_label_size(new_label, self.fontsize, self.font_name)
+      width, height, pix_width, pix_height, *offset = self._get_label_size(new_label, self.fontsize, self.font_name)
       self.bounding_box_size = (width, height)
       self.width_pixels = pix_width
       self.height_pixels = pix_height
@@ -138,6 +138,8 @@ class Particle_Label(Graph_Particle):
       border_color: str = "#eeeeee",
       alpha: float = 1,
       zorder: int = 4,
+      scale: float = 1,
+      override_position: np.ndarray = None,
       movable: bool = True) -> None:
     """
     draw the particle on the canvas.
@@ -161,11 +163,7 @@ class Particle_Label(Graph_Particle):
     text_draw = ImageDraw.Draw(text_image)
     text_draw.text((self.text_x_offset, self.text_y_offset), self.label, font=self.img_font, fill=color, stroke_width=self.inside_stroke_width)
 
-    label_extent = (
-        self.position[0] - self.bounding_box_size[0] / 2,
-        self.position[0] + self.bounding_box_size[0] / 2,
-        self.position[1] - self.bounding_box_size[1] / 2,
-        self.position[1] + self.bounding_box_size[1] / 2)
+    label_extent = self.get_extent(scale, override_position)
     self.plotted_objects.append(ax.imshow(
         text_image,
         extent=label_extent,
@@ -185,7 +183,27 @@ class Particle_Label(Graph_Particle):
 
     return outline_image
 
-  def get_label_size(self, label: str, fontsize: int, font: str, image_padding: int = 10) -> Tuple[float, float, float, float]:
+  def get_extent(self, scale: float = 1, override_position: np.ndarray = None) -> Tuple[float, float, float, float]:
+    """
+    get the extent of the label
+
+    Args:
+        scale (float, optional): _description_. Defaults to 1.
+        override_position (np.ndarray, optional): _description_. Defaults to None.
+
+    Returns:
+        Tuple[float, float, float, float]: extent of the label as (left, right, bottom, top)
+    """
+    if override_position is None:
+      override_position = self.position
+    return (
+        override_position[0] - self.bounding_box_size[0] / 2 * scale,
+        override_position[0] + self.bounding_box_size[0] / 2 * scale,
+        override_position[1] - self.bounding_box_size[1] / 2 * scale,
+        override_position[1] + self.bounding_box_size[1] / 2 * scale)
+
+
+  def _get_label_size(self, label: str, fontsize: int, font: str, image_padding: int = 10) -> Tuple[float, float, float, float]:
     """
     get size of a label with a given font size
 
@@ -220,23 +238,7 @@ class Particle_Label(Graph_Particle):
     height = height_pixels * self.height_scale_factor
     return width, height, width_pixels, height_pixels, text_x_offset, text_y_offset
 
-  def add_json_info(self, particle_info: dict) -> dict:
-    """
-    Add label-specific particle information to json dictionary for saving.
 
-    Args:
-        particle_info (dict): json dictionary
-
-    Returns:
-        (dict): json dictionary with label-specific information
-    """
-    particle_info["label"] = self.label
-    particle_info["color"] = self.color
-    particle_info["fontsize"] = self.fontsize
-    particle_info["font_name"] = self.font_name
-    particle_info["node_attraction"] = self.node_attraction
-    particle_info["height_scale_factor"] = self.height_scale_factor
-    return particle_info
 
   def get_label_height_scale(
       fontsize: int = 150,
@@ -267,6 +269,26 @@ class Particle_Label(Graph_Particle):
     
     width, height =  img_font.getsize(text, stroke_width=outline_stroke_width)
     return 1/height
+
+
+  def add_json_info(self, particle_info: dict) -> dict:
+    """
+    Add label-specific particle information to json dictionary for saving.
+
+    Args:
+        particle_info (dict): json dictionary
+
+    Returns:
+        (dict): json dictionary with label-specific information
+    """
+    particle_info["label"] = self.label
+    particle_info["color"] = self.color
+    particle_info["fontsize"] = self.fontsize
+    particle_info["font_name"] = self.font_name
+    particle_info["node_attraction"] = self.node_attraction
+    particle_info["height_scale_factor"] = self.height_scale_factor
+    return particle_info
+
 
 
 if __name__ == "__main__":
