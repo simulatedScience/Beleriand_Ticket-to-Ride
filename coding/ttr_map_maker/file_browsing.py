@@ -40,3 +40,15 @@ def browse_json_file(browse_request: str, var: tk.StringVar):
   file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.json")])
   if file_path:
     var.set(file_path)
+
+def browse_directory(browse_request: str, var: tk.StringVar):
+  """
+  Open a file dialog to select a directory. The file path is stored in the given variable.
+
+  Args:
+      browse_request (str): text to display in the file dialog
+      var (tk.StringVar): variable to store the file path in
+  """
+  file_path = tk.filedialog.askdirectory()
+  if file_path:
+    var.set(file_path)

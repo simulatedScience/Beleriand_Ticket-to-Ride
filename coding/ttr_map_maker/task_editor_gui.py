@@ -1179,17 +1179,6 @@ class Task_Editor_GUI:
       task_widgets[5].config(command=lambda task=self.task_list[row_index], task_index=row_index: self.delete_task(task, task_index))
 
 
-  def export_task_images(self) -> None:
-    """
-    Export the current task images to the directory given in `self.task_export_dir`.
-
-    Exporting is done using the following steps:
-    - hide all nodes, labels, edges and task indicators
-    - show background image
-    """
-    raise NotImplementedError("Exporting task images is not implemented yet.")
-
-
   def add_arrow_button(self, direction: str, parent_frame: tk.Frame, command: Callable) -> tk.Button:
     """
     add a button displaying an arrow in the given direction to the given parent frame and bind the command to it.
