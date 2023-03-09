@@ -46,6 +46,7 @@ import read_ttr_files as ttr_reader
 import pokemon_colors as pkmn_colors
 from graph_editor_gui import Graph_Editor_GUI
 from task_editor_gui import Task_Editor_GUI
+from task_export_gui import Task_Export_GUI
 
 class Board_Layout_GUI:
   def __init__(self,
@@ -504,7 +505,6 @@ class Board_Layout_GUI:
         columnspan=columnspan,
         sticky="nsew",
         pady=(0, self.grid_pad_y))
-
     return button, toggle_function
 
 
@@ -516,20 +516,10 @@ class Board_Layout_GUI:
         mode_frame (tk.Frame): Frame to place the widgets in
     """
     row_index: int = 0
-    # add radiobuttons in a separate frame
-    mode_selector_frame: tk.Frame = tk.Frame(mode_frame)
-    self.add_frame_style(mode_selector_frame)
-    mode_selector_frame.grid(
-        row=row_index,
-        column=0,
-        columnspan=3,
-        sticky="new",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(3*self.grid_pad_y, self.grid_pad_y))
     for column_index in range(3):
-      mode_selector_frame.columnconfigure(column_index, weight=1)
+      mode_frame.columnconfigure(column_index, weight=1)
     def add_radiobutton(row_index: int, column_index: int, text: str, var: tk.StringVar, command: Callable = None):
-      radiobutton = tk.Radiobutton(mode_selector_frame,
+      radiobutton = tk.Radiobutton(mode_frame,
           background=self.color_config["button_bg_color"],
           foreground=self.color_config["button_fg_color"],
           activebackground=self.color_config["button_active_bg_color"],
@@ -1360,7 +1350,13 @@ class Board_Layout_GUI:
     wdith and height of physical board
     """
     board_size_widgets: list = list()
-    def add_label_and_entry(parent: tk.Widget, row_index: int, column_index: int, text: str, var: tk.StringVar):
+    def add_numeric_input(
+        parent: tk.Widget,
+        row_index: int,
+        column_index: int,
+        label_text: str,
+        variable: tk.StringVar,
+        width: int = 4) -> Tuple[tk.Label, tk.Entry]:
       """
       Add a label and entry widget to the given frame.
 
@@ -1368,19 +1364,20 @@ class Board_Layout_GUI:
           parent (tk.Widget): parent widget to add the widgets to
           row_index (int): row index to place the widgets in
           column_index (int): column index to place the widgets in
-          text (str): text to display in the label
-          var (tk.StringVar): variable to store the entry value in
+          label_text (str): text to display in the label
+          variable (tk.StringVar): variable to store the entry value in
+          width (int, optional): The width of the entry widget. Defaults to 4.
       """
-      label = tk.Label(parent, text=text)
+      label = tk.Label(parent, text=label_text)
       self.add_label_style(label)
       label.grid(
           row=row_index,
           column=column_index,
-          sticky="w",
+          sticky="e",
           padx=(self.grid_pad_x, self.grid_pad_x),
           pady=(0, self.grid_pad_y))
       board_size_widgets.append(label)
-      entry = tk.Entry(parent, textvariable=var, width=4)
+      entry = tk.Entry(parent, textvariable=variable, width=width)
       self.add_entry_style(entry)
       entry.grid(
           row=row_index,
@@ -1392,6 +1389,7 @@ class Board_Layout_GUI:
       # parent.grid_columnconfigure(column_index, weight=1)
       parent.grid_columnconfigure(column_index+1, weight=1)
       board_size_widgets.append(entry)
+      return label, entry
     
     row_index: int = 0
     column_index: int = 0
@@ -1402,32 +1400,89 @@ class Board_Layout_GUI:
         widget_list=board_size_widgets,
         row_index=row_index,
         column_index=0,
-        columnspan=4)
-
+        columnspan=5)
+    row_index += 1
     # add label for background image offset
-    label = tk.Label(plot_param_frame, text="Background image position", justify="center")
-    self.add_label_style(label)
-    label.grid(
+    # background image width and height
+    background_image_size_label: tk.Label = tk.Label(plot_param_frame, text="Background image size", anchor="w")
+    self.add_label_style(background_image_size_label)
+    background_image_size_label.grid(
         row=row_index,
         column=0,
-        columnspan=8,
-        sticky="nsew",
+        sticky="new",
         padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(0, self.grid_pad_y))
-    board_size_widgets.append(label)
+        pady=(self.grid_pad_y, self.grid_pad_y),
+        )
+    board_size_widgets.append(background_image_size_label)
+    background_image_width_label, background_image_width_entry = add_numeric_input(
+        parent=plot_param_frame,
+        row_index=row_index,
+        column_index=1,
+        label_text="width:",
+        variable=self.board_width,
+        width=4,
+        )
+    background_image_height_label, background_image_height_entry = add_numeric_input(
+        parent=plot_param_frame,
+        row_index=row_index,
+        column_index=3,
+        label_text="height:",
+        variable=self.board_height,
+        width=4,
+        )
     row_index += 1
-    column_index: int = 0
-    # add Entries for offset of background image
-    add_label_and_entry(plot_param_frame, row_index, column_index, "x", self.background_image_offset_x)
-    column_index += 2
-    add_label_and_entry(plot_param_frame, row_index, column_index, "y", self.background_image_offset_y)
-    column_index += 2
-    # add Entries for width and height of physical board
-    add_label_and_entry(plot_param_frame, row_index, column_index, "width", self.board_width)
-    column_index += 2
-    add_label_and_entry(plot_param_frame, row_index, column_index, "height", self.board_height)
-    column_index += 2
+    # background image offset
+    background_image_offset_label: tk.Label = tk.Label(plot_param_frame, text="Background image offset", anchor="w")
+    self.add_label_style(background_image_offset_label)
+    background_image_offset_label.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(self.grid_pad_y, self.grid_pad_y),
+        )
+    board_size_widgets.append(background_image_offset_label)
+    background_image_offset_x_label, background_image_offset_entry = add_numeric_input(
+        parent=plot_param_frame,
+        row_index=row_index,
+        column_index=1,
+        label_text="x:",
+        variable=self.background_image_offset_x,
+        width=4,
+        )
+    background_image_offset_y_label, background_image_offset_entry = add_numeric_input(
+        parent=plot_param_frame,
+        row_index=row_index,
+        column_index=3,
+        label_text="y:",
+        variable=self.background_image_offset_y,
+        width=4,
+        )
     row_index += 1
+    # label = tk.Label(plot_param_frame, text="Background image position", justify="center")
+    # self.add_label_style(label)
+    # label.grid(
+    #     row=row_index,
+    #     column=0,
+    #     columnspan=8,
+    #     sticky="nsew",
+    #     padx=(self.grid_pad_x, self.grid_pad_x),
+    #     pady=(0, self.grid_pad_y))
+    # board_size_widgets.append(label)
+    # row_index += 1
+    # column_index: int = 0
+    # # add Entries for offset of background image
+    # add_numeric_input(plot_param_frame, row_index, column_index, "x", self.background_image_offset_x)
+    # column_index += 2
+    # add_numeric_input(plot_param_frame, row_index, column_index, "y", self.background_image_offset_y)
+    # column_index = 0
+    # row_index += 1
+    # # add Entries for width and height of physical board
+    # add_numeric_input(plot_param_frame, row_index, column_index, "width", self.board_width)
+    # column_index += 2
+    # add_numeric_input(plot_param_frame, row_index, column_index, "height", self.board_height)
+    # column_index = 0
+    # row_index += 1
     # add label for node and background scale factor
     label = tk.Label(plot_param_frame, text="scale factors", justify="center")
     self.add_label_style(label)
@@ -1446,15 +1501,16 @@ class Board_Layout_GUI:
     scale_factors_frame.grid(
         row=row_index,
         column=0,
-        columnspan=8,
+        columnspan=5,
         sticky="nsew",
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
+    board_size_widgets.append(scale_factors_frame)
     # add Entry for board scale factor
-    add_label_and_entry(scale_factors_frame, row_index, column_index, "board size", self.board_scale_factor)
+    add_numeric_input(scale_factors_frame, row_index, column_index, "board size", self.board_scale_factor)
     column_index += 2
     # add Entry for graph positions scale factor
-    add_label_and_entry(scale_factors_frame, row_index, column_index, "graph positions", self.graph_positions_scale_factor)
+    add_numeric_input(scale_factors_frame, row_index, column_index, "graph positions", self.graph_positions_scale_factor)
     column_index += 2
 
   def update_gui_mode(self):
@@ -1463,9 +1519,8 @@ class Board_Layout_GUI:
     Change which settings are currently shown and what is visible in the plot by calling the corresponding methods.
     Disable previous mode before enabling the new mode.
     """
-    print(f"last gui mode: {self.last_gui_mode.get()}")
-    print(f"new gui mode: {self.gui_mode.get()}")
-    if self.last_gui_mode.get().lower() == self.gui_mode.get().lower():
+    if self.particle_graph is None or \
+        self.last_gui_mode.get().lower() == self.gui_mode.get().lower():
       # set gui mode to graph view
       self.gui_mode.set("Graph view")
     for var in (self.last_gui_mode, self.gui_mode):
@@ -1475,6 +1530,8 @@ class Board_Layout_GUI:
         self.toggle_graph_edit_mode()
       elif var.get().lower() == "task editor":
         self.toggle_task_edit_mode()
+      elif var.get().lower() == "task export":
+        self.toggle_task_export_mode()
     self.last_gui_mode.set(self.gui_mode.get())
     print(f"uodated last gui mode: {self.last_gui_mode.get()}")
     print(f"uodated new gui mode: {self.gui_mode.get()}")
@@ -1484,10 +1541,6 @@ class Board_Layout_GUI:
     """
     Analyze the graph and display the results.
     """
-    if self.particle_graph is None: # cannot open graph analysis without a graph
-      # self.graph_analysis_enabled.set(False)
-      # self.fig.clf()
-      return
     # close graph analysis and show regular graph map
     if not self.gui_mode.get().lower() == "graph analysis":
       # clear figure and draw graph
@@ -1528,8 +1581,6 @@ class Board_Layout_GUI:
     """
     Toggle graph edit mode.
     """
-    if self.particle_graph is None: # cannot open graph edit mode without a graph
-      self.graph_edit_mode_enabled.set(False)
     movability_tk_variables = [
         self.move_nodes_enabled,
         self.move_labels_enabled,
@@ -1575,8 +1626,6 @@ class Board_Layout_GUI:
         canvas=self.canvas)
 
   def toggle_task_edit_mode(self):
-    if self.particle_graph is None: # cannot open task edit mode without a graph
-      self.task_edit_mode_enabled.set(False)
     # disable task edit mode
     if not self.gui_mode.get().lower() == "task editor":
       print("disable task edit mode")
@@ -1609,6 +1658,42 @@ class Board_Layout_GUI:
         },
         particle_graph=self.particle_graph,
         task_edit_frame=self.task_edit_frame,
+        ax=self.ax,
+        canvas=self.canvas)
+
+  def toggle_task_export_mode(self):
+    """
+    Toggle task export mode.
+    """
+    if not self.gui_mode.get().lower() == "task export":
+      print("disable task export mode")
+      self.task_export_frame.destroy()
+      return
+    # enable task export mode
+    self.task_export_frame: tk.Frame = tk.Frame(self.control_frame)
+    self.add_frame_style(self.task_export_frame)
+    self.task_export_frame.grid(
+        row=self.control_frame.grid_size()[1],
+        column=0,
+        sticky="nsew",
+        padx=0,
+        pady=(0, self.grid_pad_y))
+    self.task_export_frame.columnconfigure(0, weight=1)
+    self.task_export_ui: Task_Export_GUI = Task_Export_GUI(
+        self.master,
+        self.color_config,
+        grid_padding=(self.grid_pad_x, self.grid_pad_y),
+        tk_config_methods={
+          "add_frame_style": self.add_frame_style,
+          "add_label_style": self.add_label_style,
+          "add_button_style": self.add_button_style,
+          "add_entry_style": self.add_entry_style,
+          "add_checkbutton_style": self.add_checkbutton_style,
+          "add_radiobutton_style": self.add_radiobutton_style,
+          "add_browse_button": self.add_browse_button,
+        },
+        particle_graph=self.particle_graph,
+        task_export_frame=self.task_export_frame,
         ax=self.ax,
         canvas=self.canvas)
 
