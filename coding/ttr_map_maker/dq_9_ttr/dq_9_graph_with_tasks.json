@@ -2,9 +2,15 @@
   "particle_graph": {
     "n_nodes": 38,
     "n_connections": 81,
-    "n_tasks": 14,
+    "n_tasks": 15,
     "n_edges": 251,
     "n_labels": 38,
+    "graph_extent": [
+      0.0,
+      96.25,
+      0.0,
+      62.5
+    ],
     "particles": [
       {
         "particle_type": "Particle_Node",
@@ -7835,10 +7841,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1227,
-          949
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -7866,10 +7869,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          936,
-          1229
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -7897,10 +7897,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1228,
-          1230
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -7928,10 +7925,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1229,
-          1231
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -7960,8 +7954,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1230,
-          1232
+          1227,
+          949
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -7991,8 +7985,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1231,
-          1233
+          936,
+          1229
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8022,8 +8016,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1232,
-          1234
+          1228,
+          1230
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8053,8 +8047,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1233,
-          1235
+          1229,
+          1231
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8084,8 +8078,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1234,
-          953
+          1230,
+          1232
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8115,8 +8109,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          944,
-          1245
+          1231,
+          1233
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8146,8 +8140,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1244,
-          1246
+          1232,
+          1234
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8177,8 +8171,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1245,
-          1247
+          1233,
+          1235
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8208,8 +8202,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1246,
-          1248
+          1234,
+          953
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8239,8 +8233,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1247,
-          1249
+          944,
+          1245
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8270,8 +8264,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1248,
-          1250
+          1244,
+          1246
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8301,8 +8295,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1249,
-          922
+          1245,
+          1247
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8387,10 +8381,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1252,
-          1254
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -8418,10 +8409,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1253,
-          1255
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -8449,10 +8437,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1254,
-          936
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -8480,10 +8465,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1179,
-          1182
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -8512,8 +8494,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1181,
-          1183
+          1252,
+          1254
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8543,8 +8525,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1182,
-          938
+          1253,
+          1255
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8574,8 +8556,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1099,
-          1102
+          1254,
+          936
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8605,8 +8587,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1101,
-          1103
+          1179,
+          1182
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8636,8 +8618,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1102,
-          938
+          1181,
+          1183
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8667,8 +8649,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1111,
-          1114
+          1182,
+          938
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8698,8 +8680,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1163,
-          956
+          1099,
+          1102
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8729,8 +8711,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1124,
-          1127
+          1101,
+          1103
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8760,8 +8742,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1126,
-          936
+          1102,
+          938
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8791,8 +8773,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1133,
-          1136
+          1111,
+          1114
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8822,8 +8804,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1135,
-          949
+          1163,
+          956
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8853,8 +8835,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1016,
-          952
+          1124,
+          1127
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8884,8 +8866,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1018,
-          1021
+          1126,
+          936
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8915,8 +8897,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          937,
-          1252
+          1246,
+          1248
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8946,8 +8928,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1020,
-          953
+          1133,
+          1136
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -8977,8 +8959,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1251,
-          1253
+          1247,
+          1249
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9008,8 +8990,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1023,
-          950
+          1135,
+          949
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9039,8 +9021,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          954,
-          951
+          1248,
+          1250
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9070,8 +9052,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          939,
-          1257
+          1016,
+          952
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9101,8 +9083,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1256,
-          931
+          1249,
+          922
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9132,8 +9114,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          948,
-          1259
+          1018,
+          1021
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9163,8 +9145,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1258,
-          1260
+          937,
+          1252
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9194,8 +9176,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1259,
-          941
+          1020,
+          953
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9225,8 +9207,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          925,
-          1262
+          1251,
+          1253
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9256,8 +9238,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1261,
-          1263
+          1023,
+          950
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9287,8 +9269,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1262,
-          927
+          954,
+          951
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9318,8 +9300,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          925,
-          1265
+          939,
+          1257
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9349,8 +9331,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1264,
-          926
+          1256,
+          931
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9380,8 +9362,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          953,
-          1267
+          948,
+          1259
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9411,8 +9393,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1266,
-          1268
+          1258,
+          1260
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9442,8 +9424,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1267,
-          1269
+          1259,
+          941
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9473,8 +9455,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1268,
-          952
+          925,
+          1262
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9504,8 +9486,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          937,
-          1271
+          1261,
+          1263
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9535,8 +9517,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1270,
-          1272
+          1262,
+          927
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9594,8 +9576,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1271,
-          935
+          925,
+          1265
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9625,8 +9607,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1079,
-          944
+          1264,
+          926
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9655,10 +9637,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          957,
-          1274
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -9687,8 +9666,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          922,
-          1276
+          953,
+          1267
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9718,8 +9697,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1275,
-          1277
+          1266,
+          1268
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9748,10 +9727,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          1276,
-          1278
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -9780,8 +9756,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1277,
-          1279
+          1267,
+          1269
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9811,8 +9787,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
         "connected_particles": [
-          1278,
-          949
+          1268,
+          952
         ],
         "repulsion_strength": 2.0,
         "target_position": null,
@@ -9841,10 +9817,7 @@
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15.0,
-        "connected_particles": [
-          948,
-          1281
-        ],
+        "connected_particles": [],
         "repulsion_strength": 2.0,
         "target_position": null,
         "node_attraction": 0.1,
@@ -10018,6 +9991,17 @@
         "node_names": [
           "Port Llaffan",
           "Zere"
+        ],
+        "length": 0,
+        "points": 0,
+        "points_bonus": 0,
+        "points_penalty": 0
+      },
+      {
+        "name": "Wyrmwing - Hermany",
+        "node_names": [
+          "Wyrmwing",
+          "Hermany"
         ],
         "length": 0,
         "points": 0,

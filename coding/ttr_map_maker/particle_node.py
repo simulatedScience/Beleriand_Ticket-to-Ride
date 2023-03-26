@@ -19,6 +19,7 @@ class Particle_Node(Graph_Particle):
         id: int,
         color: str = "#222222",
         position: np.ndarray = np.array([0, 0], dtype=np.float16),
+        rotation: float = 0,
         mass: float = 0.1,
         bounding_box_size: tuple = (1, 1),
         target_attraction: float = 0.001,
@@ -48,7 +49,7 @@ class Particle_Node(Graph_Particle):
     super().__init__(
         id,
         position=position,
-        rotation=0,
+        rotation=rotation,
         target_position=target_position,
         mass=mass,
         bounding_box_size=bounding_box_size,
@@ -112,6 +113,7 @@ class Particle_Node(Graph_Particle):
       alpha: float = 1,
       zorder: int = 4,
       scale: float = 1,
+      override_position: np.ndarray = None,
       override_image_path: str = None,
       movable: bool = True):
     """draw node as circle on given axes
@@ -123,10 +125,12 @@ class Particle_Node(Graph_Particle):
         zorder (int, optional): zorder of the node. Defaults to 4.
     """
     if self.image_file_path is None and override_image_path is None: # draw mpl Circle
+      if override_position is None:
+        override_position = self.position
       self.plotted_objects.append(
           ax.add_patch(
               Circle(
-                  self.position,
+                  override_position,
                   radius=0.5 * scale,
                   color=color,
                   alpha=alpha,
@@ -139,7 +143,7 @@ class Particle_Node(Graph_Particle):
       if override_image_path is None: # draw image saved in self.image_file_path
         override_image_path = self.image_file_path
       mpl_image = mpimg.imread(override_image_path)
-      img_extent = self.get_extent(scale)
+      img_extent = self.get_extent(scale, override_position)
       plotted_image = ax.imshow(mpl_image, extent=img_extent, zorder=zorder, picker=True)
       # rotate image using transformation
       # keep image upright
@@ -152,7 +156,7 @@ class Particle_Node(Graph_Particle):
     # set movability of particle
     super().set_particle_movable(movable)
 
-  def get_extent(self, scale):
+  def get_extent(self, scale: float = 1, override_position: np.ndarray = None):
     """
     Get the extent of the node with the given scale applied.
 
@@ -162,11 +166,13 @@ class Particle_Node(Graph_Particle):
     Returns:
         Tuple[float, float, float, float]: extent of the node as (left, right, bottom, top)
     """
+    if override_position is None:
+      override_position = self.position
     return (
-        self.position[0] - self.bounding_box_size[0] / 2 * scale,
-        self.position[0] + self.bounding_box_size[0] / 2 * scale,
-        self.position[1] - self.bounding_box_size[1] / 2 * scale,
-        self.position[1] + self.bounding_box_size[1] / 2 * scale)
+        override_position[0] - self.bounding_box_size[0] / 2 * scale,
+        override_position[0] + self.bounding_box_size[0] / 2 * scale,
+        override_position[1] - self.bounding_box_size[1] / 2 * scale,
+        override_position[1] + self.bounding_box_size[1] / 2 * scale)
 
 
   def set_image_file_path(self, image_file_path: str = None):

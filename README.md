@@ -13,9 +13,9 @@ This project implements tools to create your very own, custom ticket to ride gam
 - automatic graph analysis tools ([inspired by this article](https://towardsdatascience.com/playing-ticket-to-ride-like-a-computer-programmer-2129ac4909d9))
 - select an image for each node in the UI
 - allow adding and removing tasks through the UI
+- automatically generate images for task cards
 
 ### planned features:
-- automatically generate images for task cards
 - allow adding nodes through the UI
 - support for different monitor resolutions
 - add info overlay for reward points for each edge length (possibly implemented via mpl legend?)

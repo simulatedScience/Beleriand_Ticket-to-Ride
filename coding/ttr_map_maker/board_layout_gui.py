@@ -1113,6 +1113,7 @@ class Board_Layout_GUI:
     # set background image
     if self.show_background_image.get() and \
         self.background_image_mpl is not None:
+      # remove all previous background images
       if len(self.plotted_background_images) > 0:
         for image in self.plotted_background_images:
           try:
@@ -1120,8 +1121,14 @@ class Board_Layout_GUI:
           except ValueError: # ignore if image is not plotted
             pass
       self.plotted_background_images = []
+      # set extent if not set
       if self.background_image_extent is None:
-        self.background_image_extent = (0, self.background_image_mpl.shape[1], 0, self.background_image_mpl.shape[0])
+        self.background_image_extent = (
+            0,
+            self.background_image_mpl.shape[1],
+            0,
+            self.background_image_mpl.shape[0])
+      # plot new background image
       if self.gui_mode.get() == "Graph analysis":
         self.plotted_background_images.append(self.axs[1, 2].imshow(self.background_image_mpl, extent=self.background_image_extent, zorder=0))
         self.axs[1, 2].set_xlim(self.background_image_extent[0], self.background_image_extent[1])
@@ -1274,13 +1281,18 @@ class Board_Layout_GUI:
   
   def save_image(self):
     # save canvas as image
-    filepath = tk.filedialog.asksaveasfilename(
+    filepath: str = tk.filedialog.asksaveasfilename(
         title="Save canvas as image",
         filetypes=(("PNG", "*.png"), ("all files", "*.*")))
     if filepath == "":
       return
-    transparent = not self.show_background_image.get()
-    self.fig.savefig(filepath, dpi=600, transparent=transparent)
+    transparent: bool = not self.show_background_image.get()
+    self.fig.savefig(
+        filepath,
+        dpi=600,
+        format="png",
+        bbox_inches="tight",
+        transparent=transparent)
 
   def move_labels_to_nodes(self):
     """
@@ -1668,7 +1680,13 @@ class Board_Layout_GUI:
     if not self.gui_mode.get().lower() == "task export":
       print("disable task export mode")
       self.task_export_frame.destroy()
+      # show background image
+      self.show_background_image.set(True)
+      self.toggle_background_image_visibility()
       return
+    # hide background image
+    self.show_background_image.set(False)
+    self.toggle_background_image_visibility()
     # enable task export mode
     self.task_export_frame: tk.Frame = tk.Frame(self.control_frame)
     self.add_frame_style(self.task_export_frame)
@@ -1695,7 +1713,10 @@ class Board_Layout_GUI:
         particle_graph=self.particle_graph,
         task_export_frame=self.task_export_frame,
         ax=self.ax,
-        canvas=self.canvas)
+        fig=self.fig,
+        canvas=self.canvas,
+        background_image_mpl=self.background_image_mpl,
+        )
 
 
   def init_animation(self):

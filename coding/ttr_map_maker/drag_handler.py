@@ -14,6 +14,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backend_bases import PickEvent, MouseEvent
 
 from graph_particle import Graph_Particle
+from particle_edge import Particle_Edge
 
 class Drag_Handler:
   def __init__(self,
@@ -117,7 +118,8 @@ class Drag_Handler:
       self.current_artist = None
       return
     print(f"picked particle at {self.current_particle.position}")
-    print(f"Picked particle for dragging: {self.current_particle.get_id()} ({self.current_particle.location_1_name}, {self.current_particle.location_2_name}, {self.current_particle.path_index}).")
+    if isinstance(self.current_particle, Particle_Edge):
+      print(f"Picked particle for dragging: {self.current_particle.get_id()} ({self.current_particle.location_1_name}, {self.current_particle.location_2_name}, {self.current_particle.path_index}).")
     self.canvas.mpl_disconnect(self.pick_id)
 
   def on_motion(self, event: MouseEvent):

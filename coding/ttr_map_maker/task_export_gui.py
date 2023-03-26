@@ -9,6 +9,7 @@ import tkinter as tk
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 from file_browsing import browse_image_file, browse_directory
@@ -16,7 +17,6 @@ from ttr_particle_graph import TTR_Particle_Graph
 from particle_node import Particle_Node
 from particle_label import Particle_Label
 from ttr_task import TTR_Task
-from task_label_layout import calculate_label_layout
 
 class Task_Export_GUI:
   def __init__(self,
@@ -27,7 +27,9 @@ class Task_Export_GUI:
       particle_graph: TTR_Particle_Graph,
       task_export_frame: tk.Frame,
       ax: plt.Axes,
+      fig: plt.Figure,
       canvas: FigureCanvasTkAgg,
+      background_image_mpl: np.ndarray = None,
       current_directory: str = None,
       ):
     """
@@ -46,14 +48,23 @@ class Task_Export_GUI:
         particle_graph (TTR_Particle_Graph): The particle graph of the GUI.
         task_settings_frame (tk.Frame): The frame containing the task edit GUI.
         ax (plt.Axes): The axes where the graph is drawn.
+        fig (plt.Figure): The figure where the graph is drawn.
         canvas (FigureCanvasTkAgg): The canvas for the graph.
+        background_image_mpl (np.ndarray, optional): The background image of the graph. Defaults to None.
+        current_directory (str, optional): The current directory of the GUI. Defaults to None.
     """
     self.master: tk.Tk = master
     self.color_config: dict[str, str] = color_config
     self.particle_graph: TTR_Particle_Graph = particle_graph
     self.task_export_frame: tk.Frame = task_export_frame
     self.ax: plt.Axes = ax
+    self.fig: plt.Figure = fig
     self.canvas: FigureCanvasTkAgg = canvas
+    
+    self.background_image_mpl: np.ndarray = background_image_mpl
+    self.plotted_images: dict[str, plt.AxesImage] = dict()
+    self.card_background_image_extent: Tuple[float, float, float, float] = None
+    self.graph_scale_factors: np.ndarray = np.ones(2) # scaling factors for the graph (x, y)
 
     # save grid padding for later use
     self.grid_pad_x: int = grid_padding[0]
@@ -72,26 +83,38 @@ class Task_Export_GUI:
     self.card_frame_filepath: tk.StringVar = tk.StringVar(value="")
     self.card_frame_width: tk.DoubleVar = tk.DoubleVar(value=8.9)
     self.card_frame_height: tk.DoubleVar = tk.DoubleVar(value=6.4)
-    # self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=8.5)
-    # self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=6.2)
-    self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=83.1)
-    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=54.0)
-    self.background_image_offset_x: tk.DoubleVar = tk.DoubleVar(value=0.0)
-    self.background_image_offset_y: tk.DoubleVar = tk.DoubleVar(value=0.0)
+    self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=8.9)
+    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=5.8)
+    self.background_image_offset_x: tk.DoubleVar = tk.DoubleVar(value=0.15)
+    self.background_image_offset_y: tk.DoubleVar = tk.DoubleVar(value=0.3)
 
-    self.label_scale: tk.DoubleVar = tk.DoubleVar(value=4.0)
-    self.node_scale: tk.DoubleVar = tk.DoubleVar(value=2.0)
+    self.label_scale: tk.DoubleVar = tk.DoubleVar(value=0.45)
+    self.node_scale: tk.DoubleVar = tk.DoubleVar(value=0.25)
     self.node_image_filepath: tk.StringVar = tk.StringVar(value="")
+    self.label_position_x: tk.DoubleVar = tk.DoubleVar(value=4.45)
+    self.label_position_y: tk.DoubleVar = tk.DoubleVar(value=5.8)
 
     self.node_image_override: tk.BooleanVar = tk.BooleanVar(value=False)
     self.node_connector_lines: tk.BooleanVar = tk.BooleanVar(value=True)
+    self.node_connector_line_width: tk.DoubleVar = tk.DoubleVar(value=10)
 
-    self.points_font_size: tk.DoubleVar = tk.DoubleVar(value=8.0)
-    self.bonus_font_size: tk.DoubleVar = tk.DoubleVar(value=5.0)
-    self.penalty_font_size: tk.DoubleVar = tk.DoubleVar(value=5.0)
+    self.points_image_directory: tk.StringVar = tk.StringVar(value=os.path.join(os.getcwd(), "assets", "points_images"))
+    self.points_font_size: tk.DoubleVar = tk.DoubleVar(value=1.5)
+    self.points_position_x: tk.DoubleVar = tk.DoubleVar(value=1.15)
+    self.points_position_y: tk.DoubleVar = tk.DoubleVar(value=1.3)
+
+    self.bonus_font_size: tk.DoubleVar = tk.DoubleVar(value=1.0)
+    self.bonus_position_x: tk.DoubleVar = tk.DoubleVar(value=2.4)
+    self.bonus_position_y: tk.DoubleVar = tk.DoubleVar(value=0.8)
+
+    self.penalty_font_size: tk.DoubleVar = tk.DoubleVar(value=1.0)
+    self.penalty_position_x: tk.DoubleVar = tk.DoubleVar(value=8.0)
+    self.penalty_position_y: tk.DoubleVar = tk.DoubleVar(value=0.8)
+    self.points_labels: dict[str, Particle_Node] = dict()
 
     self.selected_task: tk.IntVar = tk.IntVar(value=0)
     self.task_list: List[TTR_Task] = list(self.particle_graph.tasks.values())
+    self.task_label: Particle_Label = None
 
     if current_directory is None:
       current_directory = os.getcwd()
@@ -293,7 +316,15 @@ class Task_Export_GUI:
         width=4,
         )
     row_index += 1
+    # bind update methods to variables
+    self.card_frame_width.trace_add("write", lambda *_: self.update_frame_image())
+    self.card_frame_height.trace_add("write", lambda *_: self.update_frame_image())
+    self.background_image_width.trace_add("write", lambda *_: self.update_background_image())
+    self.background_image_height.trace_add("write", lambda *_: self.update_background_image())
+    self.background_image_offset_x.trace_add("write", lambda *_: self.update_background_image())
+    self.background_image_offset_y.trace_add("write", lambda *_: self.update_background_image())
     
+    self.update_background_image()
     # settings for graph elements
     graph_settings_frame: tk.Frame = tk.Frame(self.task_export_frame)
     self.add_frame_style(graph_settings_frame)
@@ -324,6 +355,44 @@ class Task_Export_GUI:
         width=4,
         )
     row_index += 1
+    # add label position settings
+    label_position_frame: tk.Frame = tk.Frame(graph_settings_frame)
+    self.add_frame_style(label_position_frame)
+    label_position_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=4,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=(0, self.grid_pad_y),
+        )
+    label_position_frame.grid_columnconfigure(0, weight=1)
+    label_position_label: tk.Label = tk.Label(label_position_frame, text="Label position", anchor="w")
+    self.add_label_style(label_position_label)
+    label_position_label.grid(
+        row=row_index,
+        column=0,
+        sticky="new",
+        padx=0,
+        pady=0,
+        )
+    label_position_x_label, label_position_x_entry = add_numeric_input(
+        parent=label_position_frame,
+        row_index=row_index,
+        column_index=1,
+        label_text="x:",
+        variable=self.label_position_x,
+        width=4,
+        )
+    label_position_y_label, label_position_y_entry = add_numeric_input(
+        parent=label_position_frame,
+        row_index=row_index,
+        column_index=3,
+        label_text="y:",
+        variable=self.label_position_y,
+        width=4,
+        )
+    row_index += 1
     # optional node image override
     node_image_input_frame: tk.Frame = tk.Frame(graph_settings_frame)
     self.add_frame_style(node_image_input_frame)
@@ -341,9 +410,9 @@ class Task_Export_GUI:
     node_image_label.grid(
         row=row_index,
         column=0,
-        sticky="nsw",
+        sticky="w",
         padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
+        pady=(0, self.grid_pad_y))
     node_image_entry = tk.Entry(node_image_input_frame, textvariable=self.node_image_filepath, width=10)
     self.add_entry_style(node_image_entry)
     node_image_entry.xview_moveto(1)
@@ -352,7 +421,7 @@ class Task_Export_GUI:
         column=1,
         sticky="nsew",
         padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
+        pady=(0, self.grid_pad_y))
     browse_button = self.add_browse_button(
         frame=node_image_input_frame,
         row_index=row_index,
@@ -439,6 +508,7 @@ class Task_Export_GUI:
         variable=self.penalty_font_size,
         width=4,
         )
+    row_index += 1
     # add selector for the shown task
     task_selector_frame: tk.Frame = tk.Frame(self.task_export_frame)
     self.add_frame_style(task_selector_frame)
@@ -561,7 +631,7 @@ class Task_Export_GUI:
     export_current_button: tk.Button = tk.Button(
         export_buttons_frame,
         text="Export current",
-        command=lambda task=self.selected_task: self.export_task_card(task),
+        command=lambda task=self.task_list[self.selected_task.get()]: self.export_task_card(task),
         )
     self.add_button_style(export_current_button)
     export_current_button.grid(
@@ -574,7 +644,7 @@ class Task_Export_GUI:
     export_all_button: tk.Button = tk.Button(
         export_buttons_frame,
         text="Export all task cards",
-        command=self.export_all_task_cards,
+        command=lambda: self.export_all_task_cards(task_selector_label),
         )
     self.add_button_style(export_all_button)
     export_all_button.grid(
@@ -584,6 +654,16 @@ class Task_Export_GUI:
         padx=(0, self.grid_pad_x),
         pady=(0, self.grid_pad_y),
         )
+    
+    # set trace for frame path
+    self.card_frame_filepath.trace("w", lambda *_: self.load_card_frame())
+    # configure variables to update points images when the font size changes
+    self.points_font_size.trace("w", lambda *_: self.update_points_image(points_type="standard"))
+    self.bonus_font_size.trace("w", lambda *_: self.update_points_image(points_type="bonus"))
+    self.penalty_font_size.trace("w", lambda *_: self.update_points_image(points_type="penalty"))
+    # update points images
+    for points_type in ["standard", "bonus", "penalty"]:
+      self.update_points_image(points_type=points_type)
 
 
 
@@ -599,7 +679,7 @@ class Task_Export_GUI:
     """
     self.show_current_task()
 
-  def change_selected_task(self, direction, task_label) -> None:
+  def change_selected_task(self, direction: int, task_label: tk.Label) -> None:
     """
     Change the currently selected task by the given direction.
     Update the task label accordingly.
@@ -616,12 +696,19 @@ class Task_Export_GUI:
     task_label.config(text=f"{self.selected_task.get() + 1}. {self.task_list[self.selected_task.get()].name}")
     # update shown task
     self.show_current_task()
+    # update points images
+    for points_type in ["standard", "bonus", "penalty"]:
+      self.update_points_image(points_type=points_type)
 
-  def export_all_task_cards(self) -> None:
+  def export_all_task_cards(self, task_label: tk.Label) -> None: # TODO: to be tested
     """
     Export all task cards to the directory given in `self.task_export_dir`.
     """
-    raise NotImplementedError
+    for _ in range(len(self.task_list)):
+      self.export_task_card(self.task_list[self.selected_task.get()])
+      self.change_selected_task(1, task_label)
+      self.task_export_frame.update()
+      self.canvas.draw_idle()
 
   def export_task_card(self, task: TTR_Task) -> None:
     """
@@ -630,8 +717,17 @@ class Task_Export_GUI:
     Exporting is done using the following steps:
     - hide all nodes, labels, edges and task indicators
     - show background image
+
+    Args:
+        task (TTR_Task): the task to export.
     """
-    raise NotImplementedError
+    filepath: str = os.path.join(self.export_filepath.get(), f"{task.name}.png")
+    self.fig.savefig(
+        filepath,
+        dpi=300,
+        format="png",
+        bbox_inches="tight",
+        transparent=True)
 
 
   def get_current_settings(self) -> dict:
@@ -670,71 +766,216 @@ class Task_Export_GUI:
     Show the currently selected task in the GUI by showing all nodes and corresponding labels belonging to the task.
     If self.node_connector_lines is True, also show the connection lines between the nodes.
     """
+    if self.task_label is not None:
+      self.task_label.erase()
     for task in self.task_list:
       task.erase()
     ttr_task = self.task_list[self.selected_task.get()]
     self.particle_graph.erase()
     if self.node_image_override.get():
-      override_image: str = self.node_image_filepath.get() if self.node_image_override.get() else None
+      override_image: str = self.node_image_filepath.get() if self.node_image_filepath.get() else None
+      if override_image is None:
+        self.node_image_override.set(False)
     else:
       override_image: str = None
-    for location, new_label_position in (ttr_task.node_names, self.calculate_label_positions()):
-      self.particle_graph.particle_nodes[location].draw(
+    # define variables to scale nodes to the background image
+    old_background_offset: np.ndarray = np.array([
+        self.particle_graph.graph_extent[0],
+        self.particle_graph.graph_extent[2],
+        ])
+    new_background_offset: np.ndarray = np.array([
+        self.background_image_offset_x.get(),
+        self.background_image_offset_y.get(),
+        ])
+    node_override_positions: List[np.ndarray] = []
+    # draw nodes and calculate their new positions
+    for location in ttr_task.node_names:
+      particle_node: Particle_Node = self.particle_graph.particle_nodes[location] 
+      new_position: np.ndarray = (particle_node.position - old_background_offset) * self.graph_scale_factors + new_background_offset
+      particle_node.draw(
           self.ax,
           scale=self.node_scale.get(),
           override_image_path=override_image,
+          override_position=new_position,
+          movable=False,
           )
-      self.particle_graph.particle_labels[location].draw(
-          self.ax,
-          scale=self.label_scale.get(),
-          override_position=new_label_position
-          )
+      node_override_positions.append(new_position)
+    # draw connection line(s) between nodes
     if self.node_connector_lines.get():
       ttr_task.draw(
           ax=self.ax,
           particle_graph=self.particle_graph,
           # color=self.task_connector_color,
-          linewidth=self.node_scale.get() * 6,
-          zorder=0,
+          linewidth=self.node_connector_line_width.get(),
+          zorder=1,
+          override_positions=node_override_positions,
           )
+    # create a particle_label to show the task name
+    self.task_label = Particle_Label(
+        label=ttr_task.name,
+        id=-1,
+        position=np.array([self.label_position_x.get(), self.label_position_y.get()]),
+        rotation=0,
+        height_scale_factor=self.particle_graph.label_height_scale,
+        )
+    self.task_label.draw(
+        ax=self.ax,
+        scale=self.label_scale.get(),
+        movable=True)
     self.canvas.draw_idle()
 
-
-  def calculate_label_positions(self) -> List[np.ndarray]:
+  def load_card_frame(self) -> None:
     """
-    Calculate the positions of all labels in the current task such that they are
-      - on the canvas,
-      - not overlapping with any other label,
-      - not overlapping with any node,
-
-    Returns:
-        (List[np.ndarray]): a list of center positions for each label in the current task.
+    Load the card frame image from the filepath set in `self.card_frame_filepath` unless it's empty.
     """
-    task_nodes: List[Particle_Node] = [self.particle_graph.particle_nodes[location] for location in self.task_list[self.selected_task.get()].node_names]
-    task_labels: List[Particle_Label] = [self.particle_graph.particle_labels[location] for location in self.task_list[self.selected_task.get()].node_names]
-    
-    node_extents: List[Tuple[float, float, float, float]] = [node.get_extent(self.node_scale.get()) for node in task_nodes]
-    node_centers: List[np.ndarray] = [node.position for node in task_nodes]
-    label_extents: List[Tuple[float, float, float, float]] = [label.get_extent(self.label_scale.get()) for label in task_labels]
+    filepath: str = get_tk_var(self.card_frame_filepath, default="")
+    if filepath is "":
+      if "frame" in self.plotted_images:
+        self.plotted_images["frame"].remove()
+        del self.plotted_images["frame"]
+        self.canvas.draw_idle()
+      return
+    try:
+      self.card_frame_image_mpl = mpimg.imread(filepath)
+    except FileNotFoundError: # if the file is not found, erase the image
+      self.card_frame_image_mpl = None
+      if "frame" in self.plotted_images:
+        self.plotted_images["frame"].remove()
+        del self.plotted_images["frame"]
+        self.canvas.draw_idle()
+    self.update_frame_image()
 
-    label_centers: List[np.ndarray] = [label.position for label in task_labels]
-    background_extent: Tuple[float, float, float, float] = (
-        self.background_image_offset_x.get(),
-        self.background_image_width.get() + self.background_image_offset_x.get(),
-        self.background_image_offset_y.get(),
-        self.background_image_height.get() + self.background_image_offset_y.get(),
-    )
+  def update_points_image(self, points_type: str) -> None:
+    """
+    Update the points image to the one given in `self.points_image_directory`.
 
-    new_label_centers: List[np.ndarray] = calculate_label_layout(
-        node_extents=node_extents,
-        label_extents=label_extents,
-        label_centers=label_centers,
-        node_centers=node_centers,
-        bounding_rectangle=background_extent,
-    )
-    return new_label_centers
+    Args:
+        points_type (str): type of points to be shown. Can be "points", "standard", "bonus" or "penalty", where "points" and "standard" are equivalent.
+
+    Raises:
+        ValueError: if `points_type` is not one of "points", "standard", "bonus" or "penalty".
+    """
+    task: TTR_Task = self.task_list[self.selected_task.get()]
+    if points_type == "points" or points_type == "standard":
+        points: int = task.points
+        filename: str = f"{points}.png"
+        filepath: str = os.path.join(self.points_image_directory.get(), "points_standard", filename)
+        points_scale: float = get_tk_var(self.points_font_size, 0)
+        position: np.ndarray = np.array([get_tk_var(self.points_position_x, 0), get_tk_var(self.points_position_y, 0)])
+    elif points_type == "bonus":
+        if task.points_bonus == 0:
+            return # don't show bonus points if there are none
+        points: int = task.points_bonus
+        filename: str = f"{points}.png"
+        filepath: str = os.path.join(self.points_image_directory.get(), "points_bonus", filename)
+        points_scale: float = get_tk_var(self.bonus_font_size, 0)
+        position: np.ndarray = np.array([get_tk_var(self.bonus_position_x, 0), get_tk_var(self.bonus_position_y, 0)])
+    elif points_type == "penalty":
+        if task.points_penalty == 0:
+            return # don't show penalty points if there are none
+        points: int = task.points_penalty
+        filename: str = f"{points}.png"
+        filepath: str = os.path.join(self.points_image_directory.get(), "points_penalty", filename)
+        points_scale: float = get_tk_var(self.penalty_font_size, 0)
+        position: np.ndarray = np.array([get_tk_var(self.penalty_position_x, 0), get_tk_var(self.penalty_position_y, 0)])
+    else:
+        raise ValueError(f"Invalid points type: {points_type}. Expected one of 'points', 'standard', 'bonus' or 'penalty'.")
+    # erase the points label if the scale is 0 or the points label already exists
+    if points_type in self.points_labels:
+        self.points_labels[points_type].erase()
+        del self.points_labels[points_type]
+    if points_scale == 0:
+        return
+    if points_type == "penalty" and task.points_penalty == -task.points:
+        # don't show penalty points if they are the same as the standard points
+        return
+    points_image_mpl: np.ndarray = mpimg.imread(filepath) # shape: (height, width, 4)
+    # create/ update a Particle_Node to show the points
+    self.points_labels[points_type] = Particle_Node(
+        location_name=str(points),
+        id=-1,
+        position=position,
+        rotation=0,
+        )
+    # scale node to height 1
+    bounding_box_size: Tuple[float, float] = (points_image_mpl.shape[1] / points_image_mpl.shape[0], 1)
+    self.points_labels[points_type].bounding_box_size = bounding_box_size
+    # draw the points label
+    self.points_labels[points_type].draw(
+        ax=self.ax,
+        scale=points_scale,
+        override_image_path=filepath,
+        movable=True)
 
 
+  def update_frame_image(self) -> None:
+    """
+    Update the frame image to the one given in `self.card_frame_filepath`.
+    """
+    self.card_frame_image_extent = np.array([
+        0,
+        self.card_frame_width.get(),
+        0,
+        self.card_frame_height.get(),
+        ])
+    self.plotted_images["frame"] = self.ax.imshow(
+        self.card_frame_image_mpl,
+        extent=self.card_frame_image_extent,
+        zorder=1,
+        )
+    # update plot limits
+    self.ax.set_xlim(self.card_frame_image_extent[0], self.card_frame_image_extent[1])
+    self.ax.set_ylim(self.card_frame_image_extent[2], self.card_frame_image_extent[3])
+    self.canvas.draw_idle()
+
+  def update_background_image(self) -> None:
+    """
+    Resize the background image and canvas to ensure the background fits real lego pieces.
+    new size will be the board size * scale_factor.
+    """
+    if "background" in self.plotted_images: # remove old background image
+        self.plotted_images["background"].remove()
+        del self.plotted_images["background"]
+    # get size and offset inputs
+    try:
+      new_width: float = self.background_image_width.get() if self.background_image_width.get() > 0 \
+        else self.card_background_image_extent[1] - self.card_background_image_extent[0]
+    except tk.TclError: # non-numeric input
+      new_width: float = self.card_background_image_extent[1] - self.card_background_image_extent[0]
+    try:
+      new_height: float = self.background_image_height.get() if self.background_image_height.get() > 0 \
+        else self.card_background_image_extent[3] - self.card_background_image_extent[2]
+    except tk.TclError: # non-numeric input
+      new_height: float = self.card_background_image_extent[3] - self.card_background_image_extent[2]
+    try:
+      x_offset: float = self.background_image_offset_x.get()
+    except tk.TclError: # non-numeric input
+      x_offset: float = self.card_background_image_extent[0]
+    try:
+      y_offset: float = self.background_image_offset_y.get()
+    except tk.TclError: # non-numeric input
+      y_offset: float = self.card_background_image_extent[2]
+
+    self.card_background_image_extent = np.array([
+        x_offset,
+        new_width + x_offset,
+        y_offset,
+        new_height + y_offset], dtype=np.float16)
+    self.graph_scale_factors: np.ndarray = np.array([
+        new_width / (self.particle_graph.graph_extent[1] - self.particle_graph.graph_extent[0]),
+        new_height / (self.particle_graph.graph_extent[3] - self.particle_graph.graph_extent[2])])
+    # update plot limits
+    if "frame" in self.plotted_images:
+      self.ax.set_xlim(self.card_frame_image_extent[0], self.card_frame_image_extent[1])
+      self.ax.set_ylim(self.card_frame_image_extent[2], self.card_frame_image_extent[3])
+    else:
+      self.ax.set_xlim(self.card_background_image_extent[0], self.card_background_image_extent[1])
+      self.ax.set_ylim(self.card_background_image_extent[2], self.card_background_image_extent[3])
+    self.plotted_images["background"] = self.ax.imshow(self.background_image_mpl, extent=self.card_background_image_extent, zorder=0)
+
+    # update the graph to fit on the new background image
+
+    self.canvas.draw_idle()
 
 
   def add_arrow_button(self, direction: str, parent: tk.Frame, command: Callable) -> tk.Button:
@@ -769,3 +1010,12 @@ class Task_Export_GUI:
         command=command)
     self.add_button_style(button)
     return button
+
+def get_tk_var(tk_var, default=None):
+    """
+    Get the value of a tkinter variable. If the variable has an invalid value, return the default value.
+    """
+    try:
+      return tk_var.get()
+    except tk.TclError:
+      return default

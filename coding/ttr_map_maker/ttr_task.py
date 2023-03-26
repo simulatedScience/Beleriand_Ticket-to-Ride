@@ -13,6 +13,7 @@ Tasks contain the following information:
 from typing import List
 import json
 
+import numpy as np
 import matplotlib.pyplot as plt
 
 class TTR_Task:
@@ -91,7 +92,8 @@ class TTR_Task:
       linewidth: float = 6.0,
       linestyle: str = "--",
       alpha: float = 0.8,
-      zorder: int = 6):
+      zorder: int = 6,
+      override_positions: List[np.ndarray] = None,) -> None:
     """
     Draw the task on the given axes using straight lines between the nodes contained in the task. The lines
 
@@ -102,9 +104,14 @@ class TTR_Task:
         linewidth (float, optional): The linewidth to draw the task in. Defaults to 5.0.
         linestyle (str, optional): The linestyle to draw the task in. Defaults to "--".
         alpha (float, optional): The alpha value to draw the task in. Defaults to 1.0.
+        zorder (int, optional): The zorder to draw the task in. Defaults to 6.
+        override_positions (List[np.ndarray], optional): If given, the positions of the nodes will be overridden by the given positions. Defaults to None.
     """
     # get node positions
-    node_positions = [particle_graph.particle_nodes[location].position for location in self.node_names]
+    if override_positions:
+      node_positions = override_positions
+    else:
+      node_positions = [particle_graph.particle_nodes[location].position for location in self.node_names]
     positions_x, positions_y = list(zip(*node_positions))
     # draw lines between nodes
     self.plotted_objects.append(ax.plot(

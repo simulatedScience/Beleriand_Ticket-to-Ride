@@ -20,7 +20,7 @@ def type_to_edge_image(energy_type: str) -> str:
   if not energy_type in ("grass", "fire", "water", "electric", "fighting", "psychic", "dark", "steel", "fairy", "neutral"):
     raise ValueError(f"energy_type was {energy_type} but must be one of the following: 'grass', 'fire', 'water', 'electric', 'fighting', 'psychic', 'dark', 'steel', 'fairy', 'neutral'")
   image_name = energy_type + ".png"
-  return os.path.join(os.path.dirname(__file__), "edge_images", image_name)
+  return os.path.join(os.path.dirname(__file__), "assets", "edge_images", image_name)
 
 def is_pokemon_energy_type(color: str) -> bool:
   """

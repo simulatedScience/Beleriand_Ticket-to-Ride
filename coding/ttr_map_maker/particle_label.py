@@ -10,6 +10,7 @@ from PIL import Image, ImageFont, ImageDraw
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import fontManager
+from matplotlib.patches import Rectangle
 
 from graph_particle import Graph_Particle
 from particle_node import Particle_Node
@@ -265,7 +266,7 @@ class Particle_Label(Graph_Particle):
       img_font.set_size(fontsize)
     # determine sroke widths
     outline_stroke_width = fontsize // 8
-    text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz"
+    text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz_0123456789"
     
     width, height =  img_font.getsize(text, stroke_width=outline_stroke_width)
     return 1/height
