@@ -99,6 +99,8 @@ class Board_Layout_GUI:
 
     self.init_tk_variables()
     self.init_frames()
+    # print window height when button 'i' is pressed
+    # self.master.bind("i", lambda event: print(self.master.winfo_height()))
     # self.init_animation() # TODO: implement animation
 
 
@@ -226,9 +228,12 @@ class Board_Layout_GUI:
 
     # create frame for controls
     control_outer_frame = tk.Frame(self.main_frame,
-        background=self.color_config["bg_color"],
+        background="#ff00ff",#self.color_config["bg_color"],
+        width=421, # widest width of all widgets in the control frame
         height=self.master.winfo_height()-2*self.grid_pad_y, )
+    control_outer_frame.grid_propagate(False)
     self.master.bind("<Configure>", lambda event, control_outer_frame=control_outer_frame: self.control_frame_size_update(event, control_outer_frame))
+    # self.master.after(2500, lambda: control_outer_frame.configure(width=self.master.winfo_width()-2*self.grid_pad_x))
     control_outer_frame.grid(
         row=0,
         column=1,
@@ -266,7 +271,7 @@ class Board_Layout_GUI:
     self.init_figure()
     
     # create canvas for matplotlib figure
-    self.canvas = FigureCanvasTkAgg(self.fig, master=self.animation_frame)
+    self.canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(self.fig, master=self.animation_frame)
     self.canvas.get_tk_widget().grid(
         row=0,
         column=0,
@@ -321,8 +326,19 @@ class Board_Layout_GUI:
     if event.widget != self.master:
       return
     # height = self.master.winfo_height() - 2*self.grid_pad_y
-    # control_outer_frame.config(height=height)#, width=control_outer_frame.winfo_width() - 2*self.grid_pad_x)
+    height = event.height - 2*self.grid_pad_y
+    # width = 406
+    control_outer_frame.grid_propagate(True)
+    control_outer_frame.grid_propagate(False)
     # control_outer_frame.update()
+    # control_outer_frame.config(
+    #     width=width,
+    #     height=height)
+    control_outer_frame.config(
+        # width=width,
+        height=height)
+    print(f"control frame size updated to: {control_outer_frame.winfo_width()}x{self.master.winfo_height() - 2*self.grid_pad_y}")
+    print(f"control frame size is now: {control_outer_frame.winfo_width()}x{control_outer_frame.winfo_height()}")
 
   def init_tk_variables(self):
     """
@@ -346,7 +362,7 @@ class Board_Layout_GUI:
       "#00ffff", # cyan
     ]
     self.edge_colors = [tk.StringVar(value=color, name=f"edge_color_{i}") for i, color in enumerate(base_colors)]
-    
+
     # variables for particle simulation
     self.time_step = tk.DoubleVar(value=0.1, name="time_step")
     self.iterations_per_frame = tk.IntVar(value=10, name="iterations_per_frame")

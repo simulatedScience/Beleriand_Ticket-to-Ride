@@ -463,7 +463,7 @@ class Task_Export_GUI:
         pady=(self.grid_pad_y, self.grid_pad_y),
         )
     row_index += 1
-    # add inputs for points font size and color
+    # add inputs for points font size, color and positions
     points_inputs_frame: tk.Frame = tk.Frame(self.task_export_frame)
     self.add_frame_style(points_inputs_frame)
     points_inputs_frame.grid(
@@ -484,28 +484,136 @@ class Task_Export_GUI:
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=0,
         )
+    # widgets for standard points
+    standard_points_frame: tk.Frame = tk.Frame(points_inputs_frame)
+    self.add_frame_style(standard_points_frame)
+    standard_points_frame.grid(
+        row=1,
+        column=0,
+        sticky="new",
+        padx=0,
+        pady=0,
+        )
     points_font_size_label, points_font_size_entry = add_numeric_input(
-        parent=points_inputs_frame,
-        row_index=1,
+        parent=standard_points_frame,
+        row_index=0,
         column_index=0,
         label_text="points:",
         variable=self.points_font_size,
+        width=3,
+        )
+    standard_points_position_frame: tk.Frame = tk.Frame(standard_points_frame)
+    self.add_frame_style(standard_points_position_frame)
+    standard_points_position_frame.grid(
+        row=1,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=0,
+        pady=0,
+        )
+    _ = add_numeric_input(
+        parent=standard_points_position_frame,
+        row_index=0,
+        column_index=0,
+        label_text="x:",
+        variable=self.points_position_x,
         width=4,
+        )
+    _ = add_numeric_input(
+        parent=standard_points_position_frame,
+        row_index=0,
+        column_index=2,
+        label_text="y:",
+        variable=self.points_position_y,
+        width=4,
+        )
+    # widgets for bonus points
+    bonus_points_frame: tk.Frame = tk.Frame(points_inputs_frame)
+    self.add_frame_style(bonus_points_frame)
+    bonus_points_frame.grid(
+        row=1,
+        column=1,
+        sticky="new",
+        padx=0,
+        pady=0,
         )
     bonus_font_size_label, bonus_font_size_entry = add_numeric_input(
-        parent=points_inputs_frame,
-        row_index=1,
-        column_index=2,
+        parent=bonus_points_frame,
+        row_index=0,
+        column_index=0,
         label_text="bonus:",
         variable=self.bonus_font_size,
+        width=3,
+        )
+    bonus_points_position_frame: tk.Frame = tk.Frame(bonus_points_frame)
+    self.add_frame_style(bonus_points_position_frame)
+    bonus_points_position_frame.grid(
+        row=1,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=0,
+        pady=0,
+        )
+    _ = add_numeric_input(
+        parent=bonus_points_position_frame,
+        row_index=0,
+        column_index=0,
+        label_text="x:",
+        variable=self.bonus_position_x,
         width=4,
         )
+    _ = add_numeric_input(
+        parent=bonus_points_position_frame,
+        row_index=0,
+        column_index=2,
+        label_text="y:",
+        variable=self.bonus_position_y,
+        width=4,
+        )
+    # widgets for penalty points
+    penalty_points_frame: tk.Frame = tk.Frame(points_inputs_frame)
+    self.add_frame_style(penalty_points_frame)
+    penalty_points_frame.grid(
+        row=1,
+        column=2,
+        sticky="new",
+        padx=0,
+        pady=0,
+        )
     penalty_font_size_label, penalty_font_size_entry = add_numeric_input(
-        parent=points_inputs_frame,
-        row_index=1,
-        column_index=4,
+        parent=penalty_points_frame,
+        row_index=0,
+        column_index=0,
         label_text="penalty:",
         variable=self.penalty_font_size,
+        width=3,
+        )
+    penalty_points_position_frame: tk.Frame = tk.Frame(penalty_points_frame)
+    self.add_frame_style(penalty_points_position_frame)
+    penalty_points_position_frame.grid(
+        row=1,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=0,
+        pady=0,
+        )
+    _ = add_numeric_input(
+        parent=penalty_points_position_frame,
+        row_index=0,
+        column_index=0,
+        label_text="x:",
+        variable=self.penalty_position_x,
+        width=4,
+        )
+    _ = add_numeric_input(
+        parent=penalty_points_position_frame,
+        row_index=0,
+        column_index=2,
+        label_text="y:",
+        variable=self.penalty_position_y,
         width=4,
         )
     row_index += 1
