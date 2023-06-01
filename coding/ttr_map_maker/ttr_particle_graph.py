@@ -7,7 +7,7 @@ Each edge has a length and a color. Each node has a label close to it.
 A particle graph's layout can be optimized using a simple particle method.
 """
 import json
-from typing import List, Tuple, Dict, Any
+from typing import List, Tuple, Dict, Union, Any
 from math import isinf
 
 import numpy as np
@@ -27,6 +27,10 @@ class TTR_Particle_Graph:
         paths: List[Tuple[str, str, int, str]],
         tasks: dict[str, TTR_Task],
         node_positions: Dict[str, np.ndarray] = None,
+        color_config: dict = {
+          "label_text_color": "#eeeeee",
+          "label_outline_color": "#000000",
+        },
         particle_parameters: dict = {
           "velocity_decay": 0.99,
           "edge-edge": 0.01,
@@ -50,8 +54,9 @@ class TTR_Particle_Graph:
         node_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
         location_positions (Dict[str, np.ndarray], optional): dictionary of location positions. Keys are location labels, values are 2D numpy arrays representing the position of the location. Defaults to None.
     """
+    self.color_config: dict = color_config
     self.paths: List[Tuple[str, str, int, str]] = paths
-    if tasks and not isinstance(tasks[0], (tuple, list)):
+    if tasks and isinstance(tasks, (list, tuple)) and isinstance(tasks[0], (tuple, list)):
       self.tasks: dict[str, TTR_Task] = {}
       for task in tasks:
         self.tasks[task.name] = TTR_Task([task[0], task[-1]])
@@ -399,6 +404,23 @@ class TTR_Particle_Graph:
       except KeyError:
         raise ValueError(f"no image file path specified for edge color '{particle_edge.color}'")
 
+  def set_node_sizes(self, node_sizes: Union[float, list[float]]) -> None:
+    """
+    Set the sizes of all nodes in the graph to the given value(s).
+
+    Args:
+        node_sizes (Union[float, list[float]]): size(s) of nodes
+          If a single float is given, all nodes are set to this size
+          If a list of floats is given, each node is set to the corresponding size.
+          The list must have the same length as the number of nodes.
+    """
+    if isinstance(node_sizes, float):
+      node_sizes: list[float] = [node_sizes] * len(self.particle_nodes)
+    elif len(node_sizes) != len(self.particle_nodes):
+      raise ValueError(f"Mismatch between number of nodes ({len(self.particle_nodes)}) and number of node sizes ({len(node_sizes)}).")
+    for particle_node, node_size in zip(self.particle_nodes.values(), node_sizes):
+      particle_node.set_size(node_size)
+
   def toggle_move_nodes(self, move_nodes: bool = None) -> None:
     """
     toggle the ability to move nodes in the graph.
@@ -447,7 +469,12 @@ class TTR_Particle_Graph:
     for particle_node in self.particle_nodes.values():
       particle_node.draw(ax, color="#222222", alpha=0.8 * alpha_multiplier, movable=movable)
     for particle_label in self.particle_labels.values():
-      particle_label.draw(ax, color="#222222", alpha=1.0 * alpha_multiplier, movable=movable)
+      particle_label.draw(
+          ax,
+          color=self.color_config["label_text_color"],
+          border_color=self.color_config["label_outline_color"],
+          alpha=1.0 * alpha_multiplier,
+          movable=movable)
 
   def erase(self) -> None:
     """
@@ -485,7 +512,12 @@ class TTR_Particle_Graph:
         alpha (float, optional): transparency multiplier. Defaults to 1.0.
     """
     for particle_label in self.particle_labels.values():
-      particle_label.draw(ax, color="#222222", alpha=alpha, movable=movable)
+      particle_label.draw(
+          ax,
+          color=self.color_config["label_text_color"],
+          border_color=self.color_config["label_outline_color"],
+          alpha=alpha,
+          movable=movable)
 
   def erase_labels(self) -> None:
     """
@@ -799,6 +831,7 @@ class TTR_Particle_Graph:
       self.particle_edges[(loc_1, loc_2, path_index, connection_index)] = particle
     elif isinstance(particle, Particle_Label):
       self.particle_labels[particle.label] = particle
+    self.max_particle_id += 1
 
   def add_connection(self, location_1: str, location_2: str, length: int, color: str, add_path: bool=False, ax:plt.Axes = None) -> None:
     """
@@ -1118,10 +1151,10 @@ if __name__ == "__main__":
     ("Menegroth", "Hithlum", 3, "#5588ff"),
     ("Nargothrond", "Hithlum", 2, "#22dd22"),
   ]
-  tasks = [
-    ("Menegroth", "Nargothrond"),
-    ("Menegroth", "Hithlum")
-  ]
+  tasks = {
+    "Menegroth - Nargothrond": TTR_Task(node_names=["Menegroth", "Nargothrond"]),
+    "Menegroth - Hithlum": TTR_Task(node_names=["Menegroth", "Hithlum"])
+  }
 
   particle_graph = TTR_Particle_Graph(
       locations,
@@ -1134,10 +1167,10 @@ if __name__ == "__main__":
   print_at = 0
 
   fig, ax = plt.subplots(dpi=300)
-  # particle_graph.draw(ax, alpha_multiplier=0.1)
-  # particle_graph.optimize_layout(iterations=print_at, dt=dt)
-  # particle_graph.draw(ax, alpha_multiplier=0.5)
-  # particle_graph.optimize_layout(iterations=n_iter-print_at, dt=dt)
+  particle_graph.draw(ax, alpha_multiplier=0.1)
+  particle_graph.optimize_layout(iterations=print_at, dt=dt)
+  particle_graph.draw(ax, alpha_multiplier=0.5)
+  particle_graph.optimize_layout(iterations=n_iter-print_at, dt=dt)
   particle_graph.draw(ax, alpha_multiplier=1.0)
   # particle_graph.draw_connections(ax, alpha_multiplier=0.5)
   particle_graph.draw_edge_attractors(ax, alpha=0.5)

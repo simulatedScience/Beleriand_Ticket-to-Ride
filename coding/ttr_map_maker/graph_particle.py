@@ -1,7 +1,7 @@
 """
 base class for particles in a particle graph
 """
-from typing import Tuple, List
+from typing import Tuple, List, Union
 import json
 
 import numpy as np
@@ -140,6 +140,24 @@ class Graph_Particle:
       (float): rotation of particle
     """
     return self.rotation
+
+  def get_size(self):
+    return self.bounding_box_size
+  
+  def set_size(self, size: Union[float, Tuple[float, float]]):
+    """
+    Set the size of the particle.
+
+    args:
+      size (Union[float, Tuple[float, float]]): new size of particle. If a float is given, the particle will be a square with side length `size`.
+    """
+    if isinstance(size, float):
+      self.bounding_box_size: Tuple[float] = (size, size)
+    else:
+      self.bounding_box_size: Tuple[float] = size
+    self.inertia: Tuple[float] = self.mass * (self.bounding_box_size[0] ** 2 + self.bounding_box_size[1] ** 2) / 12
+    # update bounding box
+    self.bounding_box, self.bounding_box_polygon = self.update_bounding_box()
 
   def get_adjustable_settings(self) -> dict[str, object]:
     """
@@ -464,7 +482,7 @@ class Graph_Particle:
     particle_info = {
       "particle_type": self.__class__.__name__,
       "id": self.id,
-      "position": self.position.tolist(),
+      "position": [float(coord) for coord in self.position],
       "rotation": self.rotation,
       "mass": self.mass,
       "bounding_box_size": list(self.bounding_box_size),
@@ -475,7 +493,7 @@ class Graph_Particle:
       "repulsion_strength": self.repulsion_strength,
     }
     if self.target_position is not None:
-      particle_info["target_position"] = self.target_position.tolist()
+      particle_info["target_position"] = [float(coord) for coord in self.target_position]
     else:
       particle_info["target_position"] = None
     particle_info = self.add_json_info(particle_info)

@@ -3,6 +3,7 @@ This module implements several functions to open file dialogs for various file t
 """
 
 import tkinter as tk
+from tkinter import filedialog
 
 
 def browse_txt_file(browse_request: str, var: tk.StringVar):
@@ -13,7 +14,9 @@ def browse_txt_file(browse_request: str, var: tk.StringVar):
       browse_request (str): text to display in the file dialog
       var (tk.StringVar): variable to store the file path in
   """
-  file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.txt")])
+  file_path = filedialog.askopenfilename(
+      initialdir=".",
+      filetypes=[(browse_request, "*.txt")])
   if file_path:
     var.set(file_path)
 
@@ -25,7 +28,9 @@ def browse_image_file(browse_request: str, var: tk.StringVar):
       browse_request (str): text to display in the file dialog
       var (tk.StringVar): variable to store the file path in
   """
-  file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, ["*.png", "*.jpg", "*.jpeg"])])
+  file_path = filedialog.askopenfilename(
+      initialdir=".",
+      filetypes=[(browse_request, ["*.png", "*.jpg", "*.jpeg"])])
   if file_path:
     var.set(file_path)
 
@@ -37,7 +42,9 @@ def browse_json_file(browse_request: str, var: tk.StringVar):
       browse_request (str): text to display in the file dialog
       var (tk.StringVar): variable to store the file path in
   """
-  file_path = tk.filedialog.askopenfilename(filetypes=[(browse_request, "*.json")])
+  file_path = filedialog.askopenfilename(
+      initialdir=".",
+      filetypes=[(browse_request, "*.json")])
   if file_path:
     var.set(file_path)
 
@@ -49,6 +56,6 @@ def browse_directory(browse_request: str, var: tk.StringVar):
       browse_request (str): text to display in the file dialog
       var (tk.StringVar): variable to store the file path in
   """
-  file_path = tk.filedialog.askdirectory()
+  file_path = filedialog.askdirectory(initialdir=".",)
   if file_path:
     var.set(file_path)

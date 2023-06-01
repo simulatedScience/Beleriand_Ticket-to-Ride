@@ -5,6 +5,7 @@ import pickle
 import json
 
 from ttr_particle_graph import TTR_Particle_Graph
+from ttr_task import TTR_Task
 
 def read_locations(location_file: str) -> list[str]:
   """
@@ -51,7 +52,7 @@ def read_paths(path_file: str):
   return paths
 
 
-def read_tasks(task_file: str):
+def read_tasks(task_filepath: str) -> dict[str, TTR_Task]:
   """
   read tasks from tasks file: list of location names and lengths, seperated by ` ; `
 
@@ -59,18 +60,19 @@ def read_tasks(task_file: str):
       task_file (str): path to the task file
 
   Returns:
-      List[Tuple[str, str, int]]: list of tasks as tuples of two location names and the length of the shortest path between them
+      Dict[Tuple[str, str, int]]: list of tasks as tuples of two location names and the length of the shortest path between them
   """
-  tasks = []
+  tasks: dict[str, TTR_Task] = {}
   try:
-    with open(task_file, "r") as task_file:
+    with open(task_filepath, "r") as task_file:
       for line in task_file:
         line = line.strip()
         if line:
           loc_1, loc_2, *length = line.split(" ; ")
-          tasks.append((loc_1, loc_2))
+          task = TTR_Task(node_names=[loc_1, loc_2])
+          tasks[task.name] = task
   except FileNotFoundError:
-    print(f"Warning: could not read tasks from {task_file}")
+    print(f"Warning: could not read tasks from {task_filepath}")
   return tasks
 
 

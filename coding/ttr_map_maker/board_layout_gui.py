@@ -73,6 +73,8 @@ class Board_Layout_GUI:
           "task_base_color":        "#cc00cc", # pink
           "edge_border_color":      "#888888", # grey
           "edge_neutral_color":     "#aaaaaa", # grey
+          "label_text_color":       "#eeeeee", # white
+          "label_outline_color":    "#222222", # black
           }):
     self.color_config = color_config
     # create master window in fullscreen
@@ -399,12 +401,13 @@ class Board_Layout_GUI:
     self.move_edges_enabled = tk.BooleanVar(value=False, name="move_edges_enabled")
 
     # variables for plot
-    self.board_width = tk.DoubleVar(value=83.1, name="board_width")
+    self.board_width = tk.DoubleVar(value=80.7, name="board_width")
     self.board_height = tk.DoubleVar(value=54.0, name="board_height")
     self.background_image_offset_x = tk.DoubleVar(value=0.0, name="background_image_offset_x")
     self.background_image_offset_y = tk.DoubleVar(value=0.0, name="background_image_offset_y")
-    self.board_scale_factor = tk.DoubleVar(value=1.25, name="board_scale_factor")
+    self.board_scale_factor = tk.DoubleVar(value=1., name="board_scale_factor")
     self.graph_positions_scale_factor = tk.DoubleVar(value=1.0, name="node_scale_factor")
+    self.node_size = tk.DoubleVar(value=3.0, name="node_size")
 
   def draw_control_widgets(self):
     """
@@ -755,7 +758,7 @@ class Board_Layout_GUI:
     self.graph_data = {
         "locations": locations,
         "paths": [],
-        "tasks": []}
+        "tasks": {}}
     self.init_particle_graph()
     # else:
     #   self.graph_data["locations"] = locations
@@ -1539,7 +1542,34 @@ class Board_Layout_GUI:
     column_index += 2
     # add Entry for graph positions scale factor
     add_numeric_input(scale_factors_frame, row_index, column_index, "graph positions", self.graph_positions_scale_factor)
+    column_index: int = 0
+    row_index += 1
+    # add Entry for node size
+    add_numeric_input(scale_factors_frame, row_index, column_index, "node size", self.node_size)
     column_index += 2
+    # add Button to apply node size factor to all nodes
+    apply_node_size_button = tk.Button(
+        scale_factors_frame,
+        text="apply to all",
+        command=self.apply_node_size_to_all_nodes)
+    self.add_button_style(apply_node_size_button)
+    apply_node_size_button.grid(
+        row=row_index,
+        column=column_index,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    board_size_widgets.append(apply_node_size_button)
+
+  def apply_node_size_to_all_nodes(self):
+    """
+    Applies the node size factor to all nodes.
+    """
+    if self.particle_graph is not None:
+      self.particle_graph.set_node_sizes(self.node_size.get())
+    # update plot
+    self.canvas.draw_idle()
+
 
   def update_gui_mode(self):
     """
@@ -1769,7 +1799,8 @@ class Board_Layout_GUI:
           paths = self.graph_data["paths"],
           tasks = self.graph_data["tasks"],
           node_positions = node_positions,
-          particle_parameters = self.get_particle_parameters()
+          particle_parameters = self.get_particle_parameters(),
+          color_config = self.color_config,
       )
     self.draw_graph()
 
@@ -1877,6 +1908,8 @@ if __name__ == "__main__":
       "task_base_color":        "#cc00cc", # pink
       "edge_border_color":      "#888888", # grey
       "edge_neutral_color":     "#aaaaaa", # grey
+      "label_text_color":       "#eeeeee", # white
+      "label_outline_color":    "#222222", # black
       }
   blender_colors = {
       "bg_color":               "#1d1d1d", # darkest grey
@@ -1901,6 +1934,8 @@ if __name__ == "__main__":
       "task_base_color":        "#cc00cc", # pink
       "edge_border_color":      "#888888", # grey
       "edge_neutral_color":     "#aaaaaa", # grey
+      "label_text_color":       "#eeeeee", # white
+      "label_outline_color":    "#222222", # black
       }
   gui = Board_Layout_GUI(color_config=blender_colors)
   tk.mainloop()

@@ -7,23 +7,23 @@
     "n_labels": 39,
     "graph_extent": [
       0.0,
-      103.875,
+      83.125,
       0.0,
-      67.5
+      54.0
     ],
     "particles": [
       {
         "particle_type": "Particle_Node",
         "id": 0,
         "position": [
-          73.1875,
-          23.875
+          58.5625,
+          19.09375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -37,20 +37,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Amon Ereb",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 1,
         "position": [
-          41.65625,
-          38.4375
+          33.3125,
+          30.75
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -64,20 +64,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Amon Rudh",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 2,
         "position": [
-          59.5625,
-          25.375
+          47.65625,
+          20.296875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -91,20 +91,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Andram",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 3,
         "position": [
-          31.46875,
-          21.625
+          25.171875,
+          17.296875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -118,20 +118,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Arvenien",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 4,
         "position": [
-          14.015625,
-          26.828125
+          11.2109375,
+          21.46875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -145,20 +145,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Barad Nimras",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 5,
         "position": [
-          94.125,
-          35.0625
+          75.3125,
+          28.046875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -172,20 +172,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Belegost",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 6,
         "position": [
-          15.0390625,
-          33.125
+          12.03125,
+          26.5
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -199,20 +199,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Brithombar",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 7,
         "position": [
-          29.671875,
-          12.3984375
+          23.734375,
+          9.921875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -226,20 +226,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Cape Balar",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 8,
         "position": [
-          25.515625,
-          57.09375
+          20.40625,
+          45.6875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -253,20 +253,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Cirith Ninniach",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 9,
         "position": [
-          40.59375,
-          44.9375
+          32.46875,
+          35.9375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -280,20 +280,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Crossing of Teiglin",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 10,
         "position": [
-          68.75,
-          10.4609375
+          55.0,
+          8.3671875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -307,20 +307,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "East Taur-im-Duinath",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 11,
         "position": [
-          23.84375,
-          31.078125
+          19.078125,
+          24.859375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -334,20 +334,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Eglarest",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 12,
         "position": [
-          31.46875,
-          47.65625
+          25.171875,
+          38.125
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -361,20 +361,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Eithel Ivrin",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 13,
         "position": [
-          42.625,
-          60.09375
+          34.09375,
+          48.0625
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -388,20 +388,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Eithel Sirion",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 14,
         "position": [
-          36.5625,
-          50.0
+          29.25,
+          40.0
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -415,20 +415,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Ered Wethrin",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 15,
         "position": [
-          52.375,
-          43.03125
+          41.90625,
+          34.375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -442,20 +442,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Forest of Neldoreth",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 16,
         "position": [
-          53.96875,
-          35.84375
+          43.1875,
+          28.671875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -469,20 +469,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Forest of Region",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 17,
         "position": [
-          42.875,
-          28.34375
+          34.3125,
+          22.671875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -496,20 +496,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Gates of Sirion",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 18,
         "position": [
-          45.40625,
-          51.75
+          36.3125,
+          41.40625
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -523,20 +523,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Gondolin",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 19,
         "position": [
-          41.0,
-          13.359375
+          32.8125,
+          10.6875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -550,20 +550,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Havens of Sirion",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 20,
         "position": [
-          72.625,
-          50.5625
+          58.09375,
+          40.4375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -577,20 +577,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Himring",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 21,
         "position": [
-          29.9375,
-          3.650390625
+          23.953125,
+          2.919921875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -604,20 +604,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Isle of Balar",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 22,
         "position": [
-          63.5625,
-          57.3125
+          50.84375,
+          45.84375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -631,20 +631,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Ladros",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 23,
         "position": [
-          85.375,
-          47.5625
+          68.3125,
+          38.0625
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -658,20 +658,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Lake Heleron",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 24,
         "position": [
-          35.03125,
-          59.75
+          28.03125,
+          47.8125
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -685,20 +685,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Lake Mithrim",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 25,
         "position": [
-          19.171875,
-          49.71875
+          15.3359375,
+          39.78125
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -712,20 +712,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Linaewen",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 26,
         "position": [
-          56.90625,
-          40.40625
+          45.53125,
+          32.3125
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -739,20 +739,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Menegroth",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 27,
         "position": [
-          67.75,
-          41.78125
+          54.1875,
+          33.4375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -766,20 +766,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Nan Elmoth",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 28,
         "position": [
-          43.0625,
-          22.890625
+          34.4375,
+          18.3125
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -793,20 +793,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Nan Tathren",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 29,
         "position": [
-          34.375,
-          31.625
+          27.5,
+          25.296875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -820,20 +820,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Nargothrond",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 30,
         "position": [
-          94.0,
-          29.9375
+          75.1875,
+          23.953125
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -847,20 +847,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Nogrod",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 31,
         "position": [
-          66.8125,
-          50.40625
+          53.4375,
+          40.3125
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -874,20 +874,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Pass of Aglon",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 32,
         "position": [
-          23.9375,
-          37.375
+          19.15625,
+          29.90625
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -901,20 +901,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "River Nenning",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 33,
         "position": [
-          80.125,
-          29.703125
+          64.125,
+          23.765625
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -928,20 +928,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Sarn Athrud",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 34,
         "position": [
-          53.96875,
-          54.90625
+          43.1875,
+          43.9375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -955,20 +955,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Taur-Nu-Fuin",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 35,
         "position": [
-          79.875,
-          40.5
+          63.90625,
+          32.40625
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -982,20 +982,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Thargelion",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 36,
         "position": [
-          43.28125,
-          54.3125
+          34.625,
+          43.4375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -1009,20 +1009,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Tol Sirion",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 37,
         "position": [
-          8.90625,
-          46.1875
+          7.125,
+          36.9375
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -1036,20 +1036,20 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "Vinyamar",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Node",
         "id": 38,
         "position": [
-          50.84375,
-          8.8828125
+          40.6875,
+          7.10546875
         ],
-        "rotation": 0,
+        "rotation": 0.0,
         "mass": 1.0,
         "bounding_box_size": [
-          1,
-          1
+          1.7,
+          1.7
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.999,
@@ -1063,14 +1063,14 @@
         "color": "#222222",
         "target_attraction": 0.1,
         "location_name": "West Taur-im-Duinath",
-        "image_file_path": null
+        "image_file_path": "C:/future_D/private/programming/python/Beleriand_TTR/board_map_design/location_designs/blank_location_design_hole.png"
       },
       {
         "particle_type": "Particle_Label",
         "id": 39,
         "position": [
-          73.1875,
-          25.875
+          58.5625,
+          20.703125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1097,8 +1097,8 @@
         "particle_type": "Particle_Label",
         "id": 40,
         "position": [
-          42.59375,
-          40.09375
+          34.0625,
+          32.0625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1125,8 +1125,8 @@
         "particle_type": "Particle_Label",
         "id": 41,
         "position": [
-          59.96875,
-          27.578125
+          47.96875,
+          22.0625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1153,8 +1153,8 @@
         "particle_type": "Particle_Label",
         "id": 42,
         "position": [
-          28.671875,
-          21.703125
+          22.9375,
+          17.359375
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1181,8 +1181,8 @@
         "particle_type": "Particle_Label",
         "id": 43,
         "position": [
-          10.3828125,
-          27.28125
+          8.3046875,
+          21.828125
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1209,8 +1209,8 @@
         "particle_type": "Particle_Label",
         "id": 44,
         "position": [
-          94.125,
-          37.0625
+          75.3125,
+          29.65625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1237,8 +1237,8 @@
         "particle_type": "Particle_Label",
         "id": 45,
         "position": [
-          14.8046875,
-          34.65625
+          11.84375,
+          27.71875
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1265,8 +1265,8 @@
         "particle_type": "Particle_Label",
         "id": 46,
         "position": [
-          27.65625,
-          13.65625
+          22.125,
+          10.921875
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1293,8 +1293,8 @@
         "particle_type": "Particle_Label",
         "id": 47,
         "position": [
-          25.515625,
-          59.09375
+          20.40625,
+          47.28125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1321,8 +1321,8 @@
         "particle_type": "Particle_Label",
         "id": 48,
         "position": [
-          40.78125,
-          46.28125
+          32.625,
+          37.03125
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1349,8 +1349,8 @@
         "particle_type": "Particle_Label",
         "id": 49,
         "position": [
-          68.375,
-          11.59375
+          54.6875,
+          9.2734375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1377,8 +1377,8 @@
         "particle_type": "Particle_Label",
         "id": 50,
         "position": [
-          20.875,
-          31.828125
+          16.703125,
+          25.46875
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1405,8 +1405,8 @@
         "particle_type": "Particle_Label",
         "id": 51,
         "position": [
-          31.15625,
-          49.0625
+          24.921875,
+          39.25
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1433,8 +1433,8 @@
         "particle_type": "Particle_Label",
         "id": 52,
         "position": [
-          42.625,
-          62.09375
+          34.09375,
+          49.6875
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1461,8 +1461,8 @@
         "particle_type": "Particle_Label",
         "id": 53,
         "position": [
-          38.6875,
-          51.28125
+          30.953125,
+          41.03125
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1489,8 +1489,8 @@
         "particle_type": "Particle_Label",
         "id": 54,
         "position": [
-          53.40625,
-          44.3125
+          42.71875,
+          35.4375
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1517,8 +1517,8 @@
         "particle_type": "Particle_Label",
         "id": 55,
         "position": [
-          57.28125,
-          35.25
+          45.8125,
+          28.203125
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1545,8 +1545,8 @@
         "particle_type": "Particle_Label",
         "id": 56,
         "position": [
-          41.03125,
-          29.390625
+          32.8125,
+          23.515625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1573,8 +1573,8 @@
         "particle_type": "Particle_Label",
         "id": 57,
         "position": [
-          45.6875,
-          53.0
+          36.5625,
+          42.40625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1601,8 +1601,8 @@
         "particle_type": "Particle_Label",
         "id": 58,
         "position": [
-          37.375,
-          13.390625
+          29.90625,
+          10.7109375
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1629,8 +1629,8 @@
         "particle_type": "Particle_Label",
         "id": 59,
         "position": [
-          72.625,
-          52.5625
+          58.09375,
+          42.0625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1657,8 +1657,8 @@
         "particle_type": "Particle_Label",
         "id": 60,
         "position": [
-          26.78125,
-          3.119140625
+          21.421875,
+          2.49609375
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1685,8 +1685,8 @@
         "particle_type": "Particle_Label",
         "id": 61,
         "position": [
-          63.5625,
-          59.3125
+          50.84375,
+          47.4375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1713,8 +1713,8 @@
         "particle_type": "Particle_Label",
         "id": 62,
         "position": [
-          85.375,
-          49.5625
+          68.3125,
+          39.65625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1741,8 +1741,8 @@
         "particle_type": "Particle_Label",
         "id": 63,
         "position": [
-          35.0,
-          61.0
+          28.0,
+          48.8125
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1769,8 +1769,8 @@
         "particle_type": "Particle_Label",
         "id": 64,
         "position": [
-          17.09375,
-          50.8125
+          13.671875,
+          40.65625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1797,8 +1797,8 @@
         "particle_type": "Particle_Label",
         "id": 65,
         "position": [
-          57.03125,
-          42.25
+          45.625,
+          33.8125
         ],
         "rotation": 5.98647933434055,
         "mass": 1.0,
@@ -1825,8 +1825,8 @@
         "particle_type": "Particle_Label",
         "id": 66,
         "position": [
-          67.75,
-          43.78125
+          54.1875,
+          35.03125
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1853,8 +1853,8 @@
         "particle_type": "Particle_Label",
         "id": 67,
         "position": [
-          46.53125,
-          23.8125
+          37.21875,
+          19.046875
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1881,8 +1881,8 @@
         "particle_type": "Particle_Label",
         "id": 68,
         "position": [
-          30.03125,
-          32.28125
+          24.03125,
+          25.828125
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1909,8 +1909,8 @@
         "particle_type": "Particle_Label",
         "id": 69,
         "position": [
-          94.6875,
-          28.515625
+          75.75,
+          22.8125
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1937,8 +1937,8 @@
         "particle_type": "Particle_Label",
         "id": 70,
         "position": [
-          65.8125,
-          51.78125
+          52.65625,
+          41.4375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -1965,8 +1965,8 @@
         "particle_type": "Particle_Label",
         "id": 71,
         "position": [
-          23.6875,
-          38.9375
+          18.953125,
+          31.15625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -1993,8 +1993,8 @@
         "particle_type": "Particle_Label",
         "id": 72,
         "position": [
-          83.25,
-          28.359375
+          66.625,
+          22.6875
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -2021,8 +2021,8 @@
         "particle_type": "Particle_Label",
         "id": 73,
         "position": [
-          52.84375,
-          56.15625
+          42.28125,
+          44.9375
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2049,8 +2049,8 @@
         "particle_type": "Particle_Label",
         "id": 74,
         "position": [
-          80.25,
-          41.96875
+          64.1875,
+          33.5625
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -2077,8 +2077,8 @@
         "particle_type": "Particle_Label",
         "id": 75,
         "position": [
-          43.28125,
-          56.3125
+          34.625,
+          45.0625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2105,8 +2105,8 @@
         "particle_type": "Particle_Label",
         "id": 76,
         "position": [
-          8.90625,
-          48.1875
+          7.125,
+          38.5625
         ],
         "rotation": 0,
         "mass": 1.0,
@@ -2133,8 +2133,8 @@
         "particle_type": "Particle_Label",
         "id": 77,
         "position": [
-          51.625,
-          7.06640625
+          41.3125,
+          5.65234375
         ],
         "rotation": 0.0,
         "mass": 1.0,
@@ -2161,14 +2161,14 @@
         "particle_type": "Particle_Edge",
         "id": 78,
         "position": [
-          70.5625,
-          23.953125
+          56.4375,
+          19.15625
         ],
         "rotation": -3.2497327944476466,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2192,14 +2192,14 @@
         "particle_type": "Particle_Edge",
         "id": 79,
         "position": [
-          66.4375,
-          24.421875
+          53.15625,
+          19.53125
         ],
         "rotation": -3.2497327944476466,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2223,14 +2223,14 @@
         "particle_type": "Particle_Edge",
         "id": 80,
         "position": [
-          62.40625,
-          24.859375
+          49.9375,
+          19.890625
         ],
         "rotation": -3.2497327944476466,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2254,14 +2254,14 @@
         "particle_type": "Particle_Edge",
         "id": 81,
         "position": [
-          70.4375,
-          25.265625
+          56.34375,
+          20.21875
         ],
         "rotation": -3.246796408768035,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2285,14 +2285,14 @@
         "particle_type": "Particle_Edge",
         "id": 82,
         "position": [
-          67.75,
-          26.875
+          54.1875,
+          21.5
         ],
         "rotation": -4.730326272963215,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2316,14 +2316,14 @@
         "particle_type": "Particle_Edge",
         "id": 83,
         "position": [
-          67.75,
-          30.921875
+          54.1875,
+          24.734375
         ],
         "rotation": -4.695419687923328,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2347,14 +2347,14 @@
         "particle_type": "Particle_Edge",
         "id": 84,
         "position": [
-          67.8125,
-          35.03125
+          54.25,
+          28.03125
         ],
         "rotation": -4.765232858003102,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2378,14 +2378,14 @@
         "particle_type": "Particle_Edge",
         "id": 85,
         "position": [
-          68.0625,
-          39.09375
+          54.4375,
+          31.28125
         ],
         "rotation": -4.712872980443272,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2409,14 +2409,14 @@
         "particle_type": "Particle_Edge",
         "id": 86,
         "position": [
-          74.9375,
-          25.328125
+          59.9375,
+          20.265625
         ],
         "rotation": -5.584711000858805,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2440,14 +2440,14 @@
         "particle_type": "Particle_Edge",
         "id": 87,
         "position": [
-          78.1875,
-          27.96875
+          62.5625,
+          22.375
         ],
         "rotation": -5.514897830779032,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2471,14 +2471,14 @@
         "particle_type": "Particle_Edge",
         "id": 88,
         "position": [
-          39.25,
-          39.71875
+          31.40625,
+          31.78125
         ],
         "rotation": 2.6202614365848618,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2502,14 +2502,14 @@
         "particle_type": "Particle_Edge",
         "id": 89,
         "position": [
-          39.4375,
-          42.53125
+          31.546875,
+          34.03125
         ],
         "rotation": 0.9447453546703048,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2533,14 +2533,14 @@
         "particle_type": "Particle_Edge",
         "id": 90,
         "position": [
-          44.34375,
-          38.78125
+          35.46875,
+          31.03125
         ],
         "rotation": -0.035315447545316125,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2564,14 +2564,14 @@
         "particle_type": "Particle_Edge",
         "id": 91,
         "position": [
-          47.1875,
-          40.59375
+          37.75,
+          32.46875
         ],
         "rotation": -5.044410400769042,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2595,14 +2595,14 @@
         "particle_type": "Particle_Edge",
         "id": 92,
         "position": [
-          50.0,
-          42.6875
+          40.0,
+          34.15625
         ],
         "rotation": -6.178874414565356,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2626,14 +2626,14 @@
         "particle_type": "Particle_Edge",
         "id": 93,
         "position": [
-          43.8125,
-          36.6875
+          35.0625,
+          29.34375
         ],
         "rotation": 5.442564865592544,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2657,14 +2657,14 @@
         "particle_type": "Particle_Edge",
         "id": 94,
         "position": [
-          47.28125,
-          34.8125
+          37.8125,
+          27.84375
         ],
         "rotation": 6.105789981350389,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2688,14 +2688,14 @@
         "particle_type": "Particle_Edge",
         "id": 95,
         "position": [
-          51.375,
-          35.28125
+          41.09375,
+          28.21875
         ],
         "rotation": -5.989341734970314,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2719,14 +2719,14 @@
         "particle_type": "Particle_Edge",
         "id": 96,
         "position": [
-          42.25,
-          35.21875
+          33.8125,
+          28.171875
         ],
         "rotation": -1.4631543360698132,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2750,14 +2750,14 @@
         "particle_type": "Particle_Edge",
         "id": 97,
         "position": [
-          42.78125,
-          31.234375
+          34.21875,
+          24.984375
         ],
         "rotation": -1.4980609211096994,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2781,14 +2781,14 @@
         "particle_type": "Particle_Edge",
         "id": 98,
         "position": [
-          39.84375,
-          36.5
+          31.875,
+          29.203125
         ],
         "rotation": -2.3665034033385886,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2812,14 +2812,14 @@
         "particle_type": "Particle_Edge",
         "id": 99,
         "position": [
-          36.78125,
-          33.5
+          29.421875,
+          26.796875
         ],
         "rotation": -2.436316573418362,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2843,14 +2843,14 @@
         "particle_type": "Particle_Edge",
         "id": 100,
         "position": [
-          61.375,
-          23.171875
+          49.09375,
+          18.53125
         ],
         "rotation": -0.682735501396992,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2874,14 +2874,14 @@
         "particle_type": "Particle_Edge",
         "id": 101,
         "position": [
-          64.9375,
-          21.015625
+          51.9375,
+          16.8125
         ],
         "rotation": -0.40348282107789846,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2905,14 +2905,14 @@
         "particle_type": "Particle_Edge",
         "id": 102,
         "position": [
-          67.625,
-          17.859375
+          54.09375,
+          14.2890625
         ],
         "rotation": -1.3634139096747804,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2936,14 +2936,14 @@
         "particle_type": "Particle_Edge",
         "id": 103,
         "position": [
-          67.9375,
-          13.7109375
+          54.34375,
+          10.96875
         ],
         "rotation": -1.5379468348742131,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2967,14 +2967,14 @@
         "particle_type": "Particle_Edge",
         "id": 104,
         "position": [
-          56.28125,
-          26.953125
+          45.03125,
+          21.5625
         ],
         "rotation": -3.475293844095641,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -2998,14 +2998,14 @@
         "particle_type": "Particle_Edge",
         "id": 105,
         "position": [
-          53.0625,
-          29.375
+          42.4375,
+          23.5
         ],
         "rotation": -4.173425544893373,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3029,14 +3029,14 @@
         "particle_type": "Particle_Edge",
         "id": 106,
         "position": [
-          53.34375,
-          33.15625
+          42.6875,
+          26.53125
         ],
         "rotation": -5.16826321853014,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3060,14 +3060,14 @@
         "particle_type": "Particle_Edge",
         "id": 107,
         "position": [
-          56.9375,
-          24.78125
+          45.5625,
+          19.828125
         ],
         "rotation": -2.828337983306708,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3091,14 +3091,14 @@
         "particle_type": "Particle_Edge",
         "id": 108,
         "position": [
-          52.59375,
-          24.265625
+          42.0625,
+          19.40625
         ],
         "rotation": -3.282123588825234,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3122,14 +3122,14 @@
         "particle_type": "Particle_Edge",
         "id": 109,
         "position": [
-          48.46875,
-          24.71875
+          38.78125,
+          19.78125
         ],
         "rotation": -3.282123588825234,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3153,14 +3153,14 @@
         "particle_type": "Particle_Edge",
         "id": 110,
         "position": [
-          44.96875,
-          26.421875
+          35.96875,
+          21.140625
         ],
         "rotation": -3.9278954120631355,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3184,14 +3184,14 @@
         "particle_type": "Particle_Edge",
         "id": 111,
         "position": [
-          58.59375,
-          28.109375
+          46.875,
+          22.484375
         ],
         "rotation": -4.461483616127019,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3215,14 +3215,14 @@
         "particle_type": "Particle_Edge",
         "id": 112,
         "position": [
-          59.3125,
-          31.25
+          47.4375,
+          25.0
         ],
         "rotation": -5.561041044883447,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3246,14 +3246,14 @@
         "particle_type": "Particle_Edge",
         "id": 113,
         "position": [
-          59.875,
-          34.59375
+          47.90625,
+          27.671875
         ],
         "rotation": -4.531296786206792,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3277,14 +3277,14 @@
         "particle_type": "Particle_Edge",
         "id": 114,
         "position": [
-          58.4375,
-          38.21875
+          46.75,
+          30.578125
         ],
         "rotation": -4.094964473208209,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3308,14 +3308,14 @@
         "particle_type": "Particle_Edge",
         "id": 115,
         "position": [
-          57.625,
-          23.109375
+          46.09375,
+          18.484375
         ],
         "rotation": -2.304494421884294,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3339,14 +3339,14 @@
         "particle_type": "Particle_Edge",
         "id": 116,
         "position": [
-          55.21875,
-          19.5625
+          44.1875,
+          15.6484375
         ],
         "rotation": -2.0426950340851455,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3370,14 +3370,14 @@
         "particle_type": "Particle_Edge",
         "id": 117,
         "position": [
-          53.375,
-          15.5703125
+          42.6875,
+          12.453125
         ],
         "rotation": -1.9379752789654856,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3401,14 +3401,14 @@
         "particle_type": "Particle_Edge",
         "id": 118,
         "position": [
-          52.03125,
-          11.6328125
+          41.625,
+          9.3046875
         ],
         "rotation": -1.9205219864455423,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3432,14 +3432,14 @@
         "particle_type": "Particle_Edge",
         "id": 119,
         "position": [
-          30.96875,
-          18.953125
+          24.78125,
+          15.1640625
         ],
         "rotation": -1.5354522577146321,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3463,14 +3463,14 @@
         "particle_type": "Particle_Edge",
         "id": 120,
         "position": [
-          30.75,
-          14.8984375
+          24.59375,
+          11.921875
         ],
         "rotation": -1.8670648155935545,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3494,14 +3494,14 @@
         "particle_type": "Particle_Edge",
         "id": 121,
         "position": [
-          30.71875,
-          24.046875
+          24.578125,
+          19.234375
         ],
         "rotation": -4.39760989801565,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3525,14 +3525,14 @@
         "particle_type": "Particle_Edge",
         "id": 122,
         "position": [
-          27.84375,
-          24.625
+          22.28125,
+          19.703125
         ],
         "rotation": -2.634827353501377,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3556,14 +3556,14 @@
         "particle_type": "Particle_Edge",
         "id": 123,
         "position": [
-          24.96875,
-          24.734375
+          19.96875,
+          19.78125
         ],
         "rotation": -4.031090755096841,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3587,14 +3587,14 @@
         "particle_type": "Particle_Edge",
         "id": 124,
         "position": [
-          23.484375,
-          28.59375
+          18.78125,
+          22.875
         ],
         "rotation": -4.589596115735026,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3618,14 +3618,14 @@
         "particle_type": "Particle_Edge",
         "id": 125,
         "position": [
-          33.75,
-          20.09375
+          27.0,
+          16.078125
         ],
         "rotation": -0.5084847279479165,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3649,14 +3649,14 @@
         "particle_type": "Particle_Edge",
         "id": 126,
         "position": [
-          37.3125,
-          18.25
+          29.84375,
+          14.6015625
         ],
         "rotation": -0.5259380204678599,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3680,14 +3680,14 @@
         "particle_type": "Particle_Edge",
         "id": 127,
         "position": [
-          39.71875,
-          15.46875
+          31.78125,
+          12.375
         ],
         "rotation": -1.3113361838653077,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3711,14 +3711,14 @@
         "particle_type": "Particle_Edge",
         "id": 128,
         "position": [
-          34.34375,
-          21.203125
+          27.46875,
+          16.96875
         ],
         "rotation": -0.3149407966440849,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3742,14 +3742,14 @@
         "particle_type": "Particle_Edge",
         "id": 129,
         "position": [
-          38.1875,
-          19.546875
+          30.546875,
+          15.640625
         ],
         "rotation": -0.4022072592438013,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3773,14 +3773,14 @@
         "particle_type": "Particle_Edge",
         "id": 130,
         "position": [
-          41.3125,
-          20.953125
+          33.0625,
+          16.765625
         ],
         "rotation": -5.393848919947583,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3804,14 +3804,14 @@
         "particle_type": "Particle_Edge",
         "id": 131,
         "position": [
-          14.5234375,
-          29.96875
+          11.6171875,
+          23.96875
         ],
         "rotation": -4.874010335567703,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3835,14 +3835,14 @@
         "particle_type": "Particle_Edge",
         "id": 132,
         "position": [
-          12.3515625,
-          24.953125
+          9.8828125,
+          19.96875
         ],
         "rotation": -2.175681857422653,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3866,14 +3866,14 @@
         "particle_type": "Particle_Edge",
         "id": 133,
         "position": [
-          11.3828125,
-          21.234375
+          9.109375,
+          16.984375
         ],
         "rotation": -1.3902836940252046,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3897,14 +3897,14 @@
         "particle_type": "Particle_Edge",
         "id": 134,
         "position": [
-          12.609375,
-          17.65625
+          10.0859375,
+          14.125
         ],
         "rotation": -1.0761244286662253,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3928,14 +3928,14 @@
         "particle_type": "Particle_Edge",
         "id": 135,
         "position": [
-          15.0,
-          14.8125
+          12.0,
+          11.8515625
         ],
         "rotation": -0.744511870787303,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3959,14 +3959,14 @@
         "particle_type": "Particle_Edge",
         "id": 136,
         "position": [
-          18.640625,
-          12.71875
+          14.9140625,
+          10.171875
         ],
         "rotation": -0.34308614282860717,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -3990,14 +3990,14 @@
         "particle_type": "Particle_Edge",
         "id": 137,
         "position": [
-          22.65625,
-          12.0703125
+          18.125,
+          9.65625
         ],
         "rotation": -0.02892687746962782,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4021,14 +4021,14 @@
         "particle_type": "Particle_Edge",
         "id": 138,
         "position": [
-          26.8125,
-          12.296875
+          21.453125,
+          9.8359375
         ],
         "rotation": -6.207392429529555,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4052,14 +4052,14 @@
         "particle_type": "Particle_Edge",
         "id": 139,
         "position": [
-          16.8125,
-          28.140625
+          13.453125,
+          22.515625
         ],
         "rotation": -5.910487268724841,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4083,14 +4083,14 @@
         "particle_type": "Particle_Edge",
         "id": 140,
         "position": [
-          20.71875,
-          29.796875
+          16.578125,
+          23.84375
         ],
         "rotation": -5.875580683684955,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4114,14 +4114,14 @@
         "particle_type": "Particle_Edge",
         "id": 141,
         "position": [
-          94.0625,
-          32.5
+          75.25,
+          26.0
         ],
         "rotation": 4.68382532254593,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4145,14 +4145,14 @@
         "particle_type": "Particle_Edge",
         "id": 142,
         "position": [
-          91.5,
-          33.5
+          73.1875,
+          26.796875
         ],
         "rotation": -2.7402154727403025,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4176,14 +4176,14 @@
         "particle_type": "Particle_Edge",
         "id": 143,
         "position": [
-          87.9375,
-          31.921875
+          70.375,
+          25.53125
         ],
         "rotation": -2.775122057780189,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4207,14 +4207,14 @@
         "particle_type": "Particle_Edge",
         "id": 144,
         "position": [
-          83.5625,
-          30.609375
+          66.875,
+          24.484375
         ],
         "rotation": -2.9147483979397357,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4238,14 +4238,14 @@
         "particle_type": "Particle_Edge",
         "id": 145,
         "position": [
-          90.375,
-          35.09375
+          72.3125,
+          28.078125
         ],
         "rotation": -3.384510447412919,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4269,14 +4269,14 @@
         "particle_type": "Particle_Edge",
         "id": 146,
         "position": [
-          86.1875,
-          36.59375
+          68.9375,
+          29.28125
         ],
         "rotation": -3.576496665132295,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4300,14 +4300,14 @@
         "particle_type": "Particle_Edge",
         "id": 147,
         "position": [
-          82.375,
-          38.625
+          65.875,
+          30.90625
         ],
         "rotation": -3.6986697127718977,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4331,14 +4331,14 @@
         "particle_type": "Particle_Edge",
         "id": 148,
         "position": [
-          12.125,
-          32.8125
+          9.703125,
+          26.25
         ],
         "rotation": -3.17417543577202,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4362,14 +4362,14 @@
         "particle_type": "Particle_Edge",
         "id": 149,
         "position": [
-          8.578125,
-          34.25
+          6.86328125,
+          27.40625
         ],
         "rotation": -3.9072137216096388,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4393,14 +4393,14 @@
         "particle_type": "Particle_Edge",
         "id": 150,
         "position": [
-          5.9609375,
-          37.53125
+          4.76953125,
+          30.03125
         ],
         "rotation": -4.238826279488561,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4424,14 +4424,14 @@
         "particle_type": "Particle_Edge",
         "id": 151,
         "position": [
-          4.9296875,
-          41.59375
+          3.943359375,
+          33.28125
         ],
         "rotation": -4.779878347606803,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4455,14 +4455,14 @@
         "particle_type": "Particle_Edge",
         "id": 152,
         "position": [
-          6.99609375,
-          44.90625
+          5.59765625,
+          35.9375
         ],
         "rotation": -5.757262728723628,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4486,14 +4486,14 @@
         "particle_type": "Particle_Edge",
         "id": 153,
         "position": [
-          31.734375,
-          10.625
+          25.390625,
+          8.5
         ],
         "rotation": -0.6314467527865046,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4517,14 +4517,14 @@
         "particle_type": "Particle_Edge",
         "id": 154,
         "position": [
-          35.40625,
-          9.53125
+          28.328125,
+          7.625
         ],
         "rotation": -6.16414048160853,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4548,14 +4548,14 @@
         "particle_type": "Particle_Edge",
         "id": 155,
         "position": [
-          39.03125,
-          11.1640625
+          31.21875,
+          8.9296875
         ],
         "rotation": -5.448555488290854,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4579,14 +4579,14 @@
         "particle_type": "Particle_Edge",
         "id": 156,
         "position": [
-          24.078125,
-          54.6875
+          19.265625,
+          43.75
         ],
         "rotation": 4.047312431045416,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4610,14 +4610,14 @@
         "particle_type": "Particle_Edge",
         "id": 157,
         "position": [
-          21.125,
-          51.78125
+          16.90625,
+          41.4375
         ],
         "rotation": 3.785513043246268,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4641,14 +4641,14 @@
         "particle_type": "Particle_Edge",
         "id": 158,
         "position": [
-          21.9375,
-          55.90625
+          17.546875,
+          44.71875
         ],
         "rotation": -2.82253946921289,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4672,14 +4672,14 @@
         "particle_type": "Particle_Edge",
         "id": 159,
         "position": [
-          17.78125,
-          54.0
+          14.2265625,
+          43.1875
         ],
         "rotation": -2.6654598365334,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4703,14 +4703,14 @@
         "particle_type": "Particle_Edge",
         "id": 160,
         "position": [
-          13.8671875,
-          51.84375
+          11.09375,
+          41.46875
         ],
         "rotation": -2.5607400814137407,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4734,14 +4734,14 @@
         "particle_type": "Particle_Edge",
         "id": 161,
         "position": [
-          10.7734375,
-          48.75
+          8.6171875,
+          39.0
         ],
         "rotation": -2.2291275235348174,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4765,14 +4765,14 @@
         "particle_type": "Particle_Edge",
         "id": 162,
         "position": [
-          43.0,
-          43.5
+          34.40625,
+          34.8125
         ],
         "rotation": 5.779972367014415,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4796,14 +4796,14 @@
         "particle_type": "Particle_Edge",
         "id": 163,
         "position": [
-          46.28125,
-          44.53125
+          37.03125,
+          35.625
         ],
         "rotation": 0.701064243710916,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4827,14 +4827,14 @@
         "particle_type": "Particle_Edge",
         "id": 164,
         "position": [
-          50.0,
-          44.6875
+          40.0,
+          35.75
         ],
         "rotation": -0.46830635512528485,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4858,14 +4858,14 @@
         "particle_type": "Particle_Edge",
         "id": 165,
         "position": [
-          69.3125,
-          13.9453125
+          55.4375,
+          11.15625
         ],
         "rotation": -4.830728483746136,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4889,14 +4889,14 @@
         "particle_type": "Particle_Edge",
         "id": 166,
         "position": [
-          69.9375,
-          18.203125
+          55.9375,
+          14.5625
         ],
         "rotation": -4.813275191226193,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4920,14 +4920,14 @@
         "particle_type": "Particle_Edge",
         "id": 167,
         "position": [
-          71.8125,
-          21.703125
+          57.4375,
+          17.359375
         ],
         "rotation": -5.441593721944152,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4951,14 +4951,14 @@
         "particle_type": "Particle_Edge",
         "id": 168,
         "position": [
-          71.25,
-          11.703125
+          57.0,
+          9.359375
         ],
         "rotation": -5.818885282764509,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -4982,14 +4982,14 @@
         "particle_type": "Particle_Edge",
         "id": 169,
         "position": [
-          73.8125,
-          15.140625
+          59.0625,
+          12.109375
         ],
         "rotation": -4.928767364247401,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5013,14 +5013,14 @@
         "particle_type": "Particle_Edge",
         "id": 170,
         "position": [
-          75.375,
-          19.171875
+          60.3125,
+          15.3359375
         ],
         "rotation": -5.24292662960638,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5044,14 +5044,14 @@
         "particle_type": "Particle_Edge",
         "id": 171,
         "position": [
-          78.0,
-          22.453125
+          62.40625,
+          17.96875
         ],
         "rotation": -5.4523661398457,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5075,14 +5075,14 @@
         "particle_type": "Particle_Edge",
         "id": 172,
         "position": [
-          79.5,
-          26.265625
+          63.59375,
+          21.015625
         ],
         "rotation": -4.946220656767344,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5106,14 +5106,14 @@
         "particle_type": "Particle_Edge",
         "id": 173,
         "position": [
-          66.1875,
-          9.6953125
+          52.9375,
+          7.7578125
         ],
         "rotation": -2.9814221681608584,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5137,14 +5137,14 @@
         "particle_type": "Particle_Edge",
         "id": 174,
         "position": [
-          61.875,
-          9.21875
+          49.5,
+          7.375
         ],
         "rotation": -3.086141923280518,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5168,14 +5168,14 @@
         "particle_type": "Particle_Edge",
         "id": 175,
         "position": [
-          57.59375,
-          8.9453125
+          46.0625,
+          7.15625
         ],
         "rotation": -3.086141923280518,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5199,14 +5199,14 @@
         "particle_type": "Particle_Edge",
         "id": 176,
         "position": [
-          53.46875,
-          8.8203125
+          42.78125,
+          7.0546875
         ],
         "rotation": -3.121048508320405,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5230,14 +5230,14 @@
         "particle_type": "Particle_Edge",
         "id": 177,
         "position": [
-          23.8125,
-          33.78125
+          19.046875,
+          27.03125
         ],
         "rotation": -4.702496967984924,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5261,14 +5261,14 @@
         "particle_type": "Particle_Edge",
         "id": 178,
         "position": [
-          40.3125,
-          61.875
+          32.25,
+          49.5
         ],
         "rotation": -3.7430325802993267,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5292,14 +5292,14 @@
         "particle_type": "Particle_Edge",
         "id": 179,
         "position": [
-          36.75,
-          61.84375
+          29.40625,
+          49.46875
         ],
         "rotation": -2.27695600862409,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5323,14 +5323,14 @@
         "particle_type": "Particle_Edge",
         "id": 180,
         "position": [
-          42.96875,
-          57.1875
+          34.375,
+          45.75
         ],
         "rotation": -1.45736133498768,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5354,14 +5354,14 @@
         "particle_type": "Particle_Edge",
         "id": 181,
         "position": [
-          38.59375,
-          47.65625
+          30.875,
+          38.125
         ],
         "rotation": 5.4377173010772895,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5385,14 +5385,14 @@
         "particle_type": "Particle_Edge",
         "id": 182,
         "position": [
-          50.90625,
-          40.65625
+          40.71875,
+          32.53125
         ],
         "rotation": -2.149181245340616,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5416,14 +5416,14 @@
         "particle_type": "Particle_Edge",
         "id": 183,
         "position": [
-          52.09375,
-          37.71875
+          41.6875,
+          30.171875
         ],
         "rotation": -0.7005579661853228,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5447,14 +5447,14 @@
         "particle_type": "Particle_Edge",
         "id": 184,
         "position": [
-          52.5,
-          45.65625
+          42.0,
+          36.53125
         ],
         "rotation": -4.676739044105134,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5478,14 +5478,14 @@
         "particle_type": "Particle_Edge",
         "id": 185,
         "position": [
-          49.9375,
-          47.625
+          39.9375,
+          38.09375
         ],
         "rotation": -3.350288812589443,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5509,14 +5509,14 @@
         "particle_type": "Particle_Edge",
         "id": 186,
         "position": [
-          48.65625,
-          50.375
+          38.9375,
+          40.3125
         ],
         "rotation": -5.270150989783206,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5540,14 +5540,14 @@
         "particle_type": "Particle_Edge",
         "id": 187,
         "position": [
-          51.71875,
-          53.21875
+          41.375,
+          42.5625
         ],
         "rotation": -5.741389887821675,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5571,14 +5571,14 @@
         "particle_type": "Particle_Edge",
         "id": 188,
         "position": [
-          55.34375,
-          38.15625
+          44.28125,
+          30.53125
         ],
         "rotation": -5.292625950448388,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5602,14 +5602,14 @@
         "particle_type": "Particle_Edge",
         "id": 189,
         "position": [
-          45.125,
-          30.140625
+          36.09375,
+          24.109375
         ],
         "rotation": 0.833789734805908,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5633,14 +5633,14 @@
         "particle_type": "Particle_Edge",
         "id": 190,
         "position": [
-          48.59375,
-          31.9375
+          38.875,
+          25.546875
         ],
         "rotation": 6.157043953388613,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5664,14 +5664,14 @@
         "particle_type": "Particle_Edge",
         "id": 191,
         "position": [
-          51.8125,
-          33.59375
+          41.4375,
+          26.875
         ],
         "rotation": 0.833789734805908,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5695,14 +5695,14 @@
         "particle_type": "Particle_Edge",
         "id": 192,
         "position": [
-          44.15625,
-          49.875
+          35.3125,
+          39.90625
         ],
         "rotation": -2.3425465838408592,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5726,14 +5726,14 @@
         "particle_type": "Particle_Edge",
         "id": 193,
         "position": [
-          41.65625,
-          46.84375
+          33.3125,
+          37.46875
         ],
         "rotation": 4.080265063498273,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5757,14 +5757,14 @@
         "particle_type": "Particle_Edge",
         "id": 194,
         "position": [
-          72.6875,
-          53.90625
+          58.15625,
+          43.125
         ],
         "rotation": -4.671284740963796,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5788,14 +5788,14 @@
         "particle_type": "Particle_Edge",
         "id": 195,
         "position": [
-          71.75,
-          57.78125
+          57.40625,
+          46.21875
         ],
         "rotation": -4.2873123055250435,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5819,14 +5819,14 @@
         "particle_type": "Particle_Edge",
         "id": 196,
         "position": [
-          68.875,
-          60.3125
+          55.09375,
+          48.25
         ],
         "rotation": -3.3273812169281625,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5850,14 +5850,14 @@
         "particle_type": "Particle_Edge",
         "id": 197,
         "position": [
-          65.375,
-          59.03125
+          52.3125,
+          47.21875
         ],
         "rotation": -2.4372632984110547,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5881,14 +5881,14 @@
         "particle_type": "Particle_Edge",
         "id": 198,
         "position": [
-          76.0625,
-          51.46875
+          60.84375,
+          41.1875
         ],
         "rotation": -6.130623846420972,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5912,14 +5912,14 @@
         "particle_type": "Particle_Edge",
         "id": 199,
         "position": [
-          79.8125,
-          50.90625
+          63.84375,
+          40.71875
         ],
         "rotation": -0.3186774372798551,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5943,14 +5943,14 @@
         "particle_type": "Particle_Edge",
         "id": 200,
         "position": [
-          83.1875,
-          48.59375
+          66.5625,
+          38.875
         ],
         "rotation": -0.8073696278382672,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -5974,14 +5974,14 @@
         "particle_type": "Particle_Edge",
         "id": 201,
         "position": [
-          72.125,
-          48.0625
+          57.6875,
+          38.4375
         ],
         "rotation": -1.6245736470982466,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6005,14 +6005,14 @@
         "particle_type": "Particle_Edge",
         "id": 202,
         "position": [
-          70.125,
-          44.09375
+          56.09375,
+          35.28125
         ],
         "rotation": -2.3750652254558084,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6036,14 +6036,14 @@
         "particle_type": "Particle_Edge",
         "id": 203,
         "position": [
-          69.5625,
-          50.46875
+          55.65625,
+          40.375
         ],
         "rotation": -3.1314688988466566,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6067,14 +6067,14 @@
         "particle_type": "Particle_Edge",
         "id": 204,
         "position": [
-          28.421875,
-          5.9296875
+          22.734375,
+          4.7421875
         ],
         "rotation": -4.209910248915952,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6098,14 +6098,14 @@
         "particle_type": "Particle_Edge",
         "id": 205,
         "position": [
-          28.453125,
-          9.984375
+          22.765625,
+          7.98828125
         ],
         "rotation": -5.1349347524729465,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6129,14 +6129,14 @@
         "particle_type": "Particle_Edge",
         "id": 206,
         "position": [
-          32.03125,
-          1.84375
+          25.625,
+          1.474609375
         ],
         "rotation": 5.641531852468992,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6160,14 +6160,14 @@
         "particle_type": "Particle_Edge",
         "id": 207,
         "position": [
-          35.96875,
-          0.8125
+          28.78125,
+          0.64990234375
         ],
         "rotation": 0.07393153860708157,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6191,14 +6191,14 @@
         "particle_type": "Particle_Edge",
         "id": 208,
         "position": [
-          39.75,
-          2.537109375
+          31.796875,
+          2.029296875
         ],
         "rotation": 0.7546099468848704,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6222,14 +6222,14 @@
         "particle_type": "Particle_Edge",
         "id": 209,
         "position": [
-          41.5625,
-          6.25390625
+          33.25,
+          5.00390625
         ],
         "rotation": 1.4701949402025454,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6253,14 +6253,14 @@
         "particle_type": "Particle_Edge",
         "id": 210,
         "position": [
-          41.59375,
-          10.484375
+          33.28125,
+          8.390625
         ],
         "rotation": -4.638457441777608,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6284,14 +6284,14 @@
         "particle_type": "Particle_Edge",
         "id": 211,
         "position": [
-          61.25,
-          58.96875
+          49.0,
+          47.1875
         ],
         "rotation": -3.6671733490891727,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6315,14 +6315,14 @@
         "particle_type": "Particle_Edge",
         "id": 212,
         "position": [
-          57.375,
-          60.15625
+          45.90625,
+          48.125
         ],
         "rotation": -2.951588355771497,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6346,14 +6346,14 @@
         "particle_type": "Particle_Edge",
         "id": 213,
         "position": [
-          54.78125,
-          57.46875
+          43.8125,
+          45.96875
         ],
         "rotation": -1.8694842195350132,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6377,14 +6377,14 @@
         "particle_type": "Particle_Edge",
         "id": 214,
         "position": [
-          85.8125,
-          45.03125
+          68.625,
+          36.03125
         ],
         "rotation": -1.6046657155981325,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6408,14 +6408,14 @@
         "particle_type": "Particle_Edge",
         "id": 215,
         "position": [
-          86.0,
-          41.1875
+          68.8125,
+          32.9375
         ],
         "rotation": -1.2730531577192092,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6439,14 +6439,14 @@
         "particle_type": "Particle_Edge",
         "id": 216,
         "position": [
-          88.25,
-          38.21875
+          70.625,
+          30.578125
         ],
         "rotation": -0.5400148718815913,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6470,14 +6470,14 @@
         "particle_type": "Particle_Edge",
         "id": 217,
         "position": [
-          91.875,
-          36.125
+          73.5,
+          28.90625
         ],
         "rotation": -0.5574681644015346,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6501,14 +6501,14 @@
         "particle_type": "Particle_Edge",
         "id": 218,
         "position": [
-          84.5,
-          44.90625
+          67.625,
+          35.9375
         ],
         "rotation": -1.7406146946099457,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6532,14 +6532,14 @@
         "particle_type": "Particle_Edge",
         "id": 219,
         "position": [
-          82.4375,
-          41.5
+          65.9375,
+          33.1875
         ],
         "rotation": -2.700545783206827,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6563,14 +6563,14 @@
         "particle_type": "Particle_Edge",
         "id": 220,
         "position": [
-          32.96875,
-          61.375
+          26.375,
+          49.09375
         ],
         "rotation": -3.8931464574682764,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6594,14 +6594,14 @@
         "particle_type": "Particle_Edge",
         "id": 221,
         "position": [
-          29.25,
-          62.28125
+          23.40625,
+          49.8125
         ],
         "rotation": -2.9157620763514522,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6625,14 +6625,14 @@
         "particle_type": "Particle_Edge",
         "id": 222,
         "position": [
-          26.125,
-          59.8125
+          20.90625,
+          47.84375
         ],
         "rotation": -1.9383776952346277,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6656,14 +6656,14 @@
         "particle_type": "Particle_Edge",
         "id": 223,
         "position": [
-          32.40625,
-          58.21875
+          25.921875,
+          46.5625
         ],
         "rotation": 3.5928129615714113,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6687,14 +6687,14 @@
         "particle_type": "Particle_Edge",
         "id": 224,
         "position": [
-          32.34375,
-          55.3125
+          25.875,
+          44.25
         ],
         "rotation": 5.268329043485967,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6718,14 +6718,14 @@
         "particle_type": "Particle_Edge",
         "id": 225,
         "position": [
-          34.71875,
-          52.0625
+          27.78125,
+          41.65625
         ],
         "rotation": 5.390502091125571,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6749,14 +6749,14 @@
         "particle_type": "Particle_Edge",
         "id": 226,
         "position": [
-          21.765625,
-          50.03125
+          17.40625,
+          40.03125
         ],
         "rotation": 0.15419982931599563,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6780,14 +6780,14 @@
         "particle_type": "Particle_Edge",
         "id": 227,
         "position": [
-          25.765625,
-          50.75
+          20.609375,
+          40.59375
         ],
         "rotation": 0.15419982931599563,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6811,14 +6811,14 @@
         "particle_type": "Particle_Edge",
         "id": 228,
         "position": [
-          29.59375,
-          49.4375
+          23.671875,
+          39.5625
         ],
         "rotation": 5.564720510498417,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6842,14 +6842,14 @@
         "particle_type": "Particle_Edge",
         "id": 229,
         "position": [
-          54.6875,
-          41.65625
+          43.75,
+          33.3125
         ],
         "rotation": -3.667866203207005,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6873,14 +6873,14 @@
         "particle_type": "Particle_Edge",
         "id": 230,
         "position": [
-          65.75,
-          39.96875
+          52.59375,
+          31.96875
         ],
         "rotation": -2.605810449001464,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6904,14 +6904,14 @@
         "particle_type": "Particle_Edge",
         "id": 231,
         "position": [
-          64.25,
-          36.90625
+          51.40625,
+          29.53125
         ],
         "rotation": -1.4713464352051502,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6935,14 +6935,14 @@
         "particle_type": "Particle_Edge",
         "id": 232,
         "position": [
-          64.625,
-          32.90625
+          51.6875,
+          26.328125
         ],
         "rotation": -1.453893142685207,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6966,14 +6966,14 @@
         "particle_type": "Particle_Edge",
         "id": 233,
         "position": [
-          64.625,
-          29.03125
+          51.6875,
+          23.21875
         ],
         "rotation": -1.6284260678846398,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -6997,14 +6997,14 @@
         "particle_type": "Particle_Edge",
         "id": 234,
         "position": [
-          61.96875,
-          26.734375
+          49.5625,
+          21.390625
         ],
         "rotation": -2.815249959240784,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7028,14 +7028,14 @@
         "particle_type": "Particle_Edge",
         "id": 235,
         "position": [
-          65.125,
-          42.4375
+          52.09375,
+          33.9375
         ],
         "rotation": -3.4507154950430166,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7059,14 +7059,14 @@
         "particle_type": "Particle_Edge",
         "id": 236,
         "position": [
-          62.40625,
-          40.5
+          49.9375,
+          32.40625
         ],
         "rotation": -1.9322790458079504,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7090,14 +7090,14 @@
         "particle_type": "Particle_Edge",
         "id": 237,
         "position": [
-          59.4375,
-          39.8125
+          47.5625,
+          31.84375
         ],
         "rotation": -0.5185623516925433,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7121,14 +7121,14 @@
         "particle_type": "Particle_Edge",
         "id": 238,
         "position": [
-          67.75,
-          44.3125
+          54.1875,
+          35.4375
         ],
         "rotation": -5.245435491854378,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7152,14 +7152,14 @@
         "particle_type": "Particle_Edge",
         "id": 239,
         "position": [
-          68.25,
-          47.9375
+          54.59375,
+          38.34375
         ],
         "rotation": -4.19823794065778,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7183,14 +7183,14 @@
         "particle_type": "Particle_Edge",
         "id": 240,
         "position": [
-          70.0,
-          39.625
+          56.0,
+          31.703125
         ],
         "rotation": -1.0519314743242498,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7214,14 +7214,14 @@
         "particle_type": "Particle_Edge",
         "id": 241,
         "position": [
-          72.875,
-          36.71875
+          58.3125,
+          29.375
         ],
         "rotation": -0.3712530660464619,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7245,14 +7245,14 @@
         "particle_type": "Particle_Edge",
         "id": 242,
         "position": [
-          76.75,
-          35.21875
+          61.40625,
+          28.171875
         ],
         "rotation": -0.371253066046462,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7276,14 +7276,14 @@
         "particle_type": "Particle_Edge",
         "id": 243,
         "position": [
-          78.9375,
-          32.1875
+          63.15625,
+          25.75
         ],
         "rotation": -1.2788242770835128,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7307,14 +7307,14 @@
         "particle_type": "Particle_Edge",
         "id": 244,
         "position": [
-          42.8125,
-          25.65625
+          34.25,
+          20.53125
         ],
         "rotation": -4.742025497102878,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7338,14 +7338,14 @@
         "particle_type": "Particle_Edge",
         "id": 245,
         "position": [
-          44.125,
-          20.625
+          35.3125,
+          16.5
         ],
         "rotation": -1.0573018772466676,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7369,14 +7369,14 @@
         "particle_type": "Particle_Edge",
         "id": 246,
         "position": [
-          45.03125,
-          17.390625
+          36.03125,
+          13.9140625
         ],
         "rotation": -1.7903401630842861,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7400,14 +7400,14 @@
         "particle_type": "Particle_Edge",
         "id": 247,
         "position": [
-          42.71875,
-          14.8203125
+          34.1875,
+          11.859375
         ],
         "rotation": -2.8549910068008266,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7431,14 +7431,14 @@
         "particle_type": "Particle_Edge",
         "id": 248,
         "position": [
-          40.5625,
-          23.234375
+          32.4375,
+          18.59375
         ],
         "rotation": -3.327433015956855,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7462,14 +7462,14 @@
         "particle_type": "Particle_Edge",
         "id": 249,
         "position": [
-          37.59375,
-          25.234375
+          30.078125,
+          20.1875
         ],
         "rotation": -4.444443737233225,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7493,14 +7493,14 @@
         "particle_type": "Particle_Edge",
         "id": 250,
         "position": [
-          35.875,
-          29.015625
+          28.703125,
+          23.21875
         ],
         "rotation": -4.14773776439419,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7524,14 +7524,14 @@
         "particle_type": "Particle_Edge",
         "id": 251,
         "position": [
-          45.5,
-          22.46875
+          36.40625,
+          17.96875
         ],
         "rotation": -0.22205544039078084,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7555,14 +7555,14 @@
         "particle_type": "Particle_Edge",
         "id": 252,
         "position": [
-          48.0,
-          19.59375
+          38.40625,
+          15.671875
         ],
         "rotation": -1.3041595766272653,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7586,14 +7586,14 @@
         "particle_type": "Particle_Edge",
         "id": 253,
         "position": [
-          48.9375,
-          15.4609375
+          39.15625,
+          12.3671875
         ],
         "rotation": -1.4088793317469248,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7617,14 +7617,14 @@
         "particle_type": "Particle_Edge",
         "id": 254,
         "position": [
-          49.90625,
-          11.390625
+          39.9375,
+          9.109375
         ],
         "rotation": -1.3041595766272644,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7648,14 +7648,14 @@
         "particle_type": "Particle_Edge",
         "id": 255,
         "position": [
-          34.625,
-          28.765625
+          27.703125,
+          23.015625
         ],
         "rotation": -1.2925564487453896,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7679,14 +7679,14 @@
         "particle_type": "Particle_Edge",
         "id": 256,
         "position": [
-          36.0625,
-          25.015625
+          28.84375,
+          20.015625
         ],
         "rotation": -1.2925564487453893,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7710,14 +7710,14 @@
         "particle_type": "Particle_Edge",
         "id": 257,
         "position": [
-          33.84375,
-          23.171875
+          27.078125,
+          18.53125
         ],
         "rotation": -2.8982593605801723,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7741,14 +7741,14 @@
         "particle_type": "Particle_Edge",
         "id": 258,
         "position": [
-          35.25,
-          35.625
+          28.203125,
+          28.5
         ],
         "rotation": -4.754532359812072,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7772,14 +7772,14 @@
         "particle_type": "Particle_Edge",
         "id": 259,
         "position": [
-          35.65625,
-          39.9375
+          28.53125,
+          31.953125
         ],
         "rotation": -4.841798822411788,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7803,14 +7803,14 @@
         "particle_type": "Particle_Edge",
         "id": 260,
         "position": [
-          37.9375,
-          43.28125
+          30.34375,
+          34.625
         ],
         "rotation": 0.6036284438105204,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7834,14 +7834,14 @@
         "particle_type": "Particle_Edge",
         "id": 261,
         "position": [
-          32.0625,
-          30.703125
+          25.65625,
+          24.5625
         ],
         "rotation": -2.4200877159524303,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7865,14 +7865,14 @@
         "particle_type": "Particle_Edge",
         "id": 262,
         "position": [
-          29.265625,
-          28.734375
+          23.40625,
+          22.984375
         ],
         "rotation": -2.9785930765906157,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7896,14 +7896,14 @@
         "particle_type": "Particle_Edge",
         "id": 263,
         "position": [
-          26.5625,
-          29.140625
+          21.25,
+          23.3125
         ],
         "rotation": -3.3974720970692545,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7927,14 +7927,14 @@
         "particle_type": "Particle_Edge",
         "id": 264,
         "position": [
-          36.59375,
-          29.890625
+          29.28125,
+          23.90625
         ],
         "rotation": -0.9159899670676177,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7958,14 +7958,14 @@
         "particle_type": "Particle_Edge",
         "id": 265,
         "position": [
-          40.4375,
-          28.40625
+          32.34375,
+          22.71875
         ],
         "rotation": -0.06077863359039648,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -7989,14 +7989,14 @@
         "particle_type": "Particle_Edge",
         "id": 266,
         "position": [
-          32.8125,
-          33.84375
+          26.25,
+          27.078125
         ],
         "rotation": -4.342135588807178,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8020,14 +8020,14 @@
         "particle_type": "Particle_Edge",
         "id": 267,
         "position": [
-          30.421875,
-          36.3125
+          24.34375,
+          29.046875
         ],
         "rotation": -3.2076715750108638,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8051,14 +8051,14 @@
         "particle_type": "Particle_Edge",
         "id": 268,
         "position": [
-          26.234375,
-          36.53125
+          20.984375,
+          29.21875
         ],
         "rotation": -3.155311697451034,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8082,14 +8082,14 @@
         "particle_type": "Particle_Edge",
         "id": 269,
         "position": [
-          91.375,
-          29.609375
+          73.125,
+          23.6875
         ],
         "rotation": -2.984140272107234,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8113,14 +8113,14 @@
         "particle_type": "Particle_Edge",
         "id": 270,
         "position": [
-          87.375,
-          28.390625
+          69.875,
+          22.71875
         ],
         "rotation": -2.6874342992681983,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8144,14 +8144,14 @@
         "particle_type": "Particle_Edge",
         "id": 271,
         "position": [
-          83.125,
-          28.6875
+          66.5,
+          22.953125
         ],
         "rotation": -3.49028575518559,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8175,14 +8175,14 @@
         "particle_type": "Particle_Edge",
         "id": 272,
         "position": [
-          34.0,
-          49.0
+          27.203125,
+          39.1875
         ],
         "rotation": 0.31624822988642537,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8206,14 +8206,14 @@
         "particle_type": "Particle_Edge",
         "id": 273,
         "position": [
-          33.125,
-          45.59375
+          26.5,
+          36.46875
         ],
         "rotation": 5.68532868075467,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8237,14 +8237,14 @@
         "particle_type": "Particle_Edge",
         "id": 274,
         "position": [
-          33.28125,
-          42.3125
+          26.625,
+          33.84375
         ],
         "rotation": 4.341425156719036,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8268,14 +8268,14 @@
         "particle_type": "Particle_Edge",
         "id": 275,
         "position": [
-          33.0625,
-          38.28125
+          26.453125,
+          30.625
         ],
         "rotation": 4.795210762237562,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8299,14 +8299,14 @@
         "particle_type": "Particle_Edge",
         "id": 276,
         "position": [
-          33.9375,
-          34.40625
+          27.15625,
+          27.53125
         ],
         "rotation": 5.022103564996825,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8330,14 +8330,14 @@
         "particle_type": "Particle_Edge",
         "id": 277,
         "position": [
-          63.71875,
-          49.96875
+          50.96875,
+          39.96875
         ],
         "rotation": -2.8850424441518125,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8361,14 +8361,14 @@
         "particle_type": "Particle_Edge",
         "id": 278,
         "position": [
-          61.28125,
-          50.96875
+          49.03125,
+          40.78125
         ],
         "rotation": -4.752544743785745,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8392,14 +8392,14 @@
         "particle_type": "Particle_Edge",
         "id": 279,
         "position": [
-          62.5,
-          55.25
+          50.0,
+          44.1875
         ],
         "rotation": -5.171423764264384,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8423,14 +8423,14 @@
         "particle_type": "Particle_Edge",
         "id": 280,
         "position": [
-          65.9375,
-          47.71875
+          52.75,
+          38.1875
         ],
         "rotation": -1.6507344656013845,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8454,14 +8454,14 @@
         "particle_type": "Particle_Edge",
         "id": 281,
         "position": [
-          63.65625,
-          45.1875
+          50.9375,
+          36.15625
         ],
         "rotation": -3.046997867196848,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8485,14 +8485,14 @@
         "particle_type": "Particle_Edge",
         "id": 282,
         "position": [
-          59.46875,
-          45.53125
+          47.5625,
+          36.4375
         ],
         "rotation": -3.2215307923962806,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8516,14 +8516,14 @@
         "particle_type": "Particle_Edge",
         "id": 283,
         "position": [
-          57.53125,
-          43.15625
+          46.03125,
+          34.53125
         ],
         "rotation": -1.685641050641271,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8547,14 +8547,14 @@
         "particle_type": "Particle_Edge",
         "id": 284,
         "position": [
-          21.546875,
-          35.5
+          17.234375,
+          28.40625
         ],
         "rotation": -2.519892630888209,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8578,14 +8578,14 @@
         "particle_type": "Particle_Edge",
         "id": 285,
         "position": [
-          17.8125,
-          33.46875
+          14.25,
+          26.78125
         ],
         "rotation": -2.9736782364067347,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8609,14 +8609,14 @@
         "particle_type": "Particle_Edge",
         "id": 286,
         "position": [
-          26.421875,
-          38.65625
+          21.140625,
+          30.921875
         ],
         "rotation": -5.853691339527593,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8640,14 +8640,14 @@
         "particle_type": "Particle_Edge",
         "id": 287,
         "position": [
-          28.90625,
-          41.40625
+          23.125,
+          33.125
         ],
         "rotation": -4.823947080850939,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8671,14 +8671,14 @@
         "particle_type": "Particle_Edge",
         "id": 288,
         "position": [
-          29.390625,
-          45.09375
+          23.515625,
+          36.0625
         ],
         "rotation": 0.9181861582104052,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8702,14 +8702,14 @@
         "particle_type": "Particle_Edge",
         "id": 289,
         "position": [
-          79.6875,
-          43.25
+          63.75,
+          34.59375
         ],
         "rotation": -4.628331123070353,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8733,14 +8733,14 @@
         "particle_type": "Particle_Edge",
         "id": 290,
         "position": [
-          78.625,
-          46.78125
+          62.90625,
+          37.4375
         ],
         "rotation": -3.633493449433586,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8764,14 +8764,14 @@
         "particle_type": "Particle_Edge",
         "id": 291,
         "position": [
-          74.9375,
-          48.65625
+          59.9375,
+          38.9375
         ],
         "rotation": -3.5636802793538123,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8795,14 +8795,14 @@
         "particle_type": "Particle_Edge",
         "id": 292,
         "position": [
-          77.0625,
-          40.40625
+          61.65625,
+          32.3125
         ],
         "rotation": -3.037353824724396,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8826,14 +8826,14 @@
         "particle_type": "Particle_Edge",
         "id": 293,
         "position": [
-          73.875,
-          41.21875
+          59.09375,
+          32.96875
         ],
         "rotation": -4.1369112534808234,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8857,14 +8857,14 @@
         "particle_type": "Particle_Edge",
         "id": 294,
         "position": [
-          70.6875,
-          42.25
+          56.5625,
+          33.8125
         ],
         "rotation": -3.037353824724396,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8888,14 +8888,14 @@
         "particle_type": "Particle_Edge",
         "id": 295,
         "position": [
-          78.6875,
-          38.3125
+          62.9375,
+          30.65625
         ],
         "rotation": -2.0005625285412423,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8919,14 +8919,14 @@
         "particle_type": "Particle_Edge",
         "id": 296,
         "position": [
-          79.4375,
-          35.5
+          63.5625,
+          28.40625
         ],
         "rotation": -0.4646727867862319,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8950,14 +8950,14 @@
         "particle_type": "Particle_Edge",
         "id": 297,
         "position": [
-          81.0,
-          32.21875
+          64.8125,
+          25.78125
         ],
         "rotation": -1.8783894809016388,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -8981,14 +8981,14 @@
         "particle_type": "Particle_Edge",
         "id": 298,
         "position": [
-          52.8125,
-          57.65625
+          42.25,
+          46.125
         ],
         "rotation": -4.4600906283984285,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9012,14 +9012,14 @@
         "particle_type": "Particle_Edge",
         "id": 299,
         "position": [
-          49.65625,
-          59.5625
+          39.71875,
+          47.65625
         ],
         "rotation": -3.2209068594824544,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9043,14 +9043,14 @@
         "particle_type": "Particle_Edge",
         "id": 300,
         "position": [
-          45.53125,
-          59.875
+          36.4375,
+          47.90625
         ],
         "rotation": -3.2383601520023975,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9074,14 +9074,14 @@
         "particle_type": "Particle_Edge",
         "id": 301,
         "position": [
-          50.5625,
-          54.625
+          40.4375,
+          43.6875
         ],
         "rotation": -3.092316948267258,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9105,14 +9105,14 @@
         "particle_type": "Particle_Edge",
         "id": 302,
         "position": [
-          46.15625,
-          54.46875
+          36.9375,
+          43.5625
         ],
         "rotation": -3.0574103632273713,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9136,14 +9136,14 @@
         "particle_type": "Particle_Edge",
         "id": 303,
         "position": [
-          41.84375,
-          51.875
+          33.46875,
+          41.5
         ],
         "rotation": -2.0221595504838477,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9167,14 +9167,14 @@
         "particle_type": "Particle_Edge",
         "id": 304,
         "position": [
-          39.15625,
-          49.78125
+          31.328125,
+          39.8125
         ],
         "rotation": 2.8996689401401614,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9198,14 +9198,14 @@
         "particle_type": "Particle_Edge",
         "id": 305,
         "position": [
-          12.609375,
-          47.6875
+          10.0859375,
+          38.15625
         ],
         "rotation": -5.984686375593407,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9229,14 +9229,14 @@
         "particle_type": "Particle_Edge",
         "id": 306,
         "position": [
-          16.578125,
-          48.875
+          13.265625,
+          39.09375
         ],
         "rotation": 0.29849893158617924,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9260,14 +9260,14 @@
         "particle_type": "Particle_Edge",
         "id": 307,
         "position": [
-          12.6796875,
-          46.46875
+          10.140625,
+          37.1875
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9291,14 +9291,14 @@
         "particle_type": "Particle_Edge",
         "id": 308,
         "position": [
-          16.453125,
-          46.75
+          13.1640625,
+          37.40625
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9322,14 +9322,14 @@
         "particle_type": "Particle_Edge",
         "id": 309,
         "position": [
-          20.234375,
-          47.03125
+          16.1875,
+          37.625
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9353,14 +9353,14 @@
         "particle_type": "Particle_Edge",
         "id": 310,
         "position": [
-          24.015625,
-          47.3125
+          19.21875,
+          37.84375
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9384,14 +9384,14 @@
         "particle_type": "Particle_Edge",
         "id": 311,
         "position": [
-          28.171875,
-          47.5
+          22.53125,
+          38.0
         ],
         "rotation": -6.208513181743181,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9415,14 +9415,14 @@
         "particle_type": "Particle_Edge",
         "id": 312,
         "position": [
-          11.0,
-          44.09375
+          8.796875,
+          35.28125
         ],
         "rotation": -0.7460571582285551,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9446,14 +9446,14 @@
         "particle_type": "Particle_Edge",
         "id": 313,
         "position": [
-          14.03125,
-          41.25
+          11.2265625,
+          33.0
         ],
         "rotation": -0.7809637432684413,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9477,14 +9477,14 @@
         "particle_type": "Particle_Edge",
         "id": 314,
         "position": [
-          18.03125,
-          39.6875
+          14.421875,
+          31.75
         ],
         "rotation": -0.013018872390936687,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9508,14 +9508,14 @@
         "particle_type": "Particle_Edge",
         "id": 315,
         "position": [
-          21.546875,
-          38.1875
+          17.234375,
+          30.546875
         ],
         "rotation": -0.5191643554692923,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9539,14 +9539,14 @@
         "particle_type": "Particle_Edge",
         "id": 316,
         "position": [
-          48.5,
-          8.3984375
+          38.8125,
+          6.71875
         ],
         "rotation": -2.9984154776894507,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9570,14 +9570,14 @@
         "particle_type": "Particle_Edge",
         "id": 317,
         "position": [
-          46.28125,
-          10.765625
+          37.03125,
+          8.609375
         ],
         "rotation": -4.359772294245028,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9601,14 +9601,14 @@
         "particle_type": "Particle_Edge",
         "id": 318,
         "position": [
-          43.5,
-          13.3984375
+          34.8125,
+          10.71875
         ],
         "rotation": -3.172948402888884,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9632,14 +9632,14 @@
         "particle_type": "Particle_Edge",
         "id": 319,
         "position": [
-          33.875,
-          46.5
+          27.09375,
+          37.1875
         ],
         "rotation": 5.686910960871751,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,
@@ -9663,14 +9663,14 @@
         "particle_type": "Particle_Edge",
         "id": 320,
         "position": [
-          37.90625,
-          45.34375
+          30.328125,
+          36.28125
         ],
         "rotation": 6.262869614029879,
         "mass": 1.0,
         "bounding_box_size": [
-          4,
-          1
+          3.2,
+          0.8
         ],
         "velocity_decay": 0.99,
         "angular_velocity_decay": 0.9999,

@@ -4,6 +4,8 @@ There is an attraction force between the node and target position as well as bet
 
 A node can be connected to other nodes by edges.
 """
+from typing import Union, Tuple
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -174,6 +176,16 @@ class Particle_Node(Graph_Particle):
         override_position[1] - self.bounding_box_size[1] / 2 * scale,
         override_position[1] + self.bounding_box_size[1] / 2 * scale)
 
+  def set_size(self, size: Union[float, Tuple[float, float]]):
+    """
+    Set the size of the node. The size is used to calculate the bounding box size.
+
+    Args:
+        size (Union[float, Tuple[float, float]]): new size of particle. If a float is given, the particle will be a square with side length `size`.
+    """
+    self.size = size
+    self.bounding_box_size = np.array([size, size])
+    
 
   def set_image_file_path(self, image_file_path: str = None):
     """
@@ -185,8 +197,7 @@ class Particle_Node(Graph_Particle):
     """
     self.image_file_path = image_file_path
 
-
-  def get_attraction_force(self, other):
+  def get_attraction_force(self, other: Graph_Particle):
     """calculate attraction force to other particle
 
     Args:

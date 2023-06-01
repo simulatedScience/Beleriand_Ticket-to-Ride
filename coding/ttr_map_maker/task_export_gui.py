@@ -84,23 +84,23 @@ class Task_Export_GUI:
     self.card_frame_width: tk.DoubleVar = tk.DoubleVar(value=8.9)
     self.card_frame_height: tk.DoubleVar = tk.DoubleVar(value=6.4)
     self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=8.9)
-    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=5.8)
+    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=5.6)
     self.background_image_offset_x: tk.DoubleVar = tk.DoubleVar(value=0.15)
     self.background_image_offset_y: tk.DoubleVar = tk.DoubleVar(value=0.3)
 
-    self.label_scale: tk.DoubleVar = tk.DoubleVar(value=0.45)
+    self.label_scale: tk.DoubleVar = tk.DoubleVar(value=0.4)
     self.node_scale: tk.DoubleVar = tk.DoubleVar(value=0.25)
     self.node_image_filepath: tk.StringVar = tk.StringVar(value="")
     self.label_position_x: tk.DoubleVar = tk.DoubleVar(value=4.45)
-    self.label_position_y: tk.DoubleVar = tk.DoubleVar(value=5.8)
+    self.label_position_y: tk.DoubleVar = tk.DoubleVar(value=5.55)
 
     self.node_image_override: tk.BooleanVar = tk.BooleanVar(value=False)
     self.node_connector_lines: tk.BooleanVar = tk.BooleanVar(value=True)
     self.node_connector_line_width: tk.DoubleVar = tk.DoubleVar(value=10)
 
     self.points_image_directory: tk.StringVar = tk.StringVar(value=os.path.join(os.getcwd(), "assets", "points_images"))
-    self.points_font_size: tk.DoubleVar = tk.DoubleVar(value=1.5)
-    self.points_position_x: tk.DoubleVar = tk.DoubleVar(value=1.15)
+    self.points_font_size: tk.DoubleVar = tk.DoubleVar(value=1.15)
+    self.points_position_x: tk.DoubleVar = tk.DoubleVar(value=1.05)
     self.points_position_y: tk.DoubleVar = tk.DoubleVar(value=1.3)
 
     self.bonus_font_size: tk.DoubleVar = tk.DoubleVar(value=1.0)
@@ -936,6 +936,10 @@ class Task_Export_GUI:
     """
     Load the card frame image from the filepath set in `self.card_frame_filepath` unless it's empty.
     """
+    # delete the old image if it exists
+    if "frame" in self.plotted_images:
+        self.plotted_images["frame"].remove()
+        del self.plotted_images["frame"]
     filepath: str = get_tk_var(self.card_frame_filepath, default="")
     if filepath is "":
       if "frame" in self.plotted_images:
