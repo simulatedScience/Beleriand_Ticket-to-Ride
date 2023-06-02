@@ -109,6 +109,36 @@ class Particle_Node(Graph_Particle):
       self.erase()
       self.draw(ax)
 
+  def set_simulation_parameters(self,
+      mass: float = None,
+      target_attraction: float = None,
+      interaction_radius: float = None,
+      velocity_decay: float = None,
+      repulsion_strength: float = None,
+      ) -> None:
+    """
+    Set the simulation parameters of the edge particle.
+
+    Args:
+        mass (float, optional): mass of the particle
+        target_attraction (float, optional): attraction strength to target position
+        interaction_radius (float, optional): maxumum distance to interaction partners
+        velocity_decay (float, optional): velocity decay factor
+        repulsion_strength (float, optional): repulsion strength
+    """
+    if mass is not None:
+      self.mass = mass
+    if target_attraction is not None:
+      self.target_attraction = target_attraction
+    if self.target_position is None:
+      self.target_position = self.position
+    if interaction_radius is not None:
+      self.interaction_radius = interaction_radius
+    if velocity_decay is not None:
+      self.velocity_decay = velocity_decay
+    if repulsion_strength is not None:
+      self.repulsion_strength = repulsion_strength
+
   def draw(self,
       ax: plt.Axes,
       color: str = "#222222",

@@ -330,10 +330,44 @@ class TTR_Particle_Graph:
     These changes are applied to all particles in the particle graph.
 
     Args:
-        particle_parameters (dict): dictionary of particle parameters. See __init__ for allowed parameters and details.
+        particle_parameters (dict): dictionary of particle parameters. Possible keys (and ecommended values) are:
+          "velocity_decay": 0.99,
+          "edge-edge": 0.01 - edge-edge attraction strength
+          "edge-node": 0.01 - edge-node attraction strength
+          "node-label": 0.001 - node-label attraction strength
+          "node-target": 0.001 - node-target attraction strength
+          "node_mass": 1 - mass of node particles
+          "edge_mass": 1 - mass of edge particles
+          "label_mass": 0.2 - mass of label particles
+          "interaction_radius": 15 - maximum distance between particles to interact
+          "repulsion_strength": 2 - repulsion strength between particles
     """
     for particle in self.get_particle_list():
-      particle.set_parameters(particle_parameters)
+      if isinstance(particle, Particle_Node):
+        particle.set_simulation_parameters(
+            mass = particle_parameters["node_mass"],
+            target_attraction = particle_parameters["node-target"],
+            interaction_radius = particle_parameters["interaction_radius"],
+            velocity_decay = particle_parameters["velocity_decay"],
+            repulsion_strength = particle_parameters["repulsion_strength"])
+      elif isinstance(particle, Particle_Edge):
+        particle.set_simulation_parameters(
+            mass = particle_parameters["edge_mass"],
+            node_attraction = particle_parameters["edge-node"],
+            edge_attraction = particle_parameters["edge-edge"],
+            interaction_radius = particle_parameters["interaction_radius"],
+            velocity_decay = particle_parameters["velocity_decay"],
+            angular_velocity_decay = particle_parameters["velocity_decay"],
+            repulsion_strength = particle_parameters["repulsion_strength"])
+      elif isinstance(particle, Particle_Label):
+        particle.set_simulation_parameters(
+            mass = particle_parameters["label_mass"],
+            node_attraction = particle_parameters["node-label"],
+            interaction_radius = particle_parameters["interaction_radius"],
+            velocity_decay = particle_parameters["velocity_decay"],
+            angular_velocity_decay = particle_parameters["velocity_decay"],
+            repulsion_strength = particle_parameters["repulsion_strength"])
+        
 
   def update_tasks(self, new_tasks: dict[str, TTR_Task]) -> None:
     """

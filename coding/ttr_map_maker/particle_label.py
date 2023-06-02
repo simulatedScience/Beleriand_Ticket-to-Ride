@@ -24,11 +24,11 @@ class Particle_Label(Graph_Particle):
         rotation: float = 0,
         mass: float = 1,
         color: str = "#eeeeee",#"#222222",
+        node_attraction: float = 0.1,
         interaction_radius: float = 5,
         velocity_decay: float = 0.9999,
         angular_velocity_decay: float = 0.9999,
         repulsion_strength: float = 1,
-        node_attraction: float = 0.1,
         fontsize: int = 150,
         font_name: str = None,
         font_path: str = "beleriand_ttr\\MiddleEarth.ttf",
@@ -95,23 +95,38 @@ class Particle_Label(Graph_Particle):
     return self.node_attraction * (other.position - self.position), self.position
 
 
-  def set_parameters(self, label_parameters: dict):
+  def set_simulation_parameters(self,
+      mass: float = None,
+      node_attraction: float = None,
+      interaction_radius: float = None,
+      velocity_decay: float = None,
+      angular_velocity_decay: float = None,
+      repulsion_strength: float = None) -> None:
     """
-    set parameters for the label
+    set simulation parameters for the label particle
 
     Args:
-        label_parameters (dict): dictionary with parameters for the label
+        mass (float, optional): mass of the particle
+        node_attraction (float, optional): attraction strength to nodes
+        interaction_radius (float, optional): maximum distance to interaction partners
+        velocity_decay (float, optional): velocity decay factor
+        angular_velocity_decay (float, optional): angular velocity decay factor
+        repulsion_strength (float, optional): repulsion strength
     """
-    self.color = label_parameters.get("color", self.color)
-    # self.fontsize = label_parameters.get("fontsize", self.fontsize)
-    # self.font_name = label_parameters.get("font_name", self.font_name)
-    self.node_attraction = label_parameters.get("node-label", self.node_attraction)
-    self.mass = label_parameters.get("label_mass", self.mass)
-    self.velocity_decay = label_parameters.get("label_velocity_decay", self.velocity_decay)
-    self.interaction_radius = label_parameters.get("interaction_radius", self.interaction_radius)
-    self.repulsion_strength = label_parameters.get("repulsion_strength", self.repulsion_strength)
+    if mass is not None:
+      self.mass = mass
+    if node_attraction is not None:
+      self.node_attraction = node_attraction
+    if interaction_radius is not None:
+      self.interaction_radius = interaction_radius
+    if velocity_decay is not None:
+      self.velocity_decay = velocity_decay
+    if angular_velocity_decay is not None:
+      self.angular_velocity_decay = angular_velocity_decay
+    if repulsion_strength is not None:
+      self.repulsion_strength = repulsion_strength
 
-    # self.img_font = ImageFont.truetype(self.font_name, self.fontsize)
+
   def set_text(self, new_label: str, ax: plt.Axes):
     """
     set the text of the label

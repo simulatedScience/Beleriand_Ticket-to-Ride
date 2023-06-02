@@ -65,6 +65,28 @@ class Graph_Particle:
     self.neighbors = []
     self.interaction_radius = interaction_radius
 
+  # def set_simulation_parameters(self,
+  #     target_position: np.ndarray = None,
+  #     mass: float = None,
+  #     interaction_radius: float = None,
+  #     velocity_decay: float = None,
+  #     angular_velocity_decay: float = None,
+  #     repulsion_strength: float = None,) -> None:
+  #   """
+  #   set te parameters for the particle simulation
+  #   """
+  #   if target_position is not None:
+  #     self.target_position = np.array(target_position, dtype=np.float16)
+  #   if mass is not None:
+  #     self.mass = mass
+  #   if interaction_radius is not None:
+  #     self.interaction_radius = interaction_radius
+  #   if velocity_decay is not None:
+  #     self.velocity_decay = velocity_decay
+  #   if angular_velocity_decay is not None:
+  #     self.angular_velocity_decay = angular_velocity_decay
+  #   if repulsion_strength is not None:
+  #     self.repulsion_strength = repulsion_strength
 
   def set_connected_particles(self, particles: List["Graph_Particle"]):
     """

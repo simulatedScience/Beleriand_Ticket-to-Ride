@@ -143,6 +143,42 @@ class Particle_Edge(Graph_Particle):
       self.erase()
       self.draw(ax)
 
+  def set_simulation_parameters(self,
+      mass: float = None,
+      node_attraction: float = None,
+      edge_attraction: float = None,
+      interaction_radius: float = None,
+      velocity_decay: float = None,
+      angular_velocity_decay: float = None,
+      repulsion_strength: float = None,
+      ) -> None:
+    """
+    Set the simulation parameters of the edge particle.
+
+    Args:
+        mass (float, optional): mass of the particle
+        node_attraction (float, optional): attraction force between the edge and connected nodes
+        edge_attraction (float, optional): attraction force between the edge and connected edges
+        interaction_radius (float, optional): maxumum distance to interaction partners
+        velocity_decay (float, optional): velocity decay factor
+        angular_velocity_decay (float, optional): angular velocity decay factor
+        repulsion_strength (float, optional): repulsion strength
+    """
+    if mass is not None:
+      self.mass = mass
+    if node_attraction is not None:
+      self.node_attraction = node_attraction
+    if edge_attraction is not None:
+      self.edge_attraction = edge_attraction
+    if interaction_radius is not None:
+      self.interaction_radius = interaction_radius
+    if velocity_decay is not None:
+      self.velocity_decay = velocity_decay
+    if angular_velocity_decay is not None:
+      self.angular_velocity_decay = angular_velocity_decay
+    if repulsion_strength is not None:
+      self.repulsion_strength = repulsion_strength
+
   def get_attraction_forces(self, other_particle) -> Tuple[np.ndarray, np.ndarray]:
     """get attraction force between this particle and the other particle
 

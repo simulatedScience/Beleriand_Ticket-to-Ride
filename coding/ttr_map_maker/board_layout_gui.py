@@ -47,6 +47,7 @@ import pokemon_colors as pkmn_colors
 from graph_editor_gui import Graph_Editor_GUI
 from task_editor_gui import Task_Editor_GUI
 from task_export_gui import Task_Export_GUI
+from graph_optimizer_gui import Graph_Optimzer_GUI
 
 class Board_Layout_GUI:
   def __init__(self,
@@ -103,7 +104,6 @@ class Board_Layout_GUI:
     self.init_frames()
     # print window height when button 'i' is pressed
     # self.master.bind("i", lambda event: print(self.master.winfo_height()))
-    # self.init_animation() # TODO: implement animation
 
 
   def add_frame_style(self, frame: tk.Frame):
@@ -365,20 +365,6 @@ class Board_Layout_GUI:
     ]
     self.edge_colors = [tk.StringVar(value=color, name=f"edge_color_{i}") for i, color in enumerate(base_colors)]
 
-    # variables for particle simulation
-    self.time_step = tk.DoubleVar(value=0.1, name="time_step")
-    self.iterations_per_frame = tk.IntVar(value=10, name="iterations_per_frame")
-    self.velocity_decay = tk.DoubleVar(value=0.99, name="velocity_decay")
-    self.edge_edge_force = tk.DoubleVar(value=0.1, name="edge_edge_force")
-    self.edge_node_force = tk.DoubleVar(value=0.1, name="edge_node_force")
-    self.node_label_force = tk.DoubleVar(value=0.1, name="node_label_force")
-    self.node_target_force = tk.DoubleVar(value=0.1, name="node_target_force")
-    self.node_mass = tk.DoubleVar(value=1.0, name="node_mass")
-    self.label_mass = tk.DoubleVar(value=1.0, name="label_mass")
-    self.edge_mass = tk.DoubleVar(value=1.0, name="edge_mass")
-    self.interaction_radius = tk.DoubleVar(value=15.0, name="interaction_radius")
-    self.repulsion_strength = tk.DoubleVar(value=2.0, name="repulsion_strength")
-
     # variables for toggles
     self.show_nodes = tk.BooleanVar(value=True, name="show_nodes")
     self.show_labels = tk.BooleanVar(value=True, name="show_labels")
@@ -386,7 +372,6 @@ class Board_Layout_GUI:
     self.show_background_image = tk.BooleanVar(value=True, name="show_background")
     self.show_plot_frame = tk.BooleanVar(value=False, name="show_plot_frame")
     self.show_edge_attractors = tk.BooleanVar(value=False, name="show_edge_attractors")
-    # self.simulation_paused = tk.BooleanVar(value=True, name="simulation_paused") # unused # TODO: implement
     self.edge_style = tk.StringVar(value="Flat colors", name="edge_style")
 
     # variables for different modes of operation
@@ -435,17 +420,6 @@ class Board_Layout_GUI:
         pady=(0, self.grid_pad_y))
     row_index += 1
     self.draw_file_widgets(file_frame)
-
-    # frame for particle simulation parameters
-    particle_frame = tk.Frame(self.control_frame)
-    self.add_frame_style(particle_frame)
-    particle_frame.grid(
-        row=row_index,
-        column=0,
-        sticky="ew",
-        pady=(0, self.grid_pad_y))
-    row_index += 1
-    self.draw_particle_widgets(particle_frame)
 
     # frame for toggles
     toggle_frame = tk.Frame(self.control_frame)
@@ -537,7 +511,7 @@ class Board_Layout_GUI:
     row_index: int = 0
     for column_index in range(3):
       mode_frame.columnconfigure(column_index, weight=1)
-    def add_radiobutton(row_index: int, column_index: int, text: str, var: tk.StringVar, command: Callable = None):
+    def add_radiobutton(row_index: int, column_index: int, text: str, var: tk.StringVar, command: Callable = None) -> tk.Radiobutton:
       radiobutton = tk.Radiobutton(mode_frame,
           background=self.color_config["button_bg_color"],
           foreground=self.color_config["button_fg_color"],
@@ -560,13 +534,14 @@ class Board_Layout_GUI:
           sticky="new",
           padx=0 if column_index == 0 else (self.grid_pad_x, 0),
           pady=(0, self.grid_pad_y))
+      return radiobutton
     column_index: int = 0
     mode_row_index: int = 0
     graph_edit_mode_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Graph view", self.gui_mode, self.update_gui_mode)
     column_index += 1
     graph_edit_mode_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Graph Editor", self.gui_mode, self.update_gui_mode)
     column_index += 1
-    particle_sim_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Particle simulation", self.gui_mode, self.update_gui_mode)
+    particle_sim_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Graph optimizer", self.gui_mode, self.update_gui_mode)
     column_index: int = 0
     mode_row_index += 1
     task_edit_mode_radiobutton: tk.Radiobutton = add_radiobutton(mode_row_index, column_index, "Task Editor", self.gui_mode, self.update_gui_mode)
@@ -714,15 +689,15 @@ class Board_Layout_GUI:
     Load the files specified in the file inputs.
     """
     # print info about self.master position
-    print("self.master.winfo_rootx():", self.master.winfo_rootx())
-    print("self.master.winfo_rooty():", self.master.winfo_rooty())
-    print("self.master.winfo_x():", self.master.winfo_x())
-    print("self.master.winfo_y():", self.master.winfo_y())
-    print("self.master.winfo_width():", self.master.winfo_width())
-    print("self.master.winfo_height():", self.master.winfo_height())
-    print("self.master.winfo_screenwidth():", self.master.winfo_screenwidth())
-    print("self.master.winfo_screenheight():", self.master.winfo_screenheight())
-    print("self.master.winfo_geometry():", self.master.winfo_geometry())
+    # print("self.master.winfo_rootx():", self.master.winfo_rootx())
+    # print("self.master.winfo_rooty():", self.master.winfo_rooty())
+    # print("self.master.winfo_x():", self.master.winfo_x())
+    # print("self.master.winfo_y():", self.master.winfo_y())
+    # print("self.master.winfo_width():", self.master.winfo_width())
+    # print("self.master.winfo_height():", self.master.winfo_height())
+    # print("self.master.winfo_screenwidth():", self.master.winfo_screenwidth())
+    # print("self.master.winfo_screenheight():", self.master.winfo_screenheight())
+    # print("self.master.winfo_geometry():", self.master.winfo_geometry())
     # reset graph data and clear graph
     self.reset_graph()
     # try loading particle graph
@@ -823,124 +798,6 @@ class Board_Layout_GUI:
     # if self.gui_mode.get() == "Graph editor":
     #   self.graph_edit_mode_enabled.set(False)
     #   self.toggle_graph_edit_mode() # disable graph edit mode
-
-  def draw_particle_widgets(self, particle_frame: tk.Frame) -> None:
-    """
-    Draw widgets for particle simulation parameters. Place them in the given frame using grid layout.
-
-    Inputs for:
-    - time step size
-    - number of time steps per frame
-    - velocity decay factor
-    - edge-edge attraction factor
-    - edge-node attraction factor
-    - node-label attraction factor
-    - node-target attraction factor
-    - node mass
-    - edge mass
-    - label mass
-
-    Args:
-        particle_frame (tk.Frame): frame to place widgets in
-    """
-    particle_parameter_widgets: list = list()
-    def add_label_and_entry(row_index: int, text: str, var: tk.StringVar):
-      """
-      Add a label and entry widget to the given frame.
-
-      Args:
-          row_index (int): row index to place the widgets in
-          text (str): text to display in the label
-          var (tk.StringVar): variable to store the entry value in
-      """
-      label = tk.Label(particle_frame, text=text)
-      self.add_label_style(label)
-      label.grid(
-          row=row_index,
-          column=0,
-          sticky="ne",
-          padx=(self.grid_pad_x, self.grid_pad_x),
-          pady=(0, self.grid_pad_y))
-      particle_parameter_widgets.append(label)
-      entry = tk.Entry(particle_frame, textvariable=var, width=4)
-      self.add_entry_style(entry)
-      entry.grid(
-          row=row_index,
-          column=1,
-          sticky="nw",
-          padx=(0, self.grid_pad_x),
-          pady=(0, self.grid_pad_y))
-      particle_parameter_widgets.append(entry)
-    
-    # configure grid layout
-    particle_frame.columnconfigure(0, weight=1)
-    particle_frame.columnconfigure(1, weight=1)
-    row_index: int = 0
-    # add submenu button for particle simulation parameters
-    particle_parameter_toggle_button, toggle_particle_parameter_submenu = self.create_submenu_button(
-        master=particle_frame,
-        text="Particle Simulation Parameters",
-        widget_list=particle_parameter_widgets,
-        row_index=row_index,
-        column_index=0,
-        columnspan=2)
-    row_index += 1
-    add_label_and_entry(row_index, "Time Step Size", self.time_step)
-    row_index += 1
-    add_label_and_entry(row_index, "Time Steps Per Frame", self.iterations_per_frame)
-    row_index += 1
-    add_label_and_entry(row_index, "Velocity Decay", self.velocity_decay)
-    row_index += 1
-    add_label_and_entry(row_index, "Edge-Edge Attraction", self.edge_edge_force)
-    row_index += 1
-    add_label_and_entry(row_index, "Edge-Node Attraction", self.edge_node_force)
-    row_index += 1
-    add_label_and_entry(row_index, "Node-Label Attraction", self.node_label_force)
-    row_index += 1
-    add_label_and_entry(row_index, "Node-Target Attraction", self.node_target_force)
-    row_index += 1
-    add_label_and_entry(row_index, "Node Mass", self.node_mass)
-    row_index += 1
-    add_label_and_entry(row_index, "Edge Mass", self.edge_mass)
-    row_index += 1
-    add_label_and_entry(row_index, "Label Mass", self.label_mass)
-    row_index += 1
-    add_label_and_entry(row_index, "Interaction Radius", self.interaction_radius)
-    row_index += 1
-    add_label_and_entry(row_index, "Repulsion Strength", self.repulsion_strength)
-    row_index += 1
-    # add button to load parameters into the particle simulation
-    load_button = tk.Button(particle_frame, text="Load", command=self.load_particle_parameters)
-    self.add_button_style(load_button)
-    load_button.grid(
-        row=row_index,
-        column=0,
-        columnspan=2,
-        sticky="nsew",
-        padx=(self.grid_pad_x, self.grid_pad_x),
-        pady=(self.grid_pad_y, self.grid_pad_y))
-    particle_parameter_widgets.append(load_button)
-    
-    # hide particle parameter widgets
-    # schedule the hiding of the widgets to be executed after the mainloop has started
-    particle_frame.after(1000, toggle_particle_parameter_submenu)
-
-  def load_particle_parameters(self):
-    """
-    Load the parameters for the particle simulation from the tkinter variables.
-    """
-    particle_parameters = {
-      "velocity_decay": float(self.velocity_decay.get()),
-      "edge-edge": float(self.edge_edge_force.get()),
-      "edge-node": float(self.edge_node_force.get()),
-      "node-label": float(self.node_label_force.get()),
-      "node-target": float(self.node_target_force.get()),
-      "node_mass": float(self.node_mass.get()),
-      "edge_mass": float(self.edge_mass.get()),
-      "label_mass": float(self.label_mass.get()),
-      "interaction_radius": float(self.interaction_radius.get()),
-      "repulsion_strength": float(self.repulsion_strength.get())}
-    self.particle_graph.set_parameters(particle_parameters)	
 
 
   def draw_toggle_widgets(self, toggle_frame: tk.Frame):
@@ -1278,12 +1135,6 @@ class Board_Layout_GUI:
     add_control_button(row_index, column_index, "Scale img", self.scale_background_image)
     row_index += 1
 
-  def play_pause_simulation(self):
-    """
-    Start/stop the particle simulation.
-    """
-    raise NotImplementedError # TODO
-
   def save_graph(self):
     """
     Save the current canvas.
@@ -1590,9 +1441,11 @@ class Board_Layout_GUI:
         self.toggle_task_edit_mode()
       elif var.get().lower() == "task export":
         self.toggle_task_export_mode()
+      elif var.get().lower() == "graph optimizer":
+        self.toggle_simulation_mode()
     self.last_gui_mode.set(self.gui_mode.get())
-    print(f"uodated last gui mode: {self.last_gui_mode.get()}")
-    print(f"uodated new gui mode: {self.gui_mode.get()}")
+    print(f"updated last gui mode: {self.last_gui_mode.get()}")
+    print(f"updated new gui mode: {self.gui_mode.get()}")
     print("=" * 35)
 
   def toggle_graph_analysis(self):
@@ -1764,17 +1617,49 @@ class Board_Layout_GUI:
         background_image_mpl=self.background_image_mpl,
         )
 
-
-  def init_animation(self):
+  def toggle_simulation_mode(self):
     """
-    Initialize the animation.
+    Toggle simulation mode.
     """
-    # pass
-    # self.animation = anim.FuncAnimation(
-    #     self.fig,
-    #     self.update_canvas,
-    #     interval=10000,
-    #     blit=False)
+    if not self.gui_mode.get().lower() == "graph optimizer":
+      print("disable graph optimizer mode")
+      self.graph_optimizer_frame.destroy()
+      # show background image
+      self.show_background_image.set(True)
+      self.toggle_background_image_visibility()
+      return
+    # hide background image
+    self.show_background_image.set(False)
+    self.toggle_background_image_visibility()
+    # enable task export mode
+    self.graph_optimizer_frame: tk.Frame = tk.Frame(self.control_frame)
+    self.add_frame_style(self.graph_optimizer_frame)
+    self.graph_optimizer_frame.grid(
+        row=self.control_frame.grid_size()[1],
+        column=0,
+        sticky="nsew",
+        padx=0,
+        pady=(0, self.grid_pad_y))
+    self.graph_optimizer_frame.columnconfigure(0, weight=1)
+    self.task_export_ui: Graph_Optimzer_GUI = Graph_Optimzer_GUI(
+        self.master,
+        self.color_config,
+        grid_padding=(self.grid_pad_x, self.grid_pad_y),
+        tk_config_methods={
+          "add_frame_style": self.add_frame_style,
+          "add_label_style": self.add_label_style,
+          "add_button_style": self.add_button_style,
+          "add_entry_style": self.add_entry_style,
+          "add_checkbutton_style": self.add_checkbutton_style,
+          "add_radiobutton_style": self.add_radiobutton_style,
+          "add_browse_button": self.add_browse_button,
+        },
+        particle_graph=self.particle_graph,
+        graph_optimizer_frame=self.graph_optimizer_frame,
+        ax=self.ax,
+        fig=self.fig,
+        canvas=self.canvas,
+        )
 
 
   def init_particle_graph(self) -> None:

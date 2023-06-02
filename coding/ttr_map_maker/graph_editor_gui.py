@@ -26,7 +26,7 @@ class Graph_Editor_GUI:
   def __init__(self,
       master: tk.Tk,
       color_config: dict[str, str],
-      grid_padding: Tuple[float, float],
+      grid_padding: Tuple[int, int],
       tk_config_methods: dict[str, Callable],
       movability_tk_variables: List[tk.BooleanVar],
       particle_graph: TTR_Particle_Graph,

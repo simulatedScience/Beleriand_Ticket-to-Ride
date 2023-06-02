@@ -1,17 +1,25 @@
 {
   "particle_graph": {
     "n_nodes": 3,
+    "n_connections": 3,
+    "n_tasks": 2,
     "n_edges": 7,
     "n_labels": 3,
+    "graph_extent": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
     "particles": [
       {
         "particle_type": "Particle_Node",
-        "id": 11,
+        "id": 1,
         "position": [
-          0.0,
-          6.0
+          -0.04259597222554413,
+          5.988908999356687
         ],
-        "rotation": 0,
+        "rotation": 0.11791571670515678,
         "mass": 1,
         "bounding_box_size": [
           1,
@@ -28,16 +36,17 @@
         ],
         "color": "#222222",
         "target_attraction": 0.001,
-        "location_name": "Menegroth"
+        "location_name": "Menegroth",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
-        "id": 12,
+        "id": 2,
         "position": [
-          -6.0,
-          -2.0
+          -5.9939882151766595,
+          -1.9952654980082583
         ],
-        "rotation": 0,
+        "rotation": 0.06987042813559964,
         "mass": 1,
         "bounding_box_size": [
           1,
@@ -54,16 +63,17 @@
         ],
         "color": "#222222",
         "target_attraction": 0.001,
-        "location_name": "Nargothrond"
+        "location_name": "Nargothrond",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Node",
-        "id": 13,
+        "id": 3,
         "position": [
-          4.0,
-          -5.0
+          3.9483180285664052,
+          -5.009110411857767
         ],
-        "rotation": 0,
+        "rotation": 0.16975115557854423,
         "mass": 1,
         "bounding_box_size": [
           1,
@@ -80,16 +90,17 @@
         ],
         "color": "#222222",
         "target_attraction": 0.001,
-        "location_name": "Hithlum"
+        "location_name": "Hithlum",
+        "image_file_path": null
       },
       {
         "particle_type": "Particle_Label",
-        "id": 14,
+        "id": 4,
         "position": [
-          3.177480916030534,
-          6.0
+          -1.0324926668074177,
+          7.021615115682271
         ],
-        "rotation": 0,
+        "rotation": 5.62494151404334,
         "mass": 0.2,
         "bounding_box_size": [
           4.354961832061068,
@@ -99,25 +110,25 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          11
+          1
         ],
         "repulsion_strength": 2,
         "target_position": null,
         "label": "Menegroth",
-        "color": "#222222",
+        "color": "#eeeeee",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.001,
         "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
-        "id": 15,
+        "id": 5,
         "position": [
-          -2.435114503816794,
-          -2.0
+          -5.4973176604417375,
+          -3.470164075332031
         ],
-        "rotation": 0,
+        "rotation": 5.199390083340126,
         "mass": 0.2,
         "bounding_box_size": [
           5.129770992366412,
@@ -127,25 +138,25 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          12
+          2
         ],
         "repulsion_strength": 2,
         "target_position": null,
         "label": "Nargothrond",
-        "color": "#222222",
+        "color": "#eeeeee",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.001,
         "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Label",
-        "id": 16,
+        "id": 6,
         "position": [
-          6.633587786259541,
-          -5.0
+          4.331986080649882,
+          -5.58461441795929
         ],
-        "rotation": 0,
+        "rotation": 4.62291363467188,
         "mass": 0.2,
         "bounding_box_size": [
           3.2671755725190836,
@@ -155,25 +166,25 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          13
+          3
         ],
         "repulsion_strength": 2,
         "target_position": null,
         "label": "Hithlum",
-        "color": "#222222",
+        "color": "#eeeeee",
         "fontsize": 150,
-        "font_name": null,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
         "node_attraction": 0.001,
         "height_scale_factor": 0.003816793893129771
       },
       {
         "particle_type": "Particle_Edge",
-        "id": 17,
+        "id": 0,
         "position": [
-          -2.0,
-          3.3333333333333335
+          -1.7985821654405125,
+          3.6392230040341103
         ],
-        "rotation": -2.214297435588181,
+        "rotation": -2.127566246313428,
         "mass": 1,
         "bounding_box_size": [
           4,
@@ -183,8 +194,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          11,
-          18
+          1,
+          1
         ],
         "repulsion_strength": 2,
         "target_position": null,
@@ -194,16 +205,17 @@
         "border_color": "#555555",
         "location_1_name": "Menegroth",
         "location_2_name": "Nargothrond",
-        "path_index": 0
+        "path_index": 0,
+        "connection_index": 0
       },
       {
         "particle_type": "Particle_Edge",
-        "id": 18,
+        "id": 1,
         "position": [
-          -4.0,
-          0.666666666666667
+          -4.211050737030596,
+          0.43766531601435826
         ],
-        "rotation": -2.214297435588181,
+        "rotation": -2.0781583656841365,
         "mass": 1,
         "bounding_box_size": [
           4,
@@ -213,8 +225,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          17,
-          12
+          0,
+          2
         ],
         "repulsion_strength": 2,
         "target_position": null,
@@ -224,16 +236,17 @@
         "border_color": "#555555",
         "location_1_name": "Menegroth",
         "location_2_name": "Nargothrond",
-        "path_index": 1
+        "path_index": 1,
+        "connection_index": 0
       },
       {
         "particle_type": "Particle_Edge",
-        "id": 19,
+        "id": 2,
         "position": [
-          1.0,
-          3.25
+          0.9729875512183408,
+          3.536192456532358
         ],
-        "rotation": -1.2220253232109897,
+        "rotation": -1.0123796437654886,
         "mass": 1,
         "bounding_box_size": [
           4,
@@ -243,8 +256,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          11,
-          20
+          1,
+          3
         ],
         "repulsion_strength": 2,
         "target_position": null,
@@ -254,16 +267,17 @@
         "border_color": "#555555",
         "location_1_name": "Menegroth",
         "location_2_name": "Hithlum",
-        "path_index": 0
+        "path_index": 0,
+        "connection_index": 0
       },
       {
         "particle_type": "Particle_Edge",
-        "id": 20,
+        "id": 3,
         "position": [
-          2.0,
-          0.5
+          2.0534647597088154,
+          0.40684112294105823
         ],
-        "rotation": -1.2220253232109897,
+        "rotation": -0.8559567774257691,
         "mass": 1,
         "bounding_box_size": [
           4,
@@ -273,8 +287,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          19,
-          21
+          2,
+          4
         ],
         "repulsion_strength": 2,
         "target_position": null,
@@ -284,16 +298,17 @@
         "border_color": "#555555",
         "location_1_name": "Menegroth",
         "location_2_name": "Hithlum",
-        "path_index": 1
+        "path_index": 1,
+        "connection_index": 0
       },
       {
         "particle_type": "Particle_Edge",
-        "id": 21,
+        "id": 4,
         "position": [
-          3.0,
-          -2.25
+          2.9105489716901602,
+          -2.5450024522823815
         ],
-        "rotation": -1.2220253232109897,
+        "rotation": -1.0128935296611947,
         "mass": 1,
         "bounding_box_size": [
           4,
@@ -303,8 +318,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          20,
-          13
+          3,
+          3
         ],
         "repulsion_strength": 2,
         "target_position": null,
@@ -314,16 +329,17 @@
         "border_color": "#555555",
         "location_1_name": "Menegroth",
         "location_2_name": "Hithlum",
-        "path_index": 2
+        "path_index": 2,
+        "connection_index": 0
       },
       {
         "particle_type": "Particle_Edge",
-        "id": 22,
+        "id": 5,
         "position": [
-          -2.6666666666666665,
-          -3.0
+          -2.8603786501928643,
+          -2.9476078154537464
         ],
-        "rotation": -0.2914567944778671,
+        "rotation": -0.30886933164050373,
         "mass": 1,
         "bounding_box_size": [
           4,
@@ -333,8 +349,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          12,
-          23
+          2,
+          6
         ],
         "repulsion_strength": 2,
         "target_position": null,
@@ -344,16 +360,17 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Hithlum",
-        "path_index": 0
+        "path_index": 0,
+        "connection_index": 0
       },
       {
         "particle_type": "Particle_Edge",
-        "id": 23,
+        "id": 6,
         "position": [
-          0.666666666666667,
-          -4.0
+          0.9984035343917481,
+          -4.101061063202585
         ],
-        "rotation": -0.2914567944778671,
+        "rotation": -0.28796271870449286,
         "mass": 1,
         "bounding_box_size": [
           4,
@@ -363,8 +380,8 @@
         "angular_velocity_decay": 0.9999,
         "interaction_radius": 15,
         "connected_particles": [
-          22,
-          13
+          5,
+          3
         ],
         "repulsion_strength": 2,
         "target_position": null,
@@ -374,7 +391,8 @@
         "border_color": "#555555",
         "location_1_name": "Nargothrond",
         "location_2_name": "Hithlum",
-        "path_index": 1
+        "path_index": 1,
+        "connection_index": 0
       }
     ],
     "particle_parameters": {
@@ -390,14 +408,28 @@
       "repulsion_strength": 2
     },
     "tasks": [
-      [
-        "Menegroth",
-        "Nargothrond"
-      ],
-      [
-        "Menegroth",
-        "Hithlum"
-      ]
+      {
+        "name": "Menegroth - Nargothrond",
+        "node_names": [
+          "Menegroth",
+          "Nargothrond"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Menegroth - Hithlum",
+        "node_names": [
+          "Menegroth",
+          "Hithlum"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      }
     ]
   }
 }
