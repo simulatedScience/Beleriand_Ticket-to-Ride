@@ -24,9 +24,9 @@ Included files are mostly directly related to the map creator program. Remaining
     - [x] frame design
     - [x] backside design
   - [x] Sturdy paper/ card stock
-  - [ ] decide card size
-- [ ] Train cards
-  - [ ] Colored cards (8 colors, 12 cards each)
+  - [x] decide card size (large: 10cm)
+- [x] Train cards
+  - [x] Colored cards (8 colors, 12 cards each)
   - [x] wildcards (14 cards)
 - [x] Train pieces
   - [x] Sufficient colors
