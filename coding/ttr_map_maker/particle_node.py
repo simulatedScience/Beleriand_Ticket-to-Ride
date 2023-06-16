@@ -227,14 +227,16 @@ class Particle_Node(Graph_Particle):
     """
     self.image_file_path = image_file_path
 
-  def get_attraction_force(self, other: Graph_Particle):
+  def get_attraction_force(self, other: Graph_Particle) -> Tuple[np.ndarray, np.ndarray]:
     """calculate attraction force to other particle
+    Nodes are not attracted to any other particles
 
     Args:
         other (Graph_Particle): other particle
 
     Returns:
-        np.ndarray: attraction force
+        np.ndarray: attraction force vector
+        np.ndarray: force anchor point
     """
     return np.zeros(2), self.position
 

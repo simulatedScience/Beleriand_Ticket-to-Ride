@@ -68,14 +68,15 @@ class Board_Layout_GUI:
           "entry_bg_color":         "#3c3c3c", # dark grey
           "entry_fg_color":         "#f5f5f5", # white
           "entry_select_color":     "#4477aa", # blue
-          "plot_bg_color":          "#cccccc", # darker grey
+          "plot_bg_color":          "#bbbbbb", # darker light grey
           "plot_fg_color":          "#000000", # black
           "plot_grid_color":        "#dddddd", # light grey
           "task_base_color":        "#cc00cc", # pink
+          "node_color":             "#252526", # darker grey
           "edge_border_color":      "#888888", # grey
           "edge_neutral_color":     "#aaaaaa", # grey
           "label_text_color":       "#eeeeee", # white
-          "label_outline_color":    "#222222", # black
+          "label_outline_color":    "#252526", # darker grey
           }):
     self.color_config = color_config
     # create master window in fullscreen
@@ -897,8 +898,19 @@ class Board_Layout_GUI:
     add_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.toggle_mpl_frame_visibility)
     row_index += 1
     add_checkbutton(row_index, column_index, "Show edge attractos", self.show_edge_attractors, command=self.toggle_edge_attractors_visibility)
+    row_index += 1
+    # add button to repair connection ids
+    repair_connection_ids_button = tk.Button(toggle_frame, text="Repair Connection IDs", command=self.repair_connection_ids)
+    self.add_button_style(repair_connection_ids_button)
+    repair_connection_ids_button.grid(
+        row=row_index,
+        column=column_index,
+        sticky="ew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    checkbox_toggle_widgets.append(repair_connection_ids_button)
 
-    row_index = 1 # reset for second column
+    row_index = 1 # reset row for second column
     column_index = 1
     edge_style_label = tk.Label(toggle_frame, text="Edge Style")
     self.add_label_style(edge_style_label)
@@ -922,6 +934,9 @@ class Board_Layout_GUI:
     row_index += 1
     add_radiobutton(row_index, column_index, "Edge importance", self.edge_style, command=self.update_edge_style)
     row_index += 1
+
+  def repair_connection_ids(self) -> None:
+    self.particle_graph.repair_connections()
 
   def toggle_node_visibility(self, *args) -> None:
     """
@@ -1031,8 +1046,10 @@ class Board_Layout_GUI:
     if self.particle_graph is None:
       return
     if self.show_edge_attractors.get():
+      print("draw edge attractors")
       self.particle_graph.draw_edge_attractors(self.ax)
     else:
+      print("hide edge attractors")
       self.particle_graph.erase_edge_attractors()
     self.canvas.draw_idle()
 
@@ -1684,7 +1701,7 @@ class Board_Layout_GUI:
           paths = self.graph_data["paths"],
           tasks = self.graph_data["tasks"],
           node_positions = node_positions,
-          particle_parameters = self.get_particle_parameters(),
+          # particle_parameters = self.get_particle_parameters(),
           color_config = self.color_config,
       )
     self.draw_graph()
@@ -1791,6 +1808,7 @@ if __name__ == "__main__":
       "plot_fg_color":          "#000000", # black
       "plot_grid_color":        "#dddddd", # black
       "task_base_color":        "#cc00cc", # pink
+      "node_color":             "#252526", # darker grey
       "edge_border_color":      "#888888", # grey
       "edge_neutral_color":     "#aaaaaa", # grey
       "label_text_color":       "#eeeeee", # white
@@ -1817,6 +1835,7 @@ if __name__ == "__main__":
       "plot_fg_color":          "#000000", # black
       "plot_grid_color":        "#dddddd", # black
       "task_base_color":        "#cc00cc", # pink
+      "node_color":             "#252526", # darker grey
       "edge_border_color":      "#888888", # grey
       "edge_neutral_color":     "#aaaaaa", # grey
       "label_text_color":       "#eeeeee", # white

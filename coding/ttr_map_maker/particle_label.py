@@ -89,9 +89,11 @@ class Particle_Label(Graph_Particle):
         other (Particle_Node): particle node that the label is attracted to
 
     Returns:
-        np.ndarray: attraction force
+        np.ndarray: attraction force vector
         np.ndarray: force anchor point
     """
+    if not isinstance(other, Particle_Node):
+      return np.zeros(2), self.position
     return self.node_attraction * (other.position - self.position), self.position
 
 
@@ -195,7 +197,15 @@ class Particle_Label(Graph_Particle):
     
     outline_image = Image.new("RGBA", text_image_size, (0,0,0,0))
     text_draw = ImageDraw.Draw(outline_image)
-    text_draw.text((self.text_x_offset, self.text_y_offset), self.label, font=self.img_font, fill=border_color, border=1, borderfill=border_color, stroke_width=self.outline_stroke_width, stroke_fill=border_color)
+    text_draw.text(
+        (self.text_x_offset, self.text_y_offset),
+        self.label,
+        font=self.img_font,
+        fill=border_color,
+        border=1,
+        borderfill=border_color,
+        stroke_width=self.outline_stroke_width,
+        stroke_fill=border_color)
 
     return outline_image
 

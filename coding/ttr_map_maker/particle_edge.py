@@ -204,7 +204,7 @@ class Particle_Edge(Graph_Particle):
         other_edge (Particle_Edge): other edge
 
     Returns:
-        np.ndarray: attraction force
+        np.ndarray: attraction force vector
         np.ndarray: closest point on this edge to the other edge
     """
     min_distance = np.inf
@@ -231,7 +231,8 @@ class Particle_Edge(Graph_Particle):
         node (Particle_Node): node
 
     Returns:
-        np.ndarray: attraction force
+        np.ndarray: attraction force vector
+        np.ndarray: closest midpoint to the node (midpoints are on a short side of this edge particle)
     """
     min_distance = np.inf
     closest_point = np.zeros(2)

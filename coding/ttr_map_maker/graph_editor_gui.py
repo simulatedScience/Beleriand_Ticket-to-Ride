@@ -12,6 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backend_bases import PickEvent, MouseEvent
+from matplotlib.patches import Circle
 
 from file_browsing import browse_image_file
 from drag_handler import Drag_Handler, find_particle_in_list, get_artist_center
@@ -240,12 +241,159 @@ class Graph_Editor_GUI:
   def start_node_adding_mode(self) -> None:
     """
     Add a node to the graph. This initiates a two-step process:
-    1. A new node is created and attached to the mouse cursor.
+    1. A new node is created and attached to the mouse cursor. When the cursor moves, the node moves with it.
     2. Upon clicking on the plot, the node is placed there and the user is prompted to enter a location name.
     3. (Automatic) Once the location name is entered, the node and corresponding label are added to the graph.
     """
     self.add_node_mode: bool = True
-    self.unbind_mouse_events()
+    # self.unbind_mouse_events()
+    # disable all movability toggles
+    for movability_var in [self.move_nodes_enabled, self.move_edges_enabled, self.move_labels_enabled]:
+      movability_var.set(False)
+    self.toggle_move_particle_type() # apply movability changes
+    self.clear_selection()
+    print(f"Node adding mode started: {self.add_node_mode}")
+    # step 2: add click listener to canvas
+    self.click_listener_id: int = self.canvas.mpl_connect("button_press_event", self.add_node_on_click)
+    
+  def add_node_on_click(self, event: MouseEvent) -> None:
+    """
+    When the user clicks on the canvas while in node adding mode, a node is placed at the clicked location and the user is prompted to enter a location name.
+
+    Args:
+        event (MouseEvent): Mouse event containing the clicked location.
+    """
+    self.canvas.mpl_disconnect(self.click_listener_id)
+    del self.click_listener_id
+    location_indicator: Circle = self.ax.add_patch(
+      Circle(
+        xy=(event.xdata, event.ydata),
+        radius=0.5,
+        color=self.color_config["node_color"],
+      )
+    )
+    self.canvas.draw_idle()
+
+    node_name_var: tk.StringVar = tk.StringVar()
+    
+    def finish_node_adding():
+      """
+      Finish adding a node to the graph. This creates a new node at the given location and with the given name.
+      Hide the given lodation_indicator and destroy the given node_name_var. Then draw the new node and add it to the graph.
+      
+      Args:
+          location_indicator (Circle): Indicator for the location of the new node.
+          node_name_var (tk.StringVar): Variable containing the name of the new node.
+      """
+      # hide location indicator
+      location_indicator.remove()
+      
+      # create node
+      new_node: Particle_Node = Particle_Node(
+        location_name=node_name_var.get(),
+        id=self.particle_graph.max_particle_id + 1,
+        color=self.color_config["node_color"],
+        position=np.array([event.xdata, event.ydata]),
+      )
+      new_node.draw(ax=self.ax, color=self.color_config["node_color"], movable=False)
+      self.particle_graph.add_particle(new_node) # also increments max_particle_id
+
+      new_label: Particle_Label = Particle_Label(
+        label=node_name_var.get(),
+        id=self.particle_graph.max_particle_id + 1,
+        color=self.color_config["label_text_color"],
+        position=np.array([event.xdata, event.ydata]) + np.array([0, 2]),
+        height_scale_factor=self.particle_graph.label_height_scale,
+      )
+      new_label.add_connected_particle(new_node)
+      new_label.draw(
+          ax=self.ax,
+          color=self.color_config["label_text_color"],
+          border_color=self.color_config["label_outline_color"],
+          movable=False)
+      self.particle_graph.add_particle(new_label)
+      self.canvas.draw_idle()
+      self.add_node_mode: bool = False
+      
+      # print(f"Node added: {new_node}")
+      # print(f"Graph now has nodes: {list(self.particle_graph.particle_nodes.keys())}")
+      return
+    
+    # add prompt for location name
+    self.prompt_location_name(node_name_var=node_name_var, confirm_callback=finish_node_adding)
+    
+  def prompt_location_name(self, node_name_var: tk.StringVar, confirm_callback: Callable):
+    """
+    Prompt the user to enter a location name for a new node.
+    When the user confirms their input, the given confirm_callback is called.
+    The input is stored in `node_name_var`.
+    
+    Args:
+        node_name_var (tk.StringVar): Variable to store the user input in.
+        confirm_callback (Callable): Function to call when the user confirms their input.
+    """
+    # create a frame floating above the canvas
+    location_prompt_frame: tk.Frame = tk.Frame(self.master)
+    self.add_frame_style(location_prompt_frame)
+    location_prompt_frame.place(relx=0.5, rely=0.5, anchor="center")
+    # add input field
+    location_label: tk.Label = tk.Label(location_prompt_frame, text="new location name:")
+    self.add_label_style(location_label)
+    location_label.grid(
+      row=0,
+      column=0,
+      sticky="nw",
+      padx=self.grid_pad_x,
+      pady=self.grid_pad_y)
+    location_input: tk.Entry = tk.Entry(location_prompt_frame, textvariable=node_name_var)
+    self.add_entry_style(location_input)
+    location_input.grid(
+      row=0,
+      column=1,
+      sticky="nw",
+      padx=(0, self.grid_pad_x),
+      pady=self.grid_pad_y)
+    location_input.focus_set()
+
+    def validate_input():
+      """
+      Check if the input is valid. If it is, call the confirm_callback.
+      Valid inputs are nonempty strings that are not already used as location names.
+      """
+      valid_input: bool = True
+      if node_name_var.get() == "":
+        valid_input = False
+      elif node_name_var.get() in self.particle_graph.particle_nodes.keys():
+        valid_input = False
+      if valid_input:
+        # destroy prompt frame and call confirm callback
+        location_prompt_frame.destroy()
+        print(f"Valid location name confirmed: {node_name_var.get()}")
+        confirm_callback()
+      else:
+        notification_label: tk.Label = tk.Label(location_prompt_frame, text="Input a unique, nonempty location name.")
+        self.add_label_style(notification_label)
+        notification_label.grid(
+          row=2,
+          column=0,
+          columnspan=2,
+          sticky="n",
+          padx=self.grid_pad_x,
+          pady=(0, self.grid_pad_y))
+          
+    # add confirm button
+    confirm_button: tk.Button = tk.Button(
+      location_prompt_frame,
+      text="confirm",
+      command=validate_input)
+    self.add_button_style(confirm_button)
+    confirm_button.grid(
+      row=1,
+      column=0,
+      columnspan=2,
+      sticky="n",
+      padx=self.grid_pad_x,
+      pady=(0, self.grid_pad_y))
 
 
   def start_edge_adding_mode(self) -> None:
@@ -255,12 +403,12 @@ class Graph_Editor_GUI:
     2. When selecting the second node, the user is prompted to enter a length for the connection.
     3, (Automatic) Once the length is entered, the edge is added to the graph with the default color.
     """
+    self.add_edge_mode: bool = True
     # disable all movability toggles
     for movability_var in [self.move_nodes_enabled, self.move_edges_enabled, self.move_labels_enabled]:
       movability_var.set(False)
     self.toggle_move_particle_type() # apply movability changes
     self.clear_selection()
-    self.add_edge_mode: bool = True
     print(f"Edge adding mode started: {self.add_edge_mode}")
     self.add_edge_node_indices: List[int] = [0, 0] # indices of the nodes to connect
     self.add_edge_node_labels: List[tk.Widget] = [] # labels to show the selected nodes
@@ -452,9 +600,9 @@ class Graph_Editor_GUI:
     """
     # remove highlight from the current node
     if change_direction != 0:
-      current_node_name = self.node_names[self.add_edge_node_indices[location_indicator_index]]
+      current_node_name: str = self.node_names[self.add_edge_node_indices[location_indicator_index]]
       if current_node_name != "None":
-        old_node = self.particle_graph.particle_nodes[current_node_name]
+        old_node: Particle_Node = self.particle_graph.particle_nodes[current_node_name]
         old_node.remove_highlight(self.ax)
         self.highlighted_particles.remove(old_node)
 
@@ -999,17 +1147,21 @@ class Graph_Editor_GUI:
     """
     new_position = np.array([posisition_x_var.get(), position_y_var.get()], dtype=np.float16)
     new_rotation = np.deg2rad(rotation_var_deg.get())
-    old_label = particle_node.label
+    old_name: str = particle_node.label
+    new_name: str = node_label_var.get()
     particle_node.set_adjustable_settings(
         self.ax,
         position=new_position,
         rotation=new_rotation,
-        label=node_label_var.get(),
+        label=new_name,
         image_file_path=node_image_path_var.get()
     )
-    # find Particle_Label corresponding to the node and change its text
-    if old_label != node_label_var.get():
-      self.particle_graph.rename_label(old_label, node_label_var.get(), self.ax)
+    # check if node has been renamed
+    if old_name != new_name:
+      # change node name in particle graph
+      self.particle_graph.rename_node(old_name, new_name)
+      # find Particle_Label corresponding to the node and change its text
+      self.particle_graph.rename_label(old_name, new_name, self.ax)
 
     self.canvas.draw_idle()
 

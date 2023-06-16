@@ -140,7 +140,6 @@ class TTR_Particle_Graph:
         dt (float, optional): timestep. Defaults to 0.02.
     """
     all_particles = self.get_particle_list()
-    cell_list = dict()
     for i in range(iterations):
       for particle in all_particles:
         particle.reset_acceleration()
@@ -184,8 +183,8 @@ class TTR_Particle_Graph:
 
   def straighten_connections(self,
       ax: plt.Axes,
-      x_periodic: bool = True,
-      y_periodic: bool = True,
+      x_periodic: bool = False,
+      y_periodic: bool = False,
       movable: bool = False,
       edge_border_color: str = None,
       alpha = 0.8,
@@ -203,12 +202,16 @@ class TTR_Particle_Graph:
       location_2 = edge_key[1]
       connection_index = edge_key[3]
       connection_identifier = (location_1, location_2, connection_index)
+      # only straighten each edge once
       if connection_identifier not in updated_edges:
+      # find how many connections there are between the two nodes
+        max_connection_index: int = max(val for (str1, str2, _, val) in self.particle_edges if {str1, str2} == {location_1, location_2})
         self.straighten_connection(
             location_1,
             location_2,
-            connection_index,
-            ax,
+            connection_index=connection_index,
+            max_connection_index=max_connection_index,
+            ax=ax,
             x_periodic=x_periodic,
             y_periodic=y_periodic,
             movable=movable,
@@ -226,6 +229,7 @@ class TTR_Particle_Graph:
       x_periodic: bool = True,
       y_periodic: bool = True,
       movable: bool = False,
+      max_connection_index: int = 1,
       edge_border_color: str = None,
       alpha: float = 0.8,
       **draw_kwargs) -> None:
@@ -240,6 +244,7 @@ class TTR_Particle_Graph:
         x_periodic (bool, optional): whether the graph is periodic in x direction. If so, the edge will be drawn in the shortest direction even if that means crossing the periodic boundary. Defaults to False.
         y_periodic (bool, optional): whether the graph is periodic in y direction. If so, the edge will be drawn in the shortest direction even if that means crossing the periodic boundary. Defaults to False.
         movable (bool, optional): whether the edge is movable. Defaults to False.
+        max_connection_index (int, optional): maximum number of connections between the two nodes. Defaults to 1.
         edge_border_color (str, optional): color of the edge border. Defaults to None.
         alpha (float, optional): alpha value of the edge. Defaults to 0.8.
         draw_kwargs (dict): kwargs to pass to the draw method of the edge particle
@@ -253,19 +258,32 @@ class TTR_Particle_Graph:
     if y_periodic and abs(node_distance_vec[1]) > (self.graph_extent[3] - self.graph_extent[2]) / 2:
       # if the distance in y direction is larger than half the graph extent, the shortest distance is across the periodic boundary
       node_distance_vec[1] = node_distance_vec[1] - np.sign(node_distance_vec[1]) * (self.graph_extent[3] - self.graph_extent[2])
+    # calculate orthogonal vector
+    offset_normal_vec: np.ndarray = np.array([-node_distance_vec[1], node_distance_vec[0]])
+    offset_normal_vec: np.ndarray = offset_normal_vec / np.linalg.norm(offset_normal_vec)
     edge_particles: List[Particle_Edge] = []
     length = 0
+    # find all edge particles that belong to the current connection
     while True:
       if (location_1, location_2, length, connection_index) in self.particle_edges:
         edge_particles.append(self.particle_edges[(location_1, location_2, length, connection_index)])
         length += 1
       else:
         break
+    # define offset vector for multiple connections
+    offset_vec: np.ndarray = offset_normal_vec * min(edge_particles[0].bounding_box_size)
+    # reposition the edge particles
     for i, edge_particle in enumerate(edge_particles):
-      new_position = node_1.position + node_distance_vec * (i+1) / (length+1)
-      new_position = (new_position - self.graph_extent[0:3:2]) \
-          % np.array([self.graph_extent[1] - self.graph_extent[0], self.graph_extent[3] - self.graph_extent[2]]) \
+      # calculate new position through linear interpolation along node_distance_vec
+      new_position: np.ndarray = node_1.position + node_distance_vec * (i+1) / (length+1)
+      # make sure the new position is within the graph extent
+      new_position: np.ndarray = (new_position - self.graph_extent[0:3:2]) \
+          % np.array([
+              self.graph_extent[1] - self.graph_extent[0],
+              self.graph_extent[3] - self.graph_extent[2]]) \
           + self.graph_extent[0:3:2]
+      # avoid overlap of multiple connections between the same nodes by offsetting the particles
+      new_position += offset_vec * (connection_index - max_connection_index / 2)
       edge_particle.set_position(new_position)
 
       new_rotation = np.arctan2(node_distance_vec[1], node_distance_vec[0])
@@ -279,6 +297,62 @@ class TTR_Particle_Graph:
           alpha=alpha,
           **draw_kwargs)
 
+
+  def repair_connections(self):
+    """
+    Update the `connected_particles` property of all edge particle based on the current state of the graph (as defined by the keys in self.particle_edges). This is useful to repair graphs with wrong connection settings.
+    """
+    # nodes should never be connected to other particles
+    for node in self.particle_nodes.values():
+      node.connected_particles = []
+    # labls should only be connected to corresponding nodes
+    for location_name, particle_label in self.particle_labels.items():
+      particle_label.set_connected_particles([self.particle_nodes[location_name]])
+    # calculate connected particles for all edge particles based on keys in self.particle_edges
+    # 1. loop through all stored connections
+    # 2. find all edges that belong to the current connection
+    # 3. update `connected_particles` property of particles in the current connection
+    updated_edges = set()
+    for edge_key in self.particle_edges.keys():
+      location_1, location_2, connection_index = edge_key[0], edge_key[1], edge_key[3]
+      connection_identifier = (location_1, location_2, connection_index)
+      if connection_identifier not in updated_edges:
+        self.repair_edge_connection(location_1, location_2, connection_index)
+        updated_edges.add(connection_identifier)
+    print("Repaired connections for all particles.")
+
+
+  def repair_edge_connection(self, location_1: str, location_2: str, connection_index: int):
+    """
+    Repair the `connected_particles` property of all edge particles in a connection based on the current state of the graph (as defined by the keys in self.particle_edges).
+
+    Args:
+        location_1 (str): label of the first node
+        location_2 (str): label of the second node
+        connection_index (int): index of the connection
+    """
+    # find all edges that belong to the current connection
+    edge_particles = []
+    length = 0
+    while True:
+        if (location_1, location_2, length, connection_index) in self.particle_edges:
+            edge_particles.append(self.particle_edges[(location_1, location_2, length, connection_index)])
+            length += 1
+        else:
+            break
+    # update connected_particles property of particles in the current connection
+    node_1 = self.particle_nodes[location_1]
+    node_2 = self.particle_nodes[location_2]
+    if length == 1: # handle length 1 connections
+      edge_particles[0].connected_particles = [node_1, node_2]
+      return
+    for i, edge_particle in enumerate(edge_particles):
+        if i == 0:
+            edge_particle.connected_particles = [node_1, edge_particles[i+1]]
+        elif i == length - 1:
+            edge_particle.connected_particles = [edge_particles[i-1], node_2]
+        else:
+            edge_particle.connected_particles = [edge_particles[i-1], edge_particles[i+1]]
 
   def scale_graph_positions(self, ax: plt.Axes, scale_factor: float = 0.8) -> None:
     """
@@ -623,7 +697,15 @@ class TTR_Particle_Graph:
       for connected_particle in particle_edge.connected_particles:
         _, anchor_1 = particle_edge.get_attraction_forces(connected_particle)
         _, anchor_2 = connected_particle.get_attraction_forces(particle_edge)
-        self.edge_attractor_artists.append(ax.arrow(
+        # if isinstance(connected_particle, Particle_Node):
+        #   print(f"connected to node: {connected_particle.id} at {connected_particle.position}")
+        #   print(f"anchor_1: {anchor_1}")
+        #   print(f"anchor_2: {anchor_2}")
+        arrow_length = np.linalg.norm(anchor_2-anchor_1)
+        if arrow_length > max(particle_edge.bounding_box_size):
+          print(f"Warning: edge attractor is unusually long between particles: {particle_edge.id} and {connected_particle.id} ({arrow_length} cm).")
+        self.edge_attractor_artists.append(
+          ax.arrow(
             anchor_1[0],
             anchor_1[1],
             anchor_2[0] - anchor_1[0],
@@ -1012,6 +1094,39 @@ class TTR_Particle_Graph:
       self.particle_edges[(particle_edge.location_1_name, particle_edge.location_2_name, particle_edge.path_index, connection_index)] = particle_edge
       del self.particle_edges[particle_key]
 
+  def rename_node(self, old_name: str, new_name: str) -> None:
+    """
+    rename a given node in the particle graph.
+    
+    Args:
+        old_name (str): current node name
+        new_name (str): new node name
+    """
+    self.particle_nodes[new_name] = self.particle_nodes.pop(old_name)
+    self.particle_nodes[new_name].label = new_name
+    # rename node in all edges
+    modified_edges: dict[tuple, tuple[tuple, Particle_Edge]] = dict()
+    for edge_key, particle_edge in self.particle_edges.items():
+      if old_name in edge_key: # edge needs to be renamed
+        # replace name in edge key (tuple)
+        new_edge_key = tuple(new_name if x == old_name else x for x in edge_key)
+        particle_edge.location_1_name = new_name if particle_edge.location_1_name == old_name else particle_edge.location_1_name
+        particle_edge.location_2_name = new_name if particle_edge.location_2_name == old_name else particle_edge.location_2_name
+        modified_edges[edge_key] = (new_edge_key, particle_edge)
+    for old_edge_key, (new_edge_key, particle_edge) in modified_edges.items():
+      del self.particle_edges[old_edge_key]
+      self.particle_edges[new_edge_key] = particle_edge
+    # rename node in all tasks
+    modified_tasks: dict[str, tuple[str, TTR_Task]] = dict()
+    for task_key, task in self.tasks.items():
+      if old_name in task.node_names:
+        new_node_names = [new_name if x == old_name else x for x in task.node_names]
+        task.set_node_names(new_node_names, update_name=True)
+        modified_tasks[task_key] = (task.name, task)
+    for old_task_key, (new_task_key, task) in modified_tasks.items():
+      del self.tasks[old_task_key]
+      self.tasks[new_task_key] = task
+        
 
   def rename_label(self, old_name: str, new_name: str, ax: plt.Axes) -> None:
     """

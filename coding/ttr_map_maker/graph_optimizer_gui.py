@@ -74,14 +74,14 @@ class Graph_Optimzer_GUI:
     self.simulation_running: bool = False
     # variables for particle simulation
     self.time_step = tk.DoubleVar(value=0.1, name="time_step")
-    self.iterations_per_frame = tk.IntVar(value=10, name="iterations_per_frame")
+    self.iterations_per_frame = tk.IntVar(value=3, name="iterations_per_frame")
     self.velocity_decay = tk.DoubleVar(value=0.99, name="velocity_decay")
-    self.edge_edge_force = tk.DoubleVar(value=0.1, name="edge_edge_force")
-    self.edge_node_force = tk.DoubleVar(value=0.1, name="edge_node_force")
-    self.node_label_force = tk.DoubleVar(value=0.1, name="node_label_force")
-    self.node_target_force = tk.DoubleVar(value=0.1, name="node_target_force")
-    self.node_mass = tk.DoubleVar(value=1.0, name="node_mass")
-    self.label_mass = tk.DoubleVar(value=1.0, name="label_mass")
+    self.edge_edge_force = tk.DoubleVar(value=0.3, name="edge_edge_force")
+    self.edge_node_force = tk.DoubleVar(value=0.3, name="edge_node_force")
+    self.node_label_force = tk.DoubleVar(value=0.03, name="node_label_force")
+    self.node_target_force = tk.DoubleVar(value=0.5, name="node_target_force")
+    self.node_mass = tk.DoubleVar(value=3.0, name="node_mass")
+    self.label_mass = tk.DoubleVar(value=0.1, name="label_mass")
     self.edge_mass = tk.DoubleVar(value=1.0, name="edge_mass")
     self.interaction_radius = tk.DoubleVar(value=15.0, name="interaction_radius")
     self.repulsion_strength = tk.DoubleVar(value=2.0, name="repulsion_strength")
@@ -202,7 +202,14 @@ class Graph_Optimzer_GUI:
       return
     # start simulation
     self.start_stop_button.config(text="loading parameters")
-    self.load_particle_parameters()
+    try:
+      self.load_particle_parameters()
+    except ValueError:
+      self.start_stop_button.config(text="loading failed")
+      time.sleep(0.5)
+      self.start_stop_button.config(text="Start")
+      return
+      
     self.start_stop_button.config(text="Stop")
     self.simulation_running = True
     self.master.after(1, self.run_smulation_frame)
@@ -228,38 +235,18 @@ class Graph_Optimzer_GUI:
     """
     Load the parameters for the particle simulation from the tkinter variables.
     """
-    particle_parameters = {
-      "velocity_decay": float(self.velocity_decay.get()),
-      "edge-edge": float(self.edge_edge_force.get()),
-      "edge-node": float(self.edge_node_force.get()),
-      "node-label": float(self.node_label_force.get()),
-      "node-target": float(self.node_target_force.get()),
-      "node_mass": float(self.node_mass.get()),
-      "edge_mass": float(self.edge_mass.get()),
-      "label_mass": float(self.label_mass.get()),
-      "interaction_radius": float(self.interaction_radius.get()),
-      "repulsion_strength": float(self.repulsion_strength.get())}
+    try:
+      particle_parameters = {
+        "velocity_decay": float(self.velocity_decay.get()),
+        "edge-edge": float(self.edge_edge_force.get()),
+        "edge-node": float(self.edge_node_force.get()),
+        "node-label": float(self.node_label_force.get()),
+        "node-target": float(self.node_target_force.get()),
+        "node_mass": float(self.node_mass.get()),
+        "edge_mass": float(self.edge_mass.get()),
+        "label_mass": float(self.label_mass.get()),
+        "interaction_radius": float(self.interaction_radius.get()),
+        "repulsion_strength": float(self.repulsion_strength.get())}
+    except tk.TclError:
+      raise ValueError("Some parameters aren't numbers.")
     self.particle_graph.set_parameters(particle_parameters)	
-
-  
-  def play_pause_simulation(self):
-    """
-    Start/stop the particle simulation.
-    """
-    raise NotImplementedError # TODO
-
-
-##############################################################
-##############################################################
-##############################################################
-
-    # frame for particle simulation parameters
-    particle_frame = tk.Frame(self.control_frame)
-    self.add_frame_style(particle_frame)
-    particle_frame.grid(
-        row=row_index,
-        column=0,
-        sticky="ew",
-        pady=(0, self.grid_pad_y))
-    row_index += 1
-    self.draw_particle_widgets(particle_frame)
