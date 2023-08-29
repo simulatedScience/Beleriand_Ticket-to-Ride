@@ -2,7 +2,7 @@
 .jpg~
 __pycache__
 *.pyc
-board_map_design
+# board_map_design
 printing
 reference images
 pics of cardboard
