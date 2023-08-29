@@ -11,6 +11,7 @@ from typing import List, Tuple, Dict, Union, Any
 from math import isinf
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 from graph_particle import Graph_Particle
@@ -423,7 +424,8 @@ class TTR_Particle_Graph:
             target_attraction = particle_parameters["node-target"],
             interaction_radius = particle_parameters["interaction_radius"],
             velocity_decay = particle_parameters["velocity_decay"],
-            repulsion_strength = particle_parameters["repulsion_strength"])
+            repulsion_strength = particle_parameters["repulsion_strength"],
+        )
       elif isinstance(particle, Particle_Edge):
         particle.set_simulation_parameters(
             mass = particle_parameters["edge_mass"],
@@ -432,7 +434,8 @@ class TTR_Particle_Graph:
             interaction_radius = particle_parameters["interaction_radius"],
             velocity_decay = particle_parameters["velocity_decay"],
             angular_velocity_decay = particle_parameters["velocity_decay"],
-            repulsion_strength = particle_parameters["repulsion_strength"])
+            repulsion_strength = particle_parameters["repulsion_strength"],
+        )
       elif isinstance(particle, Particle_Label):
         particle.set_simulation_parameters(
             mass = particle_parameters["label_mass"],
@@ -440,7 +443,8 @@ class TTR_Particle_Graph:
             interaction_radius = particle_parameters["interaction_radius"],
             velocity_decay = particle_parameters["velocity_decay"],
             angular_velocity_decay = particle_parameters["velocity_decay"],
-            repulsion_strength = particle_parameters["repulsion_strength"])
+            repulsion_strength = 0, # particle_parameters["repulsion_strength"])
+        )
         
 
   def update_tasks(self, new_tasks: dict[str, TTR_Task]) -> None:
@@ -695,21 +699,21 @@ class TTR_Particle_Graph:
     """
     for particle_edge in self.particle_edges.values():
       for connected_particle in particle_edge.connected_particles:
-        _, anchor_1 = particle_edge.get_attraction_forces(connected_particle)
-        _, anchor_2 = connected_particle.get_attraction_forces(particle_edge)
+        force_1, anchor_1 = particle_edge.get_attraction_forces(connected_particle)
+        # force_2, anchor_2 = connected_particle.get_attraction_forces(particle_edge)
         # if isinstance(connected_particle, Particle_Node):
         #   print(f"connected to node: {connected_particle.id} at {connected_particle.position}")
         #   print(f"anchor_1: {anchor_1}")
         #   print(f"anchor_2: {anchor_2}")
-        arrow_length = np.linalg.norm(anchor_2-anchor_1)
-        if arrow_length > max(particle_edge.bounding_box_size):
-          print(f"Warning: edge attractor is unusually long between particles: {particle_edge.id} and {connected_particle.id} ({arrow_length} cm).")
+        # arrow_length = np.linalg.norm(anchor_2-anchor_1)
+        # if arrow_length > max(particle_edge.bounding_box_size):
+        #   print(f"Warning: edge attractor is unusually long between particles: {particle_edge.id} and {connected_particle.id} ({arrow_length} cm).")
         self.edge_attractor_artists.append(
           ax.arrow(
             anchor_1[0],
             anchor_1[1],
-            anchor_2[0] - anchor_1[0],
-            anchor_2[1] - anchor_1[1],
+            3*force_1[0],
+            3*force_1[1],
             color="#222222",
             alpha=alpha,
             width=0.1,
@@ -732,7 +736,7 @@ class TTR_Particle_Graph:
       movable: bool = None,
       base_color: str = "#cc00cc",
       border_color: str = "#555555",
-      neutral_color: str = "#aaaaaa") -> None:
+      neutral_color: str = "#aaaaaa") -> tuple[plt.Axes, mpl.colorbar.Colorbar]:
     """
     draw tasks of particle graph.
     1. Calculate the shortest route(s) for each task.
@@ -747,6 +751,10 @@ class TTR_Particle_Graph:
         movable (bool, optional): whether the tasks are movable. Defaults to None (use movable of particle graph).
         border_color (str, optional): color of the task border. Defaults to "#555555".
         neutral_color (str, optional): color of connections that are not part of any shortest route. Defaults to "#aaaaaa".
+
+    Returns:
+        plt.Axes: matplotlib axes containing the colorbar
+        mpl.colorbar.Colorbar: colorbar
     """
     if self.analysis_graph is None:
       self.init_analysis_graph()
@@ -767,21 +775,37 @@ class TTR_Particle_Graph:
         edge_weight = edge_weights.get(locations_key, 0) # if the edge is not in the dict, set the weight to 0
       color = get_gradient_color(base_color, edge_weight, max_weight, weight_zero_color=neutral_color)
       particle_edge.draw(ax, color=color, alpha=alpha, movable=movable, border_color=border_color)
+      
+    cbar_ax, cbar = add_colorbar(
+      ax,
+      min_value=0,
+      max_value=max_weight,
+      min_color=neutral_color,
+      max_color=base_color,
+      label="Avg. number of shortest routes through edge")
+    return cbar_ax, cbar
 
   def draw_edge_importance(self,
       ax: plt.Axes,
       alpha: float = 1.0,
-      movable: bool = None,
+      movable: bool = False,
       base_color: str = "#cc00cc",
       border_color: str = "#555555",
-      neutral_color: str = "#aaaaaa") -> None:
+      neutral_color: str = "#aaaaaa") -> tuple[plt.Axes, mpl.colorbar.Colorbar]:
     """
     draw edge importance of particle graph. Importance is measured by the increase in task lengths if the edge is removed.
 
     Args:
         ax (plt.Axes): matplotlib axes to draw on
         alpha (float, optional): transparency multiplier. Defaults to 1.0.
+        movable (bool, optional): whether each edge is set to be movable or not. Defaults to False
         base_color (str, optional): base color for the gradient. Defaults to "#ff00ff".
+        border_color (str, optional): color of each edges border. Defaults to "#555555" (gray).
+        neutral_color (str, optional): color of edges that are not part of any task. Defaults to "#aaaaaa" (light gray).
+
+    Returns:
+        plt.Axes: matplotlib axes containing the colorbar
+        mpl.colorbar.Colorbar: colorbar
     """
     if self.analysis_graph is None:
       self.init_analysis_graph()
@@ -794,6 +818,14 @@ class TTR_Particle_Graph:
     # get maximum finite weight
     max_weight = max([weight for weight in edge_weights.values() if weight != float("inf")])
     
+    cbar_axes, cbar = add_colorbar(
+      ax,
+      min_value=0,
+      max_value=max_weight,
+      min_color=neutral_color,
+      max_color=base_color,
+      label="Avg. task length increase when removing edge")
+
     for (edge_key, particle_edge) in self.particle_edges.items():
       locations_key = (edge_key[0], edge_key[1], edge_key[3])
       if locations_key in edge_weights:
@@ -803,6 +835,8 @@ class TTR_Particle_Graph:
         edge_weight = edge_weights.get(locations_key, 0)
       color = get_gradient_color(base_color, edge_weight, max_weight, weight_zero_color=neutral_color)
       particle_edge.draw(ax, color=color, alpha=alpha, movable=movable, border_color=border_color)
+
+    return cbar_axes, cbar
 
   def draw_graph_analysis(self, axs: "np.ndarray[plt.Axes]", grid_color: str = None, base_color="#cc00cc") -> None:
     """
@@ -942,6 +976,10 @@ class TTR_Particle_Graph:
     elif isinstance(particle, Particle_Edge):
       loc_1: str = particle.location_1_name
       loc_2: str = particle.location_2_name
+      if loc_1 > loc_2: # sort locations alphabetically
+        loc_1, loc_2 = loc_2, loc_1
+        print(f"Warning: locations in path {loc_1} -> {loc_2} were not sorted alphabetically")
+      path_index: int = particle.path_index
       path_index: int = particle.path_index
       connection_index: int = particle.connection_index
       self.particle_edges[(loc_1, loc_2, path_index, connection_index)] = particle
@@ -991,6 +1029,8 @@ class TTR_Particle_Graph:
       edge_particle.add_connected_particle(last_particle)
       if path_index >= 1: # if not the first edge particle, add connection to previous edge particle
         last_particle.add_connected_particle(edge_particle)
+      if location_1 > location_2: # sort locations alphabetically
+        location_1, location_2 = location_2, location_1
       self.particle_edges[(location_1, location_2, path_index, connection_index)] = edge_particle
       last_particle = edge_particle
       self.max_particle_id += 1
@@ -1059,6 +1099,9 @@ class TTR_Particle_Graph:
     self.analysis_graph = None
     loc_1 = particle_edge.location_1_name
     loc_2 = particle_edge.location_2_name
+    if loc_1 > loc_2: # sort locations alphabetically
+      loc_1, loc_2 = loc_2, loc_1
+      print(f"Warning: locations in path {loc_1} -> {loc_2} were not sorted alphabetically")
     path_index = particle_edge.path_index
     connection_index = particle_edge.connection_index
     path_length = 0
@@ -1076,8 +1119,6 @@ class TTR_Particle_Graph:
     # remove edge particle
     if (loc_1, loc_2, path_index, connection_index) in self.particle_edges:
       del self.particle_edges[(loc_1, loc_2, path_index, connection_index)]
-    elif (loc_2, loc_1, path_index, connection_index) in self.particle_edges:
-      del self.particle_edges[(loc_2, loc_1, path_index, connection_index)]
     else:
       print(f"Warning: Could not find edge particle to remove: {loc_1} -> {loc_2} ({path_index})")
     # update path indices of all edge particles with higher path index
@@ -1157,6 +1198,9 @@ class TTR_Particle_Graph:
     for i, path in enumerate(self.paths):
       loc_1 = particle_edge.location_1_name
       loc_2 = particle_edge.location_2_name
+      if loc_1 > loc_2: # sort locations alphabetically
+        loc_1, loc_2 = loc_2, loc_1
+        print(f"Warning: locations in path {loc_1} -> {loc_2} were not sorted alphabetically")
       if path[0] == loc_1 and path[1] == loc_2 and path[3] == old_color:
         self.paths[i] = (loc_1, loc_2, path[2], particle_edge.color)
         print(f"updated path {loc_1} <-> {loc_2} from {old_color} to {particle_edge.color}")
@@ -1258,13 +1302,19 @@ def get_gradient_color(
     weight_zero_color: str = "#aaaaaa",
     inf_color: str = "#111111") -> str:
   """
-  get a color that is a gradient between white and the given color
+  get a color that is a gradient between `weight_zero_color` and the given `color`.
+  If `weight` is 0, `weight_zero_color` is returned.
+  If `weight` is `inf`, `inf_color` is returned.
+  otherwise, the color is a gradient between `weight_zero_color` and `color` depending on the weight.
+  The minimum weight should be 0. The maximum possible weight should be `max_weight`.
 
   Args:
       color (str): color as hex string to use for maximum weight
       weight (int): weight of current object
       max_weight (int): maximum weight of all objects
       min_color_factor (float, optional): proportion of color to use for weight 1. Defaults to 0.3.
+      weight_zero_color (str, optional): color to use for weight 0. Defaults to "#aaaaaa".
+      inf_color (str, optional): color to use for infinite weight. Defaults to "#111111".
 
   Returns:
       str: color in hex format
@@ -1282,6 +1332,46 @@ def get_gradient_color(
   # convert gradient color to hex
   gradient_color = f"#{''.join([hex(component)[2:].zfill(2) for component in gradient_color])}"
   return gradient_color
+
+
+def add_colorbar(
+    ax: plt.Axes,
+    min_value: int,
+    max_value: int,
+    min_color: str,
+    max_color: str,
+    label: str = "Edge importance",
+) -> tuple[plt.Axes, mpl.colorbar.Colorbar]:
+  """
+  Add a colorbar to the plot.
+
+  Args:
+      ax (plt.Axes): matplotlib axes to draw on
+      min_value (int): minimum value for the colorbar
+      max_value (int): maximum value for the colorbar
+      min_color (str): color for min_value
+      max_color (str): color for max_value
+      label (str, optional): label for the colorbar. Defaults to "Edge importance".
+      
+  Returns:
+      plt.Axes: matplotlib axes containing the colorbar
+      mpl.colorbar.Colorbar: colorbar
+  """
+  n_steps = max_value+1 if isinstance(max_value, int) else max(round(10*max_value), 100)
+  cmap = mpl.colors.ListedColormap(
+    [
+      get_gradient_color(
+        max_color,
+        value,
+        max_value,
+        weight_zero_color=min_color)
+      for value in np.linspace(min_value, max_value, n_steps, endpoint=True)])
+  norm = mpl.colors.Normalize(vmin=min_value, vmax=max_value)
+
+  colorbar_axes = ax.inset_axes([1.0, 0.1, 0.005, 0.8])
+  colorbar = mpl.colorbar.Colorbar(colorbar_axes, cmap=cmap, norm=norm, label=label, location="right")
+  return colorbar_axes, colorbar
+
 
 if __name__ == "__main__":
   locations = [

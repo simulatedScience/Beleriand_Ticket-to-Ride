@@ -224,9 +224,10 @@ class TTR_Graph_Analysis:
           connection_index = self.get_shortest_connection_index(loc1, loc2)
           edge = (loc1, loc2, connection_index)
           if edge in task_edge_counts:
-            task_edge_counts[edge] += 1
+            task_edge_counts[edge] += 1/n_random_paths
           else:
-            task_edge_counts[edge] = 1
+            task_edge_counts[edge] = 1/n_random_paths
+    
     return task_edge_counts
 
   def get_shortest_connection_index(self, loc1: str, loc2: str):
@@ -267,23 +268,63 @@ class TTR_Graph_Analysis:
       node_importance[node] = self.get_average_task_length(new_graph) - average_task_length
     return node_importance
 
+  # def get_edge_importance(self) -> dict[Tuple[str, str, int], float]:
+  #   """
+  #   Calculate the importance of each edge in the graph: how much the average task length is increased if that edge is removed.
+
+  #   Returns:
+  #       dict[Tuple[str, str, int], float]: dictionary of edges and the avergae increase in task length if that edge is removed
+  #           The edge is represented as a tuple of the two locations and the connection index.
+  #   """
+  #   edge_importance: dict[Tuple[str, str, int], float] = {}
+  #   average_task_length = self.get_average_task_length()
+  #   for edge in self.networkx_graph.edges:
+  #     # copy graph and remove edge
+  #     new_graph = self.networkx_graph.copy()
+  #     new_graph.remove_edge(*edge)
+  #     connection_index = self.networkx_graph.edges[edge]['key']
+  #     edge_importance[(edge[0], edge[1], connection_index)] = self.get_average_task_length(new_graph) - average_task_length
+  #   return edge_importance
+
   def get_edge_importance(self) -> dict[Tuple[str, str, int], float]:
     """
-    Calculate the importance of each edge in the graph: how much the average task length is increased if that edge is removed.
+    Calculate the importance of each edge in the graph: how much a task length is increased at most if that edge is removed.
 
     Returns:
         dict[Tuple[str, str, int], float]: dictionary of edges and the avergae increase in task length if that edge is removed
             The edge is represented as a tuple of the two locations and the connection index.
     """
     edge_importance: dict[Tuple[str, str, int], float] = {}
-    average_task_length = self.get_average_task_length()
+    original_task_lengths = self.get_task_lengths()
     for edge in self.networkx_graph.edges:
       # copy graph and remove edge
       new_graph = self.networkx_graph.copy()
       new_graph.remove_edge(*edge)
       connection_index = self.networkx_graph.edges[edge]['key']
-      edge_importance[(edge[0], edge[1], connection_index)] = self.get_average_task_length(new_graph) - average_task_length
+      task_length_increase = self.get_maximum_task_length_increase(new_graph, original_task_lengths)
+      edge_importance[(edge[0], edge[1], connection_index)] = task_length_increase
     return edge_importance
+  
+  def get_maximum_task_length_increase(self, new_graph, original_task_lengths) -> float:
+    """
+    Calculate the maximum task length increase caused by removing an edge from the graph.
+
+    Args:
+        graph: The graph from which the edge will be removed.
+
+    Returns:
+        float: The maximum task length increase.
+    """
+    new_task_lengths = self.get_task_lengths(new_graph)
+
+    max_increase = 0
+    for task_id, original_task_length in original_task_lengths.items():
+        new_task_length = new_task_lengths[task_id]
+        increase = new_task_length - original_task_length
+        if increase > max_increase:
+            max_increase = increase
+
+    return max_increase
 
   def get_average_task_length(self, graph: nx.Graph = None) -> float:
     """

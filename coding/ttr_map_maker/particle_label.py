@@ -28,10 +28,11 @@ class Particle_Label(Graph_Particle):
         interaction_radius: float = 5,
         velocity_decay: float = 0.9999,
         angular_velocity_decay: float = 0.9999,
-        repulsion_strength: float = 1,
+        repulsion_strength: float = 0,
         fontsize: int = 150,
         font_name: str = None,
-        font_path: str = "beleriand_ttr\\MiddleEarth.ttf",
+        # font_path: str = "beleriand_ttr\\MiddleEarth.ttf",
+        font_path: str = "assets\\fonts\\HARRYP__.ttf",
         height_scale_factor: float = None):
     """
     Initialize a particle label
@@ -54,7 +55,8 @@ class Particle_Label(Graph_Particle):
       self.height_scale_factor = Particle_Label.get_label_height_scale()
     else:
       self.height_scale_factor = height_scale_factor
-    self.inside_stroke_width = fontsize // 25
+    # self.inside_stroke_width = fontsize // 25
+    self.inside_stroke_width = fontsize // 75
     self.outline_stroke_width = fontsize // 8
     if font_name is None:
       # font_name = font_path.split("\\")[-1].strip(".ttf")

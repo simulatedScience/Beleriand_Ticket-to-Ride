@@ -25,7 +25,7 @@ class Particle_Edge(Graph_Particle):
         position: np.ndarray = np.array([0, 0], dtype=np.float16),
         rotation: float = 0,
         mass: float = 0.1,
-        bounding_box_size: tuple = (4, 1),
+        bounding_box_size: tuple = (3.2, 0.8),
         border_color: str = "#555555",
         node_attraction: float = 0.1,
         edge_attraction: float = 0.1,
@@ -375,10 +375,10 @@ class Particle_Edge(Graph_Particle):
     visited_particle_ids = {self.get_id()}
     connected_nodes = [self, self]
     for i in range(2):
-      while True:
+      while True: # find a connected node
         connected_index = 0
         new_node = connected_nodes[i].connected_particles[connected_index]
-        while True:
+        while True: # find a connected node that has not been visited yet
           if not new_node.get_id() in visited_particle_ids:
             break
           connected_index += 1

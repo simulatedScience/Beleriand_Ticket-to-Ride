@@ -47,7 +47,7 @@ class Graph_Particle:
     self.rotation = rotation # rotation of particle in radians
     self.angular_velocity = 0
     self.angular_acceleration = 0
-    self.inertia = mass * (bounding_box_size[0] ** 2 + bounding_box_size[1] ** 2) / 12 # moment of inertia
+    self.inertia: float = mass * (bounding_box_size[0] ** 2 + bounding_box_size[1] ** 2) / 12 # moment of inertia
 
     self.repulsion_strength = repulsion_strength
     self.velocity_decay = velocity_decay # factor by which the particle's velocity is multiplied each time step. This is used to simulate friction.
@@ -249,11 +249,13 @@ class Graph_Particle:
         attraction_force, attraction_anchor = self.get_attraction_forces(other)
         attraction_force_radial, attraction_torque = split_force(attraction_force, attraction_anchor, self.position)
       else:
+        attraction_force = np.zeros(2)
         attraction_force_radial = np.zeros(2)
         attraction_torque = 0
       # split attraction force into translation and rotation components
       # add forces to acceleration
-      self.acceleration += (self.repulsion_strength * repulsion_force_radial + attraction_force_radial) / self.mass
+      self.acceleration += (self.repulsion_strength * repulsion_force + attraction_force) / self.mass
+      # self.acceleration += (self.repulsion_strength * repulsion_force_radial + attraction_force_radial) / self.mass
       self.angular_acceleration += (self.repulsion_strength * repulsion_torque + attraction_torque) / self.inertia
 
 
@@ -270,13 +272,15 @@ class Graph_Particle:
       (np.ndarray) translation repulsion force to apply to `self` particle
       (np.ndarray) rotation repulsion force to apply to `self` particle
     """
+    if self.repulsion_strength == 0 or other.repulsion_strength == 0:
+      return np.zeros(2), np.zeros(2)
     # get overlap
     self_polygon = self.get_bounding_box_polygon()
     other_polygon = other.get_bounding_box_polygon()
     overlap_center, overlap_area = get_box_overlap(self_polygon, other_polygon)
 
     if not overlap_area > 0: # no overlap => no repulsion force
-      return np.zeros(2), 0
+      return np.zeros(2), np.zeros(2)
 
     overlap_vector = overlap_center - self.position # vector from self center to center of overlap area
     translation_force = -overlap_vector * overlap_area
@@ -505,14 +509,14 @@ class Graph_Particle:
       "particle_type": self.__class__.__name__,
       "id": self.id,
       "position": [float(coord) for coord in self.position],
-      "rotation": self.rotation,
-      "mass": self.mass,
+      "rotation": float(self.rotation),
+      "mass": float(self.mass),
       "bounding_box_size": list(self.bounding_box_size),
-      "velocity_decay": self.velocity_decay,
-      "angular_velocity_decay": self.angular_velocity_decay,
-      "interaction_radius": self.interaction_radius,
+      "velocity_decay": float(self.velocity_decay),
+      "angular_velocity_decay": float(self.angular_velocity_decay),
+      "interaction_radius": float(self.interaction_radius),
       "connected_particles": [p.get_id() for p in self.connected_particles],
-      "repulsion_strength": self.repulsion_strength,
+      "repulsion_strength": float(self.repulsion_strength),
     }
     if self.target_position is not None:
       particle_info["target_position"] = [float(coord) for coord in self.target_position]

@@ -221,7 +221,7 @@ class Graph_Optimzer_GUI:
     """
     if not self.simulation_running:
       return
-    print("running simulation frame")
+    print(f"running {self.iterations_per_frame.get()} simulation frame(s)")
     self.particle_graph.optimize_layout(
         iterations = self.iterations_per_frame.get(),
         dt = self.time_step.get())
