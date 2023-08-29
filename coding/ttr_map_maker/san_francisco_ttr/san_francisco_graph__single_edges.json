@@ -1,0 +1,3916 @@
+{
+  "particle_graph": {
+    "n_nodes": 21,
+    "n_connections": 45,
+    "n_tasks": 24,
+    "n_edges": 87,
+    "n_labels": 21,
+    "graph_extent": [
+      0.0,
+      40.0,
+      0.0,
+      40.0
+    ],
+    "particles": [
+      {
+        "particle_type": "Particle_Node",
+        "id": 1,
+        "position": [
+          23.9375,
+          36.6875
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          31.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Alcatraz",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 2,
+        "position": [
+          9.4921875,
+          27.859375
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          30.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Crissy Field",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 3,
+        "position": [
+          21.53125,
+          29.046875
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          28.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Fort Mason",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 4,
+        "position": [
+          4.3984375,
+          30.109375
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          27.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Golden Gate Bridge",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 5,
+        "position": [
+          15.0078125,
+          12.359375
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          25.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Haight Ashbury",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 6,
+        "position": [
+          7.34765625,
+          12.25
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          24.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Japanese Gardens",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 7,
+        "position": [
+          25.40625,
+          26.15625
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          22.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Lombard Street",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 8,
+        "position": [
+          27.34375,
+          16.203125
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          21.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Market Street",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 9,
+        "position": [
+          25.28125,
+          5.3515625
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          19.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Mission District",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 10,
+        "position": [
+          18.71875,
+          22.546875
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          18.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Pacific Heights",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 11,
+        "position": [
+          19.453125,
+          14.6015625
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          16.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Painted Ladies",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 12,
+        "position": [
+          13.9140625,
+          25.953125
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          15.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Palace of Fine Arts",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 13,
+        "position": [
+          28.53125,
+          29.671875
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          13.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Pier 39",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 14,
+        "position": [
+          32.78125,
+          6.484375
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          12.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Potrero Hill",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 15,
+        "position": [
+          8.5703125,
+          22.84375
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          10.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Presidio",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 16,
+        "position": [
+          35.53125,
+          16.875
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          9.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "South Beach",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 17,
+        "position": [
+          3.95703125,
+          4.2578125
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          7.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Sunset",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 18,
+        "position": [
+          19.515625,
+          8.828125
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          6.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "The Castro",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 19,
+        "position": [
+          32.78125,
+          24.796875
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          4.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "The Embarcadero",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 20,
+        "position": [
+          13.9765625,
+          3.869140625
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          3.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Twin Peaks",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 21,
+        "position": [
+          30.0,
+          20.109375
+        ],
+        "rotation": 0.0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          1.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.001,
+        "location_name": "Union Square",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 22,
+        "position": [
+          23.9375,
+          38.6875
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          1.5,
+          0.6603053435114503
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Alcatraz",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 23,
+        "position": [
+          9.4921875,
+          29.859375
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.114503816793893,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Crissy Field",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 24,
+        "position": [
+          21.53125,
+          31.046875
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.049618320610687,
+          0.7557251908396946
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Fort Mason",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 25,
+        "position": [
+          4.3984375,
+          32.125
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          3.3244274809160306,
+          0.7137404580152672
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Golden Gate Bridge",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 26,
+        "position": [
+          15.0078125,
+          14.359375
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.7061068702290076,
+          0.7137404580152672
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Haight Ashbury",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 27,
+        "position": [
+          7.34765625,
+          14.25
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          3.0267175572519083,
+          0.7404580152671756
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Japanese Gardens",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 28,
+        "position": [
+          25.40625,
+          28.15625
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.6717557251908395,
+          0.7099236641221374
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Lombard Street",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 29,
+        "position": [
+          27.34375,
+          18.203125
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.5,
+          0.7557251908396946
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Market Street",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 30,
+        "position": [
+          25.28125,
+          7.3515625
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.7519083969465647,
+          0.7557251908396946
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Mission District",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 31,
+        "position": [
+          18.71875,
+          24.546875
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.6526717557251906,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Pacific Heights",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 32,
+        "position": [
+          19.453125,
+          16.59375
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.5343511450381677,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Painted Ladies",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 33,
+        "position": [
+          13.9140625,
+          27.953125
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          3.396946564885496,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Palace of Fine Arts",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 34,
+        "position": [
+          28.53125,
+          31.671875
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          1.4923664122137403,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Pier 39",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 35,
+        "position": [
+          32.78125,
+          8.484375
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.045801526717557,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Potrero Hill",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 36,
+        "position": [
+          8.5703125,
+          24.84375
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          1.3893129770992365,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Presidio",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 37,
+        "position": [
+          35.53125,
+          18.875
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.16412213740458,
+          0.6450381679389313
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "South Beach",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 38,
+        "position": [
+          3.95703125,
+          6.2578125
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          1.1946564885496183,
+          0.6412213740458015
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Sunset",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 39,
+        "position": [
+          19.515625,
+          10.828125
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.068702290076336,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "The Castro",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 40,
+        "position": [
+          32.78125,
+          26.796875
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.9923664122137406,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "The Embarcadero",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 41,
+        "position": [
+          13.9765625,
+          5.8671875
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.1755725190839694,
+          0.7480916030534351
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Twin Peaks",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 42,
+        "position": [
+          30.0,
+          22.109375
+        ],
+        "rotation": 0.0,
+        "mass": 0.2,
+        "bounding_box_size": [
+          2.3244274809160306,
+          0.7519083969465649
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "Union Square",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "assets\\fonts\\HARRYP__.ttf",
+        "node_attraction": 0.001,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 0,
+        "position": [
+          33.697916666666664,
+          22.15625
+        ],
+        "rotation": 5.0465136821899295,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          16,
+          1
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "South Beach",
+        "location_2_name": "The Embarcadero",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 1,
+        "position": [
+          34.614583333333336,
+          19.515625
+        ],
+        "rotation": 5.0465136821899295,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "South Beach",
+        "location_2_name": "The Embarcadero",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 2,
+        "position": [
+          31.390625,
+          22.453125
+        ],
+        "rotation": 1.0352932077585908,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Union Square",
+        "location_2_name": "The Embarcadero",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 3,
+        "position": [
+          34.84375,
+          14.27734375
+        ],
+        "rotation": 4.453659420982761,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "South Beach",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 4,
+        "position": [
+          34.15625,
+          11.6796875
+        ],
+        "rotation": 4.453659420982761,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "South Beach",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 5,
+        "position": [
+          33.46875,
+          9.08203125
+        ],
+        "rotation": 4.453659420982761,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "South Beach",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 6,
+        "position": [
+          31.421875,
+          8.9140625
+        ],
+        "rotation": 2.0808929143276362,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "Market Street",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 7,
+        "position": [
+          30.0625,
+          11.34375
+        ],
+        "rotation": 2.0808929143276362,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "Market Street",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 8,
+        "position": [
+          28.703125,
+          13.7734375
+        ],
+        "rotation": 2.0808929143276362,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "Market Street",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 9,
+        "position": [
+          25.796875,
+          8.064453125
+        ],
+        "rotation": 1.3829718438017715,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Mission District",
+        "location_2_name": "Market Street",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 10,
+        "position": [
+          26.3125,
+          10.77734375
+        ],
+        "rotation": 1.3829718438017715,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Mission District",
+        "location_2_name": "Market Street",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 11,
+        "position": [
+          26.828125,
+          13.490234375
+        ],
+        "rotation": 1.3829718438017715,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Mission District",
+        "location_2_name": "Market Street",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 15,
+        "position": [
+          30.28125,
+          6.106770833333333
+        ],
+        "rotation": 3.2915011901009037,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "Mission District",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 16,
+        "position": [
+          27.78125,
+          5.729166666666667
+        ],
+        "rotation": 3.2915011901009037,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Potrero Hill",
+        "location_2_name": "Mission District",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 17,
+        "position": [
+          16.802734375,
+          4.23974609375
+        ],
+        "rotation": 0.1303893857417823,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Mission District",
+        "location_2_name": "Twin Peaks",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 18,
+        "position": [
+          19.62890625,
+          4.6103515625
+        ],
+        "rotation": 0.1303893857417823,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Mission District",
+        "location_2_name": "Twin Peaks",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 19,
+        "position": [
+          22.455078125,
+          4.98095703125
+        ],
+        "rotation": 0.1303893857417823,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Mission District",
+        "location_2_name": "Twin Peaks",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 20,
+        "position": [
+          22.3984375,
+          7.08984375
+        ],
+        "rotation": 5.740576755679245,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Mission District",
+        "location_2_name": "The Castro",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 21,
+        "position": [
+          19.484375,
+          11.71484375
+        ],
+        "rotation": 1.5816213437298283,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "The Castro",
+        "location_2_name": "Painted Ladies",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 22,
+        "position": [
+          17.23046875,
+          13.48046875
+        ],
+        "rotation": 3.6087490201211376,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Haight Ashbury",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 23,
+        "position": [
+          17.26171875,
+          10.59375
+        ],
+        "rotation": 2.4770793538792573,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "The Castro",
+        "location_2_name": "Haight Ashbury",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 24,
+        "position": [
+          15.822916666666666,
+          5.522135416666667
+        ],
+        "rotation": 0.7301984824238553,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Twin Peaks",
+        "location_2_name": "The Castro",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 25,
+        "position": [
+          17.669270833333332,
+          7.175130208333334
+        ],
+        "rotation": 0.7301984824238553,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Twin Peaks",
+        "location_2_name": "The Castro",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 26,
+        "position": [
+          14.3203125,
+          6.69921875
+        ],
+        "rotation": 1.449925342624527,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Twin Peaks",
+        "location_2_name": "Haight Ashbury",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 27,
+        "position": [
+          14.6640625,
+          9.529296875
+        ],
+        "rotation": 1.449925342624527,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Twin Peaks",
+        "location_2_name": "Haight Ashbury",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 28,
+        "position": [
+          9.901041666666666,
+          12.286458333333334
+        ],
+        "rotation": 0.014277459160107213,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "Haight Ashbury",
+        "location_2_name": "Japanese Gardens",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 29,
+        "position": [
+          12.454427083333332,
+          12.322916666666666
+        ],
+        "rotation": 0.014277459160107213,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "Haight Ashbury",
+        "location_2_name": "Japanese Gardens",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 30,
+        "position": [
+          12.3193359375,
+          5.96435546875
+        ],
+        "rotation": 2.239999373532163,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Japanese Gardens",
+        "location_2_name": "Twin Peaks",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 31,
+        "position": [
+          10.662109375,
+          8.0595703125
+        ],
+        "rotation": 2.239999373532163,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Japanese Gardens",
+        "location_2_name": "Twin Peaks",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 32,
+        "position": [
+          9.0048828125,
+          10.15478515625
+        ],
+        "rotation": 2.239999373532163,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Japanese Gardens",
+        "location_2_name": "Twin Peaks",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 33,
+        "position": [
+          5.087239583333333,
+          6.921875
+        ],
+        "rotation": 1.169567527790048,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Sunset",
+        "location_2_name": "Japanese Gardens",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 34,
+        "position": [
+          6.217447916666666,
+          9.5859375
+        ],
+        "rotation": 1.169567527790048,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Sunset",
+        "location_2_name": "Japanese Gardens",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 35,
+        "position": [
+          11.4716796875,
+          3.96630859375
+        ],
+        "rotation": 3.1028206704872927,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "Twin Peaks",
+        "location_2_name": "Sunset",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 36,
+        "position": [
+          8.966796875,
+          4.0634765625
+        ],
+        "rotation": 3.1028206704872927,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "Twin Peaks",
+        "location_2_name": "Sunset",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 37,
+        "position": [
+          6.4619140625,
+          4.16064453125
+        ],
+        "rotation": 3.1028206704872927,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "Twin Peaks",
+        "location_2_name": "Sunset",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 38,
+        "position": [
+          8.2646484375,
+          20.1953125
+        ],
+        "rotation": 4.597484383757038,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Japanese Gardens",
+        "location_2_name": "Presidio",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 39,
+        "position": [
+          7.958984375,
+          17.546875
+        ],
+        "rotation": 4.597484383757038,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Japanese Gardens",
+        "location_2_name": "Presidio",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 40,
+        "position": [
+          7.6533203125,
+          14.8984375
+        ],
+        "rotation": 4.597484383757038,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Japanese Gardens",
+        "location_2_name": "Presidio",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 41,
+        "position": [
+          17.791015625,
+          20.0
+        ],
+        "rotation": 4.363063926131053,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Haight Ashbury",
+        "location_2_name": "Pacific Heights",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 42,
+        "position": [
+          16.86328125,
+          17.453125
+        ],
+        "rotation": 4.363063926131053,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Haight Ashbury",
+        "location_2_name": "Pacific Heights",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 43,
+        "position": [
+          15.935546875,
+          14.90625
+        ],
+        "rotation": 4.363063926131053,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Haight Ashbury",
+        "location_2_name": "Pacific Heights",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 44,
+        "position": [
+          19.208333333333332,
+          17.25
+        ],
+        "rotation": 1.6629631714578743,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Pacific Heights",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 45,
+        "position": [
+          18.963541666666668,
+          19.8984375
+        ],
+        "rotation": 1.6629631714578743,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Pacific Heights",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 46,
+        "position": [
+          22.083333333333332,
+          15.135416666666666
+        ],
+        "rotation": 0.2002499764553055,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Market Street",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 47,
+        "position": [
+          24.713541666666668,
+          15.669270833333334
+        ],
+        "rotation": 0.2002499764553055,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Market Street",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 48,
+        "position": [
+          28.671875,
+          18.15625
+        ],
+        "rotation": 4.115212322292012,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Market Street",
+        "location_2_name": "Union Square",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 49,
+        "position": [
+          32.765625,
+          18.4921875
+        ],
+        "rotation": 5.754057673255315,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "South Beach",
+        "location_2_name": "Union Square",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 50,
+        "position": [
+          32.802083333333336,
+          16.651041666666668
+        ],
+        "rotation": 3.22347026271058,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "South Beach",
+        "location_2_name": "Market Street",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 51,
+        "position": [
+          30.072916666666668,
+          16.427083333333332
+        ],
+        "rotation": 3.22347026271058,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "South Beach",
+        "location_2_name": "Market Street",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 88,
+        "position": [
+          30.65625,
+          27.234375
+        ],
+        "rotation": 2.2878081466018414,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          6,
+          8
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "The Embarcadero",
+        "location_2_name": "Pier 39",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 53,
+        "position": [
+          30.322916666666668,
+          25.25
+        ],
+        "rotation": 2.959316497336914,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "The Embarcadero",
+        "location_2_name": "Lombard Street",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 54,
+        "position": [
+          27.864583333333332,
+          25.703125
+        ],
+        "rotation": 2.959316497336914,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "The Embarcadero",
+        "location_2_name": "Lombard Street",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 55,
+        "position": [
+          20.91015625,
+          12.2890625
+        ],
+        "rotation": 5.274624092463256,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Mission District",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 56,
+        "position": [
+          22.3671875,
+          9.9765625
+        ],
+        "rotation": 5.274624092463256,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Mission District",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 57,
+        "position": [
+          23.82421875,
+          7.6640625
+        ],
+        "rotation": 5.274624092463256,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Painted Ladies",
+        "location_2_name": "Mission District",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 58,
+        "position": [
+          21.59375,
+          20.432291666666668
+        ],
+        "rotation": 5.649024265364754,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Market Street",
+        "location_2_name": "Pacific Heights",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 59,
+        "position": [
+          24.46875,
+          18.317708333333332
+        ],
+        "rotation": 5.649024265364754,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Market Street",
+        "location_2_name": "Pacific Heights",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 60,
+        "position": [
+          26.697916666666668,
+          19.520833333333332
+        ],
+        "rotation": 1.7630544280661495,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Market Street",
+        "location_2_name": "Lombard Street",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 61,
+        "position": [
+          26.052083333333332,
+          22.838541666666668
+        ],
+        "rotation": 1.7630544280661495,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          1
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Market Street",
+        "location_2_name": "Lombard Street",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 62,
+        "position": [
+          20.947916666666668,
+          23.75
+        ],
+        "rotation": 0.4949161632076763,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          2
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Lombard Street",
+        "location_2_name": "Pacific Heights",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 63,
+        "position": [
+          23.177083333333332,
+          24.953125
+        ],
+        "rotation": 0.4949161632076763,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          3
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "green",
+        "border_color": "#555555",
+        "location_1_name": "Lombard Street",
+        "location_2_name": "Pacific Heights",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 64,
+        "position": [
+          23.46875,
+          27.6015625
+        ],
+        "rotation": 2.5006771886788126,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          4
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Lombard Street",
+        "location_2_name": "Fort Mason",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 89,
+        "position": [
+          25.03125,
+          29.359375
+        ],
+        "rotation": 3.230642236224291,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          7,
+          8
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Pier 39",
+        "location_2_name": "Fort Mason",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 66,
+        "position": [
+          27.0,
+          32.010416666666664
+        ],
+        "rotation": 2.15053038493445,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          6
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Pier 39",
+        "location_2_name": "Alcatraz",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 67,
+        "position": [
+          25.46875,
+          34.348958333333336
+        ],
+        "rotation": 2.15053038493445,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          7
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Pier 39",
+        "location_2_name": "Alcatraz",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 68,
+        "position": [
+          22.333333333333332,
+          31.59375
+        ],
+        "rotation": 1.2657006172465712,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          8
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Fort Mason",
+        "location_2_name": "Alcatraz",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 69,
+        "position": [
+          23.135416666666668,
+          34.140625
+        ],
+        "rotation": 1.2657006172465712,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          9
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Fort Mason",
+        "location_2_name": "Alcatraz",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 90,
+        "position": [
+          16.453125,
+          26.984375
+        ],
+        "rotation": 0.3858001339080004,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          9,
+          10
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Palace of Fine Arts",
+        "location_2_name": "Fort Mason",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 91,
+        "position": [
+          18.9921875,
+          28.015625
+        ],
+        "rotation": 0.3858001339080004,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          9,
+          11
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "blue",
+        "border_color": "#555555",
+        "location_1_name": "Palace of Fine Arts",
+        "location_2_name": "Fort Mason",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 72,
+        "position": [
+          16.31640625,
+          24.25
+        ],
+        "rotation": 5.666482452432546,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          12
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Pacific Heights",
+        "location_2_name": "Palace of Fine Arts",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 73,
+        "position": [
+          20.125,
+          25.796875
+        ],
+        "rotation": 1.1624283088576652,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          13
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Pacific Heights",
+        "location_2_name": "Fort Mason",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 74,
+        "position": [
+          7.25390625,
+          29.932291666666668
+        ],
+        "rotation": 6.221249122628782,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          14
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Fort Mason",
+        "location_2_name": "Golden Gate Bridge",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 75,
+        "position": [
+          10.109375,
+          29.755208333333332
+        ],
+        "rotation": 6.221249122628782,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          15
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Fort Mason",
+        "location_2_name": "Golden Gate Bridge",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 76,
+        "position": [
+          12.96484375,
+          29.578125
+        ],
+        "rotation": 6.221249122628782,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          16
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Fort Mason",
+        "location_2_name": "Golden Gate Bridge",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 77,
+        "position": [
+          15.8203125,
+          29.401041666666668
+        ],
+        "rotation": 6.221249122628782,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          17
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Fort Mason",
+        "location_2_name": "Golden Gate Bridge",
+        "path_index": 3,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 78,
+        "position": [
+          18.67578125,
+          29.223958333333332
+        ],
+        "rotation": 6.221249122628782,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          18
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Fort Mason",
+        "location_2_name": "Golden Gate Bridge",
+        "path_index": 4,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 79,
+        "position": [
+          11.703125,
+          26.90625
+        ],
+        "rotation": 2.7345704913201216,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          19
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Crissy Field",
+        "location_2_name": "Palace of Fine Arts",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 80,
+        "position": [
+          6.9453125,
+          28.984375
+        ],
+        "rotation": 5.867240175932933,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          20
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Crissy Field",
+        "location_2_name": "Golden Gate Bridge",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 81,
+        "position": [
+          7.1796875,
+          25.265625
+        ],
+        "rotation": 2.092024325611687,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          21
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Golden Gate Bridge",
+        "location_2_name": "Presidio",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 82,
+        "position": [
+          5.7890625,
+          27.6875
+        ],
+        "rotation": 2.092024325611687,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          0,
+          19
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "black",
+        "border_color": "#555555",
+        "location_1_name": "Golden Gate Bridge",
+        "location_2_name": "Presidio",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 83,
+        "position": [
+          9.03125,
+          25.3515625
+        ],
+        "rotation": 1.3890244955654927,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          21,
+          19
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "gray",
+        "border_color": "#555555",
+        "location_1_name": "Presidio",
+        "location_2_name": "Crissy Field",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 84,
+        "position": [
+          11.107421875,
+          22.76953125
+        ],
+        "rotation": 6.253940375684057,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          14,
+          4
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Pacific Heights",
+        "location_2_name": "Presidio",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 85,
+        "position": [
+          13.64453125,
+          22.6953125
+        ],
+        "rotation": 6.253940375684057,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          3,
+          5
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Pacific Heights",
+        "location_2_name": "Presidio",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 86,
+        "position": [
+          16.181640625,
+          22.62109375
+        ],
+        "rotation": 6.253940375684057,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          4,
+          16
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "red",
+        "border_color": "#555555",
+        "location_1_name": "Pacific Heights",
+        "location_2_name": "Presidio",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 87,
+        "position": [
+          28.46875,
+          22.125
+        ],
+        "rotation": 2.220470196692962,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          14,
+          7
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Union Square",
+        "location_2_name": "Lombard Street",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 88,
+        "position": [
+          26.9375,
+          24.140625
+        ],
+        "rotation": 2.220470196692962,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "yellow",
+        "border_color": "#555555",
+        "location_1_name": "Union Square",
+        "location_2_name": "Lombard Street",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 91,
+        "position": [
+          26.96875,
+          27.9140625
+        ],
+        "rotation": 3.985746639702964,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          7,
+          13
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.01,
+        "edge_attraction": 0.01,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "Lombard Street",
+        "location_2_name": "Pier 39",
+        "path_index": 0,
+        "connection_index": 0
+      }
+    ],
+    "particle_parameters": {
+      "velocity_decay": 0.99,
+      "edge-edge": 0.01,
+      "edge-node": 0.01,
+      "node-label": 0.001,
+      "node-target": 0.001,
+      "node_mass": 1,
+      "edge_mass": 1,
+      "label_mass": 0.2,
+      "interaction_radius": 15,
+      "repulsion_strength": 2
+    },
+    "tasks": [
+      {
+        "name": "Haight Ashbury - Mission District",
+        "node_names": [
+          "Haight Ashbury",
+          "Mission District"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "The Embarcadero - Market Street",
+        "node_names": [
+          "The Embarcadero",
+          "Market Street"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Palace of Fine Arts - Painted Ladies",
+        "node_names": [
+          "Palace of Fine Arts",
+          "Painted Ladies"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Fort Mason - Market Street",
+        "node_names": [
+          "Fort Mason",
+          "Market Street"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Alcatraz - Lombard Street",
+        "node_names": [
+          "Alcatraz",
+          "Lombard Street"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Pier 39 - South Beach",
+        "node_names": [
+          "Pier 39",
+          "South Beach"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Crissy Field - Pier 39",
+        "node_names": [
+          "Crissy Field",
+          "Pier 39"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Pacific Heights - South Beach",
+        "node_names": [
+          "Pacific Heights",
+          "South Beach"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Pacific Heights - The Embarcadero",
+        "node_names": [
+          "Pacific Heights",
+          "The Embarcadero"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Palace of Fine Arts - Haight Ashbury",
+        "node_names": [
+          "Palace of Fine Arts",
+          "Haight Ashbury"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Lombard Street - The Castro",
+        "node_names": [
+          "Lombard Street",
+          "The Castro"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Painted Ladies - Potrero Hill",
+        "node_names": [
+          "Painted Ladies",
+          "Potrero Hill"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "The Embarcadero - The Castro",
+        "node_names": [
+          "The Embarcadero",
+          "The Castro"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Presidio - Haight Ashbury",
+        "node_names": [
+          "Presidio",
+          "Haight Ashbury"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Union Square - Twin Peaks",
+        "node_names": [
+          "Union Square",
+          "Twin Peaks"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Golden Gate Bridge - Union Square",
+        "node_names": [
+          "Golden Gate Bridge",
+          "Union Square"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Alcatraz - Presidio",
+        "node_names": [
+          "Alcatraz",
+          "Presidio"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Fort Mason - Japanese Gardens",
+        "node_names": [
+          "Fort Mason",
+          "Japanese Gardens"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Pier 39 - Mission District",
+        "node_names": [
+          "Pier 39",
+          "Mission District"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Golden Gate Bridge - Sunset",
+        "node_names": [
+          "Golden Gate Bridge",
+          "Sunset"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Market Street - Sunset",
+        "node_names": [
+          "Market Street",
+          "Sunset"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Japanese Gardens - The Embarcadero",
+        "node_names": [
+          "Japanese Gardens",
+          "The Embarcadero"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Alcatraz - Twin Peaks",
+        "node_names": [
+          "Alcatraz",
+          "Twin Peaks"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      },
+      {
+        "name": "Golden Gate Bridge - Potrero Hill",
+        "node_names": [
+          "Golden Gate Bridge",
+          "Potrero Hill"
+        ],
+        "length": null,
+        "points": 2,
+        "points_bonus": null,
+        "points_penalty": null
+      }
+    ]
+  }
+}
