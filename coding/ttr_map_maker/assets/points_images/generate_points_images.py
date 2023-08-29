@@ -151,7 +151,7 @@ def generate_points_images(
     draw = ImageDraw.Draw(image)
     # draw text
     text = str(number)
-    text_size = draw.textsize(text, font=font)
+    _, _, *text_size = draw.textbbox((1,1), text, font=font)
     text_position = ((image_size[0] - text_size[0]) / 2, (image_size[1] - text_size[1]) / 2)
     if outline_color is not None:
       draw.text(text_position, text, font=font, fill=outline_color, stroke_width=outline_stroke_width)
@@ -162,7 +162,7 @@ def generate_points_images(
     image = apply_gradient_shading(image, top_opacity=0, bottom_opacity=80)
     # apply highlights
     light_direction: tuple = (1,1) # light from top left
-    image = apply_highlights(image, light_direction, intensity=200, blur_radius=19)
+    # image = apply_highlights(image, light_direction, intensity=200, blur_radius=11)
     # save image
     image.save(os.path.join(save_filepath, f"{number}.png"))
 
@@ -208,10 +208,18 @@ def get_image_size(
 if __name__ == "__main__":
   # generate_all_points_images(outline_color="#222222")
   generate_all_points_images(
-    font_size=250,
+    font_size=150,
+    # font_size=100,
     outline_color="#222222",
-    font_path="beleriand_ttr\\Ringbearer.ttf",
-    # font_path="beleriand_ttr\\MiddleEarth.ttf",
-    texture_path="assets\\points_images\\black_marble.jpg",
+    # font_path="beleriand_ttr\\Ringbearer.ttf",
+    font_path="beleriand_ttr\\MiddleEarth.ttf",
+    # font_path="assets\\fonts\\HARRYP__.ttf",
+    # font_path="assets\\fonts\\Top Secret Stamp.ttf",
+    texture_path="assets\\points_images\\white_marble2.jpg",
+    # texture_path="assets\\points_images\\blue_stone.png",
+    # texture_path="assets\\points_images\\stamp_texture.png",
+    stroke_width=1,
     outline_stroke_width=0,
+    min_number=1,
+    max_number=150,
     square_image=False,)

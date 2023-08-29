@@ -18,15 +18,19 @@ This project implements tools to create your very own, custom ticket to ride gam
 - automatically optimze the graph layout from the UI (adjustments and optimization still required)
 
 ### planned features:
-- documentation and user manual
-- support for different monitor resolutions
-- add info overlay for reward points for each edge length (possibly implemented via mpl legend?) -> scrapped. Instead, user should add legend to background image manually.
-- support for creating a new graph completely within the GUI
+- !!! add colorbars to task view and edge importance !!!
+- add settings for node style (hidden, flat colors, node images, node degrees, node importance)
 - less bugs. Most importantly:
   - edge attractors are sometimes wrong. likely caused by wrong reconstruction during file loading
+  - fix start-stop button for graph optimizer
+- improve graph-optimizer
+- documentation and user manual
+- support for different monitor resolutions
+- support for creating a new graph completely within the GUI
 - autosave?
 - custom file format for faster workflows (save all parameter settings like board size, offset, task card parameters, images, visibility options etc.)
 - remember last session parameters (graph file, background image, board size, task card parameters, images, visibility options etc.)
+- add info overlay for reward points for each edge length (possibly implemented via mpl legend?) -> scrapped. Instead, user should add legend to background image manually.
 
 Currently the project is still unfinished, but it is already possible to create a custom game, although some steps are still manual and rather tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. The program is only tested on Windows (Win11 22h2). While most of the code should be cross-platform compatible, some features may not work on other operating systems and require modifications (mostly UI related).
 
