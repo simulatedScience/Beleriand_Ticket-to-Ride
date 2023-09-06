@@ -148,7 +148,8 @@ class Particle_Node(Graph_Particle):
       override_position: np.ndarray = None,
       override_image_path: str = None,
       movable: bool = True):
-    """draw node as circle on given axes
+    """
+    draw node as circle on given axes
 
     Args:
         ax (plt.Axes): axes to draw on
@@ -235,7 +236,7 @@ class Particle_Node(Graph_Particle):
         other (Graph_Particle): other particle
 
     Returns:
-        np.ndarray: attraction force vector
+        np.ndarray: attraction force vector (always np.zeros(2))
         np.ndarray: force anchor point
     """
     return np.zeros(2), self.position

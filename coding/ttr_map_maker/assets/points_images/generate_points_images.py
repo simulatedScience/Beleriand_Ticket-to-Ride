@@ -162,7 +162,7 @@ def generate_points_images(
     image = apply_gradient_shading(image, top_opacity=0, bottom_opacity=80)
     # apply highlights
     light_direction: tuple = (1,1) # light from top left
-    # image = apply_highlights(image, light_direction, intensity=200, blur_radius=11)
+    image = apply_highlights(image, light_direction, intensity=200, blur_radius=11)
     # save image
     image.save(os.path.join(save_filepath, f"{number}.png"))
 
@@ -221,5 +221,5 @@ if __name__ == "__main__":
     stroke_width=1,
     outline_stroke_width=0,
     min_number=1,
-    max_number=150,
+    max_number=20,
     square_image=False,)

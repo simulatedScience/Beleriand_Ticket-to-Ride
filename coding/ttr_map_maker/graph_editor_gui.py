@@ -1193,9 +1193,9 @@ class Graph_Editor_GUI:
     """
     image_path_var = tk.StringVar(value=file_path)
 
-    label_label = tk.Label(self.settings_frame, text=text)
-    self.add_label_style(label_label)
-    label_label.grid(
+    node_name_label = tk.Label(self.settings_frame, text=text)
+    self.add_label_style(node_name_label)
+    node_name_label.grid(
         row=row_index,
         column=0,
         sticky="w",
@@ -1226,7 +1226,7 @@ class Graph_Editor_GUI:
         label_input_frame,
         row_index=0,
         column_index=1,
-        command=lambda: browse_image_file("browse node image file", image_path_var))
+        command=lambda: browse_image_file("browse image file", image_path_var))
     browse_button.grid(
         row=0,
         column=1,
@@ -1273,6 +1273,12 @@ class Graph_Editor_GUI:
     edge_color_var = self.add_edge_color_setting(edge_settings["color"], row_index)
     row_index += 1
     # edge image file path
+    image_override_filepath_var = self.add_node_image_setting(
+        text="Edge override image",
+        file_path=edge_settings["image_override_filepath"],
+        row_index=row_index,
+        width=15)
+    row_index += 1
 
     # add edge buttons (apply & delete)
     apply_function = lambda: self.apply_edge_settings(
@@ -1280,7 +1286,8 @@ class Graph_Editor_GUI:
             posisition_x_var,
             position_y_var,
             rotation_var_deg,
-            edge_color_var)
+            edge_color_var,
+            image_override_filepath_var,)
     delete_function = lambda: self.delete_edge(particle_edge)
     self.add_settings_buttons(row_index, apply_function, delete_function)
     row_index += 1
@@ -1309,7 +1316,8 @@ class Graph_Editor_GUI:
       posisition_x_var: tk.DoubleVar,
       position_y_var: tk.DoubleVar,
       rotation_var_deg: tk.DoubleVar,
-      edge_color_var: tk.IntVar):
+      edge_color_var: tk.IntVar,
+      image_override_filepath_var: tk.StringVar) -> None:
     """
     Apply the settings of an edge.
 
@@ -1319,6 +1327,7 @@ class Graph_Editor_GUI:
         position_y_var (tk.DoubleVar): The y position variable.
         rotation_var_deg (tk.DoubleVar): The rotation variable in degrees.
         edge_color_var (tk.IntVar): The color variable.
+        image_override_filepath_var (tk.StringVar): The image override file path variable (empty string deletes override).
     """
     new_position = np.array([posisition_x_var.get(), position_y_var.get()], dtype=np.float16)
     new_rotation = np.deg2rad(rotation_var_deg.get())
@@ -1327,12 +1336,13 @@ class Graph_Editor_GUI:
         self.ax,
         position=new_position,
         rotation=new_rotation)
-    if new_color != particle_edge.color:
+    if new_color != particle_edge.color or image_override_filepath_var.get() != particle_edge.image_override_filepath:
       old_color = particle_edge.color
       for connected_edge in get_edge_connected_particles(particle_edge)[0][1:-1]:
         connected_edge.set_adjustable_settings(
           self.ax,
-          color=new_color)
+          color=new_color,
+          image_override_filepath=image_override_filepath_var.get())
       self.particle_graph.update_path_color(particle_edge, old_color)
     self.canvas.draw_idle()
 
@@ -1740,8 +1750,8 @@ def delete_middle_edge_particle(
   left_particle_list: List[Graph_Particle] = connected_particles[:deletion_index + 1]
   right_particle_list: List[Graph_Particle] = connected_particles[deletion_index:]
   # calculate the gap between the deleted edge and the left edge
-  deleted_edge_anchor = deleted_edge.get_attraction_forces(connected_particles[deletion_index - 1])[1]
-  left_edge_anchor = connected_particles[deletion_index - 1].get_attraction_forces(deleted_edge)[1]
+  _, deleted_edge_anchor = deleted_edge.get_attraction_forces(connected_particles[deletion_index - 1])
+  _, left_edge_anchor = connected_particles[deletion_index - 1].get_attraction_forces(deleted_edge)
   edge_gap: float = np.linalg.norm(deleted_edge_anchor - left_edge_anchor)
   # get endpoints of current connection
   left_connection = get_connection_endpoints(left_particle_list, added_gap_at_end=edge_gap)

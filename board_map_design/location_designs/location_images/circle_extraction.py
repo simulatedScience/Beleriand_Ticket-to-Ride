@@ -96,7 +96,7 @@ def extract_circles(image_path: str, output_folder: str) -> Tuple[List[Tuple[flo
     return centers, boxes
 
 if __name__ == "__main__":
-    all_locations_image: str = "beleriand_all_locations.png"
+    all_locations_image: str = "beleriand_all_locations2.png"
     output_folder: str = "auto_locations"
     centerpoints, bounding_boxes = extract_circles(all_locations_image, output_folder)
     # print bboxes and centers

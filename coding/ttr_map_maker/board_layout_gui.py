@@ -231,7 +231,8 @@ class Board_Layout_GUI:
 
     # create frame for controls
     control_outer_frame = tk.Frame(self.main_frame,
-        background="#ff00ff",#self.color_config["bg_color"],
+        # background="#ff00ff",#self.color_config["bg_color"],
+        background=self.color_config["bg_color"],
         width=421, # widest width of all widgets in the control frame
         height=self.master.winfo_height()-2*self.grid_pad_y, )
     control_outer_frame.grid_propagate(False)
@@ -352,7 +353,7 @@ class Board_Layout_GUI:
     self.edge_file = tk.StringVar(value="beleriand_ttr//beleriand_paths.txt", name="edge_file")
     self.task_file = tk.StringVar(value="beleriand_ttr//beleriand_tasks.txt", name="task_file")
     self.background_file = tk.StringVar(value="beleriand_ttr//beleriand_map.png", name="background_file")
-    self.particle_graph_file = tk.StringVar(value="beleriand_ttr//beleriand_particle_graph.json", name="particle_graph_file")
+    self.particle_graph_file = tk.StringVar(value="beleriand_ttr//final_beleriand_graph.json", name="particle_graph_file")
 
     base_colors = [
       "#000000", # black
@@ -387,10 +388,10 @@ class Board_Layout_GUI:
     self.move_edges_enabled = tk.BooleanVar(value=False, name="move_edges_enabled")
 
     # variables for plot
-    self.board_width = tk.DoubleVar(value=80.7, name="board_width")
-    self.board_height = tk.DoubleVar(value=54.0, name="board_height")
-    self.background_image_offset_x = tk.DoubleVar(value=0.0, name="background_image_offset_x")
-    self.background_image_offset_y = tk.DoubleVar(value=0.0, name="background_image_offset_y")
+    self.board_width = tk.DoubleVar(value=82.7935, name="board_width")
+    self.board_height = tk.DoubleVar(value=59.1, name="board_height")
+    self.background_image_offset_x = tk.DoubleVar(value=2, name="background_image_offset_x")
+    self.background_image_offset_y = tk.DoubleVar(value=-2, name="background_image_offset_y")
     self.board_scale_factor = tk.DoubleVar(value=1., name="board_scale_factor")
     self.graph_positions_scale_factor = tk.DoubleVar(value=1.0, name="node_scale_factor")
     self.node_size = tk.DoubleVar(value=3.0, name="node_size")
@@ -897,11 +898,12 @@ class Board_Layout_GUI:
     row_index += 1
     add_checkbutton(row_index, column_index, "Show Plot Frame", self.show_plot_frame, command=self.toggle_mpl_frame_visibility)
     row_index += 1
-    add_checkbutton(row_index, column_index, "Show edge attractos", self.show_edge_attractors, command=self.toggle_edge_attractors_visibility)
+    add_checkbutton(row_index, column_index, "Show edge attractors", self.show_edge_attractors, command=self.toggle_edge_attractors_visibility)
     row_index += 1
     # add button to repair connection ids
     repair_connection_ids_button = tk.Button(toggle_frame, text="Repair Connection IDs", command=self.repair_connection_ids)
     self.add_button_style(repair_connection_ids_button)
+    repair_connection_ids_button.config(font=("Arial", 8))
     repair_connection_ids_button.grid(
         row=row_index,
         column=column_index,
@@ -1059,6 +1061,9 @@ class Board_Layout_GUI:
     """
     if self.particle_graph is None:
       return
+    if hasattr(self, "colorbar_ax"):
+      self.colorbar_ax.remove()
+      del self.colorbar_ax
     self.particle_graph.erase_edges()
     if self.edge_style.get() == "Edge images":
       edge_colors = self.particle_graph.get_edge_colors()
@@ -1075,9 +1080,17 @@ class Board_Layout_GUI:
     elif self.edge_style.get() == "Flat colors":
       self.particle_graph.draw_edges(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"])
     elif self.edge_style.get() == "Show tasks":
-      self.particle_graph.draw_tasks(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"], neutral_color=self.color_config["edge_neutral_color"])
+      self.colorbar_ax, _ = self.particle_graph.draw_tasks(
+          self.ax,
+          movable=self.move_edges_enabled.get(),
+          border_color=self.color_config["edge_border_color"],
+          neutral_color=self.color_config["edge_neutral_color"])
     elif self.edge_style.get() == "Edge importance":
-      self.particle_graph.draw_edge_importance(self.ax, movable=self.move_edges_enabled.get(), border_color=self.color_config["edge_border_color"], neutral_color=self.color_config["edge_neutral_color"])
+      self.colorbar_ax, _ = self.particle_graph.draw_edge_importance(
+          self.ax,
+          movable=self.move_edges_enabled.get(),
+          border_color=self.color_config["edge_border_color"],
+          neutral_color=self.color_config["edge_neutral_color"])
     self.canvas.draw_idle()
 
   def get_edge_color_map(self, edge_colors) -> dict:

@@ -3,12 +3,13 @@ from counting_strip_generator import generate_counting_strip
 
 # Beleriand counting strip
 strip_minmax = [
-    (1, 35),
-    (36, 75),
-    (76, 110),
-    (111, 150)]
-image_size = [11975, 8445]
-for (min_number, max_number), strip_length_px in zip(strip_minmax, image_size*2):
+    (1, 45),
+    (46, 75),
+    (76, 120),
+    (121, 150)]
+# image_size = [11975, 8445] # for large map (including Angband), no empty_first_cell
+image_size = [10887, 7766] # for small map (excluding Angband), empty_first_cell
+for i, ((min_number, max_number), strip_length_px) in enumerate(zip(strip_minmax, image_size*2)):
     
     strip_image = generate_counting_strip(
         min_number=min_number,
@@ -23,6 +24,9 @@ for (min_number, max_number), strip_length_px in zip(strip_minmax, image_size*2)
         #     "assets\\counting_strips\\2d_runestone.png",
         #     "assets\\counting_strips\\2d_palantir.png"],
         number_folders=["assets\\points_images\\points_standard"],
-        number_heights=[0.4, 0.5, 0.5],
-        number_offset=(0., 0.1))
-    strip_image.save(f"assets\\beleriand_counting_{min_number}_{max_number}.png")
+        # number_heights=[0.4, 0.5, 0.5],
+        number_heights=[0.5, 0.5, 0.5],
+        number_offset=(0., 0.1),
+        number_rotation=45 * (-1)**i,
+        empty_first_cell=True,
+        save_path_prefix=f"assets\\counting_strips\\beleriand_counting_strips\\beleriand_")

@@ -5,14 +5,14 @@ Included files are mostly directly related to the map creator program. Remaining
 - [ ] Game board
   - [ ] Game board design
     - [x] (Beleriand) map design: (`"Beleriand_TTR\board_map_design\map_samples\final_bg_Sirielle_Beleriand_upscaled_cut.png"`)
-    - [x] frame design (counting strip)
+    - [ ] frame design (counting strip)
     - [ ] graph (double edges?)
     - [x] edge designs
-    - [ ] node designs
+    - [x] node designs
     - [x] name designs
     - [ ] finalize legend design
-  - [x] Cardboard
-  - [ ] Finishing tape for edges
+  - [x] Cardboard: [Graupappe bei Modulor (Laden in Berlin)](https://www.modulor.de/graupappe-glatt-glatt-1-5-x-750-x-1000-schmalbahn-ca-950-g-m2-oxid.html) oder [Vollpappe schwarz](https://www.modulor.de/vollpappe-schwarz.html)
+  - [x] Finishing tape for edges
   - [ ] Spray glue
   - [ ] Backside cover
 - [ ] Task cards

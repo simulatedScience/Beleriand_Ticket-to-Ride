@@ -35,6 +35,7 @@ class Particle_Edge(Graph_Particle):
         repulsion_strength: float = 1,
         path_index: int = 0,
         connection_index: int = 0,
+        image_override_filepath: str = "",
         ):
     """
     initialize a particle edge as a part of a connection two nodes `location_1` and `location_2`.  `path_index` is the index of the edge along the path between the two given locations. Counting starts at index 0, up  to path length -1.
@@ -73,11 +74,14 @@ class Particle_Edge(Graph_Particle):
     self.edge_attraction = edge_attraction
     self.color = color
     self.border_color = border_color
+    if location_1_name > location_2_name: # sort location names alphabetically
+      location_1_name, location_2_name = location_2_name, location_1_name
     self.location_1_name = location_1_name
     self.location_2_name = location_2_name
     self.path_index = path_index
     self.connection_index = connection_index
     self.image_file_path = None
+    self.image_override_filepath = image_override_filepath
 
 
   def get_adjustable_settings(self) -> dict[str, object]:
@@ -98,6 +102,7 @@ class Particle_Edge(Graph_Particle):
       "rotation": self.rotation,
       "color": self.color,
       "image_file_path": self.image_file_path,
+      "image_override_filepath": self.image_override_filepath
     }
 
   def set_adjustable_settings(self,
@@ -105,7 +110,8 @@ class Particle_Edge(Graph_Particle):
       position: np.ndarray = None,
       rotation: float = None,
       color: str = None,
-      image_file_path: str = "") -> None:
+      image_file_path: str = "",
+      image_override_filepath: str = "") -> None:
     """
     Set the adjustable settings of the edge particle. If a new image file path is given, the image is loaded and drawn. Allowed settings are:
       - position (np.ndarray)
@@ -135,8 +141,9 @@ class Particle_Edge(Graph_Particle):
           if isinstance(artist, Rectangle):
             artist.set_facecolor(self.color)
             artist.set_edgecolor(self.border_color)
-    if image_file_path not in ("", self.image_file_path):
-      self.set_image_file_path(image_file_path)
+    if image_file_path not in ("", self.image_file_path) \
+        or not image_override_filepath in (None, self.image_override_filepath):
+      self.set_image_file_path(image_file_path, image_override_filepath=image_override_filepath)
       redraw = True
 
     if redraw:
@@ -194,7 +201,6 @@ class Particle_Edge(Graph_Particle):
     else: # other_particle is Particle_Node
       return self.get_node_attraction_force(other_particle)
 
-
   def get_edge_attraction_force(self, other_edge: "Particle_Edge") -> Tuple[np.ndarray, np.ndarray]:
     """
     get attraction force between this particle and the other edge depending on the minimum distance between midpoints of edge's bounding boxes shortest edges.
@@ -220,7 +226,6 @@ class Particle_Edge(Graph_Particle):
     force_direction = (closest_points[1, :] - closest_points[0, :]) / min_distance
     translation_force = self.edge_attraction * self.attraction_from_distance(min_distance) * force_direction
     return translation_force, closest_points[0, :]
-
 
   def get_node_attraction_force(self, node: Graph_Particle) -> Tuple[np.ndarray, np.ndarray]:
     """
@@ -249,7 +254,6 @@ class Particle_Edge(Graph_Particle):
 
     return translation_force, force_anchor
 
-
   def get_edge_midpoints(self, eps=1e-8):
     """
     get the midpoints of the edges of the bounding box of this edge
@@ -269,7 +273,6 @@ class Particle_Edge(Graph_Particle):
           break
     return midpoints
 
-  
   def attraction_from_distance(self, distance):
     """
     get attraction force depending on the distance
@@ -284,30 +287,36 @@ class Particle_Edge(Graph_Particle):
     # return (np.exp(distance) - 1) / 3
 
 
-  def set_parameters(self, edge_parameters):
-    """
-    set parameters of this edge
+  # def set_parameters(self, edge_parameters):
+  #   """
+  #   set parameters of this edge
 
-    Args:
-        edge_parameters (dict): dictionary with parameters for this edge
-    """
-    self.node_attraction = edge_parameters.get("edge-node", self.node_attraction)
-    self.edge_attraction = edge_parameters.get("edge-edge", self.edge_attraction)
-    self.mass = edge_parameters.get("edge_mass", self.mass)
-    self.color = edge_parameters.get("color", self.color)
-    self.velocity_decay = edge_parameters.get("velocity_decay", self.velocity_decay)
-    self.repulsion_strength = edge_parameters.get("repulsion_strength", self.repulsion_strength)
-    self.interaction_radius = edge_parameters.get("interaction_radius", self.interaction_radius)
+  #   Args:
+  #       edge_parameters (dict): dictionary with parameters for this edge
+  #   """
+  #   self.node_attraction = edge_parameters.get("edge-node", self.node_attraction)
+  #   self.edge_attraction = edge_parameters.get("edge-edge", self.edge_attraction)
+  #   self.mass = edge_parameters.get("edge_mass", self.mass)
+  #   self.color = edge_parameters.get("color", self.color)
+  #   self.velocity_decay = edge_parameters.get("velocity_decay", self.velocity_decay)
+  #   self.repulsion_strength = edge_parameters.get("repulsion_strength", self.repulsion_strength)
+  #   self.interaction_radius = edge_parameters.get("interaction_radius", self.interaction_radius)
 
 
-  def set_image_file_path(self, image_file_path: str = None):
+  def set_image_file_path(self, image_file_path: str = None, image_override_filepath: str = None):
     """
     Set edge to display the image at the given filepath when drawn.
     If `image_file_path` is `None`, the image will be removed and the edge is drawn as a flat colored rectangle.
 
     Args:
         image_file_path (str, optional): filepath to image file. Image aspect ratio should match bounding box aspect ratio. Otherwise the image gets stretched. Defaults to None.
+        override (str, optional): Sets a filepath for an image to draw instead of the image at `image_file_path`. Defaults to None.
+            - if a nonempty string is given, that is used as the new override filepath
+            - if an empty string is given, the override filepath is deleted and the image at `image_file_path` will be drawn
+            - if `None` is given, the override filepath is not changed
     """
+    if image_override_filepath is not None:
+      self.image_override_filepath = image_override_filepath
     self.image_file_path = image_file_path
 
 
@@ -320,6 +329,7 @@ class Particle_Edge(Graph_Particle):
       movable: bool = True) -> None:
     """
     draw this edge as a rectangle
+    If there is an image stored in self.image_file_path or self.image_override_filepath, draw the edge as that. The override_filpath takes priority.
 
     Args:
         ax (plt.Axes): matplotlib axes
@@ -339,7 +349,10 @@ class Particle_Edge(Graph_Particle):
           self.border_color = border_color
       super().draw_bounding_box(ax, color, border_color, alpha, zorder, movable)
     else:
-      mpl_image = mpimg.imread(self.image_file_path)
+      if self.image_override_filepath: # use override image
+        mpl_image = mpimg.imread(self.image_override_filepath)
+      else: # use image at `self.image_file_path`
+        mpl_image = mpimg.imread(self.image_file_path)
       edge_extent = (
         self.position[0] - self.bounding_box_size[0] / 2,
         self.position[0] + self.bounding_box_size[0] / 2,
@@ -427,6 +440,7 @@ class Particle_Edge(Graph_Particle):
     particle_info["location_2_name"] = self.location_2_name
     particle_info["path_index"] = self.path_index
     particle_info["connection_index"] = self.connection_index
+    particle_info["image_override_filepath"] = self.image_override_filepath
     return particle_info
 
 def get_adjacent_nodes(particle_edge: Particle_Edge) -> Tuple[List[Particle_Node], int]:

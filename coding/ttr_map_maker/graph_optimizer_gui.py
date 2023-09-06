@@ -156,29 +156,29 @@ class Graph_Optimzer_GUI:
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
     row_index += 1
-    add_label_and_entry(row_index, "Time Step Size", self.time_step)
+    add_label_and_entry(row_index, "Time step size", self.time_step)
     row_index += 1
-    add_label_and_entry(row_index, "Time Steps Per Frame", self.iterations_per_frame)
+    add_label_and_entry(row_index, "Time steps per frame", self.iterations_per_frame)
     row_index += 1
-    add_label_and_entry(row_index, "Velocity Decay", self.velocity_decay)
+    add_label_and_entry(row_index, "Velocity decay", self.velocity_decay)
     row_index += 1
-    add_label_and_entry(row_index, "Edge-Edge Attraction", self.edge_edge_force)
+    add_label_and_entry(row_index, "Edge-Edge attraction", self.edge_edge_force)
     row_index += 1
-    add_label_and_entry(row_index, "Edge-Node Attraction", self.edge_node_force)
+    add_label_and_entry(row_index, "Edge-Node attraction", self.edge_node_force)
     row_index += 1
-    add_label_and_entry(row_index, "Node-Label Attraction", self.node_label_force)
+    add_label_and_entry(row_index, "Node-Label attraction", self.node_label_force)
     row_index += 1
-    add_label_and_entry(row_index, "Node-Target Attraction", self.node_target_force)
+    add_label_and_entry(row_index, "Node-Target attraction", self.node_target_force)
     row_index += 1
-    add_label_and_entry(row_index, "Node Mass", self.node_mass)
+    add_label_and_entry(row_index, "Node mass", self.node_mass)
     row_index += 1
-    add_label_and_entry(row_index, "Edge Mass", self.edge_mass)
+    add_label_and_entry(row_index, "Edge mass", self.edge_mass)
     row_index += 1
-    add_label_and_entry(row_index, "Label Mass", self.label_mass)
+    add_label_and_entry(row_index, "Label mass", self.label_mass)
     row_index += 1
-    add_label_and_entry(row_index, "Interaction Radius", self.interaction_radius)
+    add_label_and_entry(row_index, "Interaction radius", self.interaction_radius)
     row_index += 1
-    add_label_and_entry(row_index, "Repulsion Strength", self.repulsion_strength)
+    add_label_and_entry(row_index, "Repulsion strength", self.repulsion_strength)
     row_index += 1
     # add button to load parameters into the particle simulation
     self.start_stop_button = tk.Button(particle_frame, text="Start", command=self.start_stop_optimization)
@@ -229,7 +229,8 @@ class Graph_Optimzer_GUI:
     self.particle_graph.erase()
     self.particle_graph.draw(ax=self.ax)
     self.canvas.draw_idle()
-    self.master.after(1, self.run_smulation_frame)
+    if self.simulation_running:
+      self.master.after(1, self.run_smulation_frame)
 
   def load_particle_parameters(self):
     """

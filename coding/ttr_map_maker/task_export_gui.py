@@ -81,18 +81,18 @@ class Task_Export_GUI:
 
     # variables for task export
     self.card_frame_filepath: tk.StringVar = tk.StringVar(value="")
-    self.card_frame_width: tk.DoubleVar = tk.DoubleVar(value=8.9)
-    self.card_frame_height: tk.DoubleVar = tk.DoubleVar(value=6.4)
-    self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=8.9)
-    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=5.6)
-    self.background_image_offset_x: tk.DoubleVar = tk.DoubleVar(value=0.15)
-    self.background_image_offset_y: tk.DoubleVar = tk.DoubleVar(value=0.3)
+    self.card_frame_width: tk.DoubleVar = tk.DoubleVar(value=8.8)
+    self.card_frame_height: tk.DoubleVar = tk.DoubleVar(value=6.3)
+    self.background_image_width: tk.DoubleVar = tk.DoubleVar(value=8.14)
+    self.background_image_height: tk.DoubleVar = tk.DoubleVar(value=5.64)
+    self.background_image_offset_x: tk.DoubleVar = tk.DoubleVar(value=0.33)
+    self.background_image_offset_y: tk.DoubleVar = tk.DoubleVar(value=0.33)
 
     self.label_scale: tk.DoubleVar = tk.DoubleVar(value=0.4)
     self.node_scale: tk.DoubleVar = tk.DoubleVar(value=0.25)
     self.node_image_filepath: tk.StringVar = tk.StringVar(value="")
-    self.label_position_x: tk.DoubleVar = tk.DoubleVar(value=4.45)
-    self.label_position_y: tk.DoubleVar = tk.DoubleVar(value=5.55)
+    self.label_position_x: tk.DoubleVar = tk.DoubleVar(value=4.4)
+    self.label_position_y: tk.DoubleVar = tk.DoubleVar(value=5.85)
 
     self.node_image_override: tk.BooleanVar = tk.BooleanVar(value=False)
     self.node_connector_lines: tk.BooleanVar = tk.BooleanVar(value=True)
@@ -100,7 +100,7 @@ class Task_Export_GUI:
 
     self.points_image_directory: tk.StringVar = tk.StringVar(value=os.path.join(os.getcwd(), "assets", "points_images"))
     self.points_font_size: tk.DoubleVar = tk.DoubleVar(value=1.15)
-    self.points_position_x: tk.DoubleVar = tk.DoubleVar(value=1.05)
+    self.points_position_x: tk.DoubleVar = tk.DoubleVar(value=1.1)
     self.points_position_y: tk.DoubleVar = tk.DoubleVar(value=1.3)
 
     self.bonus_font_size: tk.DoubleVar = tk.DoubleVar(value=1.0)
@@ -119,7 +119,7 @@ class Task_Export_GUI:
     if current_directory is None:
       current_directory = os.getcwd()
     self.current_directory: str = current_directory
-    self.export_filepath: tk.StringVar = tk.StringVar(value=os.path.join(current_directory, "task_cards"))
+    self.export_folderpath: tk.StringVar = tk.StringVar(value=os.path.join(current_directory, "beleriand_ttr", "task_cards"))
 
     # create widgets
     self.create_task_export_widgets()
@@ -719,7 +719,7 @@ class Task_Export_GUI:
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=0,
         )
-    export_filepath_entry: tk.Entry = tk.Entry(export_filepath_selector_frame, textvariable=self.export_filepath, width=10)
+    export_filepath_entry: tk.Entry = tk.Entry(export_filepath_selector_frame, textvariable=self.export_folderpath, width=10)
     self.add_entry_style(export_filepath_entry)
     export_filepath_entry.xview_moveto(1)
     export_filepath_entry.grid(
@@ -733,13 +733,17 @@ class Task_Export_GUI:
         frame=export_filepath_selector_frame,
         row_index=0,
         column_index=2,
-        command=lambda: browse_directory("Select task card directory", self.export_filepath),
+        command=lambda: browse_directory("Select task card directory", self.export_folderpath),
         )
     # add buttons to export the current or all task cards
+    def export_current_task_card():
+        task = self.task_list[self.selected_task.get()]
+        self.export_task_card(task)
     export_current_button: tk.Button = tk.Button(
         export_buttons_frame,
         text="Export current",
-        command=lambda task=self.task_list[self.selected_task.get()]: self.export_task_card(task),
+        command=export_current_task_card,
+        # command=lambda task=self.task_list[self.selected_task.get()]: self.export_task_card(task),
         )
     self.add_button_style(export_current_button)
     export_current_button.grid(
@@ -829,13 +833,15 @@ class Task_Export_GUI:
     Args:
         task (TTR_Task): the task to export.
     """
-    filepath: str = os.path.join(self.export_filepath.get(), f"{task.name}.png")
+    print(f"Exporting task {task.name} to {task.name}.png", end = "...")
+    filepath: str = os.path.join(self.export_folderpath.get(), f"{task.name}.png")
     self.fig.savefig(
         filepath,
         dpi=300,
         format="png",
         bbox_inches="tight",
         transparent=True)
+    print("Done!")
 
 
   def get_current_settings(self) -> dict:
@@ -864,7 +870,7 @@ class Task_Export_GUI:
         "bonus_font_size": self.bonus_font_size.get(),
         "penalty_font_size": self.penalty_font_size.get(),
 
-        "export_filepath": self.export_filepath.get(),
+        "export_filepath": self.export_folderpath.get(),
         "selected_task": self.selected_task.get(),
     }
 

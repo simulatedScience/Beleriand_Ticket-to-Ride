@@ -32,7 +32,8 @@ class Particle_Label(Graph_Particle):
         fontsize: int = 150,
         font_name: str = None,
         # font_path: str = "beleriand_ttr\\MiddleEarth.ttf",
-        font_path: str = "assets\\fonts\\HARRYP__.ttf",
+        font_path: str = "beleriand_ttr\\ringbearer.ttf",
+        # font_path: str = "assets\\fonts\\HARRYP__.ttf",
         height_scale_factor: float = None):
     """
     Initialize a particle label

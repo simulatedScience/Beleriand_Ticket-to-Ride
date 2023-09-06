@@ -301,7 +301,8 @@ class TTR_Particle_Graph:
 
   def repair_connections(self):
     """
-    Update the `connected_particles` property of all edge particle based on the current state of the graph (as defined by the keys in self.particle_edges). This is useful to repair graphs with wrong connection settings.
+    Update the `connected_particles` property of all edge particle based on the current state of the graph (as defined by the keys in self.particle_edges).
+    This is useful to repair graphs with wrong connection settings.
     """
     # nodes should never be connected to other particles
     for node in self.particle_nodes.values():
@@ -315,7 +316,7 @@ class TTR_Particle_Graph:
     # 3. update `connected_particles` property of particles in the current connection
     updated_edges = set()
     for edge_key in self.particle_edges.keys():
-      location_1, location_2, connection_index = edge_key[0], edge_key[1], edge_key[3]
+      location_1, location_2, connection_index = edge_key[0], edge_key[1], edge_key[3] # ignore path index for now
       connection_identifier = (location_1, location_2, connection_index)
       if connection_identifier not in updated_edges:
         self.repair_edge_connection(location_1, location_2, connection_index)
@@ -333,17 +334,20 @@ class TTR_Particle_Graph:
         connection_index (int): index of the connection
     """
     # find all edges that belong to the current connection
-    edge_particles = []
+    edge_particles: list[Particle_Edge] = []
     length = 0
-    while True:
-        if (location_1, location_2, length, connection_index) in self.particle_edges:
-            edge_particles.append(self.particle_edges[(location_1, location_2, length, connection_index)])
-            length += 1
-        else:
-            break
+    while True: # find all edge particles that belong to the current connection sorted by path index (increasing)
+      if (location_1, location_2, length, connection_index) in self.particle_edges:
+          edge_particles.append(self.particle_edges[(location_1, location_2, length, connection_index)])
+          length += 1
+      else:
+          break
     # update connected_particles property of particles in the current connection
     node_1 = self.particle_nodes[location_1]
     node_2 = self.particle_nodes[location_2]
+    # sort edges based on distance of first edge to each node to assign correct node to the end edge particles
+    if np.linalg.norm(edge_particles[0].position - node_1.position) > np.linalg.norm(edge_particles[0].position - node_2.position):
+      edge_particles.reverse()
     if length == 1: # handle length 1 connections
       edge_particles[0].connected_particles = [node_1, node_2]
       return
@@ -445,7 +449,7 @@ class TTR_Particle_Graph:
             angular_velocity_decay = particle_parameters["velocity_decay"],
             repulsion_strength = 0, # particle_parameters["repulsion_strength"])
         )
-        
+
 
   def update_tasks(self, new_tasks: dict[str, TTR_Task]) -> None:
     """
@@ -1251,7 +1255,7 @@ class TTR_Particle_Graph:
         node_positions = [],
         particle_parameters = particle_parameters,
       )
-    particle_dict: dict[int, Graph_Particle] = dict()
+    particles_by_id: dict[int, Graph_Particle] = dict()
     max_particle_id: int = 0
     for particle_info in particle_dicts:
       if particle_info["id"] > max_particle_id:
@@ -1278,11 +1282,12 @@ class TTR_Particle_Graph:
         particle_graph.add_particle(particle)
       # add connected particles back to particle info
       particle_info["connected_particles"] = connected_particles
-      particle_dict[particle.get_id()] = particle
-    # add connections to particles
-    for particle, particle_info in zip(particle_dict.values(), particle_dicts):
-      for connected_particle_id in particle_info["connected_particles"]:
-        particle.add_connected_particle(particle_dict[connected_particle_id])
+      particles_by_id[particle.get_id()] = particle
+    # add connections to particles from their ids
+    for particle, particle_info in zip(particles_by_id.values(), particle_dicts):
+      particle.set_connected_particles(
+          [particles_by_id[connected_particle_id] for connected_particle_id in particle_info["connected_particles"]]
+      )
     # set max id
     particle_graph.max_particle_id = max_particle_id
     if "graph_extent" in graph_info["particle_graph"]:
