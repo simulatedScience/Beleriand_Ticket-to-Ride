@@ -1,0 +1,5 @@
+numpy == 1.26.0 # for internal calculations
+matplotlib == 3.8.0 # for main GUI plot
+screeninfo == 0.8.1 # for full-screen mode with multiple monitors
+shapely == 2.0.1 # for polygon calculations
+networkx == 3.1 # for graph calculations

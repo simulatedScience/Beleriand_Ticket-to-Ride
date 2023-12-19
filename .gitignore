@@ -2,15 +2,15 @@
 .jpg~
 __pycache__
 *.pyc
-# board_map_design
-printing
+
 reference images
-pics of cardboard
+projects
+literature
+
+src/tickets_ai-master_by_mcandocia
+src/tickets_ai-modulated_delay
+
 *.zip
-MiddleEarth_TTR/TTR_Middle_Earth_Map_for_production3.jpg
-card_designs
-dq_9_TTR/location_images
-Harry_Potter_TTR
 *.avif
 *.png
 *.jfif

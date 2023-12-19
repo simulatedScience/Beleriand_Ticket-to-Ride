@@ -1,0 +1,1411 @@
+{
+  "particle_graph": {
+    "n_nodes": 14,
+    "n_connections": 7,
+    "n_tasks": 0,
+    "n_edges": 20,
+    "n_labels": 14,
+    "graph_extent": [
+      0.0,
+      40.0,
+      0.0,
+      40.0
+    ],
+    "particles": [
+      {
+        "particle_type": "Particle_Node",
+        "id": 0,
+        "position": [
+          4.42578125,
+          21.453125
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          9.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "1a",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 1,
+        "position": [
+          13.859375,
+          21.109375
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          7.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "1b",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 2,
+        "position": [
+          3.009765625,
+          14.859375
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          6.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "2a",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 3,
+        "position": [
+          15.171875,
+          15.2421875
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          4.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "2b",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 4,
+        "position": [
+          6.81640625,
+          7.984375
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          3.0
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "3a",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 5,
+        "position": [
+          12.5078125,
+          7.765625
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 15.0,
+        "connected_particles": [],
+        "repulsion_strength": 2.0,
+        "target_position": [
+          2.0,
+          1.5
+        ],
+        "color": "#222222",
+        "target_attraction": 0.1,
+        "location_name": "3b",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 18,
+        "position": [
+          22.234375,
+          8.515625
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          22.234375,
+          8.515625
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "4a",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 20,
+        "position": [
+          34.40625,
+          14.8515625
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          34.40625,
+          14.8515625
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "4b",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 26,
+        "position": [
+          20.640625,
+          21.71875
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          21.03125,
+          20.359375
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "5a",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 28,
+        "position": [
+          33.5,
+          27.453125
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          32.40625,
+          26.59375
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "5b",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 34,
+        "position": [
+          10.140625,
+          29.984375
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          10.140625,
+          29.984375
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "6a",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 36,
+        "position": [
+          20.3125,
+          29.78125
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          20.3125,
+          29.78125
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "6b",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 40,
+        "position": [
+          20.487534626038787,
+          37.2409972299169
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          20.487534626038787,
+          37.2409972299169
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "7a",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Node",
+        "id": 42,
+        "position": [
+          26.825484764542942,
+          31.789473684210527
+        ],
+        "rotation": 0,
+        "mass": 0.1,
+        "bounding_box_size": [
+          1,
+          1
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 1,
+        "target_position": [
+          26.825484764542942,
+          31.789473684210527
+        ],
+        "color": "#252526",
+        "target_attraction": 0.001,
+        "location_name": "7b",
+        "image_file_path": null
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 6,
+        "position": [
+          4.42578125,
+          23.453125
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          0.7709923664122137,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          0
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "1a",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 7,
+        "position": [
+          13.859375,
+          23.109375
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          0.7633587786259541,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          1
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "1b",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 8,
+        "position": [
+          3.009765625,
+          16.859375
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1.083969465648855,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          2
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "2a",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 9,
+        "position": [
+          15.171875,
+          17.25
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          1.0763358778625953,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          3
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "2b",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 10,
+        "position": [
+          6.81640625,
+          9.984375
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          0.9923664122137404,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          4
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "3a",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 11,
+        "position": [
+          12.5078125,
+          9.765625
+        ],
+        "rotation": 0,
+        "mass": 1.0,
+        "bounding_box_size": [
+          0.9847328244274809,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          5
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "label": "3b",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 19,
+        "position": [
+          22.234375,
+          10.515625
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          0.950381679389313,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [
+          18
+        ],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "4a",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 21,
+        "position": [
+          34.40625,
+          16.859375
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          0.9427480916030534,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "4b",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 27,
+        "position": [
+          20.640625,
+          23.71875
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          1.0648854961832062,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [
+          26
+        ],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "5a",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 29,
+        "position": [
+          35.3125,
+          29.3125
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          1.0572519083969465,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "5b",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 35,
+        "position": [
+          10.140625,
+          31.984375
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          0.950381679389313,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [
+          34
+        ],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "6a",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 37,
+        "position": [
+          20.3125,
+          31.78125
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          0.9427480916030534,
+          0.7938931297709924
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "6b",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 41,
+        "position": [
+          20.487534626038787,
+          39.2409972299169
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          1.1068702290076335,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [
+          40
+        ],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "7a",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Label",
+        "id": 43,
+        "position": [
+          26.825484764542942,
+          33.78947368421053
+        ],
+        "rotation": 0,
+        "mass": 1,
+        "bounding_box_size": [
+          1.099236641221374,
+          0.7977099236641221
+        ],
+        "velocity_decay": 0.9999,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 5,
+        "connected_particles": [
+          42
+        ],
+        "repulsion_strength": 0,
+        "target_position": null,
+        "label": "7b",
+        "color": "#eeeeee",
+        "fontsize": 150,
+        "font_name": "beleriand_ttr\\MiddleEarth.ttf",
+        "node_attraction": 0.1,
+        "height_scale_factor": 0.003816793893129771
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 12,
+        "position": [
+          7.89453125,
+          24.78125
+        ],
+        "rotation": 6.246762498756102,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          0,
+          13
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "1a",
+        "location_2_name": "1b",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 13,
+        "position": [
+          10.609375,
+          24.703125
+        ],
+        "rotation": 6.246762498756102,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          12,
+          1
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "1a",
+        "location_2_name": "1b",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 14,
+        "position": [
+          7.81640625,
+          15.2734375
+        ],
+        "rotation": 0.031465442571131146,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          2,
+          15
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "2a",
+        "location_2_name": "2b",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 15,
+        "position": [
+          10.1875,
+          15.1171875
+        ],
+        "rotation": 0.031465442571131146,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          14,
+          3
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "2a",
+        "location_2_name": "2b",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 16,
+        "position": [
+          9.0078125,
+          9.0859375
+        ],
+        "rotation": 6.244769075954323,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          4,
+          17
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "3a",
+        "location_2_name": "3b",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 17,
+        "position": [
+          10.609375,
+          9.015625
+        ],
+        "rotation": 6.244769075954323,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          16,
+          5
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "3a",
+        "location_2_name": "3b",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 21,
+        "position": [
+          24.671875,
+          9.78125
+        ],
+        "rotation": 0.47998221205951985,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          20
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "4a",
+        "location_2_name": "4b",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 22,
+        "position": [
+          27.109375,
+          11.0546875
+        ],
+        "rotation": 0.47998221205951985,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          18,
+          22
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "4a",
+        "location_2_name": "4b",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 23,
+        "position": [
+          29.546875,
+          12.3203125
+        ],
+        "rotation": 0.47998221205951985,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          21,
+          23
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "4a",
+        "location_2_name": "4b",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 24,
+        "position": [
+          31.96875,
+          13.5859375
+        ],
+        "rotation": 0.47998221205951985,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          22,
+          24
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "4a",
+        "location_2_name": "4b",
+        "path_index": 3,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 29,
+        "position": [
+          23.40625,
+          21.125
+        ],
+        "rotation": 0.03205423823147413,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          28
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "5a",
+        "location_2_name": "5b",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 30,
+        "position": [
+          26.1875,
+          21.484375
+        ],
+        "rotation": 0.3811200886303405,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          23,
+          20
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "5a",
+        "location_2_name": "5b",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 31,
+        "position": [
+          28.921875,
+          22.796875
+        ],
+        "rotation": 0.5381997213098298,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          26,
+          30
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "5a",
+        "location_2_name": "5b",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 32,
+        "position": [
+          31.8125,
+          25.0
+        ],
+        "rotation": 0.8523589866688093,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          29,
+          31
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "5a",
+        "location_2_name": "5b",
+        "path_index": 3,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 37,
+        "position": [
+          18.15625,
+          31.296875
+        ],
+        "rotation": 2.719043307465734,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          36
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "6b",
+        "location_2_name": "6a",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 38,
+        "position": [
+          15.3359375,
+          31.96875
+        ],
+        "rotation": 3.1204690354244295,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          30,
+          32
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "6b",
+        "location_2_name": "6a",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 39,
+        "position": [
+          12.4375,
+          31.4375
+        ],
+        "rotation": 3.382268423223579,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          31,
+          28
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "orange",
+        "border_color": "#555555",
+        "location_1_name": "6b",
+        "location_2_name": "6a",
+        "path_index": 2,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 43,
+        "position": [
+          23.187499999999996,
+          39.125
+        ],
+        "rotation": 0.35429944391553303,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          40,
+          44
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "7a",
+        "location_2_name": "7b",
+        "path_index": 0,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 44,
+        "position": [
+          28.406249999999996,
+          38.90625
+        ],
+        "rotation": 5.572833907378579,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          43,
+          45
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "7a",
+        "location_2_name": "7b",
+        "path_index": 1,
+        "connection_index": 0
+      },
+      {
+        "particle_type": "Particle_Edge",
+        "id": 45,
+        "position": [
+          29.015625000000004,
+          34.53125
+        ],
+        "rotation": 4.246383675862888,
+        "mass": 1.0,
+        "bounding_box_size": [
+          4,
+          1
+        ],
+        "velocity_decay": 0.99,
+        "angular_velocity_decay": 0.9999,
+        "interaction_radius": 15.0,
+        "connected_particles": [
+          44,
+          42
+        ],
+        "repulsion_strength": 2.0,
+        "target_position": null,
+        "node_attraction": 0.1,
+        "edge_attraction": 0.1,
+        "color": "purple",
+        "border_color": "#555555",
+        "location_1_name": "7a",
+        "location_2_name": "7b",
+        "path_index": 2,
+        "connection_index": 0
+      }
+    ],
+    "particle_parameters": {
+      "velocity_decay": 0.99,
+      "edge-edge": 0.1,
+      "edge-node": 0.1,
+      "node-label": 0.1,
+      "node-target": 0.1,
+      "node_mass": 1.0,
+      "edge_mass": 1.0,
+      "label_mass": 1.0,
+      "interaction_radius": 15.0,
+      "repulsion_strength": 2.0
+    },
+    "tasks": []
+  }
+}
