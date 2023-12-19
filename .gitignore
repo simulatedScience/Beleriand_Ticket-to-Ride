@@ -1,15 +1,17 @@
+# ignore cache files
 .kra~
 .jpg~
 __pycache__
 *.pyc
-
+# ignore finished projects and references
 reference images
-projects
+### ignore all project files, but keep the project folders to allow exceptions
+projects/**/*.*
 literature
-
+# ignore reference code
 src/tickets_ai-master_by_mcandocia
 src/tickets_ai-modulated_delay
-
+# ignore images
 *.zip
 *.avif
 *.png
@@ -18,3 +20,28 @@ src/tickets_ai-modulated_delay
 *.jpg
 *.png
 *.png
+
+# keep some examples
+!projects/**/
+!projects/Star_Wars_TTR/final_board_4k.png
+# program files for graph
+!projects/Star_Wars_TTR/mapmaker_files/star_wars_ttr_graph_v2.15_board_export.json
+!projects/Star_Wars_TTR/mapmaker_files/star_wars_ttr_graph_v2.16_task_export.json
+!projects/Star_Wars_TTR/mapmaker_files/final_planets.txt
+# points images
+!projects/Star_Wars_TTR/points_images/points_standard
+!projects/Star_Wars_TTR/points_images/counting_stip_tiles.blend
+!projects/Star_Wars_TTR/points_images/glowing_numbers.blend
+# board design
+!projects/Star_Wars_TTR/edge_images/edge_blocks_laser
+!projects/Star_Wars_TTR/edge_images/glowing_edge_frame.blend
+!projects/Star_Wars_TTR/edge_images/edge_blocks.xcf
+### Hubble photo of Galaxy NGC 2336
+!projects/Star_Wars_TTR/mapmaker_files/board_bg - blank_galaxy_upscaled.png
+!projects/Star_Wars_TTR/board design/legend_design/legend_v1.blend"
+!projects/Star_Wars_TTR/board design/legend_design/legend_v3_600p.png
+# task card frames
+!projects/Star_Wars_TTR/task_cards/task_card_frame.blend
+!projects/Star_Wars_TTR/task_cards/task_backside_frame.blend
+!projects/Star_Wars_TTR/task_cards/task_card_frame_v4.1.png
+!projects/Star_Wars_TTR/task_cards/task_card_backside.png
