@@ -1165,7 +1165,16 @@ class TTR_Particle_Graph:
       path_index: int = particle.path_index
       path_index: int = particle.path_index
       connection_index: int = particle.connection_index
-      self.particle_edges[(loc_1, loc_2, path_index, connection_index)] = particle
+      # handle incorrect connection indices:
+      particle_edge_identifier = (loc_1, loc_2, path_index, connection_index)
+      if particle_edge_identifier in self.particle_edges:
+        print(f"Warning: edge particle with identifier {particle_edge_identifier} already exists.")
+        while particle_edge_identifier in self.particle_edges:
+          connection_index += 1
+          particle_edge_identifier = (loc_1, loc_2, path_index, connection_index)
+        print(f"New connection index: {connection_index}")
+        particle.connection_index = connection_index
+      self.particle_edges[particle_edge_identifier] = particle
     elif isinstance(particle, Particle_Label):
       self.particle_labels[particle.label] = particle
     self.max_particle_id += 1
@@ -1505,23 +1514,30 @@ class TTR_Particle_Graph:
       )
     particles_by_id: dict[int, Graph_Particle] = dict()
     max_particle_id: int = 0
+    # load particles one at a time
     for particle_info in particle_dicts:
+      # keep track of maximum particle ID
       if particle_info["id"] > max_particle_id:
         max_particle_id = particle_info["id"]
+      # (temporarily) remove some particle info that isn't needed for the next step
       connected_particles = particle_info.pop("connected_particles")
       particle_type = particle_info.pop("particle_type")
       
       particle_info["position"] = np.array(particle_info["position"], dtype=np.float16)
       particle_info["bounding_box_size"] = tuple(particle_info["bounding_box_size"])
+      # add to graph: Particle Node (Location)
       if particle_type == "Particle_Node":
+        particle_info.pop("rotation")
         particle_info.pop("angular_velocity_decay")
         particle_info["target_position"] = np.array(particle_info["target_position"], dtype=np.float16)
         particle = Particle_Node(**particle_info)
         particle_graph.add_particle(particle)
+      # add to graph: Particle Edge (partial connection between two locations)
       elif particle_type == "Particle_Edge":
         particle_info.pop("target_position")
         particle = Particle_Edge(**particle_info)
         particle_graph.add_particle(particle)
+      # add to graph: Particle Label (text label for locations)
       elif particle_type == "Particle_Label":
         particle_info.pop("bounding_box_size")
         particle_info.pop("target_position")
@@ -1529,8 +1545,10 @@ class TTR_Particle_Graph:
         particle_graph.add_particle(particle)
       # add connected particles back to particle info
       particle_info["connected_particles"] = connected_particles
+      # add particle to ID
       particles_by_id[particle.get_id()] = particle
-    # add connections to particles from their ids
+    # all particles have been added to graph and to particles_by_id
+    # next: add connections to particles from their ids
     for particle, particle_info in zip(particles_by_id.values(), particle_dicts):
       particle.set_connected_particles(
           [particles_by_id[connected_particle_id] for connected_particle_id in particle_info["connected_particles"]]
