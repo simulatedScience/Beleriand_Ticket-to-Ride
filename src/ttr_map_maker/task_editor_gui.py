@@ -436,6 +436,7 @@ class Task_Editor_GUI:
     elif len(task.node_names) == 2:# or not include_bonus_points:
       return nx.shortest_path_length(self.networkx_graph, task.node_names[0], task.node_names[-1], weight="length")
     elif len(task.node_names) > 2 and not include_bonus_points:
+      # TODO: implement optimal Steiner-Tree solver: https://chatgpt.com/share/39b0e6c3-fd1f-4828-bc54-b70631aaf692
       min_length_to_connect_nodes: int = nx.algorithms.approximation.steiner_tree(self.networkx_graph, task.node_names, weight="weight", method="mehlhorn").size("length")
       return int(min_length_to_connect_nodes)
     else: # return sum of all path lengths between all nodes assuming them to be ordered to achieve the shortest path
