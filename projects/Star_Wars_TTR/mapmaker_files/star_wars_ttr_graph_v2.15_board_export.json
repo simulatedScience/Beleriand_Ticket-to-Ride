@@ -5023,7 +5023,7 @@
     ]
   },
   "project_setup": {
-    "bg_image_path": "I:/file_transfer/programming/python/Beleriand_TTR/projects/Star_Wars_TTR/mapmaker_files/board_bg - blank_galaxy_upscaled.png",
+    "bg_image_path": "../../projects/Star_Wars_TTR/mapmaker_files/board_bg - blank_galaxy_upscaled.png",
     "bg_image_size": [
       52.4,
       39.4

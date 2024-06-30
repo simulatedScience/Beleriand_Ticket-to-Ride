@@ -155,6 +155,20 @@ class Task_Editor_GUI:
         padx=self.grid_pad_x,
         pady=self.grid_pad_y)
     row_index += 1
+    # add a button to calculate all task names (unless they have been named manually)
+    calc_task_names_button = tk.Button(
+        self.task_edit_frame,
+        text="Calculate Task Names",
+        command=self.calculate_all_task_names)
+    self.add_button_style(calc_task_names_button)
+    calc_task_names_button.grid(
+        row=row_index,
+        column=0,
+        columnspan=2,
+        sticky="new",
+        padx=self.grid_pad_x,
+        pady=self.grid_pad_y)
+    row_index += 1
     # add checkbutton to toggle visibility of all tasks
     all_task_visibility_var: tk.BooleanVar = tk.BooleanVar()
     self.task_visibility_vars["all"] = all_task_visibility_var
@@ -407,7 +421,8 @@ class Task_Editor_GUI:
     Calculates the length of the given task based on the current networkx graph based on the current particle graph.
     If a task has less than 2 nodes, the length is None.
     If a task has exactly 2 nodes, the length is the shortest path length between the two nodes.
-    If a task has more than 2 nodes, the length is the sum of all shortest path lengths between the nodes assuming them to be ordered such that the sum of path lengths of consecutive nodes is minimized.
+    If a task has more than two nodes and `include_bonus_points` is False, return the minimum length to connect all nodes to each other (Steiner Tree problem). This is only an approximate solution calculated with networkx's `steiner_tree` method and may not be optimal.
+    If a task has more than 2 nodes and `include_bonus_points` is True, the returned length is the sum of all shortest path lengths between the nodes in order. This may not be the shortest set of edges connecting all nodes, but ensures correct order. Reordering the nodes can significantly change the length of the task. Overlapping edges of shortest paths between different node pairs are counted multiple times.
 
     Args:
         task (TTR_Task): Task to calculate the length for.
@@ -418,8 +433,11 @@ class Task_Editor_GUI:
     """
     if len(task.node_names) < 2:
       return 0
-    elif len(task.node_names) == 2 or not include_bonus_points:
+    elif len(task.node_names) == 2:# or not include_bonus_points:
       return nx.shortest_path_length(self.networkx_graph, task.node_names[0], task.node_names[-1], weight="length")
+    elif len(task.node_names) > 2 and not include_bonus_points:
+      min_length_to_connect_nodes: int = nx.algorithms.approximation.steiner_tree(self.networkx_graph, task.node_names, weight="weight", method="mehlhorn").size("length")
+      return int(min_length_to_connect_nodes)
     else: # return sum of all path lengths between all nodes assuming them to be ordered to achieve the shortest path
       length: int = 0
       for node_1, node_2 in zip(task.node_names[:-1], task.node_names[1:]):
@@ -462,6 +480,29 @@ class Task_Editor_GUI:
       task_points_vars[2].set(task.points_bonus)
       task_points_vars[3].set(task.points_penalty)
 
+  def calculate_all_task_names(self):
+    for i, (task_list_widgets, (task_name, task)) in enumerate(
+            zip(self.task_list_widgets, self.particle_graph.tasks.items())):
+      if task_name == "all" or task.automatic_name == False:
+        continue
+      old_name: str = task.name
+      new_name: str = task.calculate_task_name(self.particle_graph)
+      if new_name != old_name:
+        print(f"{i+1}. Task name changed from '{old_name}' to '{new_name}'.")
+        # update task name in UI task list
+        task_list_widgets[2].config(text=new_name.replace(" - ", "\n"))
+        # update task name in particle graph
+        self.particle_graph.tasks[new_name] = self.particle_graph.tasks.pop(old_name)
+        self.task_visibility_vars[new_name] = self.task_visibility_vars.pop(old_name)
+
+  def calculate_task_name(self, task: TTR_Task):
+    """
+    Calculates and sets the task name based on the task's current configuration (node names, points, etc.).
+    """
+    new_name = task.calculate_task_name(self.particle_graph)  # Call the method from TTR_Task
+    # Update the task name entry
+    self.task_name_entry.delete(0, tk.END)
+    self.task_name_entry.insert(0, new_name)
 
   def add_task(self):
     """
@@ -550,8 +591,31 @@ class Task_Editor_GUI:
         padx=self.grid_pad_x,
         pady=(self.grid_pad_y, 0))
     row_index += 1
-    # 3. Show task location widgets
-    # 3.1. Show task location headline
+    # 3. Show task name input
+    task_name_frame = tk.Frame(self.task_edit_frame)  # New frame for task name
+    self.add_frame_style(task_name_frame)
+    task_name_frame.grid(row=row_index, column=0, columnspan=2, sticky="new", padx=self.grid_pad_x, pady=self.grid_pad_y)
+    
+    task_name_label = tk.Label(task_name_frame, text="Task Name:")
+    self.add_label_style(task_name_label)
+    task_name_label.grid(row=0, column=0, sticky="w")
+
+    self.task_name_entry = tk.Entry(task_name_frame)  # Task name entry
+    self.add_entry_style(self.task_name_entry, justify="left")
+    self.task_name_entry.insert(0, task.name)  # Prefill with current name
+    self.task_name_entry.grid(row=0, column=1, sticky="ew")
+    
+    # 3.1 Button to trigger task name calculation
+    calculate_task_name_button = tk.Button(
+        task_name_frame,
+        text="Calculate Name",
+        command=lambda task=task: self.calculate_task_name(task)
+    )
+    self.add_button_style(calculate_task_name_button)
+    calculate_task_name_button.grid(row=0, column=2, sticky="e", padx=(self.grid_pad_x, 0))
+    row_index += 1
+    # 4. Show task location widgets
+    # 4.1. Show task location headline
     task_location_headline = tk.Label(
         self.task_edit_frame,
         text="Task Locations")
@@ -564,7 +628,7 @@ class Task_Editor_GUI:
         padx=self.grid_pad_x,
         pady=(self.grid_pad_y, 0))
     row_index += 1
-    # 3.2. Show task location widgets
+    # 4.2. Show task location widgets
     self.task_locations_frame: tk.Frame = tk.Frame(self.task_edit_frame)
     self.add_frame_style(self.task_locations_frame)
     self.task_locations_frame.grid(
@@ -580,7 +644,7 @@ class Task_Editor_GUI:
       self.add_task_location(location_index, location)
 
     self.canvas.draw_idle()
-    # 3.3. Show button to add new task location
+    # 4.3. Show button to add new task location
     self.add_task_location_button = tk.Button(
         self.task_edit_frame,
         text="Add Location",
@@ -597,8 +661,8 @@ class Task_Editor_GUI:
         padx=self.grid_pad_x,
         pady=(0, self.grid_pad_y))
     row_index += 1
-    # 4. Show task length/ points widgets
-    # 4.1. Create task points headline
+    # 5. Show task length/ points widgets
+    # 5.1. Create task points headline
     task_length_headline = tk.Label(
         self.task_edit_frame,
         text="Task points")
@@ -609,7 +673,7 @@ class Task_Editor_GUI:
         sticky="w",
         padx=self.grid_pad_x,
         pady=(self.grid_pad_y, 0))
-    # 4.2. Create button to calculate task length
+    # 5.2. Create button to calculate task length
     calculate_task_length_button = tk.Button(
         self.task_edit_frame,
         text="Calculate task length",
@@ -622,7 +686,7 @@ class Task_Editor_GUI:
         padx=(0, self.grid_pad_x),
         pady=(self.grid_pad_y, 0))
     row_index += 1
-    # 4.3. Create task points 
+    # 5.3. Create task points 
     task_points_frame: tk.Frame = tk.Frame(self.task_edit_frame)
     self.add_frame_style(task_points_frame)
     task_points_frame.grid(
@@ -635,7 +699,7 @@ class Task_Editor_GUI:
     # task_points_frame.grid_columnconfigure(1, weight=1)
     # task_points_frame.grid_columnconfigure(3, weight=1)
     row_index += 1
-    # 4.3.1. Create label for task length
+    # 5.3.1. Create label for task length
     task_length_var: tk.IntVar = tk.IntVar(value=task.length)
     task_length_label = tk.Label(
         task_points_frame,
@@ -658,7 +722,7 @@ class Task_Editor_GUI:
         padx=0,
         pady=0)
     task_points_vars.append(task_length_var)
-    # 4.3.2. Create label for task points
+    # 5.3.2. Create label for task points
     task_points_var: tk.IntVar = tk.IntVar(value=task.points)
     self.add_int_input(
         task_points_frame,
@@ -670,7 +734,7 @@ class Task_Editor_GUI:
         input_justify="center",
     )
     task_points_vars.append(task_points_var)
-    # 4.3.3. Create label for task bonus points
+    # 5.3.3. Create label for task bonus points
     task_bonus_points_var: tk.IntVar = tk.IntVar(value=task.points_bonus)
     self.add_int_input(
         task_points_frame,
@@ -682,7 +746,7 @@ class Task_Editor_GUI:
         input_justify="center",
     )
     task_points_vars.append(task_bonus_points_var)
-    # 4.3.4. Create label for task penalty points
+    # 5.3.4. Create label for task penalty points
     task_penalty_points_var: tk.IntVar = tk.IntVar(value=task.points_penalty)
     self.add_int_input(
         task_points_frame,
@@ -694,8 +758,8 @@ class Task_Editor_GUI:
         input_justify="center",
     )
     task_points_vars.append(task_penalty_points_var)
-    # 5. Show task edit buttons
-    # 5.1 Create task edit buttons frame
+    # 6. Show task edit buttons
+    # 6.1 Create task edit buttons frame
     task_edit_buttons_frame: tk.Frame = tk.Frame(self.task_edit_frame)
     self.add_frame_style(task_edit_buttons_frame)
     task_edit_buttons_frame.grid(
@@ -708,7 +772,7 @@ class Task_Editor_GUI:
     task_edit_buttons_frame.grid_columnconfigure(0, weight=1)
     task_edit_buttons_frame.grid_columnconfigure(1, weight=1)
     row_index += 1
-    # 5.2. Create button to apply changes
+    # 6.2. Create button to apply changes
     apply_name = "Create" if task.is_empty() else "Apply"
     apply_changes_button = tk.Button(
         task_edit_buttons_frame,
@@ -721,7 +785,7 @@ class Task_Editor_GUI:
         sticky="nsew",
         padx=self.grid_pad_x,
         pady=0)
-    # 5.3. Create button to cancel changes
+    # 6.3. Create button to cancel changes
     cancel_changes_button = tk.Button(
         task_edit_buttons_frame,
         text="Abort",
@@ -737,7 +801,8 @@ class Task_Editor_GUI:
         sticky="nsew",
         padx=(0, self.grid_pad_x),
         pady=0)
-    # bind ESC to cancel changes
+    self.current_old_task_name: str = task.name
+    # 7. bind ESC to cancel changes
     self.master.bind("<Escape>", lambda event, task_points_vars=task_points_vars, task_node_indices=self.task_node_indices: self.cancel_task_changes(task_points_vars, task_node_indices))
     self.bind_task_edit_mouse_events()
 
@@ -980,20 +1045,25 @@ class Task_Editor_GUI:
     # get new node names
     new_node_names: List[str] = [self.node_names[i] for i in task_node_indices if i != 0] # remove the placeholder "None" (index 0)
     # update task nodes and name
+    updated_name = False
     if task.is_empty():
       task.set_node_names(new_node_names, update_name=True)
       self.particle_graph.tasks[task.name] = task
       self.task_list.append(task) # potentially unnecessary
+    if task.name != self.task_name_entry.get():
+      task.overwrite_name(self.task_name_entry.get())
+      updated_name = True
     elif task.node_names != new_node_names: # not working properly
-      old_name = task.name
       # print(f"delete task {task.name} with nodes {task.node_names}")
-      task.set_node_names(new_node_names, update_name=True) # TODO: consider adding a name input
+      task.set_node_names(new_node_names, update_name=True)
       # print(f"adding task {task.name} with nodes {task.node_names}")
-      if task.name != old_name:
-        self.particle_graph.tasks[task.name] = task # update task key in task list
-        self.task_visibility_vars[task.name] = self.task_visibility_vars[old_name] # update task key in task visibility list
-        del self.particle_graph.tasks[old_name]
-        del self.task_visibility_vars[old_name]
+      if task.name != self.current_old_task_name:
+        updated_name = True
+    if updated_name:
+      self.particle_graph.tasks[task.name] = task # update task key in task list
+      self.task_visibility_vars[task.name] = self.task_visibility_vars[self.current_old_task_name] # update task key in task visibility list
+      del self.particle_graph.tasks[self.current_old_task_name]
+      del self.task_visibility_vars[self.current_old_task_name]
     # update task points
     task.set_length(task_points_vars[0].get())
     task.set_points(*[var.get() for var in task_points_vars[1:]])
@@ -1010,6 +1080,7 @@ class Task_Editor_GUI:
         task_points_vars (List[tk.IntVar]): list of IntVars for the task points (these will be deleted)
         task_node_indices (List[int]): list of node indices for the task locations (remove highlight from these nodes)
     """
+    self.current_old_task_name = None
     # unbind the escape key
     self.master.unbind("<Escape>")
     # remove highlight from selected nodes

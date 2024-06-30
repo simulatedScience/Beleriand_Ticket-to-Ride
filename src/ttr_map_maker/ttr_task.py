@@ -46,6 +46,7 @@ class TTR_Task:
     self.points_bonus: int = points_bonus
     self.points_penalty: int = points_penalty
     self.plotted_objects: List[plt.Line2D] = []
+    self.automatic_name: bool = True
 
 
   def set_node_names(self, node_names: List[str], update_name: bool = True) -> None:
@@ -77,6 +78,32 @@ class TTR_Task:
     self.points_bonus = points_bonus
     self.points_penalty = points_penalty
 
+
+  def calculate_task_name(self, particle_graph: "TTR_Particle_Graph") -> str:
+    """
+    Calculate the name of the task based on the node names such that the node that's further left in the graph is listed first. Changes `self.name` and returns this new name.
+
+    Args:
+        particle_graph (TTR_Particle_Graph): The particle graph to get the node positions from.
+
+    Returns:
+        str: The new name of the task.
+    """
+    node_positions: List[np.ndarray] = [particle_graph.particle_nodes[location].position for location in self.node_names]
+    self.node_names: List[str] = [self.node_names[i] for i in np.argsort(node_positions, axis=0)[:, 0]]
+    self.set_node_names(self.node_names, update_name=True)
+    self.automatic_name: bool = True
+    return self.name
+
+  def overwrite_name(self, name: str) -> None:
+    """
+    Overwrite the name of the task.
+
+    Args:
+        name (str): The new name of the task.
+    """
+    self.name: str = name
+    self.automatic_name: bool = False
 
   def is_empty(self):
     return self.name == "_empty_task_"
@@ -153,7 +180,8 @@ class TTR_Task:
       "length": self.length,
       "points": self.points,
       "points_bonus": self.points_bonus,
-      "points_penalty": self.points_penalty
+      "points_penalty": self.points_penalty,
+      "automatic_name": self.automatic_name,
     }
     return task_info
 
