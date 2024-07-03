@@ -1167,6 +1167,7 @@ class Task_Export_GUI:
         border_color=(1, 0, 1, 0),
         ax=self.ax,
         scale=self.label_scale.get(),
+        zorder=5,
         movable=True)
     self.canvas.draw_idle()
 
@@ -1274,7 +1275,7 @@ class Task_Export_GUI:
         ax=self.ax,
         scale=points_scale,
         override_image_path=filepath,
-        zorder=1,
+        zorder=5,
         movable=True)
 
   def update_frame_image(self) -> None:

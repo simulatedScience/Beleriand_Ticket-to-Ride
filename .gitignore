@@ -5,6 +5,7 @@ __pycache__
 *.pyc
 # ignore finished projects and references
 reference images
+misc
 ### ignore all project files, but keep the project folders to allow exceptions
 projects/**/*.*
 literature
