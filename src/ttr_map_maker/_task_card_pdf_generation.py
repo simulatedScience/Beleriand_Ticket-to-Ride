@@ -263,7 +263,7 @@ def task_cards_to_latex(
 
 if __name__ == "__main__":
     # Example usage
-    front_images = ["img1.png", "img1.png", "img1.png", "img1.png", "img1.png"]
-    back_image = "back.png"
     task_cards_to_latex(flip_backside=False)
+    # front_images = ["img1.png", "img1.png", "img1.png", "img1.png", "img1.png"]
+    # back_image = "back.png"
     # generate_latex_document(front_images, back_image, flip_backside=False)

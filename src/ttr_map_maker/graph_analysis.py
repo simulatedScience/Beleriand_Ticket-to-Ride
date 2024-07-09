@@ -445,15 +445,35 @@ class TTR_Graph_Analysis:
         dict[str, dict[int, int]]: dictionary of edge colors and their length distributions. See get_edge_length_distribution for the format of the length distributions.
     """
     edge_color_length_distribution: dict = {}
-    for edge in self.networkx_graph.edges:
-      color: str = self.networkx_graph.edges[edge]["color"]
-      length: int = self.networkx_graph.edges[edge]["length"]
+    counted_edge_identifiers: set[tuple[str, str, int]] = set()
+    for edge_key, particle_edge in self.edge_particles.items():
+      loc1, loc2, path_index, connection_index = edge_key
+      if (loc1, loc2, connection_index) in counted_edge_identifiers:
+        continue
+      counted_edge_identifiers.add((loc1, loc2, connection_index))
+      color = particle_edge.color
+      # find length by finding max path index
+      length = 0
+      for edge_key2 in self.edge_particles.keys():
+        if edge_key2[0] == loc1 and edge_key2[1] == loc2 and edge_key2[3] == connection_index:
+          length = max(length, edge_key2[2])
+      length += 1
       if color not in edge_color_length_distribution:
-        edge_color_length_distribution[color]: dict = {}
+        edge_color_length_distribution[color] = {}
       if length in edge_color_length_distribution[color]:
         edge_color_length_distribution[color][length] += 1
       else:
-        edge_color_length_distribution[color][length]: int = 1
+        edge_color_length_distribution[color][length] = 1
+      # edge_color_length_distribution[color][length] = edge_color_length_distribution[color].get(length, 0) + 1
+    # for edge in self.networkx_graph.edges:
+    #   color: str = self.networkx_graph.edges[edge]["color"]
+    #   length: int = self.networkx_graph.edges[edge]["length"]
+    #   if color not in edge_color_length_distribution:
+    #     edge_color_length_distribution[color]: dict = {}
+    #   if length in edge_color_length_distribution[color]:
+    #     edge_color_length_distribution[color][length] += 1
+    #   else:
+    #     edge_color_length_distribution[color][length]: int = 1
     return edge_color_length_distribution
 
   def plot_edge_color_length_distribution(self,
@@ -581,22 +601,28 @@ class TTR_Graph_Analysis:
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
-  def get_task_length_distribution(self) -> dict[int, int]:
+  def get_task_points_distribution(self) -> dict[int, int]:
     """
     Calculate the distribution of task lengths.
 
     Returns:
         dict[int, int]: dictionary of task lengths and their counts
     """
-    task_length_distribution = {}
-    for length in self.task_lengths.values():
-      if length in task_length_distribution:
-        task_length_distribution[length] += 1
+    task_points_distribution = {}
+    for task in self.tasks.values():
+      points = task.points
+      if points in task_points_distribution:
+        task_points_distribution[points] += 1
       else:
-        task_length_distribution[length] = 1
-    return task_length_distribution
+        task_points_distribution[points] = 1
+    # for length in self.task_lengths.values():
+    #   if length in task_length_distribution:
+    #     task_length_distribution[length] += 1
+    #   else:
+    #     task_length_distribution[length] = 1
+    return task_points_distribution
 
-  def plot_task_length_distribution(self, ax: plt.Axes, plot_color: str = "#5588ff", grid_color: str = None, **bar_plot_kwargs):
+  def plot_task_points_distribution(self, ax: plt.Axes, plot_color: str = "#5588ff", grid_color: str = None, **bar_plot_kwargs):
     """
     Plot the distribution of task lengths as a bar plot.
 
@@ -606,7 +632,7 @@ class TTR_Graph_Analysis:
         grid_color (str, optional): color of the grid. Defaults to None (no grid).
         bar_plot_kwargs: keyword arguments passed to the `matplotlib.pyplot.bar` plot function
     """
-    task_length_distribution = self.get_task_length_distribution()
+    task_length_distribution = self.get_task_points_distribution()
     ax.bar(
         task_length_distribution.keys(),
         task_length_distribution.values(),
@@ -618,9 +644,9 @@ class TTR_Graph_Analysis:
     y_ticks = get_ticks(0, max(task_length_distribution.values()), 10)
     ax.set_yticks(y_ticks)
     ax.set_yticklabels(y_ticks)
-    ax.set_xlabel("task length")
+    ax.set_xlabel("task points")
     ax.set_ylabel("count")
-    ax.set_title("Task length distribution")
+    ax.set_title("Task points distribution")
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
@@ -629,7 +655,7 @@ class TTR_Graph_Analysis:
     Calculate how often each color is required to complete all tasks.
     Assume that the shortest path for each task is used.
     If there are multiple shortest paths, choose one (uniformly) randomly.
-    Repeat this process for a large number of times and calculate the average and standard deviation of the distribution.
+    Repeat this process many times and calculate the average and standard deviation of the distribution.
 
     Algorithm used:
       For each task:
@@ -649,14 +675,30 @@ class TTR_Graph_Analysis:
           value: tuple of average and standard deviation
     """
     task_color_length_counts: dict[str, dict[int, int]] = {}
+    # init dict mapping location pairs to length and list of colors of connections
+    edge_ends_to_colors: dict[Tuple[str, str], List[str]] = {}
+    edge_ends_to_length: dict[Tuple[str, str], int] = {}
+    for edge_key, particle_edge in self.edge_particles.items():
+      loc1, loc2, path_index, connection_index = edge_key
+      if (loc1, loc2) not in edge_ends_to_colors:
+        edge_ends_to_colors[(loc1, loc2)] = [particle_edge.color]
+      if path_index > edge_ends_to_length.get((loc1, loc2), -1):
+        edge_ends_to_length[(loc1, loc2)] = path_index
+      # add color to list of colors if not already in list
+      if not particle_edge.color in edge_ends_to_colors[(loc1, loc2)]:
+        edge_ends_to_colors[(loc1, loc2)].append(particle_edge.color)
+    # add 1 to all edge lengths
+    edge_ends_to_length = {edge_key: length + 1 for edge_key, length in edge_ends_to_length.items()}
     for task in self.tasks.values():
       shortest_paths = self.get_all_shortest_paths(loc1=task.node_names[0], loc2=task.node_names[-1])
       for _ in range(n_random_paths):
         path, length = random.choice(shortest_paths)
         for (loc1, loc2) in zip(path[:-1], path[1:]):
-          edge = (loc1, loc2)
-          color = self.networkx_graph.edges[edge]["color"]
-          length = self.networkx_graph.edges[edge]["length"]
+          particle_edge: tuple[str, str] = tuple(sorted([loc1, loc2]))
+          length: int = edge_ends_to_length[particle_edge]
+          color: str = random.choice(edge_ends_to_colors[particle_edge])
+          # color = self.networkx_graph.edges[edge]["color"]
+          # length = self.networkx_graph.edges[edge]["length"]
           if color not in task_color_length_counts: # initialize dict for color
             task_color_length_counts[color] = {}
           if length not in task_color_length_counts[color]: # initialize dict for length
@@ -676,7 +718,7 @@ class TTR_Graph_Analysis:
   def plot_task_color_avg_distribution(self,
       ax: plt.Axes,
       color_map: dict[str, str] = None,
-      errorbar_color: str = "#222222",
+      errorbar_color: str = "#dd55dd",
       grid_color: str = None,
       **bar_plot_kwargs):
     """
@@ -699,9 +741,9 @@ class TTR_Graph_Analysis:
         # capsize=5,
         # ecolor=errorbar_color,
         **bar_plot_kwargs)
-    ax.set_xlabel("task color")
+    ax.set_xlabel("edge color")
     ax.set_ylabel("avg color count for all tasks")
-    ax.set_title("Task color avg requirements distribution")
+    ax.set_title("Avg. task color requirements distribution")
     if grid_color is not None:
       ax.grid(axis="y", color=grid_color)
 
@@ -792,7 +834,7 @@ if __name__ == "__main__":
   # plot edge color total length distribution
   ttr_graph.plot_edge_color_total_length_distribution(ax=axs[1, 1], grid_color=grid_color)
   # plot task length distribution
-  ttr_graph.plot_task_length_distribution(ax=axs[1, 2], grid_color=grid_color)
+  ttr_graph.plot_task_points_distribution(ax=axs[1, 2], grid_color=grid_color)
   # plot task color distribution
   ttr_graph.plot_task_color_avg_distribution(ax=axs[0, 2], grid_color=grid_color)
   

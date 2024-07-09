@@ -1070,7 +1070,7 @@ class TTR_Particle_Graph:
       max_value=max_weight,
       min_color=neutral_color,
       max_color=base_color,
-      label="Avg. task length increase when removing edge")
+      label="Max. task length increase when removing edge")
 
     for (edge_key, particle_edge) in self.particle_edges.items():
       locations_key = (edge_key[0], edge_key[1], edge_key[3])
@@ -1126,7 +1126,7 @@ class TTR_Particle_Graph:
       axs[1, 2].set_title("Edge importance")
       self.draw_edge_importance(ax=axs[1, 2])
       # plot task length distribution
-      self.analysis_graph.plot_task_length_distribution(ax=axs[2, 0], grid_color=grid_color)
+      self.analysis_graph.plot_task_points_distribution(ax=axs[2, 0], grid_color=grid_color)
       # plot task color distribution
       self.analysis_graph.plot_task_color_avg_distribution(ax=axs[2, 1], grid_color=grid_color)
       # plot shortest task paths
