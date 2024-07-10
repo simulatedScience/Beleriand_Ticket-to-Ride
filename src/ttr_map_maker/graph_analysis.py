@@ -350,13 +350,26 @@ class TTR_Graph_Analysis:
     Returns:
         dict[int, int]: dictionary of degrees and their counts
     """
-    degree_distribution = {}
-    for node in self.networkx_graph.nodes:
-      degree = self.networkx_graph.degree[node]
-      if degree in degree_distribution:
-        degree_distribution[degree] += 1
-      else:
-        degree_distribution[degree] = 1
+    node_degrees: dict[str, int] = {}
+    seen_edges: set[tuple[str, str, int]] = set()
+    for edge_id in self.edge_particles.keys():
+      loc1, loc2, path_index, connection_index = edge_id
+      shortened_edge_id = (loc1, loc2, connection_index)
+      if shortened_edge_id in seen_edges:
+        continue
+      seen_edges.add(shortened_edge_id)
+      for node in (loc1, loc2):
+        node_degrees[node] = node_degrees.get(node, 0) + 1
+        
+    degree_distribution: dict[int, int] = {
+      degree: list(node_degrees.values()).count(degree) for degree in set(node_degrees.values())
+    }
+    # for node in self.networkx_graph.nodes:
+    #   degree = self.networkx_graph.degree[node]
+    #   if degree in degree_distribution:
+    #     degree_distribution[degree] += 1
+    #   else:
+    #     degree_distribution[degree] = 1
     return degree_distribution
 
   def plot_node_degree_distribution(self, ax: plt.Axes, color: str = "#5588ff", grid_color: str = None, **bar_plot_kwargs):
