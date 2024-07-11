@@ -56,19 +56,15 @@ def split_image_nxm(
     ):
     # Open the image
     img = Image.open(image_path)
-    img_width, img_height = img.size
     
     # Calculate effective width and height
     effective_width = total_width - 2 * outer_margin
     effective_height = total_height - 2 * outer_margin
     
     # Calculate tile widths and heights
-    
     tile_widths = [total_width / n - 2*inner_margin] * n
     tile_heights = [total_height / m - 2*inner_margin] * m
-    # tile_widths = [(total_width - (n - 1) * 2*inner_margin) / n] * n
-    # tile_heights = [(total_height - (m - 1) * 2*inner_margin) / m] * m
-    
+    # Correct outer cell sizes to account for outer margin
     tile_widths[0] -= outer_margin - inner_margin
     tile_widths[-1] -= outer_margin - inner_margin
     tile_heights[0] -= outer_margin - inner_margin
@@ -137,4 +133,4 @@ if __name__ == "__main__":
         total_height = 589, # in mm
         outer_margin = 2, # in mm
         inner_margin = 1 # in mm
-        )
+    )
