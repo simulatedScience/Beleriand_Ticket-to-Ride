@@ -84,8 +84,8 @@ def split_image_nxm(
     # Plot rectangles for tiles
     for i in range(n):
         for j in range(m):
-            x = outer_margin + sum(tile_widths[:i]) + (i-1) * inner_margin
-            y = outer_margin + sum(tile_heights[:j]) + (j-1) * inner_margin
+            x = outer_margin + sum(tile_widths[:i]) + 2*i * inner_margin
+            y = outer_margin + sum(tile_heights[:j]) + 2*j * inner_margin
             rect = patches.Rectangle((x, y), tile_widths[i], tile_heights[j], linewidth=1, edgecolor='r', facecolor='none')
             ax.add_patch(rect)
     
@@ -96,12 +96,14 @@ def split_image_nxm(
     ax.imshow(img, extent=img_extent)
     
     # Draw cut lines for inner margins
-    for i in range(1, n):
-        cut_x = outer_margin + sum(tile_widths[:i]) + (i - 0.5) * inner_margin
+    for i in range(1, n): # vertical cut lines
+        cut_x = outer_margin + sum(tile_widths[:i]) + (2*i-1) * inner_margin
+        print(f"vert cut {i} at {cut_x}")
         ax.axvline(x=cut_x, color='g', linestyle='--')
     
-    for j in range(1, m):
-        cut_y = outer_margin + sum(tile_heights[:j]) + (j - 0.5) * inner_margin
+    for j in range(1, m): # horizontal cut lines
+        cut_y = outer_margin + sum(tile_heights[:j]) + (2*j-1) * inner_margin
+        print(f"horz cut {j} at {cut_y}")
         ax.axhline(y=cut_y, color='g', linestyle='--')
     
     # Set limits and aspect ratio
@@ -133,6 +135,6 @@ if __name__ == "__main__":
         3, 3,
         total_width = 832, # in mm
         total_height = 589, # in mm
-        outer_margin = 100, # in mm
-        inner_margin = 50 # in mm
+        outer_margin = 2, # in mm
+        inner_margin = 1 # in mm
         )
