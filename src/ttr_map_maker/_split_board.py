@@ -1,28 +1,21 @@
 import os
 from tkinter import Tk, filedialog
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 from PIL import Image
 
-def split_image_into_parts():
-    # Hide the main Tkinter window
-    root = Tk()
-    root.withdraw()
-
-    # Open a file picker dialog to choose the image file
-    file_path = filedialog.askopenfilename(
-        title='Select an image file',
-        filetypes=[('Image files', '*.png;*.jpg;*.jpeg;*.bmp')]
-    )
-
-    # Open a folder picker dialog to choose the output directory
-    output_folder = filedialog.askdirectory(title='Select an output folder')
-
+def split_image_into_4_parts(image_path, output_folder):
+    """
+    
+    """
     # If no file or folder was selected, return
-    if not file_path or not output_folder:
+    if not image_path or not output_folder:
         print("File or output folder not selected. Exiting.")
         return
 
     # Load the image
-    original_image = Image.open(file_path)
+    original_image = Image.open(image_path)
 
     # Calculate dimensions for the split
     width, height = original_image.size
@@ -52,5 +45,94 @@ def split_image_into_parts():
 
     print("The image has been split and saved to the output folder.")
 
-# Run the function
-split_image_into_parts()
+def split_image_nxm(
+        image_path,
+        n,
+        m,
+        total_width: float = 832, # in mm
+        total_height: float = 589, # in mm
+        outer_margin: float = 5, # in mm
+        inner_margin: float = 1 # in mm
+    ):
+    # Open the image
+    img = Image.open(image_path)
+    img_width, img_height = img.size
+    
+    # Calculate effective width and height
+    effective_width = total_width - 2 * outer_margin
+    effective_height = total_height - 2 * outer_margin
+    
+    # Calculate tile widths and heights
+    
+    tile_widths = [total_width / n - 2*inner_margin] * n
+    tile_heights = [total_height / m - 2*inner_margin] * m
+    # tile_widths = [(total_width - (n - 1) * 2*inner_margin) / n] * n
+    # tile_heights = [(total_height - (m - 1) * 2*inner_margin) / m] * m
+    
+    tile_widths[0] -= outer_margin - inner_margin
+    tile_widths[-1] -= outer_margin - inner_margin
+    tile_heights[0] -= outer_margin - inner_margin
+    tile_heights[-1] -= outer_margin - inner_margin
+
+    # Create figure and axes
+    fig, ax = plt.subplots(1)
+    
+    # Draw the total size rectangle
+    total_rect = patches.Rectangle((0, 0), total_width, total_height, linewidth=1, edgecolor='b', facecolor='none')
+    ax.add_patch(total_rect)
+    
+    # Plot rectangles for tiles
+    for i in range(n):
+        for j in range(m):
+            x = outer_margin + sum(tile_widths[:i]) + (i-1) * inner_margin
+            y = outer_margin + sum(tile_heights[:j]) + (j-1) * inner_margin
+            rect = patches.Rectangle((x, y), tile_widths[i], tile_heights[j], linewidth=1, edgecolor='r', facecolor='none')
+            ax.add_patch(rect)
+    
+    # Plot the image centered within the effective area
+    img_x = outer_margin
+    img_y = outer_margin
+    img_extent = [img_x, img_x + effective_width, img_y + effective_height, img_y]
+    ax.imshow(img, extent=img_extent)
+    
+    # Draw cut lines for inner margins
+    for i in range(1, n):
+        cut_x = outer_margin + sum(tile_widths[:i]) + (i - 0.5) * inner_margin
+        ax.axvline(x=cut_x, color='g', linestyle='--')
+    
+    for j in range(1, m):
+        cut_y = outer_margin + sum(tile_heights[:j]) + (j - 0.5) * inner_margin
+        ax.axhline(y=cut_y, color='g', linestyle='--')
+    
+    # Set limits and aspect ratio
+    ax.set_xlim(0, total_width)
+    ax.set_ylim(total_height, 0)
+    ax.set_aspect('equal')
+    
+    plt.show()
+
+
+if __name__ == "__main__":
+    # Hide the main Tkinter window
+    root = Tk()
+    root.withdraw()
+
+    # Open a file picker dialog to choose the image file
+    image_path = filedialog.askopenfilename(
+        title='Select an image file',
+        filetypes=[('Image files', '*.png;*.jpg;*.jpeg;*.bmp')]
+    )
+
+    # # Open a folder picker dialog to choose the output directory
+    # output_folder = filedialog.askdirectory(title='Select an output folder')
+
+    # split_image_into_4_parts(image_path, output_folder)
+    
+    split_image_nxm(
+        image_path,
+        3, 3,
+        total_width = 832, # in mm
+        total_height = 589, # in mm
+        outer_margin = 100, # in mm
+        inner_margin = 50 # in mm
+        )

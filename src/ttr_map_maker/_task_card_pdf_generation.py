@@ -259,6 +259,7 @@ def task_cards_to_latex(
         filepath,
         compiler="pdflatex",
         clean_tex=False)
+    print(f"Generated PDF at {filepath}.pdf")
 
 
 if __name__ == "__main__":
