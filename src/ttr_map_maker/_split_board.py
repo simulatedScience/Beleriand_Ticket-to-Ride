@@ -68,29 +68,34 @@ def add_fullpage_image(
         gap (float): Gap between front and back in mm.
         vspace (float): Vertical space between cards in mm.
     """
-    # Back image first
-    image_command = Command(
-        'includegraphics',
-        options=NoEscape(
-            # f'height={max(tile_height, tile_width)}mm, ' + 
-            # f'width={min(tile_height, tile_width)}mm, ' +
-            f'height={tile_height}mm, ' + 
-            f'width={tile_width}mm, ' +
-            'keepaspectratio=FALSE'
-            ),
-        arguments=image_path)
     
+    # Start tikzpicture for precise image placement
+    doc.append(NoEscape(r'\begin{tikzpicture}[overlay, remember picture]'))
+
+    # Place the image at the specified location with rotation if needed
+    if tile_width > tile_height:
+        x_shift = x_pos + tile_height / 2
+        y_shift = y_pos + tile_width / 2
+        doc.append(NoEscape(
+            f'\\node[anchor=center,rotate=-90] at ([xshift={x_shift}mm,yshift=-{y_shift}mm]current page.north west) '
+            f'{{\\includegraphics[height={tile_height}mm,width={tile_width}mm,keepaspectratio=FALSE]{{{image_path}}}}};'
+        ))
+    else:
+        x_shift = x_pos + tile_width / 2
+        y_shift = y_pos + tile_height / 2
+        doc.append(NoEscape(
+            f'\\node[anchor=center] at ([xshift={x_shift}mm,yshift=-{y_shift}mm]current page.north west) '
+            f'{{\\includegraphics[height={tile_height}mm,width={tile_width}mm,keepaspectratio=FALSE]{{{image_path}}}}};'
+        ))
+
+
+    # End tikzpicture
+    doc.append(NoEscape(r'\end{tikzpicture}'))
+
+    # Add crop marks
     add_horizontal_crop_marks(doc, x_pos, y_pos, tile_width, tile_height)
     add_vertical_crop_marks(doc, x_pos, y_pos, tile_width, tile_height)
-    with doc.create(MiniPage(width=NoEscape(f"{tile_width}mm"))) as minipage:
-        if tile_width > tile_height:
-            minipage.append(
-                Command('rotatebox',
-                        arguments='90',
-                        extra_arguments=image_command)
-            )
-        else:
-            minipage.append(image_command)
+    
 
 def calculate_cut_lines_and_tiles(
         tile_columns: int,
@@ -266,19 +271,19 @@ if __name__ == "__main__":
     root.withdraw()
 
     image_path = None
-    image_path = "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/board_samples/06_board_preview.png"
+    image_path = "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/board_samples/07_board_preview.png"
     image_paths = None
-    image_paths = [
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_1.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_2.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_3.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_1.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_2.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_3.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_1.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_2.png",
-        "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_3.png"
-    ]
+    # image_paths = [
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_1.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_2.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_3.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_1.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_2.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_3.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_1.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_2.png",
+    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_3.png"
+    # ]
 
     if not image_path:
         # Open a file picker dialog to choose the image file
@@ -329,6 +334,6 @@ if __name__ == "__main__":
     generate_board_latex(
         image_paths=image_paths,
         tile_bboxes=tile_bboxes,
-        target_filepath=f"{output_folder}/Middle_Earth.tex",
+        target_filepath=f"{output_folder}/Middle_Earth_board.tex",
         border=(10, 10),
     )

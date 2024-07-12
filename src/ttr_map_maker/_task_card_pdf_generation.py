@@ -96,42 +96,38 @@ def add_card(
         card_height (float): Height of the card in mm.
         gap (float): Gap between front and back in mm.
         vspace (float): Vertical space between cards in mm.
-    """
-    # doc.append(NoEscape(f'\\vspace*{{{y_pos}mm}}' if y_pos > 0 else r'\noindent'))
-    # doc.append(NoEscape(f'\\hspace*{{{x_pos}mm}}'))
-    with doc.create(MiniPage(width=NoEscape(f"{card_width*2 + gap}mm"))) as card_minipage:
-        # Back image first
-        image_command = Command(
-            'includegraphics',
-            options=NoEscape(
-                f'height={card_height}mm, ' + 
-                f'width={card_width}mm, ' +
-                'keepaspectratio=FALSE'
-                ),
-            arguments=back_path)
+    """# Start tikzpicture for precise image placement
+    doc.append(NoEscape(r'\begin{tikzpicture}[overlay, remember picture]'))
 
-        if flip_backside:
-            card_minipage.append(
-                Command('rotatebox',
-                        arguments='180',
-                        extra_arguments=image_command))
-        else:
-            card_minipage.append(image_command)
-        card_minipage.append(NoEscape(f'\\hspace{{{gap}mm}}'))
-        # Front image
-        card_minipage.append(
-            Command(
-                'includegraphics',
-                options=NoEscape(
-                    f'height={card_height}mm, ' + 
-                    f'width={card_width}mm, ' +
-                    'keepaspectratio=FALSE'
-                    ),
-                    arguments=NoEscape(front_path)
-                )
-            )
-        # Vertical space between cards
-        doc.append(NoEscape(f'\\vspace{{{vspace}mm}}'))
+    # Adjust shifts to correct the positioning for the back image
+    x_shift_back = x_pos + card_width / 2
+    y_shift_back = y_pos + card_height / 2
+
+    if flip_backside:
+        doc.append(NoEscape(
+            f'\\node[anchor=center,rotate=180] at ([xshift={x_shift_back}mm,yshift=-{y_shift_back}mm]current page.north west) '
+            f'{{\\includegraphics[height={card_height}mm,width={card_width}mm,keepaspectratio=FALSE]{{{back_path}}}}};'
+        ))
+    else:
+        doc.append(NoEscape(
+            f'\\node[anchor=center] at ([xshift={x_shift_back}mm,yshift=-{y_shift_back}mm]current page.north west) '
+            f'{{\\includegraphics[height={card_height}mm,width={card_width}mm,keepaspectratio=FALSE]{{{back_path}}}}};'
+        ))
+
+    # Adjust shifts to correct the positioning for the front image
+    x_shift_front = x_pos + card_width + gap + card_width / 2
+    y_shift_front = y_pos + card_height / 2
+
+    doc.append(NoEscape(
+        f'\\node[anchor=center] at ([xshift={x_shift_front}mm,yshift=-{y_shift_front}mm]current page.north west) '
+        f'{{\\includegraphics[height={card_height}mm,width={card_width}mm,keepaspectratio=FALSE]{{{front_path}}}}};'
+    ))
+
+    # End tikzpicture
+    doc.append(NoEscape(r'\end{tikzpicture}'))
+
+    # Vertical space between cards
+    doc.append(NoEscape(f'\\vspace{{{vspace}mm}}'))
 
 def generate_latex_document(
         fronts: List[str], 
