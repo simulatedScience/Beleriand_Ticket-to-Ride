@@ -203,18 +203,24 @@ def export_sub_images(
         tiles,
         total_board_width,
         total_board_height,
+        outer_margin: float,
         output_prefix='cut') -> list[str]:
     img = Image.open(image_path)
     img_width, img_height = img.size
     tile_columns = len(set([x for x, *_ in tiles]))
     tile_rows = len(set([y for _, y, *_ in tiles]))
     # convert mm to pixels
-    scale_x = img_width / total_board_width
-    scale_y = img_height / total_board_height
+    scale_x = img_width / (total_board_width - 2*outer_margin)
+    scale_y = img_height / (total_board_height - 2*outer_margin)
+    
+    first_rect_x: float = tiles[0][0]
+    first_rect_y: float = tiles[0][1]
     
     image_paths = []
     for idx, tile in enumerate(tiles):
         x, y, w, h = tile
+        x -= first_rect_x
+        y -= first_rect_y
         left = int(x * scale_x)
         upper = int(y * scale_y)
         right = int((x + w) * scale_x)
@@ -261,7 +267,7 @@ def generate_board_latex(
         )
         doc.append(NoEscape(r'\newpage'))
     # Output as .tex file
-    target_filepath_stripped = target_filepath.strip(".tex")
+    target_filepath_stripped = target_filepath[:-4] if ".tex" in target_filepath else target_filepath
     doc.generate_tex(target_filepath_stripped)
     print(f"Generated LaTeX file at {target_filepath}")
 
@@ -271,18 +277,18 @@ if __name__ == "__main__":
     root.withdraw()
 
     image_path = None
-    image_path = "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/board_samples/07_board_preview.png"
+    image_path = "../../projects/MiddleEarth_TTR/board_samples/07_board_preview.png"
     image_paths = None
     # image_paths = [
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_1.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_2.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_1_3.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_1.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_2.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_2_3.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_1.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_2.png",
-    #     "C:/Users/basti/Documents/programming/python/Beleriand_TTR/projects/MiddleEarth_TTR/printing/board_06/Middle_Earth_3_3.png"
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_1_1.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_1_2.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_1_3.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_2_1.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_2_2.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_2_3.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_3_1.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_3_2.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_3_3.png"
     # ]
 
     if not image_path:
@@ -329,6 +335,7 @@ if __name__ == "__main__":
             tile_bboxes,
             total_board_width,
             total_board_height,
+            outer_margin=outer_margin,
             output_prefix='Middle_Earth'
         )
     generate_board_latex(
