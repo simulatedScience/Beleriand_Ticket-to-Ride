@@ -68,10 +68,16 @@ class Particle_Label(Graph_Particle):
     if font_name is None:
       # font_name = font_path.split("\\")[-1].strip(".ttf")
       fontManager.addfont(font_path)
-      width, height, pix_width, pix_height, *offset = self._get_label_size(label, fontsize, font_path)
+      width, height, pix_width, pix_height, *offset = self._get_label_size(
+          label = label,
+          fontsize = fontsize,
+          font = font_path)
       self.font_name = font_path
     else:
-      width, height, pix_width, pix_height, *offset = self._get_label_size(label, fontsize, font_name)
+      width, height, pix_width, pix_height, *offset = self._get_label_size(
+          label = label,
+          fontsize = fontsize,
+          font = font_name)
       self.font_name = font_name
     super().__init__(
         id,
@@ -151,7 +157,10 @@ class Particle_Label(Graph_Particle):
       if self.ignore_linebreaks:
         self.label = self.label.replace("\n", " ")
       # update bounding box size
-      width, height, pix_width, pix_height, *offset = self._get_label_size(new_label, self.fontsize, self.font_name)
+      width, height, pix_width, pix_height, *offset = self._get_label_size(
+          new_label,
+          self.fontsize,
+          self.font_path)
       self.bounding_box_size = (width, height)
       self.width_pixels = pix_width
       self.height_pixels = pix_height
@@ -164,6 +173,7 @@ class Particle_Label(Graph_Particle):
   def set_font(self,
     font_size: int = None,
     font_path: str = None,
+    label_height_scale: float = None,
   ) -> None:
     """
     set the font and fontsize of the label
@@ -172,11 +182,16 @@ class Particle_Label(Graph_Particle):
         font_size (int, optional): fontsize to set. Defaults to None.
         font_path (str, optional): path to a font file. Defaults to None.
     """
+    if label_height_scale is not None:
+      self.height_scale_factor: float = label_height_scale
     if font_size is not None:
       self.fontsize = font_size
     if font_path is not None:
       self.font_path = font_path
-    width, height, pix_width, pix_height, *offset = self._get_label_size(self.label, self.fontsize, self.font_path)
+    width, height, pix_width, pix_height, *offset = self._get_label_size(
+        label = self.label,
+        fontsize = self.fontsize,
+        font = self.font_path)
     self.bounding_box_size = (width, height)
     self.width_pixels = pix_width
     self.height_pixels = pix_height
@@ -283,7 +298,7 @@ class Particle_Label(Graph_Particle):
         override_position[1] + self.bounding_box_size[1] / 2 * scale)
 
 
-  def _get_label_size(self, label: str, fontsize: int, font: str, image_padding: int = 100) -> Tuple[float, float, float, float]:
+  def _get_label_size(self, label: str, fontsize: int, font: str, image_padding: int = 0.3) -> Tuple[float, float, float, float]:
     """
     get size of a label with a given font size
 
@@ -291,7 +306,7 @@ class Particle_Label(Graph_Particle):
         label (str): text of the label
         fontsize (int): fontsize of the label
         font (str): name or path of the font to use
-        image_padding (int): number of pixels to add to width and height as padding to ensure text is not cut off. Defaults to 0.1
+        image_padding (int): number of pixels to add to width and height in each direction as padding to ensure text is not cut off. Defaults to 0.3 (30%)
 
     Returns:
         float: width of the label, normalized to height=1
@@ -311,14 +326,14 @@ class Particle_Label(Graph_Particle):
     bbox_size = get_multiline_bbox_size(label, self.img_font, stroke_width=self.outline_stroke_width)
     width_pixels, height_pixels = bbox_size
     # add padding
-    width_pixels = int(width_pixels + image_padding)
-    height_pixels = int(height_pixels + image_padding)
+    width_pixels = int(width_pixels + image_padding*width_pixels)
+    height_pixels = int(height_pixels + image_padding*height_pixels)
     # calculate bounding box of inside stroke
     # bbox_size = get_multiline_bbox_size(label, self.img_font, stroke_width=self.inside_stroke_width)
     small_width_pixels, small_height_pixels = bbox_size
     # calculate offsets of inner text
-    text_x_offset = (width_pixels - small_width_pixels)
-    text_y_offset = (height_pixels - small_height_pixels)
+    text_x_offset = (width_pixels - small_width_pixels)//2
+    text_y_offset = (height_pixels - small_height_pixels)//2
     # text_x_offset = image_padding // 2
     # text_y_offset = -image_padding // 2
     # normalize height

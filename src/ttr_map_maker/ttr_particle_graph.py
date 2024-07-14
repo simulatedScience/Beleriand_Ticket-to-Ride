@@ -773,9 +773,13 @@ class TTR_Particle_Graph:
         label_fontsize (int): font size
     """
     self.erase_labels()
-    Particle_Label.get_label_height_scale(fontsize=label_fontsize, font_path=label_font)
+    self.label_height_scale = Particle_Label.get_label_height_scale(fontsize=label_fontsize, font_path=label_font)
+    print(f"new label height scale: {self.label_height_scale}")
     for particle_label in self.particle_labels.values():
-      particle_label.set_font(label_fontsize, label_font)
+      particle_label.set_font(
+          label_fontsize,
+          label_font)
+          # self.label_height_scale)
     self.draw_labels(ax, movable=False)
 
 

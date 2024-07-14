@@ -277,18 +277,18 @@ if __name__ == "__main__":
     root.withdraw()
 
     image_path = None
-    image_path = "../../projects/MiddleEarth_TTR/board_samples/07_board_preview.png"
+    image_path = "../../projects/MiddleEarth_TTR/board_samples/08_board_preview.png"
     image_paths = None
     # image_paths = [
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_1_1.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_1_2.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_1_3.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_2_1.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_2_2.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_2_3.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_3_1.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_3_2.png",
-    #     "../../projects/MiddleEarth_TTR/printing/board_07/Middle_Earth_3_3.png"
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_1_1.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_1_2.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_1_3.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_2_1.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_2_2.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_2_3.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_3_1.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_3_2.png",
+    #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_3_3.png"
     # ]
 
     if not image_path:
