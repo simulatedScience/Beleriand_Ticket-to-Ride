@@ -1,4 +1,5 @@
 import os
+import sys
 from tkinter import Tk, filedialog
 
 import matplotlib.pyplot as plt
@@ -277,7 +278,7 @@ if __name__ == "__main__":
     root.withdraw()
 
     image_path = None
-    image_path = "../../projects/MiddleEarth_TTR/board_samples/08_board_preview.png"
+    # image_path = "../../projects/MiddleEarth_TTR/board_samples/10_board_preview.png"
     image_paths = None
     # image_paths = [
     #     "../../projects/MiddleEarth_TTR/printing/board_08/Middle_Earth_1_1.png",
@@ -303,6 +304,8 @@ if __name__ == "__main__":
         output_folder = filedialog.askdirectory(title='Select an output folder')
     else:
         output_folder = os.path.dirname(image_paths[0])
+    if not output_folder:
+        sys.exit("No output folder selected. Exiting.")
 
     # split_image_into_4_parts(image_path, output_folder)
     tile_columns = 3
@@ -311,6 +314,7 @@ if __name__ == "__main__":
     total_board_height = 589 # in mm
     outer_margin = 2 # in mm
     inner_margin = 1 # in mm
+    output_prefix = "Beleriand_v2.08"
     
     tile_bboxes, horz_cuts, vert_cuts = calculate_cut_lines_and_tiles(
         tile_columns = tile_columns,
@@ -336,11 +340,11 @@ if __name__ == "__main__":
             total_board_width,
             total_board_height,
             outer_margin=outer_margin,
-            output_prefix='Middle_Earth'
+            output_prefix=output_prefix
         )
     generate_board_latex(
         image_paths=image_paths,
         tile_bboxes=tile_bboxes,
-        target_filepath=f"{output_folder}/Middle_Earth_board.tex",
+        target_filepath=f"{output_folder}/{output_prefix}_board.tex",
         border=(10, 10),
     )

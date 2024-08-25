@@ -16,20 +16,19 @@ This project implements tools to create your very own, custom ticket to ride gam
 - automatically generate images for task cards
 - allow adding nodes through the UI
 - automatically optimze the graph layout from the UI (adjustments and optimization still required)
+- custom files enable faster workflows (save all parameter settings like board size, offset, task card parameters, images, visibility options etc.)
 
-### planned features:
-- !!! add colorbars to task view and edge importance !!!
+### Future feature ideas:
 - add settings for node style (hidden, flat colors, node images, node degrees, node importance)
-- less bugs. Most importantly:
+- fix bugs. Most importantly:
   - edge attractors are sometimes wrong. likely caused by wrong reconstruction during file loading
   - fix start-stop button for graph optimizer
 - improve graph-optimizer
 - documentation and user manual
 - support for different monitor resolutions
 - support for creating a new graph completely within the GUI
-- autosave?
-- custom file format for faster workflows (save all parameter settings like board size, offset, task card parameters, images, visibility options etc.)
-- remember last session parameters (graph file, background image, board size, task card parameters, images, visibility options etc.)
+- autosave
+- remember last session parameters (graph file, background image, board size, task card parameters, images, visibility options etc.) -> scrapped. parameters are saved in project files.
 - add info overlay for reward points for each edge length (possibly implemented via mpl legend?) -> scrapped. Instead, user should add legend to background image manually.
 
 Currently the project is still unfinished, but it is already possible to create a custom game, although some steps are still manual and rather tedious. Due to the libraries being used, the program runs quite slow, so it will require some patience. The program is only tested on Windows (Win11 22h2). While most of the code should be cross-platform compatible, some features may not work on other operating systems and require modifications (mostly UI related).
@@ -47,7 +46,8 @@ To store the game board, cards and LEGO bricks, you can find or buy a box (appro
 ## How to use the program
 ### Prerequisites
 At the current stage, I highly recommend being familiar with Python and some image editing software like GIMP.
-- Python 3.6 or higher
+- Python 3.9 or higher
+
 #### Dependencies
 - matplotlib 3.6 or higher -> essential for the UI
 - numpy -> for efficient calculations
