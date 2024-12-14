@@ -1531,7 +1531,7 @@ class TTR_Particle_Graph:
       particle_info["bounding_box_size"] = tuple(particle_info["bounding_box_size"])
       # add to graph: Particle Node (Location)
       if particle_type == "Particle_Node":
-        particle_info.pop("rotation")
+        # particle_info.pop("rotation")
         particle_info.pop("angular_velocity_decay")
         particle_info["target_position"] = np.array(particle_info["target_position"], dtype=np.float16)
         particle = Particle_Node(**particle_info)

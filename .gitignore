@@ -46,3 +46,8 @@ src/tickets_ai-modulated_delay
 !projects/Star_Wars_TTR/task_cards/task_backside_frame.blend
 !projects/Star_Wars_TTR/task_cards/task_card_frame_v4.1.png
 !projects/Star_Wars_TTR/task_cards/task_card_backside.png
+*.3mf
+*.skb
+*.stl
+*.skp
+*.svg
