@@ -1,3 +1,12 @@
+"""
+This program splits a given image into parts for printing and glueing as a foldable game board.
+This process completely removes slim gaps between the image parts such that the images line up when printed. There is no outer margin for cutting though, so you will have to cut precisely along the outer border of the image parts and then glue them with the correct gap between each part.
+
+This script will also create and compile a latex document where the image parts are placed on a page with crop marks for cutting to the correct size.
+
+Author: Sebastian Jost & ChatGPT
+"""
+
 import os
 import sys
 from tkinter import Tk, filedialog
@@ -11,7 +20,7 @@ from _task_card_pdf_generation import add_horizontal_crop_marks, add_vertical_cr
 
 def split_image_into_4_parts(image_path, output_folder):
     """
-    
+    old version: basic splitting of an image into 4 parts
     """
     # If no file or folder was selected, return
     if not image_path or not output_folder:
@@ -57,7 +66,7 @@ def add_fullpage_image(
         tile_width: float = 88.9,
         tile_height: float = 63.5,):
     """
-    Adds a single card (front and back) to the document.
+    Adds a single image (front and back) to the given LaTeX document.
 
     Args:
         doc (Document): The LaTeX document.
@@ -96,7 +105,7 @@ def add_fullpage_image(
     # Add crop marks
     add_horizontal_crop_marks(doc, x_pos, y_pos, tile_width, tile_height)
     add_vertical_crop_marks(doc, x_pos, y_pos, tile_width, tile_height)
-    
+
 
 def calculate_cut_lines_and_tiles(
         tile_columns: int,
@@ -272,7 +281,15 @@ def generate_board_latex(
     doc.generate_tex(target_filepath_stripped)
     print(f"Generated LaTeX file at {target_filepath}")
 
-if __name__ == "__main__":
+def main(
+        tile_columns = 3,
+        tile_rows = 3,
+        total_board_width = 832, # in mm
+        total_board_height = 589, # in mm
+        outer_margin = 2, # in mm
+        inner_margin = 1, # in mm
+        output_prefix = "Beleriand_v2.08",
+    ) -> None:
     # Hide the main Tkinter window
     root = Tk()
     root.withdraw()
@@ -308,13 +325,6 @@ if __name__ == "__main__":
         sys.exit("No output folder selected. Exiting.")
 
     # split_image_into_4_parts(image_path, output_folder)
-    tile_columns = 3
-    tile_rows = 3
-    total_board_width = 832 # in mm
-    total_board_height = 589 # in mm
-    outer_margin = 2 # in mm
-    inner_margin = 1 # in mm
-    output_prefix = "Beleriand_v2.08"
     
     tile_bboxes, horz_cuts, vert_cuts = calculate_cut_lines_and_tiles(
         tile_columns = tile_columns,
@@ -348,3 +358,26 @@ if __name__ == "__main__":
         target_filepath=f"{output_folder}/{output_prefix}_board.tex",
         border=(10, 10),
     )
+
+
+if __name__ == "__main__":
+    beleriand_middle_earth_board_settings: dict[str, float] = {
+        "tile_columns": 3,
+        "tile_rows":  3,
+        "total_board_width":  832, # in mm
+        "total_board_height":  589, # in mm
+        "outer_margin":  2, # in mm
+        "inner_margin":  1, # in mm
+        "output_prefix":  "Beleriand_v2.08",
+    }
+    harry_potter_star_wars_board_settings: dict[str, float] = {
+        "tile_columns": 2,
+        "tile_rows":  2,
+        "total_board_width":  524, # in mm
+        "total_board_height":  394, # in mm
+        "outer_margin":  2, # in mm
+        "inner_margin":  1, # in mm
+        "output_prefix":  "Harry_Potter_v2.4.3",
+    }
+    main(
+        **harry_potter_star_wars_board_settings)
