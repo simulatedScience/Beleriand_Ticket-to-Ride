@@ -32,6 +32,8 @@ User interactions:
 import tkinter as tk
 from typing import Callable, List, Tuple
 
+import tkcolorpicker
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -47,6 +49,23 @@ from graph_editor_gui import Graph_Editor_GUI
 from task_editor_gui import Task_Editor_GUI
 from task_export_gui import Task_Export_GUI
 from graph_optimizer_gui import Graph_Optimzer_GUI
+
+def get_tk_color(color: str) -> str:
+  """
+  Convert a color to a format that tkinter widgets can display.
+  Colors may be given as 8-digit hex strings (`#rrggbbaa`) to include an alpha value,
+  which tkinter doesn't support. In that case the alpha value is dropped.
+
+  Args:
+      color (str): color as hex string, with or without alpha value
+
+  Returns:
+      str: color as hex string without alpha value
+  """
+  if color.startswith("#") and len(color) == 9:
+    return color[:7]
+  return color
+
 
 class Board_Layout_GUI:
   def __init__(self,
@@ -127,6 +146,31 @@ class Board_Layout_GUI:
       fg=self.color_config["label_fg_color"],
       font=(self.gui_font, fontsize, font_type),
       )
+
+  def add_horizontal_separator(self, parent: tk.Widget, row_index: int, columnspan: int = 5) -> tk.Frame:
+    """
+    Add a thin horizontal line to visually separate groups of settings.
+
+    Args:
+        parent (tk.Widget): parent widget to add the separator to
+        row_index (int): row index to place the separator in
+        columnspan (int, optional): number of columns to span. Defaults to 5.
+
+    Returns:
+        tk.Frame: the separator widget
+    """
+    separator = tk.Frame(
+        parent,
+        height=1,
+        bg=self.color_config.get("separator_color", "#aaaaaa"))
+    separator.grid(
+        row=row_index,
+        column=0,
+        columnspan=columnspan,
+        sticky="ew",
+        padx=self.grid_pad_x,
+        pady=(self.grid_pad_y, self.grid_pad_y))
+    return separator
 
   def add_button_style(self, button: tk.Button):
     button.configure(
@@ -397,6 +441,8 @@ class Board_Layout_GUI:
     self.node_size = tk.DoubleVar(value=3.0, name="node_size")
     self.label_font = tk.StringVar(value="", name="label_font")
     self.label_fontsize = tk.IntVar(value=200, name="label_fontsize")
+    self.label_text_color = tk.StringVar(value="#eeeeee", name="label_text_color")
+    self.label_outline_color = tk.StringVar(value="#222222", name="label_outline_color")
 
   def draw_control_widgets(self):
     """
@@ -725,6 +771,9 @@ class Board_Layout_GUI:
     self.edge_folder_path.set(misc_info["edge_images_path"])
     self.label_font.set(misc_info["label_font"])
     self.label_fontsize.set(misc_info["label_fontsize"])
+    self.label_text_color.set(misc_info["label_text_color"])
+    self.label_outline_color.set(misc_info["label_outline_color"])
+    self.update_label_color_buttons()
     self.apply_label_settings()
     # except FileNotFoundError as exception:
     #   print("Particle graph file not found. Constructing new particle graph.")
@@ -1361,7 +1410,7 @@ class Board_Layout_GUI:
     # add submenu button for physical board size
     board_scaling_button, toggle_board_scaling_submenu = self.create_submenu_button(
         master=plot_param_frame,
-        text="Board scaling",
+        text="Board scaling & labels",
         widget_list=board_size_widgets,
         row_index=row_index,
         column_index=0,
@@ -1448,6 +1497,10 @@ class Board_Layout_GUI:
     # add_numeric_input(plot_param_frame, row_index, column_index, "height", self.board_height)
     # column_index = 0
     # row_index += 1
+    # add separator above the scale factor settings
+    board_size_widgets.append(
+        self.add_horizontal_separator(plot_param_frame, row_index, columnspan=5))
+    row_index += 1
     # add label for node and background scale factor
     label = tk.Label(plot_param_frame, text="scale factors", justify="center")
     self.add_label_style(label)
@@ -1507,6 +1560,22 @@ class Board_Layout_GUI:
     board_size_widgets.append(apply_node_size_button)
     row_index += 1
     column_index: int = 0
+    # add separator above the label settings
+    board_size_widgets.append(
+        self.add_horizontal_separator(graph_apperance_frame, row_index, columnspan=5))
+    row_index += 1
+    # add headline for the label settings
+    label_settings_headline = tk.Label(graph_apperance_frame, text="label settings", justify="center")
+    self.add_label_style(label_settings_headline)
+    label_settings_headline.grid(
+        row=row_index,
+        column=0,
+        columnspan=4,
+        sticky="nsew",
+        padx=(self.grid_pad_x, self.grid_pad_x),
+        pady=(0, self.grid_pad_y))
+    board_size_widgets.append(label_settings_headline)
+    row_index += 1
     # add Entries for label font and size
     # browser for label font file
     label_font_frame = tk.Frame(graph_apperance_frame)
@@ -1546,6 +1615,62 @@ class Board_Layout_GUI:
         command=lambda: browse_ttf_file("label font", self.label_font))
     board_size_widgets.append(browse_button)
     row_index += 1
+    column_index: int = 0
+    # add color pickers for label text and outline color (both in one row)
+    label_color_frame = tk.Frame(label_font_frame)
+    self.add_frame_style(label_color_frame)
+    label_color_frame.grid(
+        row=row_index,
+        column=0,
+        columnspan=3,
+        sticky="nsew",
+        padx=0,
+        pady=0)
+    board_size_widgets.append(label_color_frame)
+    def add_label_color_picker(
+        column_index: int,
+        label_text: str,
+        color_var: tk.StringVar) -> tk.Button:
+      """
+      Add a label and a color picker button for one of the label colors.
+
+      Args:
+          column_index (int): column index to place the widgets in
+          label_text (str): text to display in the label
+          color_var (tk.StringVar): variable holding the chosen color
+
+      Returns:
+          tk.Button: the color picker button (used as color preview)
+      """
+      color_label = tk.Label(label_color_frame, text=label_text, justify="left")
+      self.add_label_style(color_label)
+      color_label.grid(
+          row=0,
+          column=column_index,
+          sticky="nsw",
+          padx=(self.grid_pad_x, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
+      board_size_widgets.append(color_label)
+      color_picker = tk.Button(label_color_frame, text="", width=3)
+      self.add_button_style(color_picker)
+      color_picker.config(
+          bg=get_tk_color(color_var.get()),
+          command=lambda: self.change_label_color(color_var, color_picker))
+      color_picker.grid(
+          row=0,
+          column=column_index+1,
+          sticky="w",
+          padx=(0, self.grid_pad_x),
+          pady=(0, self.grid_pad_y))
+      board_size_widgets.append(color_picker)
+      return color_picker
+
+    self.label_text_color_button = add_label_color_picker(
+        0, "text color", self.label_text_color)
+    self.label_outline_color_button = add_label_color_picker(
+        2, "outline color", self.label_outline_color)
+    row_index += 1
+    column_index: int = 0
     # add label size entry and button to apply label settings
     add_numeric_input(label_font_frame, row_index, column_index, "label size", self.label_fontsize)
     column_index += 2
@@ -1561,6 +1686,47 @@ class Board_Layout_GUI:
         padx=(self.grid_pad_x, self.grid_pad_x),
         pady=(0, self.grid_pad_y))
     board_size_widgets.append(apply_label_settings_button)
+
+  def update_label_color_buttons(self):
+    """
+    Update the background of the label color picker buttons to show the current colors.
+    """
+    for button, color_var in (
+        (getattr(self, "label_text_color_button", None), self.label_text_color),
+        (getattr(self, "label_outline_color_button", None), self.label_outline_color)):
+      if button is not None:
+        button.config(bg=get_tk_color(color_var.get()))
+
+  def change_label_color(self, color_var: tk.StringVar, button: tk.Button):
+    """
+    Let the user pick a new label text or outline color and apply it to all labels.
+
+    Args:
+        color_var (tk.StringVar): the variable containing the color
+        button (tk.Button): the color picker button used as color preview
+    """
+    color: str = tkcolorpicker.askcolor(
+        color=color_var.get(),
+        parent=self.master,
+        title="Choose label color",
+        alpha=True)[1]
+    if color is None:
+      return
+    color_var.set(color)
+    button.config(bg=get_tk_color(color))
+    self.apply_label_colors()
+
+  def apply_label_colors(self):
+    """
+    Applies the label text and outline colors to all labels.
+    """
+    if self.particle_graph is not None:
+      self.particle_graph.set_label_colors(
+          self.ax,
+          self.label_text_color.get(),
+          self.label_outline_color.get())
+    # update plot
+    self.canvas.draw_idle()
 
   def apply_node_size_to_all_nodes(self):
     """

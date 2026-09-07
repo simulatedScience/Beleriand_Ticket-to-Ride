@@ -74,7 +74,7 @@ class Particle_Label(Graph_Particle):
     # else:
     self.font_path = font_path
     width, height, pix_width, pix_height, *offset = self._get_label_size(
-        label = label,
+        label = self.label,
         fontsize = fontsize,
         font = font_path)
     # self.font_name = font_name
@@ -157,7 +157,7 @@ class Particle_Label(Graph_Particle):
         self.label = self.label.replace("\n", " ")
       # update bounding box size
       width, height, pix_width, pix_height, *offset = self._get_label_size(
-          new_label,
+          self.label,
           self.fontsize,
           self.font_path)
       self.bounding_box_size = (width, height)

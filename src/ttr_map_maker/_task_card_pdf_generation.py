@@ -292,11 +292,12 @@ if __name__ == "__main__":
     #     )
     # Example usage (to fill regular fit sleeves for standard size cards)
     card_width: float = 65.0
+    card_height: float = 91.0
     card_height, card_width = card_width, card_height
     task_cards_to_latex(
         card_height=card_height,
         card_width=card_width,
-        image_rotation=90,
+        image_rotation=180, # horizontal images
         flip_backside=True,
         )
     # front_images = ["img1.png", "img1.png", "img1.png", "img1.png", "img1.png"]

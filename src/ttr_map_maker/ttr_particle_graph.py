@@ -150,6 +150,8 @@ class TTR_Particle_Graph:
           # other settings
             "label_font": "arial.ttf",
             "label_fontsize": 200,
+            "label_text_color": "#eeeeee",
+            "label_outline_color": "#222222",
             "edge_images_path": "assets/edge_images",
         #    }
     }
@@ -792,11 +794,31 @@ class TTR_Particle_Graph:
       label_fontsize = list(self.particle_labels.values())[0].fontsize
     self.label_height_scale = Particle_Label.get_label_height_scale(fontsize=label_fontsize, font_path=label_font)
     print(f"new label height scale: {self.label_height_scale}")
+    # remember the new settings so they are included when saving the project
+    self.project_setup_dict["label_font"] = label_font
+    self.project_setup_dict["label_fontsize"] = label_fontsize
     for particle_label in self.particle_labels.values():
       particle_label.set_font(
           label_fontsize,
           label_font)
           # self.label_height_scale)
+    self.draw_labels(ax, movable=False)
+
+
+  def set_label_colors(self, ax: plt.Axes, label_text_color: str = None, label_outline_color: str = None) -> None:
+    """
+    set the text and outline color of all labels in the graph and redraw them on the given axes.
+
+    Args:
+        ax (plt.Axes): axes to draw on
+        label_text_color (str, optional): color of the label text. Defaults to None (keep current).
+        label_outline_color (str, optional): color of the label outline. Defaults to None (keep current).
+    """
+    if label_text_color:
+      self.project_setup_dict["label_text_color"] = label_text_color
+    if label_outline_color:
+      self.project_setup_dict["label_outline_color"] = label_outline_color
+    self.erase_labels()
     self.draw_labels(ax, movable=False)
 
 
@@ -850,8 +872,8 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.draw(
           ax,
-          color=self.color_config["label_text_color"],
-          border_color=self.color_config["label_outline_color"],
+          color=self.project_setup_dict["label_text_color"],
+          border_color=self.project_setup_dict["label_outline_color"],
           alpha=1.0 * alpha_multiplier,
           movable=movable)
 
@@ -893,8 +915,8 @@ class TTR_Particle_Graph:
     for particle_label in self.particle_labels.values():
       particle_label.draw(
           ax,
-          color=self.color_config["label_text_color"],
-          border_color=self.color_config["label_outline_color"],
+          color=self.project_setup_dict["label_text_color"],
+          border_color=self.project_setup_dict["label_outline_color"],
           alpha=alpha,
           movable=movable)
 
@@ -1566,7 +1588,14 @@ class TTR_Particle_Graph:
       elif particle_type == "Particle_Label":
         particle_info.pop("bounding_box_size")
         particle_info.pop("target_position")
-        particle = Particle_Label(**particle_info, font_path=particle_graph.project_setup_dict["label_font"])
+        if "font_path" not in particle_info:
+          particle_info["font_path"] = particle_graph.project_setup_dict.get("label_font", "Arial")
+        if "font_name" in particle_info:
+          print(f"Warning: 'font_name' is deprecated. Use 'font_path' instead.\n"
+                f"Ignoring particle {particle_info['id']}'s font_name: {particle_info['font_name']}.\n"
+                f"Using font_path: {particle_info['font_path']} instead.")
+          particle_info.pop("font_name")
+        particle = Particle_Label(**particle_info)
         particle_graph.add_particle(particle)
       # add connected particles back to particle info
       particle_info["connected_particles"] = connected_particles

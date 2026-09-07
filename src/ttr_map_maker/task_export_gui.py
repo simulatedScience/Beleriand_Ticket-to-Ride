@@ -1025,8 +1025,10 @@ class Task_Export_GUI:
     Args:
         task (TTR_Task): the task to export.
     """
-    print(f"Exporting task {task.name} to {task.name}.png", end = "\n...")
-    filepath: str = os.path.join(self.export_folderpath.get(), f"{task.name}.png")
+    # task names may contain linebreaks, which are not usable in filenames
+    filename: str = task.name.replace("\n", " ")
+    print(f"Exporting task {task.name} to {filename}.png", end = "\n...")
+    filepath: str = os.path.join(self.export_folderpath.get(), f"{filename}.png")
     # save export filepath to particle graph
     self.particle_graph.set_task_info(
         task_card_folder_path=filepath,
@@ -1162,9 +1164,9 @@ class Task_Export_GUI:
         task_card_folder_path=self.export_folderpath.get(),
         )
     self.task_label.draw(
-        color="#eeeeee",
+        color=self.particle_graph.get_misc_info("label_text_color"),
         # border_color="#629bb4",
-        border_color=(1, 0, 1, 0),
+        border_color=self.particle_graph.get_misc_info("label_outline_color"),
         ax=self.ax,
         scale=self.label_scale.get(),
         zorder=5,

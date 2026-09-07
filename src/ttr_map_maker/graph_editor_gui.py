@@ -301,7 +301,7 @@ class Graph_Editor_GUI:
       new_label: Particle_Label = Particle_Label(
         label=node_name_var.get(),
         id=self.particle_graph.max_particle_id + 1,
-        color=self.color_config["label_text_color"],
+        color=self.particle_graph.project_setup_dict["label_text_color"],
         position=np.array([event.xdata, event.ydata]) + np.array([0, 2]),
         height_scale_factor=self.particle_graph.label_height_scale,
         font_path=self.particle_graph.project_setup_dict["label_font"],
@@ -309,8 +309,8 @@ class Graph_Editor_GUI:
       new_label.add_connected_particle(new_node)
       new_label.draw(
           ax=self.ax,
-          color=self.color_config["label_text_color"],
-          border_color=self.color_config["label_outline_color"],
+          color=self.particle_graph.project_setup_dict["label_text_color"],
+          border_color=self.particle_graph.project_setup_dict["label_outline_color"],
           movable=False)
       self.particle_graph.add_particle(new_label)
       self.canvas.draw_idle()
